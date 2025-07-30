@@ -198,76 +198,64 @@ export default function Home() {
       {/* Hero Banner */}
       <div className="relative w-full overflow-hidden">
         {/* Desktop Version */}
-        <div className="hidden lg:block relative h-[640px] bg-gradient-to-r from-gray-100 to-gray-200">
-          {/* Background with earbuds image placeholder */}
+        <div className="hidden lg:block relative h-[640px] bg-white">
+          {/* Background with banner image */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage:
-                "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+              backgroundImage: "url('/banner1.png')",
             }}
           >
-            {/* Earbuds illustration area - right side */}
-            <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center">
-              {/* Placeholder for earbuds image */}
-              <div className="relative">
-                <div className="w-80 h-80 bg-white rounded-full shadow-2xl flex items-center justify-center opacity-90">
-                  <div className="text-gray-400 text-sm">Earbuds Image</div>
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Content */}
-          <div className="relative z-10 h-full flex items-center">
-            <div className="container mx-auto px-8">
+          {/* Content - Bottom Left with Previous Button */}
+          <div className="relative z-10 h-full flex items-end">
+            <div className="container mx-auto px-8 pb-16">
               <div className="max-w-2xl">
-                <h1 className="text-5xl font-semibold text-gray-800 mb-6 leading-tight">
+                {/* Row 1: Previous Button */}
+                <div className="mb-6">
+                  <button className="text-gray-800 hover:text-gray-600 transition-colors">
+                    <img
+                      src="/previousicon.svg"
+                      alt="Previous"
+                      className="w-4 h-7"
+                    />
+                  </button>
+                </div>
+                
+                {/* Row 2: Heading */}
+                <h1 className="text-[2.8rem] font-semibold text-gray-800 mb-6 leading-none whitespace-nowrap">
                   Silence the World, Hear Every Detail
                 </h1>
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                
+                {/* Row 3: Paragraph 1 */}
+                <p className="text-[1.3rem] text-gray-600 mb-0 leading-relaxed">
                   Active Noise Cancellation, Superior Comfort, Unmatched Finish
-                  <br />
+                </p>
+                
+                {/* Row 4: Paragraph 2 */}
+                <p className="text-[1.3rem] text-gray-600 mb-8 leading-relaxed">
                   Upgrade Your Audio Game Today
                 </p>
-                <button className="bg-green-700 hover:bg-green-800 text-white font-medium px-8 py-4 rounded-lg transition-colors duration-200">
+                
+                {/* Row 5: Shop Now Button */}
+                <button className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-6 py-4 rounded transition-colors duration-200 flex items-center justify-center gap-2">
                   Shop now
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Navigation arrows */}
-          <button className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800 hover:text-gray-600 transition-colors">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
+          {/* Next Button Only */}
+          <div className="absolute right-50 top-1/2 transform -translate-y-1/2">
+            <button className="text-gray-800 hover:text-gray-600 transition-colors p-2">
+              <img
+                src="/nexticon.svg"
+                alt="Next"
+                className="w-4 h-7"
               />
-            </svg>
           </button>
-          <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-800 hover:text-gray-600 transition-colors">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+          </div>
 
           {/* Progress indicator */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
@@ -281,18 +269,11 @@ export default function Home() {
         {/* Mobile Version - Clean Layout */}
         <div className="lg:hidden relative h-[570px] w-full">
           {/* Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200">
-            {/* IEM Image Placeholder - Centered */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative">
-                <div className="w-64 h-64 bg-white rounded-full shadow-xl flex items-center justify-center opacity-90">
-                  <div className="text-gray-400 text-sm">IEM Image</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Subtle overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('/banner1.png')",
+            }}
+          >
           </div>
 
           {/* Content positioned at bottom */}
@@ -338,36 +319,22 @@ export default function Home() {
           </div>
 
           {/* Navigation Arrows */}
-          <button className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#333333] hover:text-[#565656] transition-colors z-10">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
+          <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between items-center px-8 z-10">
+            <button className="text-[#333333] hover:text-[#565656] transition-colors">
+              <img
+                src="/previousicon.svg"
+                alt="Previous"
+                className="w-4 h-7"
               />
-            </svg>
           </button>
-          <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#333333] hover:text-[#565656] transition-colors z-10">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
+            <button className="text-[#333333] hover:text-[#565656] transition-colors">
+              <img
+                src="/nexticon.svg"
+                alt="Next"
+                className="w-4 h-7"
               />
-            </svg>
           </button>
+          </div>
 
           {/* Progress Indicator */}
           <div className="absolute bottom-[15.68px] left-1/2 transform -translate-x-1/2">
@@ -381,27 +348,62 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Shop by Category Section - Exact Figma Design */}
-      <div className="flex flex-col gap-8 items-center justify-start pb-10 pt-16 px-0 w-full">
+      {/* Shop by Category Section - Updated Layout */}
+      <div 
+        className="flex flex-col items-center justify-center w-full"
+        style={{
+          display: "flex",
+          padding: "80px 0 40px 0",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "40px",
+          alignSelf: "stretch",
+          background: "#FFF"
+        }}
+      >
         <div
           className="text-[#333333] text-[22px] font-bold text-center"
           style={{
-            fontFamily: "'Nunito Sans', sans-serif",
-            letterSpacing: "-0.22px",
+            fontFamily: '"Nunito Sans", sans-serif',
+            fontSize: "28px",
+            fontWeight: 700,
+            letterSpacing: "-0.28px",
+            lineHeight: "normal",
+            fontStyle: "normal",
+            alignSelf: "stretch",
           }}
         >
           Shop by category
         </div>
-        <div className="flex flex-wrap gap-6 items-start justify-center px-4 py-0 w-[428px] max-w-full mx-auto">
+        <div 
+          className="flex items-start justify-center w-full"
+          style={{
+            display: "flex",
+            padding: "0 200px",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: "24px",
+            alignSelf: "stretch"
+          }}
+        >
           {/* In-Ears */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="bg-center bg-cover bg-no-repeat w-[110px] h-[110px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/35419d552beadb0a62b9ff2b641e11a23ff933aa.png')",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop1.png"
+                alt="In-Ears"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -416,14 +418,23 @@ export default function Home() {
           </div>
 
           {/* Headphones */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="bg-center bg-cover bg-no-repeat w-[110px] h-[110px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/7496bc2bb3bacd2cc802bff639593704a0cee868.png')",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop2.png"
+                alt="Headphones"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -438,14 +449,23 @@ export default function Home() {
           </div>
 
           {/* True Wireless */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="bg-center bg-cover bg-no-repeat w-[134px] h-[134px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/17c65358b988e0030206ba7b11ec0d3014462203.png')",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop3.png"
+                alt="True Wireless"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -460,16 +480,23 @@ export default function Home() {
           </div>
 
           {/* Amps & DACs */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="w-[110px] h-[110px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/b318b55c51823db7d85e261231f3756e1102fcf0.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "50% 50%",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop4.png"
+                alt="Amps & DACs"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -484,17 +511,23 @@ export default function Home() {
           </div>
 
           {/* Hi-Res Players */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="w-[126px] h-[125px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/59cb7669f7c85bb909cd6cdaa4be08fd3ed5b43f.png')",
-                  backgroundSize: "74% 74.1%",
-                  backgroundPosition: "51.99% 50%",
-                  backgroundRepeat: "no-repeat",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop5.png"
+                alt="Hi-Res Players"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -509,16 +542,23 @@ export default function Home() {
           </div>
 
           {/* Accessories */}
-          <div className="flex flex-col gap-2 items-center justify-start w-[110px]">
-            <div className="aspect-[164/163.766] bg-[#ffffff] flex flex-col gap-2 items-center justify-center overflow-hidden rounded w-full">
               <div
-                className="w-[110px] h-[110px]"
+            className="flex flex-col items-center justify-start"
                 style={{
-                  backgroundImage:
-                    "url('http://localhost:3845/assets/5c683fde9b5148a17519807c7aa869a4e5628e00.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "50% 50%",
-                }}
+              display: "flex",
+              height: "274.593px",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+              flex: "1 0 0",
+              aspectRatio: "233.33/274.59"
+            }}
+          >
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+              <img
+                src="/shop6.png"
+                alt="Accessories"
+                className="w-full h-full object-cover"
               />
             </div>
             <div
@@ -529,6 +569,469 @@ export default function Home() {
               }}
             >
               Accessories
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Best Sellers Section */}
+      <div className="bg-white py-16">
+        <div className="px-4 sm:px-6 md:px-12 lg:px-[200px]">
+          {/* Section Header */}
+          <div className="flex items-center justify-between mb-8">
+            <h2
+              className="text-[24px] font-bold"
+              style={{
+                color: "#333",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontWeight: 700,
+                fontStyle: "normal",
+                lineHeight: "normal",
+                letterSpacing: "-0.24px",
+              }}
+            >
+              Best Sellers
+            </h2>
+            <button className="flex items-center gap-2 font-medium transition-colors" style={{ color: "#035F0F" }}>
+              <span>View all</span>
+              <img
+                src="/nextarrow.svg"
+                alt="Next arrow"
+                className="w-7 h-7"
+              />
+            </button>
+          </div>
+
+          {/* Best Sellers Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Product 1 - A1 Badge */}
+            <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+              <div className="relative">
+                <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+                  <img
+                    src="/best1.png"
+                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                {/* A1 Badge */}
+                <div className="absolute top-2 left-0 flex items-center shadow-lg">
+                  <div className="text-white px-2 text-xs font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "23px" }}>
+                    A1
+                  </div>
+                  <svg width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  7hz Salnotes Zero 2 Wired IEM(type c)
+                </h3>
+                <p className="text-xs text-gray-600 mb-3">
+                  In-ear monitors
+                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+                    ₹1,899
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    ₹2,099
+                  </span>
+                </div>
+                <div className="flex justify-start">
+                  <button 
+                    className="bg-white text-black font-medium transition-colors"
+                    style={{
+                      display: "flex",
+                      height: "40px",
+                      padding: "14px 24px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Product 2 - #2 Badge */}
+            <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+              <div className="relative">
+                <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+                  <img
+                    src="/best2.png"
+                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                {/* #2 Badge */}
+                <div className="absolute top-2 left-0 flex items-center shadow-lg">
+                  <div className="text-white px-2 text-xs font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "23px" }}>
+                    #2
+                  </div>
+                  <svg width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  7hz Salnotes Zero 2 Wired IEM(type c)
+                </h3>
+                <p className="text-xs text-gray-600 mb-3">
+                  In-ear monitors
+                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+                    ₹1,899
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    ₹2,099
+                  </span>
+                </div>
+                <div className="flex justify-start">
+                  <button 
+                    className="bg-white text-black font-medium transition-colors"
+                    style={{
+                      display: "flex",
+                      height: "40px",
+                      padding: "14px 24px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Product 3 - #3 Badge */}
+            <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+              <div className="relative">
+                <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+                  <img
+                    src="/best3.png"
+                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                {/* #3 Badge */}
+                <div className="absolute top-2 left-0 flex items-center shadow-lg">
+                  <div className="text-white px-2 text-xs font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "23px" }}>
+                    #3
+                  </div>
+                  <svg width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
+                  </svg>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  7hz Salnotes Zero 2 Wired IEM(type c)
+                </h3>
+                <p className="text-xs text-gray-600 mb-3">
+                  In-ear monitors
+                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+                    ₹1,899
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    ₹2,099
+                  </span>
+                </div>
+                <div className="flex justify-start">
+                  <button 
+                    className="bg-white text-black font-medium transition-colors"
+                    style={{
+                      display: "flex",
+                      height: "40px",
+                      padding: "14px 24px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Product 4 - No Badge */}
+            <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+              <div className="relative">
+                <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+                  <img
+                    src="/best4.png"
+                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                  7hz Salnotes Zero 2 Wired IEM(type c)
+                </h3>
+                <p className="text-xs text-gray-600 mb-3">
+                  In-ear monitors
+                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+                    ₹1,899
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    ₹2,099
+                  </span>
+                </div>
+                <div className="flex justify-start">
+                  <button 
+                    className="bg-white text-black font-medium transition-colors"
+                    style={{
+                      display: "flex",
+                      height: "40px",
+                      padding: "14px 24px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Service Benefits Section */}
+      <div className="py-12" style={{ background: "rgba(3, 95, 15, 0.05)" }}>
+        <div className="px-8 sm:px-12 md:px-16 lg:px-[300px]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
+            {/* Secured Payment */}
+            <div className="flex flex-col items-center gap-3">
+              <img
+                src="/cash1.svg"
+                alt="Secured Payment"
+                className="w-16 h-16"
+              />
+              <span 
+                className="text-center"
+                style={{
+                  color: "#333",
+                  fontFamily: '"Nunito Sans"',
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: 600,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.36px",
+                  width: "180px"
+                }}
+              >
+                Secured payment
+              </span>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden sm:block" style={{ width: "0", height: "120px" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="2" height="120" viewBox="0 0 2 120" fill="none">
+                <path d="M1 0.59375V120.594" stroke="rgba(0, 0, 0, 0.16)" strokeWidth="1"/>
+              </svg>
+            </div>
+
+            {/* Delivery */}
+            <div className="flex flex-col items-center gap-3">
+              <img
+                src="/cash2.svg"
+                alt="Delivery"
+                className="w-16 h-16"
+              />
+              <span 
+                className="text-center"
+                style={{
+                  color: "#333",
+                  fontFamily: '"Nunito Sans"',
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: 600,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.36px",
+                  width: "180px"
+                }}
+              >
+                Delivery in 3-4 working days
+              </span>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden sm:block" style={{ width: "0", height: "120px" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="2" height="120" viewBox="0 0 2 120" fill="none">
+                <path d="M1 0.59375V120.594" stroke="rgba(0, 0, 0, 0.16)" strokeWidth="1"/>
+              </svg>
+            </div>
+
+            {/* 24x7 Support */}
+            <div className="flex flex-col items-center gap-3">
+              <img
+                src="/cash3.svg"
+                alt="24x7 Support"
+                className="w-16 h-16"
+              />
+              <span 
+                className="text-center"
+                style={{
+                  color: "#333",
+                  fontFamily: '"Nunito Sans"',
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: 600,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.36px",
+                  width: "180px"
+                }}
+              >
+                24x7 support
+              </span>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden sm:block" style={{ width: "0", height: "120px" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="2" height="120" viewBox="0 0 2 120" fill="none">
+                <path d="M1 0.59375V120.594" stroke="rgba(0, 0, 0, 0.16)" strokeWidth="1"/>
+              </svg>
+            </div>
+
+            {/* Pay on Delivery */}
+            <div className="flex flex-col items-center gap-3">
+              <img
+                src="/cash4.svg"
+                alt="Pay on Delivery"
+                className="w-16 h-16"
+              />
+              <span 
+                className="text-center"
+                style={{
+                  color: "#333",
+                  fontFamily: '"Nunito Sans"',
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: 600,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.36px",
+                  width: "180px"
+                }}
+              >
+                Pay on delivery
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Promotional Banner Section */}
+      <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
+        <div className="flex flex-col lg:flex-row gap-0">
+          {/* Left Section - Crystal Clear Audio */}
+          <div 
+            className="flex-1 relative overflow-hidden rounded-l-lg"
+            style={{
+              height: "240px",
+              flex: "1 0 0",
+              borderRadius: "4px 0 0 4px",
+              background: "linear-gradient(90deg, #E3EBFF, #ECF1FF)"
+            }}
+          >
+            {/* Product Image - Right Side */}
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+              <img
+                src="/left.png"
+                alt="SOUNDPEATS Headphones"
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain"
+              />
+            </div>
+
+            {/* Content - Left Side */}
+            <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
+              <h3 
+                className="text-xl sm:text-2xl font-bold mb-3"
+                style={{ color: "#333333" }}
+              >
+                Crystal Clear Audio, Now at 15% OFF!
+              </h3>
+              <p 
+                className="text-sm sm:text-base mb-4 text-gray-600"
+                style={{ color: "#333333" }}
+              >
+                Crisp sound. Comfortable fit. Limited time offer
+              </p>
+              <button 
+                className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 rounded text-sm sm:text-base hover:bg-gray-50 transition-colors duration-200"
+                style={{ 
+                  color: "#333333",
+                  border: "1px solid #333"
+                }}
+              >
+                Shop now
+              </button>
+            </div>
+          </div>
+
+          {/* Right Section - Pro Sound, Pro Price */}
+          <div 
+            className="flex-1 relative overflow-hidden rounded-r-lg"
+            style={{
+              height: "240px",
+              flex: "1 0 0",
+              borderRadius: "0 4px 4px 0",
+              background: "#F4FFAA"
+            }}
+          >
+            {/* Product Image - Right Side */}
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+              <img
+                src="/right.png"
+                alt="Professional IEMs"
+                className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain"
+              />
+            </div>
+
+            {/* Content - Left Side */}
+            <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
+              <h3 
+                className="text-xl sm:text-2xl font-bold mb-3"
+                style={{ color: "#333333" }}
+              >
+                Pro Sound, Pro Price
+              </h3>
+              <p 
+                className="text-sm sm:text-base mb-4 text-gray-600"
+                style={{ color: "#333333" }}
+              >
+                Get pro-quality IEMs at unbeatable prices. Limited time only
+              </p>
+              <button 
+                className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 rounded text-sm sm:text-base hover:bg-gray-50 transition-colors duration-200"
+                style={{ 
+                  color: "#333333",
+                  border: "1px solid #333"
+                }}
+              >
+                Shop now
+              </button>
             </div>
           </div>
         </div>

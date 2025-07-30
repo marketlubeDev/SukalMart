@@ -61,40 +61,32 @@ export default function Nav() {
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+      <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
+        <div className="flex items-center h-20">
+          {/* Logo - Leftmost with small padding */}
+          <div className="flex-shrink-0 pr-4">
             <Link href="/" className="flex items-center">
-              <div className="text-2xl font-bold text-green-700">YesJ</div>
+              <div className="text-2xl font-bold text-green-700">SukalMart</div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-8">
+          {/* Desktop Navigation - Center with more gap */}
+          <div className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
             {navigationItems.map((item, index) => (
               <div key={index} className="relative group">
                 <button
-                  className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-medium transition-colors duration-200 py-2"
+                  className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
                   onClick={() => item.hasDropdown && toggleDropdown(item.label)}
                 >
                   <span>{item.label}</span>
                   {item.hasDropdown && (
-                    <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${
+                    <img
+                      src="/dropdownicon.svg"
+                      alt="dropdown"
+                      className={`w-[7px] h-[4px] transition-transform duration-200 ${
                         activeDropdown === item.label ? "rotate-180" : ""
                       }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
+                    />
                   )}
                 </button>
 
@@ -118,23 +110,15 @@ export default function Nav() {
             ))}
           </div>
 
-          {/* Desktop Action Buttons */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-4">
+          {/* Desktop Action Buttons - Rightmost with same padding */}
+          <div className="hidden lg:flex lg:items-center lg:space-x-4 pl-4">
             {/* Search */}
             <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <img
+                src="/searchicon.svg"
+                alt="search"
+                className="w-5 h-5"
+              />
             </button>
 
             {/* Wishlist */}
@@ -156,54 +140,26 @@ export default function Nav() {
 
             {/* Cart */}
             <button className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293A1 1 0 005 17h16M7 13v4a2 2 0 002 2h6a2 2 0 002-2v-4"
-                />
-              </svg>
-              {/* Cart Badge */}
-              <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
-              </span>
+              <img
+                src="/Carticon.svg"
+                alt="cart"
+                className="w-[44px] h-[44px]"
+              />
             </button>
 
             {/* User Profile */}
             <div className="relative group">
               <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-                <svg
+                <img
+                  src="/usericon.svg"
+                  alt="user"
                   className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                />
+                <img
+                  src="/dropdownicon.svg"
+                  alt="dropdown"
+                  className="w-[8px] h-[5px]"
+                />
               </button>
 
               {/* User Dropdown */}
@@ -249,22 +205,11 @@ export default function Nav() {
           <div className="lg:hidden flex items-center space-x-2">
             {/* Mobile Cart */}
             <button className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293A1 1 0 005 17h16M7 13v4a2 2 0 002 2h6a2 2 0 002-2v-4"
-                />
-              </svg>
-              <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
-              </span>
+              <img
+                src="/Carticon.svg"
+                alt="cart"
+                className="w-[44px] h-[44px]"
+              />
             </button>
 
             {/* Hamburger Menu Button */}
@@ -323,19 +268,11 @@ export default function Nav() {
               placeholder="Search products..."
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
             />
-            <svg
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+            <img
+              src="/searchicon.svg"
+              alt="search"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+            />
           </div>
 
           {/* Mobile Navigation Items */}
@@ -345,26 +282,18 @@ export default function Nav() {
               className="border-b border-gray-100 last:border-b-0"
             >
               <button
-                className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-medium transition-colors duration-200"
+                className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
                 onClick={() => item.hasDropdown && toggleDropdown(item.label)}
               >
                 <span>{item.label}</span>
                 {item.hasDropdown && (
-                  <svg
-                    className={`w-5 h-5 transition-transform duration-200 ${
+                  <img
+                    src="/dropdownicon.svg"
+                    alt="dropdown"
+                    className={`w-[7px] h-[4px] transition-transform duration-200 ${
                       activeDropdown === item.label ? "rotate-180" : ""
                     }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  />
                 )}
               </button>
 
@@ -392,19 +321,11 @@ export default function Nav() {
                 href="#"
                 className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
               >
-                <svg
+                <img
+                  src="/usericon.svg"
+                  alt="user"
                   className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+                />
                 <span>My Account</span>
               </a>
 
