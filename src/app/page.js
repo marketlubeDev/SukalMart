@@ -1037,7 +1037,344 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Astell&Kern Banner Section */}
+      {/* Featured IEM's Section */}
+      <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
+        <div className="flex flex-col gap-6">
+          {/* Header */}
+          <div className="flex flex-row gap-2 items-center justify-between w-full">
+            <h2
+              className="text-[22px] font-bold"
+              style={{
+                color: "#333333",
+                fontFamily: "'Nunito Sans', sans-serif",
+                letterSpacing: "-0.22px",
+              }}
+            >
+              Featured IEM's
+            </h2>
+            <button className="flex items-center gap-2 font-medium transition-colors" style={{ color: "#035F0F" }}>
+              <span>View all</span>
+              <img
+                src="/nextarrow.svg"
+                alt="Next arrow"
+                className="w-7 h-7"
+              />
+            </button>
+          </div>
+
+          {/* Product Cards - 50:50 Layout */}
+          <div className="flex flex-row gap-6 w-full">
+            {/* Product Card 1 - 50% width */}
+            <div className="flex flex-row gap-6 w-1/2 bg-white rounded-lg p-6 pl-0">
+              {/* Product Image - 50% of card */}
+              <div className="relative w-1/2 aspect-square rounded overflow-hidden flex-shrink-0">
+                <img
+                  src="/iem1.jpg"
+                  alt="Jabar x Crinacle - ZERO: RED"
+                  className="w-full h-full object-cover"
+                />
+                {/* Wishlist Button */}
+                <button className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="/like.svg"
+                    alt="Wishlist"
+                    className="w-5 h-5"
+                  />
+                </button>
+              </div>
+
+              {/* Product Info - 50% of card */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div className="flex flex-col gap-3">
+                  <h3
+                    className="text-[18px] font-semibold"
+                    style={{
+                      color: "#333333",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.36px",
+                    }}
+                  >
+                    Jabar x Crinacle - ZERO: RED
+                  </h3>
+                  <p
+                    className="text-[14px] font-normal"
+                    style={{
+                      color: "rgba(51,51,51,0.7)",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.28px",
+                    }}
+                  >
+                    In-ear monitors
+                  </p>
+                  
+                  {/* Rating */}
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="flex flex-row gap-1 items-center">
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/star.svg" alt="Star" className="w-4 h-4" />
+                    </div>
+                    <span
+                      className="text-[16px] font-medium"
+                      style={{
+                        color: "#333333",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.32px",
+                      }}
+                    >
+                      4.5
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    className="text-[16px] font-normal"
+                    style={{
+                      color: "rgba(51,51,51,0.8)",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.32px",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Expertly tuned dual dynamic driver IEMs with balanced, engaging sound and bold RED design. Crafted for audiophiles, by Crinacle.
+                  </p>
+                </div>
+
+                {/* Price and Button */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-row gap-3 items-center">
+                    <span
+                      className="text-[20px] font-bold"
+                      style={{
+                        color: "#035F0F",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.4px",
+                      }}
+                    >
+                      ₹1,899
+                    </span>
+                    <span
+                      className="text-[16px] font-normal line-through"
+                      style={{
+                        color: "rgba(51,51,51,0.6)",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.32px",
+                      }}
+                    >
+                      ₹2,099
+                    </span>
+                  </div>
+                  <button 
+                    className="bg-white text-[#035F0F] font-medium transition-colors self-start"
+                    style={{
+                      display: "flex",
+                      height: "48px",
+                      padding: "16px 32px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Product Card 2 - 50% width */}
+            <div className="flex flex-row gap-6 w-1/2 bg-white rounded-lg p-6 pl-0">
+              {/* Product Image - 50% of card */}
+              <div className="relative w-1/2 aspect-square rounded overflow-hidden flex-shrink-0">
+                <img
+                  src="/iem1.jpg"
+                  alt="Jabar x Crinacle - ZERO: RED"
+                  className="w-full h-full object-cover"
+                />
+                {/* Wishlist Button */}
+                <button className="absolute top-3 left-3 w-8 h-8 flex items-center justify-center">
+                  <img
+                    src="/like.svg"
+                    alt="Wishlist"
+                    className="w-5 h-5"
+                  />
+                </button>
+              </div>
+
+              {/* Product Info - 50% of card */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div className="flex flex-col gap-3">
+                  <h3
+                    className="text-[18px] font-semibold"
+                    style={{
+                      color: "#333333",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.36px",
+                    }}
+                  >
+                    Jabar x Crinacle - ZERO: RED
+                  </h3>
+                  <p
+                    className="text-[14px] font-normal"
+                    style={{
+                      color: "rgba(51,51,51,0.7)",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.28px",
+                    }}
+                  >
+                    In-ear monitors
+                  </p>
+                  
+                  {/* Rating */}
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="flex flex-row gap-1 items-center">
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/filledstar.svg" alt="Star" className="w-4 h-4" />
+                      <img src="/star.svg" alt="Star" className="w-4 h-4" />
+                    </div>
+                    <span
+                      className="text-[16px] font-medium"
+                      style={{
+                        color: "#333333",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.32px",
+                      }}
+                    >
+                      4.5
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    className="text-[16px] font-normal"
+                    style={{
+                      color: "rgba(51,51,51,0.8)",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      letterSpacing: "-0.32px",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    Expertly tuned dual dynamic driver IEMs with balanced, engaging sound and bold RED design. Crafted for audiophiles, by Crinacle.
+                  </p>
+                </div>
+
+                {/* Price and Button */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-row gap-3 items-center">
+                    <span
+                      className="text-[20px] font-bold"
+                      style={{
+                        color: "#035F0F",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.4px",
+                      }}
+                    >
+                      ₹1,899
+                    </span>
+                    <span
+                      className="text-[16px] font-normal line-through"
+                      style={{
+                        color: "rgba(51,51,51,0.6)",
+                        fontFamily: "'Nunito Sans', sans-serif",
+                        letterSpacing: "-0.32px",
+                      }}
+                    >
+                      ₹2,099
+                    </span>
+                  </div>
+                  <button 
+                    className="bg-white text-[#035F0F] font-medium transition-colors self-start"
+                    style={{
+                      display: "flex",
+                      height: "48px",
+                      padding: "16px 32px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #035F0F"
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      {/* Crystal Clear Audio Banner Section */}
+      <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
+        <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full overflow-hidden rounded-lg">
+          {/* Background with crystal image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('/crystal.jpg')",
+            }}
+          >
+            {/* Dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/30"></div>
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 h-full flex items-center">
+            <div className="ml-4 sm:ml-6 lg:ml-10 max-w-[400px] sm:max-w-[500px] lg:max-w-[600px]">
+                              <div className="mb-6 lg:mb-8">
+                  <h2
+                    className="mb-4 sm:mb-5 lg:mb-6"
+                    style={{
+                      color: "#FFF",
+                      textAlign: "left",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      fontSize: "32px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "135%", // 43.2px
+                      letterSpacing: "-0.64px",
+                    }}
+                  >
+                    Crystal Clear Audio, Now at 15% OFF!
+                  </h2>
+                  <p
+                    style={{
+                      color: "#FFF",
+                      textAlign: "left",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      fontSize: "18px",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      lineHeight: "135%", // 24.3px
+                      letterSpacing: "-0.36px",
+                    }}
+                    className="mb-6 sm:mb-8"
+                  >
+                    Crisp sound. Comfortable fit. Limited time offer
+                  </p>
+                </div>
+
+              <button
+                className="bg-transparent text-white font-medium px-6 py-3 sm:px-8 sm:py-4 lg:px-10 lg:py-4 rounded-[4px] text-base sm:text-lg hover:bg-gray-700 transition-colors duration-200"
+                style={{ border: "1px solid #FFF" }}
+              >
+                Shop now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      {/* Promotional Banner Section */}
       <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
         <div className="relative h-[300px] sm:h-[400px] lg:h-[507px] w-full overflow-hidden rounded-lg">
           {/* Background with gradient and product image */}
