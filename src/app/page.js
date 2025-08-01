@@ -24,7 +24,7 @@ export default function Home() {
       <EngineeredBy7Hz />
       <InstagramSection />
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

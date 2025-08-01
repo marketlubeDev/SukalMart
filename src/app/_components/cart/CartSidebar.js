@@ -35,7 +35,12 @@ export default function CartSidebar({ isOpen, onClose }) {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      // Add a small delay to prevent jarring transition
+      const timer = setTimeout(() => {
+        document.body.style.overflow = 'unset';
+      }, 300); // Match the animation duration
+      
+      return () => clearTimeout(timer);
     }
 
     // Cleanup function to restore scrolling when component unmounts
@@ -69,12 +74,15 @@ export default function CartSidebar({ isOpen, onClose }) {
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-opacity-50 backdrop-blur-sm z-40"
+        className={`fixed inset-0 transition-opacity duration-300 ease-in-out z-40 ${isOpen ? 'bg-opacity-70' : 'bg-opacity-0 pointer-events-none'}`}
         onClick={onClose}
+        style={{
+          background: "linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 100%)"
+        }}
       />
       
       {/* Cart Sidebar */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-full w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
           <div className="flex items-center">

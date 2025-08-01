@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "../layout/user/Nav";
+import Footer from "../layout/user/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${nunitoSans.variable} antialiased`}
       >
         <Nav />
+       
         {children}
+        <Footer />
       </body>
     </html>
   );

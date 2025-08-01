@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-dvh bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         {/* Logo */}
         <div className="text-center">
@@ -144,7 +144,6 @@ export default function LoginPage() {
           </div>
         </form>
       </div>
-
     </div>
 
 
