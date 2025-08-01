@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+
 export default function LoginPage() {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -143,6 +144,10 @@ export default function LoginPage() {
           </div>
         </form>
       </div>
+
     </div>
+
+
   );
+  
 }

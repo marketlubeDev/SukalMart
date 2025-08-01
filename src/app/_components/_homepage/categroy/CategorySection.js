@@ -3,22 +3,21 @@ import { categories } from "../../../../lib/data";
 export default function CategorySection() {
   return (
     <div
-      className="flex flex-col items-center justify-center w-full"
+      className="flex flex-col items-center justify-center w-full overflow-hidden px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10"
       style={{
         display: "flex",
-        padding: "80px 0 40px 0",
         flexDirection: "column",
         alignItems: "center",
-        gap: "40px",
+        gap: "20px",
         alignSelf: "stretch",
-        background: "#FFF",
+        background: "#FFF"
       }}
     >
       <div
-        className="text-[#333333] text-[22px] font-bold text-center"
+        className="text-[#333333] text-center"
         style={{
           fontFamily: '"Nunito Sans", sans-serif',
-          fontSize: "28px",
+          fontSize: "clamp(20px, 5vw, 28px)",
           fontWeight: 700,
           letterSpacing: "-0.28px",
           lineHeight: "normal",
@@ -29,31 +28,18 @@ export default function CategorySection() {
         Shop by category
       </div>
       <div
-        className="flex items-start justify-center w-full"
+        className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-6 w-full"
         style={{
-          display: "flex",
-          padding: "0 200px",
+          display: "grid",
+          padding: "0",
           justifyContent: "center",
           alignItems: "flex-start",
-          gap: "24px",
-          alignSelf: "stretch",
+          alignSelf: "stretch"
         }}
       >
         {categories.map((category, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-start"
-            style={{
-              display: "flex",
-              height: "274.593px",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "12px",
-              flex: "1 0 0",
-              aspectRatio: "233.33/274.59",
-            }}
-          >
-            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full h-full">
+          <div key={index} className="flex flex-col items-center justify-start">
+            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full aspect-square">
               <img
                 src={category.image}
                 alt={category.name}
@@ -61,9 +47,10 @@ export default function CategorySection() {
               />
             </div>
             <div
-              className="text-[#000000] text-[14px] font-medium text-left whitespace-nowrap"
+              className="text-[#000000] font-medium text-center mt-2"
               style={{
                 fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "clamp(10px, 2.5vw, 14px)",
                 letterSpacing: "-0.28px",
               }}
             >

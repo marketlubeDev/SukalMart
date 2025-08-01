@@ -3,7 +3,7 @@ import { featuredProducts } from "../../../../lib/data";
 
 export default function FeaturedProductsSection() {
   return (
-    <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
+    <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10 overflow-hidden">
       <div className="flex flex-col gap-6">
         {/* Header */}
         <div className="flex flex-row gap-2 items-center justify-between w-full">
