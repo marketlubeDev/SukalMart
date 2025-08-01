@@ -26,10 +26,19 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+      <div
+        className="max-w-md w-full space-y-8 flex flex-col items-center justify-center"
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto"
+        }}
+      >
         {/* Logo */}
         <div className="text-center">
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2">
               {/* Shield Icon */}
               <div className="w-8 h-8 bg-gray-700 rounded-md flex items-center justify-center">
@@ -54,22 +63,60 @@ export default function LoginPage() {
 
         {/* Welcome Message */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome <span className="text-green-600">Audiophiles</span>
+          <h2
+            style={{
+              color: "#333333",
+              textAlign: "center",
+              leadingTrim: "both",
+              textEdge: "cap",
+              fontFamily: "'Nunito Sans', sans-serif",
+              fontSize: "40px",
+              fontStyle: "normal",
+              fontWeight: 600,
+              lineHeight: "normal",
+              letterSpacing: "-1.6px",
+              marginBottom: "8px"
+            }}
+          >
+            Welcome <span style={{ color: "#035F0F" }}>Audiophiles</span>
           </h2>
-          <p className="text-sm text-gray-600">
+          <p
+            style={{
+              color: "rgba(51, 51, 51, 0.80)",
+              textAlign: "center",
+              leadingTrim: "both",
+              textEdge: "cap",
+              fontFamily: "'Nunito Sans', sans-serif",
+              fontSize: "16px",
+              fontStyle: "normal",
+              fontWeight: 500,
+              lineHeight: "normal",
+              letterSpacing: "-0.64px"
+            }}
+          >
             Login / signup with your email or mobile number.
           </p>
         </div>
 
         {/* Login Form */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6 w-full" onSubmit={handleSubmit}>
           <div className="space-y-4">
             {/* Email/Phone Input */}
             <div>
               <label
                 htmlFor="emailOrPhone"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block mb-2"
+                style={{
+                  color: "#333333",
+                  leadingTrim: "both",
+                  textEdge: "cap",
+                  fontFamily: "'Nunito Sans', sans-serif",
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.72px"
+                }}
               >
                 Enter your email or phone
               </label>
@@ -80,9 +127,33 @@ export default function LoginPage() {
                 required
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-colors duration-200"
+                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+                style={{
+                  color: "rgba(51, 51, 51, 0.60)",
+                  fontFamily: "'Nunito Sans', sans-serif",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.64px",
+                  boxShadow: "none",
+                  transition: "border-color 0.2s, box-shadow 0.2s"
+                }}
+                onFocus={e => e.target.style.borderColor = "#035F0F"}
+                onBlur={e => e.target.style.borderColor = "#d1d5db"}
                 placeholder="Email or phone number"
               />
+              <style jsx>{`
+                #emailOrPhone::placeholder {
+                  color: rgba(51, 51, 51, 0.60);
+                  font-family: 'Nunito Sans', sans-serif;
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: normal;
+                  letter-spacing: -0.64px;
+                }
+              `}</style>
             </div>
           </div>
 
@@ -91,7 +162,23 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading || !emailOrPhone.trim()}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="w-full flex justify-center items-center gap-2 py-4 px-6 text-sm font-medium text-white"
+              style={{
+                display: "flex",
+                padding: "16px 24px",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px",
+                alignSelf: "stretch",
+                borderRadius: "4px",
+                background: "#035F0F",
+                border: "none",
+                transition: "background-color 0.2s"
+              }}
+              onMouseOver={e => e.currentTarget.style.background = "#02490C"}
+              onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
+              onFocus={e => e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33"}
+              onBlur={e => e.currentTarget.style.boxShadow = "none"}
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -125,18 +212,37 @@ export default function LoginPage() {
 
           {/* Legal Text */}
           <div className="text-center">
-            <p className="text-xs text-gray-600">
+            <p
+              style={{
+                color: "rgba(51, 51, 51, 0.60)",
+                textAlign: "center",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "-0.56px",
+                leadingTrim: "both",
+                textEdge: "cap",
+              }}
+            >
               By continuing, you agree to our{" "}
               <Link
                 href="/terms"
-                className="text-green-600 hover:text-green-700 underline font-medium"
+                className="underline font-medium"
+                style={{ color: "#035F0F" }}
+                onMouseOver={e => e.currentTarget.style.color = "#035F0F"}
+                onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Terms
               </Link>{" "}
               and{" "}
               <Link
                 href="/privacy"
-                className="text-green-600 hover:text-green-700 underline font-medium"
+                className="underline font-medium"
+                style={{ color: "#035F0F" }}
+                onMouseOver={e => e.currentTarget.style.color = "#035F0F"}
+                onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Privacy Policy
               </Link>
