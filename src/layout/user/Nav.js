@@ -105,7 +105,7 @@ export default function Nav() {
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-4 hidden lg:block">
               <Link href="/" className="flex items-center">
-                <div className="text-3xl font-bold text-green-700">Souqalmart</div>
+                <div className="text-3xl font-bold text-[#035F0F]">Souqalmart</div>
               </Link>
             </div>
 
@@ -268,10 +268,10 @@ export default function Nav() {
                 </button>
 
                 {/* Mobile Title */}
-                <div className="flex items-center">
+                <Link href="/" className="flex items-center">
                   <img src="/logo1.svg" alt="Souqalmart Logo" className="h-6 w-6 mr-2" />
                   <div className="text-xl font-bold text-green-700">Souqalmart</div>
-                </div>
+                </Link>
               </div>
 
               {/* Right Group - Search and Cart */}

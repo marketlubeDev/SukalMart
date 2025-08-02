@@ -45,13 +45,19 @@ export default function BestSellersSection() {
                 />
               </div>
               {/* A1 Badge */}
-              <div className="absolute top-1 md:top-2 left-0 flex items-center shadow-lg">
-                <div className="text-white px-2 md:px-3 text-sm font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "24px", fontSize: "12px" }}>
-                  A1
+              <div className="absolute top-1 md:top-2 -left-4">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+                      A1
+                    </span>
+                  </div>
                 </div>
-                <svg width="16" height="24" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-[20px] md:h-[28px]">
-                  <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
-                </svg>
               </div>
             </div>
             <div className="p-2 md:p-4">
@@ -100,13 +106,19 @@ export default function BestSellersSection() {
                 />
               </div>
               {/* #2 Badge */}
-              <div className="absolute top-1 md:top-2 left-0 flex items-center shadow-lg">
-                <div className="text-white px-2 md:px-3 text-sm font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "24px", fontSize: "12px" }}>
-                  #2
+              <div className="absolute top-1 md:top-2 -left-4">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+                      #2
+                    </span>
+                  </div>
                 </div>
-                <svg width="16" height="24" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-[20px] md:h-[28px]">
-                  <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
-                </svg>
               </div>
             </div>
             <div className="p-2 md:p-4">
@@ -155,13 +167,19 @@ export default function BestSellersSection() {
                 />
               </div>
               {/* #3 Badge */}
-              <div className="absolute top-1 md:top-2 left-0 flex items-center shadow-lg">
-                <div className="text-white px-2 md:px-3 text-sm font-bold flex items-center" style={{ backgroundColor: "#035F0F", height: "24px", fontSize: "12px" }}>
-                  #3
+              <div className="absolute top-1 md:top-2 -left-4">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+                      #3
+                    </span>
+                  </div>
                 </div>
-                <svg width="16" height="24" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-[20px] md:h-[28px]">
-                  <path d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z" fill="#035F0F"/>
-                </svg>
               </div>
             </div>
             <div className="p-2 md:p-4">

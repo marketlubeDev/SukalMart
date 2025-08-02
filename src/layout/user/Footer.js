@@ -140,8 +140,11 @@ export default function Footer() {
                   <rect width="1" height="14" fill="rgba(255, 255, 255, 0.2)"/>
                 </svg>
               </div>
-              <p
-                className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal"
+              <a
+                href="https://www.marketlube.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal hover:opacity-60 transition-opacity"
                 style={{
                   color: "#FFF",
                   fontFamily: "'Nunito Sans', sans-serif",
@@ -153,7 +156,7 @@ export default function Footer() {
                 }}
               >
                 Powered by Marketlube
-              </p>
+              </a>
             </div>
           </div>
         </div>

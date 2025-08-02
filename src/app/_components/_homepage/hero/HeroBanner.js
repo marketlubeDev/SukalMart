@@ -1,17 +1,61 @@
+"use client";
 
-
+import { useState } from "react";
 import Image from "next/image";
 
 export default function HeroBanner() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const banners = [
+    {
+      id: 1,
+      image: "/banner1.png",
+      title: "Silence the World, Hear Every Detail",
+      subtitle: "Active Noise Cancellation, Superior Comfort, Unmatched Finish",
+      description: "Upgrade Your Audio Game Today"
+    },
+    {
+      id: 2,
+      image: "/banner2.png",
+      title: "Silence the World, Hear Every Detail",
+      subtitle: "Active Noise Cancellation, Superior Comfort, Unmatched Finish",
+      description: "Upgrade Your Audio Game Today"
+    }
+  ];
+
+  const nextSlide = () => {
+    console.log('Next button clicked, current slide:', currentSlide);
+    setCurrentSlide((prev) => {
+      const newSlide = (prev + 1) % banners.length;
+      console.log('New slide:', newSlide);
+      return newSlide;
+    });
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const currentBanner = banners[currentSlide];
+  console.log('Current banner:', currentBanner);
+
   return (
     <div className="relative w-full overflow-hidden">
       {/* Desktop Version */}
       <div className="hidden lg:block relative h-[640px] bg-white">
-        {/* Background with banner image */}
+                {/* Background with banner image */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-all duration-500 ease-in-out"
           style={{
-            backgroundImage: "url('/banner1.png')",
+            backgroundImage: `url('${currentBanner.image}')`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: "#f8f9fa"
           }}
         >
         </div>
@@ -22,7 +66,10 @@ export default function HeroBanner() {
             <div className="max-w-2xl">
               {/* Row 1: Previous Button */}
               <div className="mb-6">
-                <button className="text-gray-800 hover:text-gray-600 transition-colors">
+                <button 
+                  onClick={prevSlide}
+                  className="text-gray-800 hover:text-gray-600 transition-colors"
+                >
                   <img
                     src="/previousicon.svg"
                     alt="Previous"
@@ -32,18 +79,18 @@ export default function HeroBanner() {
               </div>
               
               {/* Row 2: Heading */}
-              <h1 className="text-[2.8rem] font-semibold text-gray-800 mb-6 leading-none whitespace-nowrap">
-                Silence the World, Hear Every Detail
+              <h1 className="text-[2.8rem] font-semibold text-gray-800 mb-6 leading-none whitespace-nowrap transition-all duration-500">
+                {currentBanner.title}
               </h1>
               
               {/* Row 3: Paragraph 1 */}
-              <p className="text-[1.3rem] text-gray-600 mb-0 leading-relaxed">
-                Active Noise Cancellation, Superior Comfort, Unmatched Finish
+              <p className="text-[1.3rem] text-gray-600 mb-0 leading-relaxed transition-all duration-500">
+                {currentBanner.subtitle}
               </p>
               
               {/* Row 4: Paragraph 2 */}
-              <p className="text-[1.3rem] text-gray-600 mb-8 leading-relaxed">
-                Upgrade Your Audio Game Today
+              <p className="text-[1.3rem] text-gray-600 mb-8 leading-relaxed transition-all duration-500">
+                {currentBanner.description}
               </p>
               
               {/* Row 5: Shop Now Button */}
@@ -55,21 +102,31 @@ export default function HeroBanner() {
         </div>
 
         {/* Next Button Only */}
-        <div className="absolute right-50 top-1/2 transform -translate-y-1/2">
-          <button className="text-gray-800 hover:text-gray-600 transition-colors p-2">
+        <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20">
+          <button 
+            onClick={nextSlide}
+            className="text-gray-800 hover:text-gray-600 transition-colors p-2"
+          >
             <img
               src="/nexticon.svg"
               alt="Next"
               className="w-4 h-7"
             />
-        </button>
+          </button>
         </div>
 
         {/* Progress indicator */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
           <div className="flex space-x-2">
-            <div className="w-20 h-1 bg-green-700 rounded-full opacity-70"></div>
-            <div className="w-20 h-1 bg-gray-300 rounded-full"></div>
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-20 h-1 rounded-full transition-all duration-300 ${
+                  index === currentSlide ? 'bg-green-700 opacity-70' : 'bg-gray-300'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -77,58 +134,66 @@ export default function HeroBanner() {
       {/* Mobile Version - Clean Layout */}
       <div className="lg:hidden relative h-[500px] w-full overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0 w-full h-full"
+        <div 
+          className="absolute inset-0 w-full h-full transition-all duration-500 ease-in-out"
           style={{
-            backgroundImage: "url('/banner1.png')",
-            backgroundSize: "100% 100%",
+            backgroundImage: `url('${currentBanner.image}')`,
+            backgroundSize: "contain",
             backgroundPosition: "center",
-            backgroundRepeat: "no-repeat"
+            backgroundRepeat: "no-repeat",
+            backgroundColor: "#f8f9fa"
           }}
         >
-          </div>
+        </div>
 
         {/* Content positioned at bottom */}
         <div className="absolute bottom-8 left-4 right-4">
           <div className="flex flex-col gap-6">
             {/* Navigation Arrows - Above Heading */}
             <div className="flex justify-between items-center mb-2">
-              <button className="text-[#333333] hover:text-[#565656] transition-colors">
+              <button 
+                onClick={prevSlide}
+                className="text-[#333333] hover:text-[#565656] transition-colors"
+              >
                 <img
                   src="/previousicon.svg"
                   alt="Previous"
                   className="w-2 h-4"
                 />
               </button>
-              <button className="text-[#333333] hover:text-[#565656] transition-colors">
+              <button 
+                onClick={nextSlide}
+                className="text-[#333333] hover:text-[#565656] transition-colors"
+              >
                 <img
                   src="/nexticon.svg"
                   alt="Next"
                   className="w-2 h-4"
                 />
               </button>
-        </div>
+            </div>
 
             {/* Text Content */}
             <div className="flex flex-col gap-3">
               <h1
-                className="text-[24px] font-semibold text-[#333333] leading-tight"
+                className="text-[24px] font-semibold text-[#333333] leading-tight transition-all duration-500"
                 style={{
                   fontFamily: "'Nunito Sans', sans-serif",
                   letterSpacing: "-0.88px",
                 }}
               >
-                Silence the World, Hear Every Detail
+                {currentBanner.title}
               </h1>
               <p
-                className="text-[12px] font-normal text-[#565656] leading-relaxed"
+                className="text-[12px] font-normal text-[#565656] leading-relaxed transition-all duration-500"
                 style={{
                   fontFamily: "'Nunito Sans', sans-serif",
                   letterSpacing: "-0.36px",
                 }}
               >
-                Active Noise Cancellation, Superior Comfort, Unmatched Finish
+                {currentBanner.subtitle}
                 <br />
-                Upgrade Your Audio Game Today
+                {currentBanner.description}
               </p>
             </div>
 
@@ -150,10 +215,17 @@ export default function HeroBanner() {
         {/* Progress Indicator */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
           <div className="flex gap-1 w-[80px]">
-            <div className="flex-1 h-0.5 bg-[rgba(51,51,51,0.2)] rounded-2xl relative overflow-hidden">
-              <div className="absolute left-0 top-0 w-full h-[2px] bg-[rgba(3,95,15,0.7)] rounded-2xl" />
-            </div>
-            <div className="flex-1 h-0.5 bg-[rgba(51,51,51,0.2)] rounded-2xl" />
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 ${
+                  index === currentSlide 
+                    ? 'bg-[rgba(3,95,15,0.7)]' 
+                    : 'bg-[rgba(51,51,51,0.2)]'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
