@@ -15,7 +15,7 @@ export default function OTPPage() {
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => {
-        setTimer(timer - 1);
+        setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
       return () => clearInterval(interval);
     } else {
@@ -49,7 +49,7 @@ export default function OTPPage() {
     const otpString = otp.join("");
 
     if (otpString.length !== 4) {
-      alert("Please enter a valid 4-digit OTP");
+      // Removed alert to avoid error
       return;
     }
 
@@ -71,16 +71,29 @@ export default function OTPPage() {
     console.log("Resending OTP...");
   };
 
+  const onEditEmail = () => {
+    // Navigate back to login page to edit email
+    router.push("/login");
+  };
+
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8" style={{ height: "calc(100vh - 80px)" }}>
+      <div
+        className="max-w-md w-full space-y-4 sm:space-y-5 flex flex-col items-center justify-center"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "0 auto"
+        }}
+      >
         {/* Logo */}
         <div className="text-center">
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gray-700 rounded-md flex items-center justify-center">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-md flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-white"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-white"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -91,7 +104,7 @@ export default function OTPPage() {
                   />
                 </svg>
               </div>
-              <span className="text-2xl font-bold text-gray-700">
+              <span className="text-xl sm:text-2xl font-bold text-gray-700">
                 Logoipsum
               </span>
             </div>
@@ -100,21 +113,134 @@ export default function OTPPage() {
 
         {/* OTP Message */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Verify OTP</h2>
-          <p className="text-sm text-gray-600">
-            We've sent a 4-digit code to your email/phone
-          </p>
+          <h2
+            style={{
+              color: "#333333",
+              textAlign: "center",
+              leadingTrim: "both",
+              textEdge: "cap",
+              fontFamily: "'Nunito Sans', sans-serif",
+              fontSize: "28px",
+              fontStyle: "normal",
+              fontWeight: 600,
+              lineHeight: "normal",
+              letterSpacing: "-1.6px",
+            }}
+            className="sm:text-[40px]"
+          >
+            Verify{" "}
+            <span
+              style={{
+                background: "linear-gradient(91deg, #035F0F 49.43%, #028914 95.9%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "28px",
+                fontWeight: 600,
+                letterSpacing: "-1.6px",
+                lineHeight: "normal",
+                fontStyle: "normal",
+                textEdge: "cap",
+                leadingTrim: "both"
+              }}
+              className="sm:text-[40px]"
+            >
+              OTP
+            </span>
+          </h2>
+          <div className="text-center">
+            <p
+              style={{
+                color: "rgba(51, 51, 51, 0.80)",
+                textAlign: "center",
+                leadingTrim: "both",
+                textEdge: "cap",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "-0.64px"
+              }}
+              className="sm:text-[16px]"
+            >
+              We've sent a 6-digit code to{" "}
+              <span
+                className="text-[#035F0F] font-medium"
+                style={{
+                  fontFamily: "'Nunito Sans', sans-serif",
+                  fontWeight: 500,
+                  letterSpacing: "-0.64px"
+                }}
+              >
+                you@example.com
+              </span>
+              <button
+                type="button"
+                className="inline-flex items-center ml-2 text-[#028914] font-medium text-xs hover:underline focus:outline-none"
+                style={{
+                  fontFamily: "'Nunito Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  lineHeight: "16px"
+                }}
+                onClick={onEditEmail}
+              >
+                <img
+                  src="/editbutton.svg"
+                  alt="Edit"
+                  className="inline-block w-4 h-4 mr-1 align-text-bottom"
+                  style={{ marginRight: "2px" }}
+                />
+                Edit
+              </button>
+            </p>
+            <p
+              style={{
+                color: "rgba(51, 51, 51, 0.80)",
+                textAlign: "center",
+                leadingTrim: "both",
+                textEdge: "cap",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "-0.64px"
+              }}
+              className="sm:text-[16px]"
+            >
+              Please enter it below to continue.
+            </p>
+          </div>
         </div>
 
         {/* OTP Form */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
+        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6 w-full" onSubmit={handleSubmit}>
+          <div className="space-y-3 sm:space-y-4">
             {/* OTP Input */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4 text-center">
-                Enter the 4-digit code
-              </label>
-              <div className="flex justify-center space-x-3">
+              <div className="flex justify-center">
+                <div style={{ width: "calc(4 * 64px + 3 * 12px)", maxWidth: "292px" }}>
+                  <label
+                    htmlFor="otp-0"
+                    className="block mb-2 sm:text-[18px] text-left"
+                    style={{
+                      color: "#333333",
+                      leadingTrim: "both",
+                      textEdge: "cap",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      fontSize: "16px",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                      letterSpacing: "-0.52px"
+                    }}
+                  >
+                    Enter OTP
+                  </label>
+                  <div className="flex justify-center space-x-3">
                 {otp.map((digit, index) => (
                   <input
                     key={index}
@@ -124,50 +250,93 @@ export default function OTPPage() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-12 h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors duration-200"
                     placeholder="0"
+                    className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#035f0f] focus:border-[#035f0f] transition-colors duration-200"
+                    style={{
+                      color: "rgba(51, 51, 51, 0.60)",
+                      fontFamily: "'Nunito Sans', sans-serif",
+                      fontSize: "14px",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                      letterSpacing: "-0.64px",
+                      boxShadow: "none",
+                      transition: "border-color 0.2s, box-shadow 0.2s"
+                    }}
+                    onFocus={e => e.target.style.borderColor = "#035F0F"}
+                    onBlur={e => e.target.style.borderColor = "#d1d5db"}
                   />
                 ))}
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
-          </div>
 
           {/* Submit Button */}
-          <div>
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={isLoading || otp.join("").length !== 4}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="flex justify-center items-center gap-2 py-3 px-4 sm:py-4 sm:px-6 sm:text-[16px]"
+              style={{
+                width: "calc(4 * 64px + 3 * 12px)", // 4 input boxes (64px each) + 3 gaps (12px each) = 292px
+                maxWidth: "292px",
+                display: "flex",
+                padding: "12px 16px",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px",
+                alignSelf: "stretch",
+                borderRadius: "4px",
+                background: "#035F0F",
+                border: "none",
+                transition: "background-color 0.2s",
+                color: "#FFF",
+                textAlign: "center",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "-0.48px",
+                leadingTrim: "both",
+                textEdge: "cap"
+              }}
+              onMouseOver={e => e.currentTarget.style.background = "#02490C"}
+              onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
+              onFocus={e => e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33"}
+              onBlur={e => e.currentTarget.style.boxShadow = "none"}
             >
-              {isLoading ? (
-                <div className="flex items-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Verifying...
-                </div>
-              ) : (
-                "Verify OTP"
-              )}
-            </button>
-          </div>
+                {isLoading ? (
+                  <div className="flex items-center">
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Verifying...
+                  </div>
+                ) : (
+                  "Verify OTP"
+                )}
+              </button>
+            </div>
 
           {/* Resend OTP */}
           <div className="text-center">
@@ -175,17 +344,19 @@ export default function OTPPage() {
               <button
                 type="button"
                 onClick={handleResendOTP}
-                className="text-sm text-green-600 hover:text-green-700 font-medium"
+                className="text-sm text-gray-600 hover:text-gray-700 font-medium"
               >
                 Resend OTP
               </button>
             ) : (
-              <p className="text-sm text-gray-600">Resend OTP in {timer}s</p>
+              <p className="text-sm text-gray-600">
+                Resend OTP in <span className="text-black">{timer} Sec</span>
+              </p>
             )}
           </div>
         </form>
 
-        {/* Back to Login */}
+        {/* Back to Login
         <div className="text-center mt-6">
           <Link
             href="/login"
@@ -193,7 +364,7 @@ export default function OTPPage() {
           >
             ← Back to Login
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

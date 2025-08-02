@@ -25,11 +25,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8" style={{ height: "calc(100vh - 80px)" }}>
       <div
         className="max-w-md w-full space-y-4 sm:space-y-5 flex flex-col items-center justify-center"
         style={{
-          minHeight: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -116,7 +115,7 @@ export default function LoginPage() {
                   fontStyle: "normal",
                   fontWeight: 500,
                   lineHeight: "normal",
-                  letterSpacing: "-0.72px"
+                  letterSpacing: "-0.52px"
                 }}
               >
                 Enter your email or phone

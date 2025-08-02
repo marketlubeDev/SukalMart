@@ -62,11 +62,11 @@ export default function FeaturedProductsSection() {
           
           {/* Desktop: Original 50:50 layout */}
           <div className="hidden lg:flex flex-row gap-6 w-full">
-            {featuredProducts.map((product) => (
-              <FeaturedProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {featuredProducts.map((product) => (
+            <FeaturedProductCard key={product.id} product={product} />
+          ))}
         </div>
+      </div>
 
         {/* Mobile scroll indicator */}
         <div className="md:hidden w-full">
