@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function BestSellersSection() {
   return (
     <div className="bg-white py-8 md:py-16 overflow-hidden">
-      <div className="px-4 sm:px-6 md:px-12 lg:px-[200px]">
+      <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2
@@ -33,7 +33,7 @@ export default function BestSellersSection() {
         </div>
 
         {/* Best Sellers Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6">
           {/* Product 1 - A1 Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">

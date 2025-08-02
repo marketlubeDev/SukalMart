@@ -4,10 +4,31 @@ import { useState } from "react";
 import Link from "next/link";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 
+// Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
+import { useEffect, useState as useReactState } from "react";
+
+function useBigTablet() {
+  const [isBigTablet, setIsBigTablet] = useReactState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth;
+      setIsBigTablet(width >= 992 && width <= 1199.98);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isBigTablet;
+}
+
 export default function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const isBigTablet = useBigTablet();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -69,10 +90,17 @@ export default function Nav() {
     },
   ];
 
+  // Add extra left/right padding for bigTablet screens
+  // We'll use inline style for the wrapper div
+  const bigTabletPadding = isBigTablet ? { paddingLeft: "32px", paddingRight: "32px" } : {};
+
   return (
     <>
       <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
+        <div
+          className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5"
+          style={bigTabletPadding}
+        >
           <div className="flex items-center h-20">
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-4 hidden lg:block">

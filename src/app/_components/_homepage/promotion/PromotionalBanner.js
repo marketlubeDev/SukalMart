@@ -1,6 +1,6 @@
 export default function PromotionalBanner() {
   return (
-    <div className="px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10">
+    <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10">
       <div className="flex flex-col lg:flex-row gap-0">
         {/* Left Section - Crystal Clear Audio */}
         <div 
@@ -17,26 +17,26 @@ export default function PromotionalBanner() {
             <img
               src="/left.png"
               alt="SOUNDPEATS Headphones"
-              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain"
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-48 xl:h-48 object-contain"
             />
           </div>
 
           {/* Content - Left Side */}
           <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
             <h3 
-              className="text-xl sm:text-2xl font-bold mb-3"
+              className="text-xl sm:text-2xl lg:text-2xl xl:text-2xl font-bold mb-3"
               style={{ color: "#333333" }}
             >
               Crystal Clear Audio, Now at 15% OFF!
             </h3>
             <p 
-              className="text-sm sm:text-base mb-4 text-gray-600"
+              className="text-sm sm:text-base lg:text-base xl:text-base mb-4 text-gray-600"
               style={{ color: "#333333" }}
             >
               Crisp sound. Comfortable fit. Limited time offer
             </p>
             <button 
-              className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 rounded text-sm sm:text-base hover:bg-gray-50 transition-colors duration-200"
+              className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 lg:px-6 lg:py-3 xl:px-6 xl:py-3 rounded text-sm sm:text-base lg:text-base xl:text-base hover:bg-gray-50 transition-colors duration-200"
               style={{ 
                 color: "#333333",
                 border: "1px solid #333"
@@ -62,26 +62,26 @@ export default function PromotionalBanner() {
             <img
               src="/right.png"
               alt="Professional IEMs"
-              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 object-contain"
+              className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-48 xl:h-48 object-contain"
             />
           </div>
 
           {/* Content - Left Side */}
           <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
             <h3 
-              className="text-xl sm:text-2xl font-bold mb-3"
+              className="text-xl sm:text-2xl lg:text-2xl xl:text-2xl font-bold mb-3"
               style={{ color: "#333333" }}
             >
               Pro Sound, Pro Price
             </h3>
             <p 
-              className="text-sm sm:text-base mb-4 text-gray-600"
+              className="text-sm sm:text-base lg:text-base xl:text-base mb-4 text-gray-600"
               style={{ color: "#333333" }}
             >
               Get pro-quality IEMs at unbeatable prices. Limited time only
             </p>
             <button 
-              className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 rounded text-sm sm:text-base hover:bg-gray-50 transition-colors duration-200"
+              className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 lg:px-6 lg:py-3 xl:px-6 xl:py-3 rounded text-sm sm:text-base lg:text-base xl:text-base hover:bg-gray-50 transition-colors duration-200"
               style={{
                 color: "#333333",
                 border: "1px solid #333"

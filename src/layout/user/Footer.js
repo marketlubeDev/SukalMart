@@ -5,29 +5,25 @@ import { navigationLinks } from "../../lib/data";
 export default function Footer() {
   return (
     <footer className="bg-[#202020] text-white overflow-hidden">
-      <div className="flex flex-col items-center px-4 py-16">
-        <div className="flex flex-col gap-16 items-center justify-start w-full max-w-6xl">
+      <div className="flex flex-col items-center px-4 py-8 sm:py-12 md:py-16">
+        <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 items-center justify-start w-full max-w-6xl">
           {/* Logo */}
-          <div className="h-8 w-44 flex items-center">
-            <img src="/logo1.svg" alt="Souqalmart Logo" className="h-7 w-7 mr-2" />
-            <span className="text-white text-3xl font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+          <div className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center">
+            <img src="/logo1.svg" alt="Souqalmart Logo" className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2" />
+            <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
               souqalmart
             </span>
           </div>
 
           {/* Navigation and Social Links */}
-          <div className="flex flex-col gap-8 items-center justify-start w-full">
+          <div className="flex flex-col gap-6 sm:gap-8 items-center justify-start w-full">
             {/* Navigation Links */}
             <div
-              className="flex flex-wrap justify-center items-center gap-6 w-full"
+              className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full text-[14px] sm:text-[16px] md:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.18px]"
               style={{
                 color: "#FFF",
                 fontFamily: "'Nunito Sans', sans-serif",
-                fontSize: "18px",
                 fontStyle: "normal",
-                fontWeight: 500,
-                lineHeight: "normal",
-                letterSpacing: "-0.18px",
                 leadingTrim: "both",
                 textEdge: "cap",
               }}
@@ -78,10 +74,10 @@ export default function Footer() {
             </div>
 
             {/* Social Media Icons */}
-            <div className="flex gap-8 items-center justify-center">
+            <div className="flex gap-6 sm:gap-8 items-center justify-center">
               <a
                 href="#"
-                className="w-6 h-6 hover:opacity-80 transition-opacity"
+                className="w-5 h-5 sm:w-6 sm:h-6 hover:opacity-80 transition-opacity"
               >
                 <img
                   alt="X (Twitter)"
@@ -91,7 +87,7 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="w-6 h-6 hover:opacity-80 transition-opacity"
+                className="w-5 h-5 sm:w-6 sm:h-6 hover:opacity-80 transition-opacity"
               >
                 <img
                   alt="Facebook"
@@ -101,7 +97,7 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="w-6 h-6 hover:opacity-80 transition-opacity"
+                className="w-5 h-5 sm:w-6 sm:h-6 hover:opacity-80 transition-opacity"
               >
                 <img
                   alt="Instagram"
@@ -111,7 +107,7 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="w-6 h-6 hover:opacity-80 transition-opacity"
+                className="w-5 h-5 sm:w-6 sm:h-6 hover:opacity-80 transition-opacity"
               >
                 <img
                   alt="YouTube"
@@ -122,19 +118,16 @@ export default function Footer() {
             </div>
 
             {/* Copyright and Powered By */}
-            <div className="flex gap-3 h-3.5 items-center justify-center">
+            <div className="flex flex-row gap-2 sm:gap-3 h-auto sm:h-3.5 items-center justify-center">
               <div className="flex gap-2 items-center opacity-40">
                 <p
-                  className="whitespace-nowrap text-[12px] font-normal"
+                  className="whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal"
                   style={{
                     color: "#FFF",
                     fontFamily: "'Nunito Sans', sans-serif",
-                    fontSize: "16px",
                     fontStyle: "normal",
                     fontWeight: 400,
                     lineHeight: "normal",
-                    // leading-trim and text-edge are not standard CSS properties yet,
-                    // but if you want to add them for future support or custom implementation:
                     leadingTrim: "both",
                     textEdge: "cap",
                   }}
@@ -148,11 +141,10 @@ export default function Footer() {
                 </svg>
               </div>
               <p
-                className="opacity-40 text-center whitespace-nowrap text-[12px] font-normal"
+                className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal"
                 style={{
                   color: "#FFF",
                   fontFamily: "'Nunito Sans', sans-serif",
-                  fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",

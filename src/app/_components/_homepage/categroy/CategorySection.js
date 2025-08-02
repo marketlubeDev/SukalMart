@@ -3,7 +3,7 @@ import { categories } from "../../../../lib/data";
 export default function CategorySection() {
   return (
     <div
-      className="flex flex-col items-center justify-center w-full overflow-hidden px-4 sm:px-6 md:px-12 lg:px-[200px] py-6 md:py-8 lg:py-10"
+      className="flex flex-col items-center justify-center w-full overflow-hidden px-2 sm:px-4 md:px-6 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -14,13 +14,9 @@ export default function CategorySection() {
       }}
     >
       <div
-        className="text-[#333333] text-center"
+        className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px]"
         style={{
           fontFamily: '"Nunito Sans", sans-serif',
-          fontSize: "clamp(20px, 5vw, 28px)",
-          fontWeight: 700,
-          letterSpacing: "-0.28px",
-          lineHeight: "normal",
           fontStyle: "normal",
           alignSelf: "stretch",
         }}
@@ -28,7 +24,7 @@ export default function CategorySection() {
         Shop by category
       </div>
       <div
-        className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-6 w-full"
+        className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-3 xl:gap-6 w-full"
         style={{
           display: "grid",
           padding: "0",
@@ -47,11 +43,9 @@ export default function CategorySection() {
               />
             </div>
             <div
-              className="text-[#000000] font-medium text-center mt-2"
+              className="text-[#000000] font-medium text-center mt-2 text-[10px] sm:text-[12px] md:text-[14px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]"
               style={{
                 fontFamily: "'Nunito Sans', sans-serif",
-                fontSize: "clamp(10px, 2.5vw, 14px)",
-                letterSpacing: "-0.28px",
               }}
             >
               {category.name}
