@@ -82,7 +82,7 @@ export default function CartSidebar({ isOpen, onClose }) {
       />
       
       {/* Cart Sidebar */}
-      <div className={`fixed top-0 right-0 h-full w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 h-screen w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
           <div className="flex items-center">
@@ -113,7 +113,7 @@ export default function CartSidebar({ isOpen, onClose }) {
         {/* Cart Content */}
         <div className="flex flex-col h-full">
           {/* Items Section */}
-          <div className="flex-1 overflow-y-auto py-4">
+          <div className="flex-1 overflow-y-auto py-4" style={{ maxHeight: "calc(100vh - 200px)" }}>
             {/* Items Header */}
             <div className="flex justify-between items-center mb-4 px-4">
               <h3
@@ -616,14 +616,14 @@ export default function CartSidebar({ isOpen, onClose }) {
           </div>
 
           {/* Bottom Action Bar */}
-          <div className="border-t border-gray-200 p-4 bg-white" style={{ position: "sticky", bottom: 0, zIndex: 20, boxShadow: "0 -2px 8px rgba(0,0,0,0.03)" }}>
+          <div className="border-t border-gray-200 p-4 bg-white" style={{ position: "fixed", bottom: 0, right: 0, left: 0, zIndex: 20, boxShadow: "0 -2px 8px rgba(0,0,0,0.03)", width: "100%", maxWidth: "100vw" }}>
             <div className="flex items-center justify-between mb-2">
               <div>
                 <div
+                  className="text-[18px] sm:text-[20px]"
                   style={{
                     color: "#333333",
                     fontFamily: "'Nunito Sans', sans-serif",
-                    fontSize: "20px",
                     fontStyle: "normal",
                     fontWeight: 700,
                     lineHeight: "normal",
@@ -656,8 +656,8 @@ export default function CartSidebar({ isOpen, onClose }) {
               <button
                 style={{
                   display: "flex",
-                  width: "260px",
-                  padding: "16px 24px",
+                  width: "200px",
+                  padding: "12px 16px",
                   justifyContent: "center",
                   alignItems: "center",
                   gap: "8px",
@@ -667,13 +667,13 @@ export default function CartSidebar({ isOpen, onClose }) {
                   color: "#fff",
                   fontFamily: "'Nunito Sans', sans-serif",
                   fontWeight: 500,
-                  fontSize: "16px",
+                  fontSize: "14px",
                   lineHeight: "normal",
                   border: "none",
                   transition: "background 0.2s",
                   cursor: "pointer",
                 }}
-                className="font-medium"
+                className="font-medium sm:w-[260px] sm:px-6 sm:py-4 sm:text-base"
                 onMouseOver={e => e.currentTarget.style.background = "#024a0c"}
                 onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
               >
