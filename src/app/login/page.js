@@ -27,7 +27,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div
-        className="max-w-md w-full space-y-8 flex flex-col items-center justify-center"
+        className="max-w-md w-full space-y-4 sm:space-y-5 flex flex-col items-center justify-center"
         style={{
           minHeight: "100vh",
           display: "flex",
@@ -41,9 +41,9 @@ export default function LoginPage() {
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2">
               {/* Shield Icon */}
-              <div className="w-8 h-8 bg-gray-700 rounded-md flex items-center justify-center">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-md flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-white"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-white"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -54,7 +54,7 @@ export default function LoginPage() {
                   />
                 </svg>
               </div>
-              <span className="text-2xl font-bold text-gray-700">
+              <span className="text-xl sm:text-2xl font-bold text-gray-700">
                 Logoipsum
               </span>
             </div>
@@ -70,13 +70,13 @@ export default function LoginPage() {
               leadingTrim: "both",
               textEdge: "cap",
               fontFamily: "'Nunito Sans', sans-serif",
-              fontSize: "40px",
+              fontSize: "28px",
               fontStyle: "normal",
               fontWeight: 600,
               lineHeight: "normal",
               letterSpacing: "-1.6px",
-              marginBottom: "8px"
             }}
+            className="sm:text-[40px]"
           >
             Welcome <span style={{ color: "#035F0F" }}>Audiophiles</span>
           </h2>
@@ -87,31 +87,32 @@ export default function LoginPage() {
               leadingTrim: "both",
               textEdge: "cap",
               fontFamily: "'Nunito Sans', sans-serif",
-              fontSize: "16px",
+              fontSize: "14px",
               fontStyle: "normal",
               fontWeight: 500,
               lineHeight: "normal",
               letterSpacing: "-0.64px"
             }}
+            className="sm:text-[16px]"
           >
             Login / signup with your email or mobile number.
           </p>
         </div>
 
         {/* Login Form */}
-        <form className="mt-8 space-y-6 w-full" onSubmit={handleSubmit}>
-          <div className="space-y-4">
+        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6 w-full" onSubmit={handleSubmit}>
+          <div className="space-y-3 sm:space-y-4">
             {/* Email/Phone Input */}
             <div>
               <label
                 htmlFor="emailOrPhone"
-                className="block mb-2"
+                className="block mb-2 sm:text-[18px]"
                 style={{
                   color: "#333333",
                   leadingTrim: "both",
                   textEdge: "cap",
                   fontFamily: "'Nunito Sans', sans-serif",
-                  fontSize: "18px",
+                  fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: 500,
                   lineHeight: "normal",
@@ -127,11 +128,11 @@ export default function LoginPage() {
                 required
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:text-[16px]"
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
                   fontFamily: "'Nunito Sans', sans-serif",
-                  fontSize: "16px",
+                  fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
                   lineHeight: "normal",
@@ -147,11 +148,16 @@ export default function LoginPage() {
                 #emailOrPhone::placeholder {
                   color: rgba(51, 51, 51, 0.60);
                   font-family: 'Nunito Sans', sans-serif;
-                  font-size: 16px;
+                  font-size: 14px;
                   font-style: normal;
                   font-weight: 500;
                   line-height: normal;
                   letter-spacing: -0.64px;
+                }
+                @media (min-width: 640px) {
+                  #emailOrPhone::placeholder {
+                    font-size: 16px;
+                  }
                 }
               `}</style>
             </div>
@@ -162,10 +168,10 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading || !emailOrPhone.trim()}
-              className="w-full flex justify-center items-center gap-2 py-4 px-6 text-sm font-medium text-white"
+              className="w-full flex justify-center items-center gap-2 py-3 px-4 sm:py-4 sm:px-6 sm:text-[16px]"
               style={{
                 display: "flex",
-                padding: "16px 24px",
+                padding: "12px 16px",
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "8px",
@@ -173,7 +179,17 @@ export default function LoginPage() {
                 borderRadius: "4px",
                 background: "#035F0F",
                 border: "none",
-                transition: "background-color 0.2s"
+                transition: "background-color 0.2s",
+                color: "#FFF",
+                textAlign: "center",
+                fontFamily: "'Nunito Sans', sans-serif",
+                fontSize: "14px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "normal",
+                letterSpacing: "-0.48px",
+                leadingTrim: "both",
+                textEdge: "cap"
               }}
               onMouseOver={e => e.currentTarget.style.background = "#02490C"}
               onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
@@ -183,7 +199,7 @@ export default function LoginPage() {
               {isLoading ? (
                 <div className="flex items-center">
                   <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -217,7 +233,7 @@ export default function LoginPage() {
                 color: "rgba(51, 51, 51, 0.60)",
                 textAlign: "center",
                 fontFamily: "'Nunito Sans', sans-serif",
-                fontSize: "14px",
+                fontSize: "12px",
                 fontStyle: "normal",
                 fontWeight: 500,
                 lineHeight: "normal",
@@ -225,6 +241,7 @@ export default function LoginPage() {
                 leadingTrim: "both",
                 textEdge: "cap",
               }}
+              className="sm:text-[14px]"
             >
               By continuing, you agree to our{" "}
               <Link

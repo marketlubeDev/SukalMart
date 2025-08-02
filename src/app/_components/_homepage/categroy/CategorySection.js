@@ -24,7 +24,7 @@ export default function CategorySection() {
         Shop by category
       </div>
       <div
-        className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-3 xl:gap-6 w-full"
+        className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-3 xl:gap-6 w-full"
         style={{
           display: "grid",
           padding: "0",
