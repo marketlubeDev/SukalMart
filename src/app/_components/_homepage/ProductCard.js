@@ -1,18 +1,30 @@
 
 
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function ProductCard({
   product,
   showBadge = false,
   badgeText = "",
 }) {
+  const router = useRouter();
+
+  const handleProductClick = () => {
+    router.push(`/products/${product.id}`);
+  };
   return (
-    <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <div 
+      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      onClick={handleProductClick}
+    >
       <div className="relative">
-        <div className="aspect-square bg-gray-50 flex items-center justify-center p-4">
+        <div className="aspect-square flex items-center justify-center">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
         {/* Badge */}
@@ -43,13 +55,13 @@ export default function ProductCard({
         <h3 className="text-sm font-semibold text-gray-900 mb-1">
           {product.name}
         </h3>
-        <p className="text-xs text-gray-600 mb-3">{product.category}</p>
+        <p className="text-xs text-gray-600 mb-3">{product.type || product.category}</p>
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
-            {product.price}
+            ₹{product.price?.toLocaleString() || product.price}
           </span>
           <span className="text-sm text-gray-500 line-through">
-            {product.originalPrice}
+            ₹{product.originalPrice?.toLocaleString() || product.originalPrice}
           </span>
         </div>
         <div className="flex justify-start">
@@ -64,6 +76,11 @@ export default function ProductCard({
               gap: "8px",
               borderRadius: "4px",
               border: "1px solid #035F0F",
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              // Add to cart functionality
+              console.log(`Adding ${product.name} to cart`);
             }}
           >
             Add to cart

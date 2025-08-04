@@ -48,6 +48,11 @@ export default function Nav() {
 
   const navigationItems = [
     {
+      label: "Products",
+      hasDropdown: false,
+      href: "/products",
+    },
+    {
       label: "In-Ear Monitors",
       hasDropdown: true,
       submenu: [
@@ -113,21 +118,30 @@ export default function Nav() {
             <div className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
               {navigationItems.map((item, index) => (
                 <div key={index} className="relative group">
-                  <button
-                    className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
-                    onClick={() => item.hasDropdown && toggleDropdown(item.label)}
-                  >
-                    <span>{item.label}</span>
-                    {item.hasDropdown && (
-                      <img
-                        src="/dropdownicon.svg"
-                        alt="dropdown"
-                        className={`w-[7px] h-[4px] transition-transform duration-200 ${
-                          activeDropdown === item.label ? "rotate-180" : ""
-                        }`}
-                        />
-                    )}
-                  </button>
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                    >
+                      <span>{item.label}</span>
+                    </Link>
+                  ) : (
+                    <button
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                      onClick={() => item.hasDropdown && toggleDropdown(item.label)}
+                    >
+                      <span>{item.label}</span>
+                      {item.hasDropdown && (
+                        <img
+                          src="/dropdownicon.svg"
+                          alt="dropdown"
+                          className={`w-[7px] h-[4px] transition-transform duration-200 ${
+                            activeDropdown === item.label ? "rotate-180" : ""
+                          }`}
+                          />
+                      )}
+                    </button>
+                  )}
 
                   {/* Desktop Dropdown Menu */}
                   {item.hasDropdown && (

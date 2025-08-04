@@ -1,4 +1,4 @@
-export default function PromotionalBanner() {
+export default function PromotionalBanner({ fullWidth = false }) {
   const banners = [
     {
       id: 1,
@@ -21,7 +21,7 @@ export default function PromotionalBanner() {
   ];
 
   return (
-    <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10">
+    <div className={`py-6 md:py-8 lg:py-10 ${fullWidth ? 'px-0' : 'px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]'}`}>
       {/* Mobile: Carousel with one banner at a time */}
       <div className="lg:hidden">
         <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
