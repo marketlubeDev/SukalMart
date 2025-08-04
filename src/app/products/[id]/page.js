@@ -19,7 +19,7 @@ export default function ProductDetailPage() {
     price: 1899,
     originalPrice: 2099,
     discount: 10,
-    images: ["/iem1.jpg", "/thumbnail1.jpg", "/thumbnail2.jpg", "/thumbnail3.jpg"],
+    images: ["/iem1.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
     description: "Experience crystal clear audio with the 7hz Salnotes Zero 2 Wired IEM. Featuring premium drivers and ergonomic design for extended listening sessions.",
     features: [
       "Premium audio drivers",
@@ -48,24 +48,15 @@ export default function ProductDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
-          <div className="space-y-4">
-            {/* Main Image */}
-            <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
-              <img
-                src={product.images[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            
-            {/* Thumbnail Images */}
-            <div className="flex gap-2 overflow-x-auto">
+          <div className="flex gap-4">
+            {/* Thumbnail Images - Left Side */}
+            <div className="flex flex-col gap-2">
               {product.images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                    selectedImage === index ? 'border-green-500' : 'border-gray-200'
+                    selectedImage === index ? 'border-[#035F0F]' : 'border-gray-200'
                   }`}
                 >
                   <img
@@ -75,6 +66,25 @@ export default function ProductDetailPage() {
                   />
                 </button>
               ))}
+            </div>
+            
+            {/* Main Image - Right Side */}
+            <div className="flex-1">
+              <div className="aspect-square rounded-lg overflow-hidden relative">
+                <img
+                  src={product.images[selectedImage]}
+                  alt={product.name}
+                  className="w-full h-full object-contain"
+                />
+                {/* Like Button */}
+                <button className="absolute top-4 right-4 w-10 h-10 bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all">
+                  <img
+                    src="/blacklike.svg"
+                    alt="Add to wishlist"
+                    className="w-5 h-5"
+                  />
+                </button>
+              </div>
             </div>
           </div>
 
