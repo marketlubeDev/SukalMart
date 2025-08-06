@@ -11,11 +11,11 @@ import React from "react";
  * Achieved via inline style and a custom CSS class with media queries.
  */
 
-export default function FeaturedProductsSection() {
+export default function FeaturedProductsSection({ isProductPage = false }) {
   return (
     <div
       className={
-        "featured-products-section-base py-6 md:py-8 lg:py-10 overflow-hidden"
+        isProductPage ? "py-6 md:py-8 lg:py-10 overflow-hidden" : "featured-products-section-base py-6 md:py-8 lg:py-10 overflow-hidden"
       }
     >
       <div className="flex flex-col gap-6">
@@ -25,7 +25,7 @@ export default function FeaturedProductsSection() {
             className="text-[22px] font-bold"
             style={{
               color: "#333333",
-              fontFamily: "'Nunito Sans', sans-serif",
+              // fontFamily: "'Nunito Sans', sans-serif",
               letterSpacing: "-0.22px",
             }}
           >
@@ -40,7 +40,7 @@ export default function FeaturedProductsSection() {
           </button>
         </div>
 
-        {/* Product Cards - Mobile: Full width carousel, Tablet: Single card carousel, Desktop: 50:50 Layout */}
+        {/* Product Cards - Mobile: Full width carousel, Desktop: 50:50 Layout */}
         <div className="flex flex-row gap-6 w-full">
           {/* Mobile: Full width carousel container */}
           <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide md:hidden snap-x snap-mandatory">
@@ -51,37 +51,19 @@ export default function FeaturedProductsSection() {
             ))}
           </div>
           
-          {/* Tablet: Single card carousel */}
-          <div className="hidden md:flex lg:hidden flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+          {/* Desktop: Original 50:50 layout */}
+          <div className="hidden md:flex flex-row gap-6 w-full">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="flex-shrink-0 w-full snap-start px-2">
-                <FeaturedProductCard product={product} />
-              </div>
+              <FeaturedProductCard key={product.id} product={product} />
             ))}
           </div>
-          
-          {/* Desktop: Original 50:50 layout */}
-          <div className="hidden lg:flex flex-row gap-6 w-full">
-          {featuredProducts.map((product) => (
-            <FeaturedProductCard key={product.id} product={product} />
-          ))}
         </div>
-      </div>
 
         {/* Mobile scroll indicator */}
         <div className="md:hidden w-full">
           <div className="flex justify-center">
             <div className="w-20 h-1 bg-gray-200 rounded-full">
               <div className="w-5 h-1 bg-[#035F0F] rounded-full"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tablet scroll indicator */}
-        <div className="hidden md:block lg:hidden w-full">
-          <div className="flex justify-center">
-            <div className="w-20 h-1 bg-gray-200 rounded-full">
-              <div className="w-10 h-1 bg-[#035F0F] rounded-full"></div>
             </div>
           </div>
         </div>
@@ -97,11 +79,10 @@ export default function FeaturedProductsSection() {
             padding-right: 1.5rem;
           }
         }
-        /* Tablets: 768px - 991.98px */
-        @media (min-width: 768px) and (max-width: 991.98px) {
+        @media (min-width: 768px) {
           .featured-products-section-base {
-            padding-left: 2rem;
-            padding-right: 2rem;
+            padding-left: 3rem;
+            padding-right: 3rem;
           }
         }
         /* BigTablets: 992px - 1199.98px, remove 200px paddings, use px-8 */

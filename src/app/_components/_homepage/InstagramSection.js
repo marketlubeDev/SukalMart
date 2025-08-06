@@ -16,7 +16,7 @@ export default function InstagramSection() {
         style={{
           color: "#333333",
           textAlign: "center",
-          fontFamily: "'Nunito Sans', sans-serif",
+       
           fontStyle: "normal",
           textEdge: "cap",
           leadingTrim: "both",
@@ -27,7 +27,7 @@ export default function InstagramSection() {
           className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.2px] sm:tracking-[-0.24px] md:tracking-[-0.26px] lg:tracking-[-0.28px]"
           style={{
             color: "#035F0F",
-            fontFamily: "'Nunito Sans', sans-serif",
+           
             fontStyle: "normal",
             textEdge: "cap",
             leadingTrim: "both",

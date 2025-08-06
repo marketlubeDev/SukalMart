@@ -119,7 +119,6 @@ export default function OTPPage() {
               textAlign: "center",
               leadingTrim: "both",
               textEdge: "cap",
-              fontFamily: "'Nunito Sans', sans-serif",
               fontSize: "28px",
               fontStyle: "normal",
               fontWeight: 600,
@@ -135,7 +134,6 @@ export default function OTPPage() {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "28px",
                 fontWeight: 600,
                 letterSpacing: "-1.6px",
@@ -156,7 +154,6 @@ export default function OTPPage() {
                 textAlign: "center",
                 leadingTrim: "both",
                 textEdge: "cap",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: 500,
@@ -169,7 +166,6 @@ export default function OTPPage() {
               <span
                 className="text-[#035F0F] font-medium"
                 style={{
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontWeight: 500,
                   letterSpacing: "-0.64px"
                 }}
@@ -180,7 +176,6 @@ export default function OTPPage() {
                 type="button"
                 className="inline-flex items-center ml-2 text-[#028914] font-medium text-xs hover:underline focus:outline-none"
                 style={{
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontWeight: 500,
                   fontSize: "14px",
                   lineHeight: "16px"
@@ -202,7 +197,6 @@ export default function OTPPage() {
                 textAlign: "center",
                 leadingTrim: "both",
                 textEdge: "cap",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: 500,
@@ -230,7 +224,6 @@ export default function OTPPage() {
                       color: "#333333",
                       leadingTrim: "both",
                       textEdge: "cap",
-                      fontFamily: "'Nunito Sans', sans-serif",
                       fontSize: "16px",
                       fontStyle: "normal",
                       fontWeight: 500,
@@ -254,7 +247,6 @@ export default function OTPPage() {
                     className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#035f0f] focus:border-[#035f0f] transition-colors duration-200"
                     style={{
                       color: "rgba(51, 51, 51, 0.60)",
-                      fontFamily: "'Nunito Sans', sans-serif",
                       fontSize: "14px",
                       fontStyle: "normal",
                       fontWeight: 500,
@@ -294,7 +286,6 @@ export default function OTPPage() {
                 transition: "background-color 0.2s",
                 color: "#FFF",
                 textAlign: "center",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: 500,

@@ -1,8 +1,6 @@
-import ProductCard from "../ProductCard";
 import { bestSellers } from "../../../../lib/data";
-import Image from "next/image";
 
-export default function BestSellersSection() {
+export default function RecommendedSection() {
   return (
     <div className="bg-white py-8 md:py-16 overflow-hidden">
       <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]">
@@ -12,7 +10,7 @@ export default function BestSellersSection() {
             className="font-bold"
             style={{
               color: "#333",
-              // fontFamily: "'Nunito Sans', sans-serif",
+             
               fontSize: "clamp(18px, 4vw, 24px)",
               fontWeight: 700,
               fontStyle: "normal",
@@ -20,7 +18,7 @@ export default function BestSellersSection() {
               letterSpacing: "-0.24px",
             }}
           >
-            Best Sellers
+            Recommended for you
           </h2>
           <button className="flex items-center gap-1 md:gap-2 font-medium transition-colors" style={{ color: "#035F0F" }}>
             <span className="text-sm md:text-base">View all</span>
@@ -32,9 +30,9 @@ export default function BestSellersSection() {
           </button>
         </div>
 
-        {/* Best Sellers Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6">
-          {/* Product 1 - A1 Badge */}
+        {/* Recommended Products Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-3">
+          {/* Product 1 */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
@@ -44,21 +42,6 @@ export default function BestSellersSection() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              {/* A1 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
-                <div className="relative">
-                  <img
-                    src="/badge.svg"
-                    alt="Badge"
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold" >
-                      A1
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
@@ -75,27 +58,10 @@ export default function BestSellersSection() {
                   ₹2,099
                 </span>
               </div>
-              <div className="flex justify-start">
-                <button 
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
-                  style={{
-                    display: "flex",
-                    height: "32px",
-                    padding: "8px 12px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
-                    borderRadius: "4px",
-                    border: "1px solid #035F0F"
-                  }}
-                >
-                  Add to cart
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Product 2 - #2 Badge */}
+          {/* Product 2 */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
@@ -105,21 +71,6 @@ export default function BestSellersSection() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              {/* #2 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
-                <div className="relative">
-                  <img
-                    src="/badge.svg"
-                    alt="Badge"
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold">
-                      #2
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
@@ -136,27 +87,10 @@ export default function BestSellersSection() {
                   ₹2,099
                 </span>
               </div>
-              <div className="flex justify-start">
-                <button 
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
-                  style={{
-                    display: "flex",
-                    height: "32px",
-                    padding: "8px 12px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
-                    borderRadius: "4px",
-                    border: "1px solid #035F0F"
-                  }}
-                >
-                  Add to cart
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Product 3 - #3 Badge */}
+          {/* Product 3 */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
@@ -166,21 +100,6 @@ export default function BestSellersSection() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              {/* #3 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
-                <div className="relative">
-                  <img
-                    src="/badge.svg"
-                    alt="Badge"
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold">
-                      #3
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
@@ -197,27 +116,10 @@ export default function BestSellersSection() {
                   ₹2,099
                 </span>
               </div>
-              <div className="flex justify-start">
-                <button 
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
-                  style={{
-                    display: "flex",
-                    height: "32px",
-                    padding: "8px 12px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
-                    borderRadius: "4px",
-                    border: "1px solid #035F0F"
-                  }}
-                >
-                  Add to cart
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Product 4 - No Badge */}
+          {/* Product 4 */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
@@ -243,27 +145,10 @@ export default function BestSellersSection() {
                   ₹2,099
                 </span>
               </div>
-              <div className="flex justify-start">
-                <button 
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
-                  style={{
-                    display: "flex",
-                    height: "32px",
-                    padding: "8px 12px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
-                    borderRadius: "4px",
-                    border: "1px solid #035F0F"
-                  }}
-                >
-                  Add to cart
-                </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+} 

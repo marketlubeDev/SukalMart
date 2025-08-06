@@ -22,7 +22,7 @@ export default function CrystalClearBanner() {
                 style={{
                   color: "#FFF",
                   textAlign: "left",
-                  fontFamily: "'Nunito Sans', sans-serif",
+                  
                   fontStyle: "normal",
                 }}
               >
@@ -33,7 +33,7 @@ export default function CrystalClearBanner() {
                 style={{
                   color: "#FFF",
                   textAlign: "left",
-                  fontFamily: "'Nunito Sans', sans-serif",
+                 
                   fontStyle: "normal",
                 }}
               >

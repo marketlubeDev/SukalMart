@@ -2,7 +2,7 @@
 
 export default function FeaturedProductCard({ product }) {
   return (
-    <div className="flex flex-row gap-3 sm:gap-4 md:gap-4 lg:gap-6 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-2 md:py-4 lg:p-6 lg:pl-0 shadow-sm md:h-full">
+    <div className="flex flex-row gap-3 sm:gap-4 md:gap-4 lg:gap-6 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-2 md:py-4 lg:p-6 lg:pl-0 md:h-full">
       {/* Product Image - Mobile: 35%, Tablet: 40%, Desktop: 50% of card */}
       <div className="relative w-1/3 md:w-2/5 lg:w-1/2 aspect-[4/3] md:aspect-[3/2] lg:aspect-square rounded overflow-hidden flex-shrink-0">
         <img
@@ -23,7 +23,7 @@ export default function FeaturedProductCard({ product }) {
             className="text-[14px] md:text-[16px] lg:text-[18px] font-semibold"
             style={{
               color: "#333333",
-              fontFamily: "'Nunito Sans', sans-serif",
+              // fontFamily: "'Nunito Sans', sans-serif",
               letterSpacing: "-0.36px",
             }}
           >
@@ -33,7 +33,7 @@ export default function FeaturedProductCard({ product }) {
             className="text-[11px] md:text-[12px] lg:text-[14px] font-normal"
             style={{
               color: "rgba(51,51,51,0.7)",
-              fontFamily: "'Nunito Sans', sans-serif",
+              // fontFamily: "'Nunito Sans', sans-serif",
               letterSpacing: "-0.28px",
             }}
           >
@@ -60,7 +60,7 @@ export default function FeaturedProductCard({ product }) {
               className="text-[12px] md:text-[14px] lg:text-[16px] font-medium"
               style={{
                 color: "#333333",
-                fontFamily: "'Nunito Sans', sans-serif",
+                // fontFamily: "'Nunito Sans', sans-serif",
                 letterSpacing: "-0.32px",
               }}
             >
@@ -73,7 +73,7 @@ export default function FeaturedProductCard({ product }) {
             className="text-[12px] md:text-[14px] lg:text-[16px] font-normal line-clamp-2 md:flex-1"
             style={{
               color: "rgba(51,51,51,0.8)",
-              fontFamily: "'Nunito Sans', sans-serif",
+              // fontFamily: "'Nunito Sans', sans-serif",
               letterSpacing: "-0.32px",
               lineHeight: "1.4",
             }}
@@ -89,7 +89,7 @@ export default function FeaturedProductCard({ product }) {
               className="text-[16px] md:text-[18px] lg:text-[20px] font-bold"
               style={{
                 color: "#035F0F",
-                fontFamily: "'Nunito Sans', sans-serif",
+                // fontFamily: "'Nunito Sans', sans-serif",
                 letterSpacing: "-0.4px",
               }}
             >
@@ -99,7 +99,7 @@ export default function FeaturedProductCard({ product }) {
               className="text-[12px] md:text-[14px] lg:text-[16px] font-normal line-through"
               style={{
                 color: "rgba(51,51,51,0.6)",
-                fontFamily: "'Nunito Sans', sans-serif",
+                // fontFamily: "'Nunito Sans', sans-serif",
                 letterSpacing: "-0.32px",
               }}
             >

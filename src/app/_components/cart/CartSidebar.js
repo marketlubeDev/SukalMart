@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import CouponSidebar from "./CouponSidebar";
 
 export default function CartSidebar({ isOpen, onClose }) {
   const [quantities, setQuantities] = useState({
@@ -8,6 +9,7 @@ export default function CartSidebar({ isOpen, onClose }) {
     2: 1
   });
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
+  const [showCouponSidebar, setShowCouponSidebar] = useState(false);
 
   const cartItems = [
     {
@@ -98,7 +100,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               className="font-[600]"
               style={{
                 color: "#333333",
-                fontFamily: "'Nunito Sans', sans-serif",
+            
                 fontSize: "22px",
                 fontStyle: "normal",
                 lineHeight: "normal",
@@ -119,7 +121,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               <h3
                 style={{
                   color: "#333333",
-                  fontFamily: "'Nunito Sans', sans-serif",
+                 
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
@@ -132,7 +134,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               <span
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
-                  fontFamily: "'Nunito Sans', sans-serif",
+                 
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
@@ -215,7 +217,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 1,
-                        fontFamily: "'Nunito Sans', sans-serif",
                         fontSize: "16px",
                         fontStyle: "normal",
                         fontWeight: 600,
@@ -235,7 +236,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                         overflow: "hidden",
                         fontSize: "14px",
                         color: "rgba(51, 51, 51, 0.70)",
-                        fontFamily: "'Nunito Sans', sans-serif",
                         fontWeight: 500,
                         lineHeight: "140%",
                         letterSpacing: "-0.28px",
@@ -300,7 +300,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                               fontSize: "15px",
                               fontWeight: 600,
                               color: "#035F0F",
-                              fontFamily: "'Nunito Sans', sans-serif",
                               minWidth: "20px",
                               textAlign: "center",
                               userSelect: "none",
@@ -344,7 +343,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                             overflow: "hidden",
                             color: "#035F0F",
                             textOverflow: "ellipsis",
-                            fontFamily: "'Nunito Sans', sans-serif",
                             fontSize: "16px",
                             fontStyle: "normal",
                             fontWeight: 600,
@@ -372,7 +370,6 @@ export default function CartSidebar({ isOpen, onClose }) {
               <h3
                 style={{
                   color: "#333333",
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
@@ -383,12 +380,15 @@ export default function CartSidebar({ isOpen, onClose }) {
               >
                 Coupon
               </h3>
-              <div className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4">
+              <button 
+                onClick={() => setShowCouponSidebar(true)}
+                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors"
+              >
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
                     <img src="/coupon.svg" alt="Coupon" className="w-6 h-6" />
                   </div>
-                  <div >
+                  <div className="text-left">
                     <p className="text-sm font-medium text-gray-800">Apply Coupon & Offers</p>
                     <p className="text-xs text-gray-600">Use a valid coupon code and get an instant discount.</p>
                   </div>
@@ -396,7 +396,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </div>
+              </button>
             </div>
 
             {/* 
@@ -412,7 +412,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <h3
                   style={{
                     color: "#333333",
-                    fontFamily: "'Nunito Sans', sans-serif",
                     fontSize: "20px",
                     fontStyle: "normal",
                     fontWeight: 600,
@@ -461,7 +460,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <span
                       style={{
                         color: "#333",
-                        fontFamily: "'Nunito Sans', sans-serif",
                         fontSize: "16px",
                         fontStyle: "normal",
                         fontWeight: 500,
@@ -474,7 +472,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <span
                       style={{
                         color: "#333",
-                        fontFamily: "'Nunito Sans', sans-serif",
                         fontSize: "18px",
                         fontStyle: "normal",
                         fontWeight: 700,
@@ -501,7 +498,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -514,7 +510,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "#333",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -529,7 +524,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -542,7 +536,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "#035F0F",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -557,7 +550,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -570,7 +562,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "#035F0F",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -585,7 +576,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -598,7 +588,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span
                         style={{
                           color: "#035F0F",
-                          fontFamily: "'Nunito Sans', sans-serif",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -623,7 +612,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                   className="text-[18px] sm:text-[20px]"
                   style={{
                     color: "#333333",
-                    fontFamily: "'Nunito Sans', sans-serif",
                     fontStyle: "normal",
                     fontWeight: 700,
                     lineHeight: "normal",
@@ -635,7 +623,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <button
                   style={{
                     color:"rgba(51, 51, 51, 0.70)",
-                    fontFamily: "'Nunito Sans', sans-serif",
                     fontSize: "14px",
                     fontStyle: "normal",
                     fontWeight: 500,
@@ -665,7 +652,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                   borderRadius: "4px",
                   background: "#035F0F",
                   color: "#fff",
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontWeight: 500,
                   fontSize: "14px",
                   lineHeight: "normal",
@@ -683,6 +669,12 @@ export default function CartSidebar({ isOpen, onClose }) {
           </div>
         </div>
       </div>
+      
+      {/* Coupon Sidebar */}
+      <CouponSidebar 
+        isOpen={showCouponSidebar} 
+        onClose={() => setShowCouponSidebar(false)} 
+      />
     </>
   );
 } 

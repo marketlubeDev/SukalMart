@@ -16,7 +16,7 @@ export default function CategorySection() {
       <div
         className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px]"
         style={{
-          fontFamily: '"Nunito Sans", sans-serif',
+     
           fontStyle: "normal",
           alignSelf: "stretch",
         }}
@@ -44,9 +44,7 @@ export default function CategorySection() {
             </div>
             <div
               className="text-[#000000] font-medium text-center mt-2 text-[10px] sm:text-[12px] md:text-[14px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]"
-              style={{
-                fontFamily: "'Nunito Sans', sans-serif",
-              }}
+             
             >
               {category.name}
             </div>

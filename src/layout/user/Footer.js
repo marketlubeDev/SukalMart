@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Logo */}
           <div className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center">
             <img src="/logo1.svg" alt="Souqalmart Logo" className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2" />
-            <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+            <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold">
               souqalmart
             </span>
           </div>
@@ -22,7 +22,7 @@ export default function Footer() {
               className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full text-[14px] sm:text-[16px] md:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.18px]"
               style={{
                 color: "#FFF",
-                fontFamily: "'Nunito Sans', sans-serif",
+                
                 fontStyle: "normal",
                 leadingTrim: "both",
                 textEdge: "cap",
@@ -124,7 +124,7 @@ export default function Footer() {
                   className="whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal"
                   style={{
                     color: "#FFF",
-                    fontFamily: "'Nunito Sans', sans-serif",
+                   
                     fontStyle: "normal",
                     fontWeight: 400,
                     lineHeight: "normal",
@@ -147,7 +147,7 @@ export default function Footer() {
                 className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal hover:opacity-60 transition-opacity"
                 style={{
                   color: "#FFF",
-                  fontFamily: "'Nunito Sans', sans-serif",
+                
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",

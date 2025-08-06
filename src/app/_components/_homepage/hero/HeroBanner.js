@@ -178,7 +178,7 @@ export default function HeroBanner() {
               <h1
                 className="text-[24px] font-semibold text-[#333333] leading-tight transition-all duration-500"
                 style={{
-                  fontFamily: "'Nunito Sans', sans-serif",
+                 
                   letterSpacing: "-0.88px",
                 }}
               >
@@ -187,7 +187,7 @@ export default function HeroBanner() {
               <p
                 className="text-[12px] font-normal text-[#565656] leading-relaxed transition-all duration-500"
                 style={{
-                  fontFamily: "'Nunito Sans', sans-serif",
+                
                   letterSpacing: "-0.36px",
                 }}
               >
@@ -202,7 +202,7 @@ export default function HeroBanner() {
               <span
                 className="text-[12px] font-medium"
                 style={{
-                  fontFamily: "'Nunito Sans', sans-serif",
+                
                   letterSpacing: "-0.36px",
                 }}
               >

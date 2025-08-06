@@ -10,7 +10,7 @@ export default function EngineeredBy7Hz() {
             className="mb-4 sm:mb-6 text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px]"
             style={{
               color: "#333",
-              fontFamily: '"Nunito Sans"',
+             
               fontStyle: "normal",
             }}
           >
@@ -19,9 +19,10 @@ export default function EngineeredBy7Hz() {
           <p
             className="mb-6 sm:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.17px] lg:tracking-[-0.18px]"
             style={{
-              color: "#333333",
-              fontFamily: '"Nunito Sans"',
+              color: "rgba(51, 51, 51, 0.8)",
               fontStyle: "normal",
+             fontSize: "18px",
+              letterSpacing: "-0.28px",
             }}
           >
             Precision-crafted IEMs delivering cutting-edge sound, innovative design, and audiophile-grade performance. Experience the difference.
@@ -43,7 +44,7 @@ export default function EngineeredBy7Hz() {
 
         {/* Right Section - Product Cards */}
         <div className="flex-1 w-full">
-          <div className="flex flex-row gap-4 md:gap-6 lg:gap-8 w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row">
+          <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row">
             {/* Product Card 1 */}
             <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
@@ -57,7 +58,7 @@ export default function EngineeredBy7Hz() {
                 <h3
                   className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.32px",
                   }}
                 >
@@ -66,7 +67,7 @@ export default function EngineeredBy7Hz() {
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.28px",
                   }}
                 >
@@ -98,7 +99,7 @@ export default function EngineeredBy7Hz() {
                 <h3
                   className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.32px",
                   }}
                 >
@@ -107,7 +108,7 @@ export default function EngineeredBy7Hz() {
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.28px",
                   }}
                 >
@@ -139,7 +140,7 @@ export default function EngineeredBy7Hz() {
                 <h3
                   className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.32px",
                   }}
                 >
@@ -148,7 +149,7 @@ export default function EngineeredBy7Hz() {
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                   style={{
-                    fontFamily: "'Nunito Sans', sans-serif",
+                    // fontFamily: "'Nunito Sans', sans-serif",
                     letterSpacing: "-0.28px",
                   }}
                 >

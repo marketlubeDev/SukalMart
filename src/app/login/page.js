@@ -68,7 +68,6 @@ export default function LoginPage() {
               textAlign: "center",
               leadingTrim: "both",
               textEdge: "cap",
-              fontFamily: "'Nunito Sans', sans-serif",
               fontSize: "28px",
               fontStyle: "normal",
               fontWeight: 600,
@@ -85,7 +84,6 @@ export default function LoginPage() {
               textAlign: "center",
               leadingTrim: "both",
               textEdge: "cap",
-              fontFamily: "'Nunito Sans', sans-serif",
               fontSize: "14px",
               fontStyle: "normal",
               fontWeight: 500,
@@ -110,7 +108,6 @@ export default function LoginPage() {
                   color: "#333333",
                   leadingTrim: "both",
                   textEdge: "cap",
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: 500,
@@ -130,7 +127,6 @@ export default function LoginPage() {
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:text-[16px]"
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
-                  fontFamily: "'Nunito Sans', sans-serif",
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
@@ -146,7 +142,7 @@ export default function LoginPage() {
               <style jsx>{`
                 #emailOrPhone::placeholder {
                   color: rgba(51, 51, 51, 0.60);
-                  font-family: 'Nunito Sans', sans-serif;
+                  /* font-family: 'Nunito Sans', sans-serif; */
                   font-size: 14px;
                   font-style: normal;
                   font-weight: 500;
@@ -181,7 +177,6 @@ export default function LoginPage() {
                 transition: "background-color 0.2s",
                 color: "#FFF",
                 textAlign: "center",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: 500,
@@ -231,7 +226,6 @@ export default function LoginPage() {
               style={{
                 color: "rgba(51, 51, 51, 0.60)",
                 textAlign: "center",
-                fontFamily: "'Nunito Sans', sans-serif",
                 fontSize: "12px",
                 fontStyle: "normal",
                 fontWeight: 500,

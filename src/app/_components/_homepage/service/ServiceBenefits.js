@@ -18,7 +18,7 @@ export default function ServiceBenefits() {
                   className="text-center"
                   style={{
                     color: "#333",
-                    fontFamily: '"Nunito Sans"',
+            
                     fontSize: "clamp(10px, 2vw, 18px)",
                     fontStyle: "normal",
                     fontWeight: 600,
