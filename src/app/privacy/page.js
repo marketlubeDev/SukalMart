@@ -81,7 +81,7 @@ export default function PrivacyPage() {
           <p className="text-gray-700 mb-6">
             We may update this privacy policy from time to time. We will notify
             you of any changes by posting the new policy on this page and
-            updating the "Last updated" date.
+            updating the &quot;Last updated&quot; date.
           </p>
 
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">

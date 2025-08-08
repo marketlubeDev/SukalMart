@@ -15,7 +15,9 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
   return (
     <div
       className={
-        isProductPage ? "py-6 md:py-8 lg:py-10 overflow-hidden" : "featured-products-section-base py-6 md:py-8 lg:py-10 overflow-hidden"
+        isProductPage
+          ? "py-6 md:py-8 lg:py-10 overflow-hidden"
+          : "featured-products-section-base py-6 md:py-8 lg:py-10 overflow-hidden"
       }
     >
       <div className="flex flex-col gap-6">
@@ -29,7 +31,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
               letterSpacing: "-0.22px",
             }}
           >
-            Featured IEM's
+            Featured IEMs
           </h2>
           <button
             className="flex items-center gap-2 font-medium transition-colors"
@@ -45,12 +47,15 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
           {/* Mobile: Full width carousel container */}
           <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide md:hidden snap-x snap-mandatory">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="flex-shrink-0 w-full snap-start px-2">
+              <div
+                key={product.id}
+                className="flex-shrink-0 w-full snap-start px-2"
+              >
                 <FeaturedProductCard product={product} />
               </div>
             ))}
           </div>
-          
+
           {/* Desktop: Original 50:50 layout */}
           <div className="hidden md:flex flex-row gap-6 w-full">
             {featuredProducts.map((product) => (

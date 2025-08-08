@@ -31,7 +31,7 @@ export default function TermsPage() {
           </h2>
           <p className="text-gray-700 mb-6">
             Permission is granted to temporarily download one copy of the
-            materials (information or software) on SukalMart's website for
+            materials (information or software) on SukalMart&apos;s website for
             personal, non-commercial transitory viewing only.
           </p>
 
@@ -39,12 +39,13 @@ export default function TermsPage() {
             3. Disclaimer
           </h2>
           <p className="text-gray-700 mb-6">
-            The materials on SukalMart's website are provided on an 'as is'
-            basis. SukalMart makes no warranties, expressed or implied, and
-            hereby disclaims and negates all other warranties including without
-            limitation, implied warranties or conditions of merchantability,
-            fitness for a particular purpose, or non-infringement of
-            intellectual property or other violation of rights.
+            The materials on SukalMart&apos;s website are provided on an
+            &apos;as is&apos; basis. SukalMart makes no warranties, expressed or
+            implied, and hereby disclaims and negates all other warranties
+            including without limitation, implied warranties or conditions of
+            merchantability, fitness for a particular purpose, or
+            non-infringement of intellectual property or other violation of
+            rights.
           </p>
 
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
@@ -54,14 +55,14 @@ export default function TermsPage() {
             In no event shall SukalMart or its suppliers be liable for any
             damages (including, without limitation, damages for loss of data or
             profit, or due to business interruption) arising out of the use or
-            inability to use the materials on SukalMart's website.
+            inability to use the materials on SukalMart&apos;s website.
           </p>
 
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
             5. Revisions and Errata
           </h2>
           <p className="text-gray-700 mb-6">
-            The materials appearing on SukalMart's website could include
+            The materials appearing on SukalMart&apos;s website could include
             technical, typographical, or photographic errors. SukalMart does not
             warrant that any of the materials on its website are accurate,
             complete or current.

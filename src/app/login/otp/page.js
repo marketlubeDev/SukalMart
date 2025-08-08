@@ -77,14 +77,17 @@ export default function OTPPage() {
   };
 
   return (
-    <div className="bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8" style={{ height: "calc(100vh - 80px)" }}>
+    <div
+      className="bg-white flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      style={{ height: "calc(100vh - 80px)" }}
+    >
       <div
         className="max-w-md w-full space-y-4 sm:space-y-5 flex flex-col items-center justify-center"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          margin: "0 auto"
+          margin: "0 auto",
         }}
       >
         {/* Logo */}
@@ -130,7 +133,8 @@ export default function OTPPage() {
             Verify{" "}
             <span
               style={{
-                background: "linear-gradient(91deg, #035F0F 49.43%, #028914 95.9%)",
+                background:
+                  "linear-gradient(91deg, #035F0F 49.43%, #028914 95.9%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -140,7 +144,7 @@ export default function OTPPage() {
                 lineHeight: "normal",
                 fontStyle: "normal",
                 textEdge: "cap",
-                leadingTrim: "both"
+                leadingTrim: "both",
               }}
               className="sm:text-[40px]"
             >
@@ -158,16 +162,16 @@ export default function OTPPage() {
                 fontStyle: "normal",
                 fontWeight: 500,
                 lineHeight: "normal",
-                letterSpacing: "-0.64px"
+                letterSpacing: "-0.64px",
               }}
               className="sm:text-[16px]"
             >
-              We've sent a 6-digit code to{" "}
+              We&apos;ve sent a 6-digit code to{" "}
               <span
                 className="text-[#035F0F] font-medium"
                 style={{
                   fontWeight: 500,
-                  letterSpacing: "-0.64px"
+                  letterSpacing: "-0.64px",
                 }}
               >
                 you@example.com
@@ -178,7 +182,7 @@ export default function OTPPage() {
                 style={{
                   fontWeight: 500,
                   fontSize: "14px",
-                  lineHeight: "16px"
+                  lineHeight: "16px",
                 }}
                 onClick={onEditEmail}
               >
@@ -201,7 +205,7 @@ export default function OTPPage() {
                 fontStyle: "normal",
                 fontWeight: 500,
                 lineHeight: "normal",
-                letterSpacing: "-0.64px"
+                letterSpacing: "-0.64px",
               }}
               className="sm:text-[16px]"
             >
@@ -211,12 +215,20 @@ export default function OTPPage() {
         </div>
 
         {/* OTP Form */}
-        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6 w-full" onSubmit={handleSubmit}>
+        <form
+          className="mt-6 sm:mt-8 space-y-4 sm:space-y-6 w-full"
+          onSubmit={handleSubmit}
+        >
           <div className="space-y-3 sm:space-y-4">
             {/* OTP Input */}
             <div>
               <div className="flex justify-center">
-                <div style={{ width: "calc(4 * 64px + 3 * 12px)", maxWidth: "292px" }}>
+                <div
+                  style={{
+                    width: "calc(4 * 64px + 3 * 12px)",
+                    maxWidth: "292px",
+                  }}
+                >
                   <label
                     htmlFor="otp-0"
                     className="block mb-2 sm:text-[18px] text-left"
@@ -228,37 +240,39 @@ export default function OTPPage() {
                       fontStyle: "normal",
                       fontWeight: 500,
                       lineHeight: "normal",
-                      letterSpacing: "-0.52px"
+                      letterSpacing: "-0.52px",
                     }}
                   >
                     Enter OTP
-              </label>
-              <div className="flex justify-center space-x-3">
-                {otp.map((digit, index) => (
-                  <input
-                    key={index}
-                    id={`otp-${index}`}
-                    type="text"
-                    maxLength="1"
-                    value={digit}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                    placeholder="0"
-                    className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#035f0f] focus:border-[#035f0f] transition-colors duration-200"
-                    style={{
-                      color: "rgba(51, 51, 51, 0.60)",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "normal",
-                      letterSpacing: "-0.64px",
-                      boxShadow: "none",
-                      transition: "border-color 0.2s, box-shadow 0.2s"
-                    }}
-                    onFocus={e => e.target.style.borderColor = "#035F0F"}
-                    onBlur={e => e.target.style.borderColor = "#d1d5db"}
-                  />
-                ))}
+                  </label>
+                  <div className="flex justify-center space-x-3">
+                    {otp.map((digit, index) => (
+                      <input
+                        key={index}
+                        id={`otp-${index}`}
+                        type="text"
+                        maxLength="1"
+                        value={digit}
+                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                        placeholder="0"
+                        className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#035f0f] focus:border-[#035f0f] transition-colors duration-200"
+                        style={{
+                          color: "rgba(51, 51, 51, 0.60)",
+                          fontSize: "14px",
+                          fontStyle: "normal",
+                          fontWeight: 500,
+                          lineHeight: "normal",
+                          letterSpacing: "-0.64px",
+                          boxShadow: "none",
+                          transition: "border-color 0.2s, box-shadow 0.2s",
+                        }}
+                        onFocus={(e) =>
+                          (e.target.style.borderColor = "#035F0F")
+                        }
+                        onBlur={(e) => (e.target.style.borderColor = "#d1d5db")}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -292,12 +306,16 @@ export default function OTPPage() {
                 lineHeight: "normal",
                 letterSpacing: "-0.48px",
                 leadingTrim: "both",
-                textEdge: "cap"
+                textEdge: "cap",
               }}
-              onMouseOver={e => e.currentTarget.style.background = "#02490C"}
-              onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
-              onFocus={e => e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33"}
-              onBlur={e => e.currentTarget.style.boxShadow = "none"}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.background = "#02490C")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.background = "#035F0F")}
+              onFocus={(e) =>
+                (e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33")
+              }
+              onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
             >
               {isLoading ? (
                 <div className="flex items-center">
