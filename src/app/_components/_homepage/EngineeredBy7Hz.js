@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function EngineeredBy7Hz() {
   return (
@@ -10,7 +11,7 @@ export default function EngineeredBy7Hz() {
             className="mb-4 sm:mb-6 text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px]"
             style={{
               color: "#333",
-             
+
               fontStyle: "normal",
             }}
           >
@@ -21,11 +22,12 @@ export default function EngineeredBy7Hz() {
             style={{
               color: "rgba(51, 51, 51, 0.8)",
               fontStyle: "normal",
-             fontSize: "18px",
+              fontSize: "18px",
               letterSpacing: "-0.28px",
             }}
           >
-            Precision-crafted IEMs delivering cutting-edge sound, innovative design, and audiophile-grade performance. Experience the difference.
+            Precision-crafted IEMs delivering cutting-edge sound, innovative
+            design, and audiophile-grade performance. Experience the difference.
           </p>
           <button
             className="flex justify-center items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 md:px-5 md:py-4 lg:px-6 lg:py-4 text-sm sm:text-base md:text-lg lg:text-lg font-medium"
@@ -35,8 +37,10 @@ export default function EngineeredBy7Hz() {
               color: "#fff",
               transition: "background 0.2s",
             }}
-            onMouseOver={e => e.currentTarget.style.background = "#035F0FE6"}
-            onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.background = "#035F0FE6")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.background = "#035F0F")}
           >
             Shop all
           </button>
@@ -48,11 +52,13 @@ export default function EngineeredBy7Hz() {
             {/* Product Card 1 */}
             <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
-                <div className="aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                  <img
+                <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
+                  <Image
                     src="/best1.png"
                     alt="7hz Salnotes Zero 2 Wired IEM"
-                    className="w-full h-full object-contain"
+                    fill
+                    sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
+                    className="object-contain"
                   />
                 </div>
                 <h3
@@ -89,11 +95,13 @@ export default function EngineeredBy7Hz() {
             {/* Product Card 2 */}
             <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
-                <div className="aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                  <img
+                <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
+                  <Image
                     src="/best2.png"
                     alt="7hz Salnotes Zero 2 Wired IEM"
-                    className="w-full h-full object-contain"
+                    fill
+                    sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
+                    className="object-contain"
                   />
                 </div>
                 <h3
@@ -130,11 +138,13 @@ export default function EngineeredBy7Hz() {
             {/* Product Card 3 */}
             <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
-                <div className="aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                  <img
+                <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
+                  <Image
                     src="/best3.png"
                     alt="7hz Salnotes Zero 2 Wired IEM"
-                    className="w-full h-full object-contain"
+                    fill
+                    sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
+                    className="object-contain"
                   />
                 </div>
                 <h3

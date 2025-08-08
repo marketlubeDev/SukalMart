@@ -1,6 +1,8 @@
+import Image from "next/image";
+
 export default function InstagramSection() {
   return (
-    <div 
+    <div
       className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-12 py-6 md:py-8 lg:py-10 custom-padding"
       style={{
         display: "flex",
@@ -8,7 +10,7 @@ export default function InstagramSection() {
         alignItems: "center",
         gap: "40px",
         alignSelf: "stretch",
-        background: "rgba(241, 132, 8, 0.05)"
+        background: "rgba(241, 132, 8, 0.05)",
       }}
     >
       <h2
@@ -16,7 +18,7 @@ export default function InstagramSection() {
         style={{
           color: "#333333",
           textAlign: "center",
-       
+
           fontStyle: "normal",
           textEdge: "cap",
           leadingTrim: "both",
@@ -27,7 +29,7 @@ export default function InstagramSection() {
           className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.2px] sm:tracking-[-0.24px] md:tracking-[-0.26px] lg:tracking-[-0.28px]"
           style={{
             color: "#035F0F",
-           
+
             fontStyle: "normal",
             textEdge: "cap",
             leadingTrim: "both",
@@ -46,7 +48,7 @@ export default function InstagramSection() {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-        
+
         @keyframes scroll-left {
           0% {
             transform: translateX(0);
@@ -55,11 +57,11 @@ export default function InstagramSection() {
             transform: translateX(-50%);
           }
         }
-        
+
         .auto-scroll {
           animation: scroll-left 30s linear infinite;
         }
-        
+
         .auto-scroll:hover {
           animation-play-state: paused;
         }
@@ -79,7 +81,10 @@ export default function InstagramSection() {
         }
       `}</style>
       <div className="relative w-full overflow-hidden">
-        <div className="flex flex-row gap-3 sm:gap-4 auto-scroll" style={{ padding: '0 24px', width: 'max-content' }}>
+        <div
+          className="flex flex-row gap-3 sm:gap-4 auto-scroll"
+          style={{ padding: "0 24px", width: "max-content" }}
+        >
           {/* Thumbnail 1 */}
           <div
             className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
@@ -92,17 +97,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail1.jpg"
               alt="Instagram Video 1"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -120,17 +130,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail2.jpg"
               alt="Instagram Video 2"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -148,17 +163,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail3.jpg"
               alt="Instagram Video 3"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -176,17 +196,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail4.jpg"
               alt="Instagram Video 4"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -204,17 +229,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail1.jpg"
               alt="Instagram Video 5"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -232,17 +262,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail2.jpg"
               alt="Instagram Video 6"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -261,17 +296,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail1.jpg"
               alt="Instagram Video 1"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -289,17 +329,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail2.jpg"
               alt="Instagram Video 2"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -317,17 +362,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail3.jpg"
               alt="Instagram Video 3"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -345,17 +395,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail4.jpg"
               alt="Instagram Video 4"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -373,17 +428,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail1.jpg"
               alt="Instagram Video 5"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -401,17 +461,22 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <img
+            <Image
               src="/thumbnail2.jpg"
               alt="Instagram Video 6"
-              className="w-full h-full object-cover"
-              style={{ aspectRatio: "122/217" }}
+              fill
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+              className="object-cover"
             />
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
@@ -420,4 +485,4 @@ export default function InstagramSection() {
       </div>
     </div>
   );
-} 
+}
