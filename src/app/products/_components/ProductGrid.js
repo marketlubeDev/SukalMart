@@ -4,9 +4,19 @@ import PromotionalBanner from "@/app/_components/_homepage/promotion/Promotional
 import ProductShowcaseBanner from "@/app/_components/_homepage/promotion/ProductShowcaseBanner";
 import ProductCard from "../../_components/_homepage/ProductCard";
 
-
-export default function ProductGrid({ products, selectedCategory, sortBy, setSortBy }) {
-  const sortOptions = ["Featured", "Price: Low to High", "Price: High to Low", "Newest", "Popular"];
+export default function ProductGrid({
+  products,
+  selectedCategory,
+  sortBy,
+  setSortBy,
+}) {
+  const sortOptions = [
+    "Featured",
+    "Price: Low to High",
+    "Price: High to Low",
+    "Newest",
+    "Popular",
+  ];
 
   return (
     <div className="bg-white">
@@ -14,15 +24,18 @@ export default function ProductGrid({ products, selectedCategory, sortBy, setSor
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-semibold text-gray-800">
-            Showing result for "{selectedCategory}"
+            Showing result for &quot;{selectedCategory}&quot;
           </h1>
         </div>
-        
+
         <div className="flex items-center gap-4">
           {/* Sort Dropdown */}
           <div className="flex items-center gap-1 relative">
             <span className="text-sm text-gray-600">Sort by :</span>
-            <div className="relative flex items-center" style={{ marginRight: "12px" }}>
+            <div
+              className="relative flex items-center"
+              style={{ marginRight: "12px" }}
+            >
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -67,28 +80,132 @@ export default function ProductGrid({ products, selectedCategory, sortBy, setSor
             <button
               className="p-0 focus:outline-none"
               aria-label="Grid View"
-              style={{ width: 56, height: 24, display: "flex", alignItems: "center", background: "transparent" }}
+              style={{
+                width: 56,
+                height: 24,
+                display: "flex",
+                alignItems: "center",
+                background: "transparent",
+              }}
             >
               <svg width="56" height="24" viewBox="0 0 56 24" fill="none">
                 {/* 8 Green cards */}
                 <g>
-                  <rect x="2" y="2" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="10" y="2" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="18" y="2" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="26" y="2" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="2" y="10" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="10" y="10" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="18" y="10" width="6" height="6" rx="1.5" fill="#0B6612"/>
-                  <rect x="26" y="10" width="6" height="6" rx="1.5" fill="#0B6612"/>
+                  <rect
+                    x="2"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="10"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="18"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="26"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="2"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="10"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="18"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
+                  <rect
+                    x="26"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#0B6612"
+                  />
                 </g>
                 {/* 6 Gray cards */}
                 <g>
-                  <rect x="36" y="2" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
-                  <rect x="44" y="2" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
-                  <rect x="52" y="2" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
-                  <rect x="36" y="10" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
-                  <rect x="44" y="10" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
-                  <rect x="52" y="10" width="6" height="6" rx="1.5" fill="#BDBDBD"/>
+                  <rect
+                    x="36"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
+                  <rect
+                    x="44"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
+                  <rect
+                    x="52"
+                    y="2"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
+                  <rect
+                    x="36"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
+                  <rect
+                    x="44"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
+                  <rect
+                    x="52"
+                    y="10"
+                    width="6"
+                    height="6"
+                    rx="1.5"
+                    fill="#BDBDBD"
+                  />
                 </g>
               </svg>
             </button>
@@ -128,8 +245,6 @@ export default function ProductGrid({ products, selectedCategory, sortBy, setSor
           </div>
         ))}
       </div>
-
-     
     </div>
   );
-} 
+}
