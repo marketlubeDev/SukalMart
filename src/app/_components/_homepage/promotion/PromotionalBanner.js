@@ -12,13 +12,13 @@ export default function PromotionalBanner({ fullWidth = false }) {
     },
     {
       id: 2,
-      title: "Beauty Essentials Collection",
+      title: "Anti-Aging Collection, 25% OFF!",
       description:
-        "Complete your beauty routine with our curated collection. Limited time offer",
+        "Advanced anti-aging formulas to restore youthful radiance. Limited time offer",
       image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-      alt: "Beauty Products",
-      background: "#FFF8DC",
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+      alt: "Anti-Aging Products",
+      background: "linear-gradient(90deg, #FFF8DC, #FFF5E6)",
       buttonText: "Shop now",
     },
   ];
