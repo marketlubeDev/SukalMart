@@ -20,7 +20,7 @@ export default function CategorySection() {
   // On mobile, if the last row has less than 3 items, center them
   return (
     <div
-      className="flex flex-col items-center justify-center w-full overflow-hidden px-2 sm:px-4 md:px-6 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10"
+      className="flex flex-col items-center justify-center w-full overflow-hidden px-2 sm:px-4 md:px-6 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10 border-b border-black/10 max-w-6xl mx-auto"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -39,33 +39,27 @@ export default function CategorySection() {
       >
         Shop by category
       </div>
-      {/* Mobile: custom centering for second row if not full */}
+      {/* Mobile: custom centering for all rows */}
       <div className="block sm:hidden w-full">
         {getRows().map((row, rowIdx, arr) => (
           <div
             key={rowIdx}
             className="flex w-full mb-2 last:mb-0"
             style={{
-              justifyContent:
-                row.length < mobileColumns && rowIdx === arr.length - 1
-                  ? "center"
-                  : "flex-start",
+              justifyContent: "center",
               gap: "8px",
             }}
           >
             {row.map((category, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center justify-start flex-1 min-w-0 max-w-[120px]"
+                className="flex flex-col items-center justify-start"
                 style={{
-                  // If last row and not full, don't stretch
-                  flex:
-                    row.length < mobileColumns && rowIdx === arr.length - 1
-                      ? "0 0 33.33%"
-                      : "1 1 0%",
+                  flex: "0 0 33.33%",
+                  maxWidth: "120px",
                 }}
               >
-                <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full aspect-square">
+                <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] md:w-[220px] md:h-[220px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
                   <img
                     src={category.image}
                     alt={category.name}
@@ -80,33 +74,31 @@ export default function CategorySection() {
           </div>
         ))}
       </div>
-      {/* Desktop/tablet: normal grid */}
+      {/* Desktop/tablet: flex layout - single line */}
       <div
         className="
           hidden
-          sm:grid
-          sm:grid-cols-4
-          md:grid-cols-6
-          lg:grid-cols-6
-          xl:grid-cols-6
+          sm:flex
+          sm:flex-nowrap
+          sm:justify-center
+          sm:items-center
           sm:gap-3
           md:gap-4
           lg:gap-3
           xl:gap-6
           w-full
-          justify-items-center
         "
         style={{
-          display: "grid",
+          display: "flex",
           padding: "0",
           justifyContent: "center",
-          alignItems: "flex-start",
+          alignItems: "center",
           alignSelf: "stretch",
         }}
       >
         {categories.map((category, index) => (
           <div key={index} className="flex flex-col items-center justify-start">
-            <div className="bg-[#ffffff] flex flex-col items-center justify-center overflow-hidden rounded w-full aspect-square">
+            <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] md:w-[220px] md:h-[220px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
               <img
                 src={category.image}
                 alt={category.name}

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function BestSellersSection() {
   return (
-    <div className="bg-white py-8 md:py-16 overflow-hidden">
+    <div className="bg-white py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
       <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
@@ -40,15 +40,13 @@ export default function BestSellersSection() {
           {/* Product 1 - A1 Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/Dove-Nutritive-Solutions-Shampoo-Intensive-Repair-12-oz_26f70c89-b2fd-4a72-8d5e-c825aea4a74d.298b021af0c2ed36673b9536677c7f06.webp"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+                alt="7hz Salnotes Zero 2 Wired IEM"
+                className="w-full h-full aspect-square object-cover"
+              />
               {/* A1 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
+              <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
                   <img
                     src="/badge.svg"
@@ -102,15 +100,13 @@ export default function BestSellersSection() {
           {/* Product 2 - #2 Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                alt="7hz Salnotes Zero 2 Wired IEM"
+                className="w-full h-full aspect-square object-cover"
+              />
               {/* #2 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
+              <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
                   <img
                     src="/badge.svg"
@@ -166,15 +162,13 @@ export default function BestSellersSection() {
           {/* Product 3 - #3 Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/51bCJJss6GL._UF894%2C1000_QL80_.jpg"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                alt="7hz Salnotes Zero 2 Wired IEM"
+                className="w-full h-full aspect-square object-cover"
+              />
               {/* #3 Badge */}
-              <div className="absolute top-1 md:top-2 -left-4">
+              <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
                   <img
                     src="/badge.svg"
@@ -230,13 +224,11 @@ export default function BestSellersSection() {
           {/* Product 4 - No Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+                alt="7hz Salnotes Zero 2 Wired IEM"
+                className="w-full h-full aspect-square object-cover"
+              />
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
@@ -275,6 +267,7 @@ export default function BestSellersSection() {
           </div>
         </div>
       </div>
+      <div className="border-b border-black/10 w-[80%] mt-6 mx-auto"></div>
     </div>
   );
 }

@@ -87,7 +87,29 @@ export default function HeroBanner() {
         {/* Readability overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
 
-        {/* Content - Bottom Left with Previous Button */}
+        {/* Previous Icon - Positioned above content with left spacing */}
+        <div className="absolute left-52 top-60 z-20">
+          <button
+            onClick={prevSlide}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+            aria-label="Previous slide"
+          >
+            <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Next Icon - Top Right */}
+        <div className="absolute right-52 top-62 z-20">
+          <button
+            onClick={nextSlide}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+            aria-label="Next slide"
+          >
+            <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Content - Bottom Left */}
         <div className="relative z-10 h-full flex items-end">
           <div className="container mx-auto px-8 pb-16">
             <div className="max-w-2xl">
@@ -112,26 +134,6 @@ export default function HeroBanner() {
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Prev/Next Buttons - aligned center vertically */}
-        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-20">
-          <button
-            onClick={prevSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-            aria-label="Previous slide"
-          >
-            <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
-          </button>
-        </div>
-        <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20">
-          <button
-            onClick={nextSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-            aria-label="Next slide"
-          >
-            <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
-          </button>
         </div>
 
         {/* Progress indicator */}
