@@ -57,7 +57,7 @@ export default function BestSellersSection() {
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-white text-xs md:text-sm font-bold">
-                      A1
+                      #1
                     </span>
                   </div>
                 </div>
