@@ -6,7 +6,7 @@ import ProductSidebar from "./_components/ProductSidebar";
 import ProductGrid from "./_components/ProductGrid";
 
 export default function ProductsPage() {
-  const [selectedCategory, setSelectedCategory] = useState("In-Ear Monitors");
+  const [selectedCategory, setSelectedCategory] = useState("Skincare");
   const [selectedDiscount, setSelectedDiscount] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 1000, max: 12999 });
   const [sortBy, setSortBy] = useState("Featured");
@@ -15,84 +15,92 @@ export default function ProductsPage() {
   const products = [
     {
       id: 1,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Glow & Hydrate Face Serum",
+      type: "Skincare",
+      price: 899,
+      originalPrice: 1099,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+      category: "Skincare",
+      discount: 18,
     },
     {
       id: 2,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors", 
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Luxury Beauty Collection Set",
+      type: "Beauty Essentials",
+      price: 2499,
+      originalPrice: 3199,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+      category: "Beauty Essentials",
+      discount: 22,
     },
     {
       id: 3,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Anti-Aging Night Cream",
+      type: "Anti-Aging",
+      price: 1299,
+      originalPrice: 1599,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+      category: "Anti-Aging",
+      discount: 19,
     },
     {
       id: 4,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Vitamin C Brightening Serum",
+      type: "Skincare",
+      price: 799,
+      originalPrice: 999,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+      category: "Skincare",
+      discount: 20,
     },
     {
       id: 5,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Hyaluronic Acid Moisturizer",
+      type: "Skincare",
+      price: 699,
+      originalPrice: 899,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+      category: "Skincare",
+      discount: 22,
     },
     {
       id: 6,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Retinol Eye Cream",
+      type: "Anti-Aging",
+      price: 999,
+      originalPrice: 1299,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+      category: "Anti-Aging",
+      discount: 23,
     },
     {
       id: 7,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
+      name: "Gentle Facial Cleanser",
+      type: "Skincare",
+      price: 599,
+      originalPrice: 799,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+      category: "Skincare",
+      discount: 25,
     },
     {
       id: 8,
-      name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/iem1.jpg",
-      category: "In-Ear Monitors",
-      discount: 10
-    }
+      name: "SPF 50 Sunscreen",
+      type: "Skincare",
+      price: 899,
+      originalPrice: 1199,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+      category: "Skincare",
+      discount: 25,
+    },
   ];
 
   return (
@@ -124,4 +132,4 @@ export default function ProductsPage() {
       </div>
     </div>
   );
-} 
+}
