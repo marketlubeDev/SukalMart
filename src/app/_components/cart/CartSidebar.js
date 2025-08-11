@@ -6,7 +6,7 @@ import CouponSidebar from "./CouponSidebar";
 export default function CartSidebar({ isOpen, onClose }) {
   const [quantities, setQuantities] = useState({
     1: 1,
-    2: 1
+    2: 1,
   });
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
   const [showCouponSidebar, setShowCouponSidebar] = useState(false);
@@ -14,48 +14,50 @@ export default function CartSidebar({ isOpen, onClose }) {
   const cartItems = [
     {
       id: 1,
-      name: "7hz Salnotes Zero 2 Wired IEM(type c)",
-      color: "Blue",
-      plug: "3.5mm with mic",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/best1.png"
+      name: "Glow & Hydrate Face Serum",
+      color: "Clear",
+      plug: "30ml bottle",
+      price: 899,
+      originalPrice: 1099,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
     },
     {
       id: 2,
-      name: "7hz Salnotes Zero 2 Wired IEM(type c)",
-      color: "Blue",
-      plug: "3.5mm with mic",
-      price: 1899,
-      originalPrice: 2099,
-      image: "/best2.png"
-    }
+      name: "Luxury Beauty Collection Set",
+      color: "Multi",
+      plug: "Complete set",
+      price: 2499,
+      originalPrice: 3199,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+    },
   ];
 
   // Prevent background scrolling when cart is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       // Add a small delay to prevent jarring transition
       const timer = setTimeout(() => {
-        document.body.style.overflow = 'unset';
+        document.body.style.overflow = "unset";
       }, 300); // Match the animation duration
-      
+
       return () => clearTimeout(timer);
     }
 
     // Cleanup function to restore scrolling when component unmounts
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
   const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity >= 1) {
-      setQuantities(prev => ({
+      setQuantities((prev) => ({
         ...prev,
-        [itemId]: newQuantity
+        [itemId]: newQuantity,
       }));
     }
   };
@@ -65,7 +67,10 @@ export default function CartSidebar({ isOpen, onClose }) {
     console.log(`Remove item ${itemId}`);
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * quantities[item.id]), 0);
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * quantities[item.id],
+    0
+  );
   const total = subtotal + 400; // Adding delivery cost
   const discount = 400;
   const couponDiscount = 199;
@@ -75,32 +80,49 @@ export default function CartSidebar({ isOpen, onClose }) {
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className={`fixed inset-0 transition-opacity duration-300 ease-in-out z-40 ${isOpen ? 'bg-opacity-70' : 'bg-opacity-0 pointer-events-none'}`}
+      <div
+        className={`fixed inset-0 transition-opacity duration-300 ease-in-out z-40 ${
+          isOpen ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
+        }`}
         onClick={onClose}
         style={{
-          background: "linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 100%)"
+          background:
+            "linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 100%)",
         }}
       />
-      
+
       {/* Cart Sidebar */}
-      <div className={`fixed top-0 right-0 h-screen w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div
+        className={`fixed top-0 right-0 h-screen w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
           <div className="flex items-center">
-            <button 
+            <button
               onClick={onClose}
               className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
             <h2
               className="font-[600]"
               style={{
                 color: "#333333",
-            
+
                 fontSize: "22px",
                 fontStyle: "normal",
                 lineHeight: "normal",
@@ -115,13 +137,16 @@ export default function CartSidebar({ isOpen, onClose }) {
         {/* Cart Content */}
         <div className="flex flex-col h-full">
           {/* Items Section */}
-          <div className="flex-1 overflow-y-auto py-4" style={{ maxHeight: "calc(100vh - 200px)" }}>
+          <div
+            className="flex-1 overflow-y-auto py-4"
+            style={{ maxHeight: "calc(100vh - 200px)" }}
+          >
             {/* Items Header */}
             <div className="flex justify-between items-center mb-4 px-4">
               <h3
                 style={{
                   color: "#333333",
-                 
+
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
@@ -134,7 +159,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               <span
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
-                 
+
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
@@ -180,8 +205,18 @@ export default function CartSidebar({ isOpen, onClose }) {
                     onClick={() => removeItem(item.id)}
                     className="absolute top-3 right-3 p-1 hover:bg-gray-200 rounded-full transition-colors"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
 
@@ -243,10 +278,16 @@ export default function CartSidebar({ isOpen, onClose }) {
                       }}
                     >
                       <span style={{ marginRight: "16px" }}>
-                        Color: <span style={{ color: "#222", fontWeight: 500 }}>{item.color}</span>
+                        Type:{" "}
+                        <span style={{ color: "#222", fontWeight: 500 }}>
+                          {item.color}
+                        </span>
                       </span>
                       <span>
-                        Plug: <span style={{ color: "#222", fontWeight: 500 }}>{item.plug}</span>
+                        Size:{" "}
+                        <span style={{ color: "#222", fontWeight: 500 }}>
+                          {item.plug}
+                        </span>
                       </span>
                     </div>
 
@@ -272,7 +313,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                           }}
                         >
                           <button
-                            onClick={() => updateQuantity(item.id, quantities[item.id] - 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, quantities[item.id] - 1)
+                            }
                             style={{
                               width: "28px",
                               height: "28px",
@@ -289,8 +332,12 @@ export default function CartSidebar({ isOpen, onClose }) {
                               borderRadius: "3px",
                               lineHeight: 1,
                             }}
-                            onMouseOver={e => e.currentTarget.style.background = "#E6F9ED"}
-                            onMouseOut={e => e.currentTarget.style.background = "transparent"}
+                            onMouseOver={(e) =>
+                              (e.currentTarget.style.background = "#E6F9ED")
+                            }
+                            onMouseOut={(e) =>
+                              (e.currentTarget.style.background = "transparent")
+                            }
                           >
                             -
                           </button>
@@ -309,10 +356,12 @@ export default function CartSidebar({ isOpen, onClose }) {
                               height: "100%",
                             }}
                           >
-                            {String(quantities[item.id]).padStart(2, '0')}
+                            {String(quantities[item.id]).padStart(2, "0")}
                           </span>
                           <button
-                            onClick={() => updateQuantity(item.id, quantities[item.id] + 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, quantities[item.id] + 1)
+                            }
                             style={{
                               width: "28px",
                               height: "28px",
@@ -329,8 +378,12 @@ export default function CartSidebar({ isOpen, onClose }) {
                               borderRadius: "3px",
                               lineHeight: 1,
                             }}
-                            onMouseOver={e => e.currentTarget.style.background = "#E6F9ED"}
-                            onMouseOut={e => e.currentTarget.style.background = "transparent"}
+                            onMouseOver={(e) =>
+                              (e.currentTarget.style.background = "#E6F9ED")
+                            }
+                            onMouseOut={(e) =>
+                              (e.currentTarget.style.background = "transparent")
+                            }
                           >
                             +
                           </button>
@@ -357,7 +410,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                         >
                           ₹{item.price.toLocaleString()}
                         </span>
-                        <span className="text-xs text-gray-400 line-through">₹{item.originalPrice.toLocaleString()}</span>
+                        <span className="text-xs text-gray-400 line-through">
+                          ₹{item.originalPrice.toLocaleString()}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -380,7 +435,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               >
                 Coupon
               </h3>
-              <button 
+              <button
                 onClick={() => setShowCouponSidebar(true)}
                 className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors"
               >
@@ -389,17 +444,31 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <img src="/coupon.svg" alt="Coupon" className="w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-medium text-gray-800">Apply Coupon & Offers</p>
-                    <p className="text-xs text-gray-600">Use a valid coupon code and get an instant discount.</p>
+                    <p className="text-sm font-medium text-gray-800">
+                      Apply Coupon & Offers
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      Use a valid coupon code and get an instant discount.
+                    </p>
                   </div>
                 </div>
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
             </div>
 
-            {/* 
+            {/*
               To make this work, you must:
               1. Import useState from React at the top of your file:
                  import React, { useState } from "react";
@@ -424,7 +493,11 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <div className="flex flex-col items-center ml-2">
                   <button
                     type="button"
-                    aria-label={orderSummaryOpen ? "Collapse order summary" : "Expand order summary"}
+                    aria-label={
+                      orderSummaryOpen
+                        ? "Collapse order summary"
+                        : "Expand order summary"
+                    }
                     onClick={() => setOrderSummaryOpen((open) => !open)}
                     style={{
                       background: "none",
@@ -444,16 +517,23 @@ export default function CartSidebar({ isOpen, onClose }) {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                       style={{
-                        transform: orderSummaryOpen ? "rotate(0deg)" : "rotate(-90deg)",
+                        transform: orderSummaryOpen
+                          ? "rotate(0deg)"
+                          : "rotate(-90deg)",
                         transition: "transform 0.2s",
                       }}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 15l7-7 7 7"
+                      />
                     </svg>
                   </button>
                 </div>
               </div>
-              
+
               {orderSummaryOpen && (
                 <div className="space-y-2 text-sm bg-white px-6 py-4">
                   <div className="flex justify-between">
@@ -605,7 +685,19 @@ export default function CartSidebar({ isOpen, onClose }) {
           </div>
 
           {/* Bottom Action Bar */}
-          <div className="border-t border-gray-200 p-4 bg-white" style={{ position: "fixed", bottom: 0, right: 0, left: 0, zIndex: 20, boxShadow: "0 -2px 8px rgba(0,0,0,0.03)", width: "100%", maxWidth: "100vw" }}>
+          <div
+            className="border-t border-gray-200 p-4 bg-white"
+            style={{
+              position: "fixed",
+              bottom: 0,
+              right: 0,
+              left: 0,
+              zIndex: 20,
+              boxShadow: "0 -2px 8px rgba(0,0,0,0.03)",
+              width: "100%",
+              maxWidth: "100vw",
+            }}
+          >
             <div className="flex items-center justify-between mb-2">
               <div>
                 <div
@@ -622,7 +714,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 </div>
                 <button
                   style={{
-                    color:"rgba(51, 51, 51, 0.70)",
+                    color: "rgba(51, 51, 51, 0.70)",
                     fontSize: "14px",
                     fontStyle: "normal",
                     fontWeight: 500,
@@ -634,8 +726,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                     cursor: "pointer",
                     textDecoration: "underline",
                   }}
-                  onMouseOver={e => e.currentTarget.style.color = "#333"}
-                  onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.7)"}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#333")}
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.color = "rgba(51, 51, 51, 0.7)")
+                  }
                 >
                   View Details
                 </button>
@@ -660,8 +754,12 @@ export default function CartSidebar({ isOpen, onClose }) {
                   cursor: "pointer",
                 }}
                 className="font-medium sm:w-[260px] sm:px-6 sm:py-4 sm:text-base"
-                onMouseOver={e => e.currentTarget.style.background = "#024a0c"}
-                onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.background = "#024a0c")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.background = "#035F0F")
+                }
               >
                 Proceed to checkout
               </button>
@@ -669,12 +767,12 @@ export default function CartSidebar({ isOpen, onClose }) {
           </div>
         </div>
       </div>
-      
+
       {/* Coupon Sidebar */}
-      <CouponSidebar 
-        isOpen={showCouponSidebar} 
-        onClose={() => setShowCouponSidebar(false)} 
+      <CouponSidebar
+        isOpen={showCouponSidebar}
+        onClose={() => setShowCouponSidebar(false)}
       />
     </>
   );
-} 
+}
