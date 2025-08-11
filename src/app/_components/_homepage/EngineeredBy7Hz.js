@@ -15,7 +15,7 @@ export default function EngineeredBy7Hz() {
               fontStyle: "normal",
             }}
           >
-            Engineered by 7Hz
+            Premium Beauty Collection
           </h2>
           <p
             className="mb-6 sm:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.17px] lg:tracking-[-0.18px]"
@@ -26,8 +26,9 @@ export default function EngineeredBy7Hz() {
               letterSpacing: "-0.28px",
             }}
           >
-            Precision-crafted IEMs delivering cutting-edge sound, innovative
-            design, and audiophile-grade performance. Experience the difference.
+            Expertly formulated skincare and beauty products delivering radiant
+            results, innovative ingredients, and dermatologist-approved
+            performance. Experience the transformation.
           </p>
           <button
             className="flex justify-center items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 md:px-5 md:py-4 lg:px-6 lg:py-4 text-sm sm:text-base md:text-lg lg:text-lg font-medium"
@@ -54,8 +55,8 @@ export default function EngineeredBy7Hz() {
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
                 <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                   <Image
-                    src="/best1.png"
-                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                    alt="Glow & Hydrate Face Serum"
                     fill
                     sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
                     className="object-contain"
@@ -68,7 +69,7 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.32px",
                   }}
                 >
-                  7hz Salnotes Zero 2 Wired IEM(type c)
+                  Glow & Hydrate Face Serum
                 </h3>
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
@@ -77,17 +78,17 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.28px",
                   }}
                 >
-                  In-ear monitors
+                  Skincare
                 </p>
                 <div className="flex items-center gap-2 mt-auto">
                   <span
                     className="text-base sm:text-lg font-bold"
                     style={{ color: "#035F0F" }}
                   >
-                    ₹1,899
+                    ₹899
                   </span>
                   <span className="text-xs sm:text-sm text-gray-500 line-through">
-                    ₹2,099
+                    ₹1,099
                   </span>
                 </div>
               </div>
@@ -97,8 +98,8 @@ export default function EngineeredBy7Hz() {
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
                 <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                   <Image
-                    src="/best2.png"
-                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+                    alt="Luxury Beauty Collection Set"
                     fill
                     sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
                     className="object-contain"
@@ -111,7 +112,7 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.32px",
                   }}
                 >
-                  7hz Salnotes Zero 2 Wired IEM(type c)
+                  Luxury Beauty Collection Set
                 </h3>
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
@@ -120,17 +121,17 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.28px",
                   }}
                 >
-                  In-ear monitors
+                  Beauty Essentials
                 </p>
                 <div className="flex items-center gap-2 mt-auto">
                   <span
                     className="text-base sm:text-lg font-bold"
                     style={{ color: "#035F0F" }}
                   >
-                    ₹1,899
+                    ₹2,499
                   </span>
                   <span className="text-xs sm:text-sm text-gray-500 line-through">
-                    ₹2,099
+                    ₹3,199
                   </span>
                 </div>
               </div>
@@ -140,8 +141,8 @@ export default function EngineeredBy7Hz() {
               <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
                 <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                   <Image
-                    src="/best3.png"
-                    alt="7hz Salnotes Zero 2 Wired IEM"
+                    src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                    alt="Anti-Aging Night Cream"
                     fill
                     sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
                     className="object-contain"
@@ -154,7 +155,7 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.32px",
                   }}
                 >
-                  7hz Salnotes Zero 2 Wired IEM(type c)
+                  Anti-Aging Night Cream
                 </h3>
                 <p
                   className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
@@ -163,17 +164,17 @@ export default function EngineeredBy7Hz() {
                     letterSpacing: "-0.28px",
                   }}
                 >
-                  In-ear monitors
+                  Anti-Aging
                 </p>
                 <div className="flex items-center gap-2 mt-auto">
                   <span
                     className="text-base sm:text-lg font-bold"
                     style={{ color: "#035F0F" }}
                   >
-                    ₹1,899
+                    ₹1,299
                   </span>
                   <span className="text-xs sm:text-sm text-gray-500 line-through">
-                    ₹2,099
+                    ₹1,599
                   </span>
                 </div>
               </div>

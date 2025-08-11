@@ -53,51 +53,54 @@ export default function Nav() {
       href: "/products",
     },
     {
-      label: "In-Ear Monitors",
+      label: "Hair Care",
+      hasDropdown: true,
+      submenu: ["Shampoo", "Conditioner", "Hair Oil", "Hair Serum"],
+    },
+    {
+      label: "Body & Shower",
       hasDropdown: true,
       submenu: [
-        "Professional IEMs",
-        "Consumer IEMs",
-        "Custom IEMs",
-        "Budget IEMs",
-        "Flagship IEMs",
+        "Body Wash",
+        "Body Lotion",
+        "Body Cream",
+        "Body Oil",
+        "Body Soap",
       ],
     },
     {
-      label: "Headphones",
+      label: "Soap & Deodorants",
       hasDropdown: true,
       submenu: [
-        "Over-Ear",
-        "On-Ear",
-        "Gaming Headsets",
-        "Studio Monitors",
-        "Wireless",
+        "Deodorant",
+        "Deodorant Stick",
+        "Deodorant Spray",
+        "Deodorant Roll-On",
       ],
     },
     {
-      label: "Speakers",
+      label: "Skin Care",
       hasDropdown: true,
       submenu: [
-        "Bluetooth Speakers",
-        "Bookshelf Speakers",
-        "Studio Monitors",
-        "Portable Speakers",
+        "Face Wash",
+        "Face Cream",
+        "Face Oil",
+        "Face Serum",
+        "Face Moisturizer",
       ],
     },
     {
-      label: "Audio Gear",
+      label: "Oral & Misc",
       hasDropdown: true,
-      submenu: ["DACs & Amps", "Audio Cables", "Accessories", "Cases & Tips"],
-    },
-    {
-      label: "Brands",
-      hasDropdown: false,
+      submenu: ["Toothpaste", "Toothbrush", "Mouthwash", "Mouthwash"],
     },
   ];
 
   // Add extra left/right padding for bigTablet screens
   // We'll use inline style for the wrapper div
-  const bigTabletPadding = isBigTablet ? { paddingLeft: "32px", paddingRight: "32px" } : {};
+  const bigTabletPadding = isBigTablet
+    ? { paddingLeft: "32px", paddingRight: "32px" }
+    : {};
 
   return (
     <>
@@ -110,7 +113,9 @@ export default function Nav() {
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-4 hidden lg:block">
               <Link href="/" className="flex items-center">
-                <div className="text-3xl font-bold text-[#035F0F]">Souqalmart</div>
+                <div className="text-3xl font-bold text-[#035F0F]">
+                  Souqalmart
+                </div>
               </Link>
             </div>
 
@@ -126,21 +131,23 @@ export default function Nav() {
                       <span>{item.label}</span>
                     </Link>
                   ) : (
-                  <button
-                    className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
-                    onClick={() => item.hasDropdown && toggleDropdown(item.label)}
-                  >
-                    <span>{item.label}</span>
-                    {item.hasDropdown && (
-                      <img
-                        src="/dropdownicon.svg"
-                        alt="dropdown"
-                        className={`w-[7px] h-[4px] transition-transform duration-200 ${
-                          activeDropdown === item.label ? "rotate-180" : ""
-                        }`}
+                    <button
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                      onClick={() =>
+                        item.hasDropdown && toggleDropdown(item.label)
+                      }
+                    >
+                      <span>{item.label}</span>
+                      {item.hasDropdown && (
+                        <img
+                          src="/dropdownicon.svg"
+                          alt="dropdown"
+                          className={`w-[7px] h-[4px] transition-transform duration-200 ${
+                            activeDropdown === item.label ? "rotate-180" : ""
+                          }`}
                         />
-                    )}
-                  </button>
+                      )}
+                    </button>
                   )}
 
                   {/* Desktop Dropdown Menu */}
@@ -167,15 +174,11 @@ export default function Nav() {
             <div className="hidden lg:flex lg:items-center lg:space-x-4 pl-4">
               {/* Search */}
               <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-                <img
-                  src="/searchicon.svg"
-                  alt="search"
-                  className="w-5 h-5"
-                  />
+                <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
               </button>
 
               {/* Cart */}
-              <button 
+              <button
                 onClick={toggleCart}
                 className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200"
               >
@@ -183,22 +186,18 @@ export default function Nav() {
                   src="/Carticon.svg"
                   alt="cart"
                   className="w-[44px] h-[44px]"
-                  />
+                />
               </button>
 
               {/* User Profile */}
               <div className="relative group">
                 <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-                  <img
-                    src="/usericon.svg"
-                    alt="user"
-                    className="w-6 h-6"
-                  />
+                  <img src="/usericon.svg" alt="user" className="w-6 h-6" />
                   <img
                     src="/dropdownicon.svg"
                     alt="dropdown"
                     className="w-[8px] h-[5px]"
-                    />
+                  />
                 </button>
 
                 {/* User Dropdown */}
@@ -283,8 +282,14 @@ export default function Nav() {
 
                 {/* Mobile Title */}
                 <Link href="/" className="flex items-center">
-                  <img src="/logo1.svg" alt="Souqalmart Logo" className="h-6 w-6 mr-2" />
-                  <div className="text-xl font-bold text-green-700">Souqalmart</div>
+                  <img
+                    src="/logo1.svg"
+                    alt="Souqalmart Logo"
+                    className="h-6 w-6 mr-2"
+                  />
+                  <div className="text-xl font-bold text-green-700">
+                    Souqalmart
+                  </div>
                 </Link>
               </div>
 
@@ -292,15 +297,11 @@ export default function Nav() {
               <div className="flex items-center">
                 {/* Mobile Search */}
                 <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
-                  <img
-                    src="/searchicon.svg"
-                    alt="search"
-                    className="w-5 h-5"
-                    />
+                  <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
                 </button>
 
                 {/* Mobile Cart */}
-                <button 
+                <button
                   onClick={toggleCart}
                   className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200"
                 >
@@ -308,7 +309,7 @@ export default function Nav() {
                     src="/Carticon.svg"
                     alt="cart"
                     className="w-[44px] h-[44px]"
-                    />
+                  />
                 </button>
               </div>
             </div>
@@ -335,7 +336,7 @@ export default function Nav() {
                 src="/searchicon.svg"
                 alt="search"
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                />
+              />
             </div>
 
             {/* Mobile Navigation Items */}
@@ -356,7 +357,7 @@ export default function Nav() {
                       className={`w-[7px] h-[4px] transition-transform duration-200 ${
                         activeDropdown === item.label ? "rotate-180" : ""
                       }`}
-                      />
+                    />
                   )}
                 </button>
 
@@ -384,11 +385,7 @@ export default function Nav() {
                   href="#"
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
                 >
-                  <img
-                    src="/usericon.svg"
-                    alt="user"
-                    className="w-5 h-5"
-                    />
+                  <img src="/usericon.svg" alt="user" className="w-5 h-5" />
                   <span>My Account</span>
                 </a>
 

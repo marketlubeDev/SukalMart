@@ -2,29 +2,34 @@
 
 export const categories = [
   {
-    name: "In-Ears",
-    image: "/shop1.png",
+    name: "Hair Care",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp",
   },
   {
-    name: "Headphones",
-    image: "/shop2.png",
+    name: "Body & Shower",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif",
   },
   {
-    name: "True Wireless",
-    image: "/shop3.png",
+    name: "Soap & Deodorants",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/JBX_Soap_Deo_Mix_Pack.webp",
   },
   {
-    name: "Amps & DACs",
-    image: "/shop4.png",
+    name: "Skin Care",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp",
   },
   {
-    name: "Hi-Res Players",
-    image: "/shop5.png",
+    name: "Oral & Misc",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/mouthwash-other-oral-hygiene-products-colored-table-top-view-with-copy-space-flat-lay-dental-hygiene-oral-care-products-space-text-light-background-concept_79075-26657.avif",
   },
-  {
-    name: "Accessories",
-    image: "/shop6.png",
-  },
+  // {
+  //   name: "Accessories",
+  //   image: "/shop6.png",
+  // },
 ];
 
 export const bestSellers = [
@@ -68,25 +73,27 @@ export const bestSellers = [
 export const featuredProducts = [
   {
     id: 1,
-    name: "Jabar x Crinacle - ZERO: RED",
-    category: "In-ear monitors",
+    name: "Glow & Hydrate Face Serum",
+    category: "Skincare",
     rating: 4.5,
     description:
-      "Expertly tuned dual dynamic driver IEMs with balanced, engaging sound and bold RED design. Crafted for audiophiles, by Crinacle.",
-    price: "₹1,899",
-    originalPrice: "₹2,099",
-    image: "/iem1.jpg",
+      "Advanced hydrating serum with hyaluronic acid and vitamin C for radiant, glowing skin. Suitable for all skin types.",
+    price: "₹899",
+    originalPrice: "₹1,099",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
   },
   {
     id: 2,
-    name: "DITA Audio - Project M",
-    category: "In-Ears with 1 DD + 1 BA drivers",
+    name: "Luxury Beauty Collection Set",
+    category: "Beauty Essentials",
     rating: 4.5,
     description:
-      "1 Dynamic + 1 BA driver deliver a balanced, detailed sound with rich lows and crisp highs.",
-    price: "₹29,999",
-    originalPrice: "₹34,999",
-    image: "/iem1.jpg",
+      "Complete beauty routine set including cleanser, toner, moisturizer, and makeup essentials for flawless skin.",
+    price: "₹2,499",
+    originalPrice: "₹3,199",
+    image:
+      "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
   },
 ];
 
@@ -114,10 +121,9 @@ export const serviceBenefits = [
 ];
 
 export const navigationLinks = [
-  "In-Ears",
-  "Headphones",
-  "True Wireless",
-  "Amps & DACs",
-  "Hi-Res Players",
-  "Accessories",
+  "Hair Care",
+  "Body & Shower",
+  "Soap & Deodorants",
+  "Skin Care",
+  "Oral & Misc",
 ];

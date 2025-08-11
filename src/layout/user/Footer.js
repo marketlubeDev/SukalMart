@@ -9,7 +9,11 @@ export default function Footer() {
         <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 items-center justify-start w-full max-w-6xl">
           {/* Logo */}
           <div className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center">
-            <img src="/logo1.svg" alt="Souqalmart Logo" className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2" />
+            <img
+              src="/logo1.svg"
+              alt="Souqalmart Logo"
+              className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2"
+            />
             <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold">
               souqalmart
             </span>
@@ -22,7 +26,7 @@ export default function Footer() {
               className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full text-[14px] sm:text-[16px] md:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.18px]"
               style={{
                 color: "#FFF",
-                
+
                 fontStyle: "normal",
                 leadingTrim: "both",
                 textEdge: "cap",
@@ -32,44 +36,38 @@ export default function Footer() {
                 href="#"
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
-                In-Ears
+                Hair Care
               </a>
               <a
                 href="#"
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
-                Headphones
+                Body & Shower
               </a>
               <a
                 href="#"
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
-                True Wireless
+                Soap & Deodorants
               </a>
               <a
                 href="#"
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
-                Amps & DACs
+                Skin Care
               </a>
               <a
                 href="#"
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
-                Hi-Res Players
-              </a>
-              <a
-                href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
-              >
-                Accessories
+                Oral & Misc
               </a>
             </div>
 
             {/* Divider Line */}
             <div className="h-0 w-full">
               <svg width="100%" height="1" viewBox="0 0 100% 1" fill="none">
-                <rect width="100%" height="1" fill="rgba(255, 255, 255, 0.2)"/>
+                <rect width="100%" height="1" fill="rgba(255, 255, 255, 0.2)" />
               </svg>
             </div>
 
@@ -124,7 +122,7 @@ export default function Footer() {
                   className="whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal"
                   style={{
                     color: "#FFF",
-                   
+
                     fontStyle: "normal",
                     fontWeight: 400,
                     lineHeight: "normal",
@@ -137,7 +135,7 @@ export default function Footer() {
               </div>
               <div className="h-full w-0">
                 <svg width="1" height="14" viewBox="0 0 1 14" fill="none">
-                  <rect width="1" height="14" fill="rgba(255, 255, 255, 0.2)"/>
+                  <rect width="1" height="14" fill="rgba(255, 255, 255, 0.2)" />
                 </svg>
               </div>
               <a
@@ -147,7 +145,7 @@ export default function Footer() {
                 className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal hover:opacity-60 transition-opacity"
                 style={{
                   color: "#FFF",
-                
+
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",

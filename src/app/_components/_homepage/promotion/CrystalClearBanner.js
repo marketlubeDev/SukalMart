@@ -6,7 +6,8 @@ export default function CrystalClearBanner() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/crystal.jpg')",
+            backgroundImage:
+              "url('https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner2.jpg')",
           }}
         >
           {/* Dark overlay for better text readability */}
@@ -22,22 +23,23 @@ export default function CrystalClearBanner() {
                 style={{
                   color: "#FFF",
                   textAlign: "left",
-                  
+
                   fontStyle: "normal",
                 }}
               >
-                Crystal Clear Audio, Now at 15% OFF!
+                Glow Up Your Skin, 20% OFF!
               </h2>
               <p
                 className="mb-4 sm:mb-6 md:mb-6 lg:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] xl:text-[18px] font-normal leading-[135%] tracking-[-0.28px] sm:tracking-[-0.32px] md:tracking-[-0.34px] lg:tracking-[-0.36px] xl:tracking-[-0.36px]"
                 style={{
                   color: "#FFF",
                   textAlign: "left",
-                 
+
                   fontStyle: "normal",
                 }}
               >
-                Crisp sound. Comfortable fit. Limited time offer
+                Premium skincare essentials for radiant, healthy skin. Limited
+                time offer
               </p>
             </div>
 
@@ -52,4 +54,4 @@ export default function CrystalClearBanner() {
       </div>
     </div>
   );
-} 
+}

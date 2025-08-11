@@ -22,7 +22,10 @@ export default function BestSellersSection() {
           >
             Best Sellers
           </h2>
-          <button className="flex items-center gap-1 md:gap-2 font-medium transition-colors" style={{ color: "#035F0F" }}>
+          <button
+            className="flex items-center gap-1 md:gap-2 font-medium transition-colors"
+            style={{ color: "#035F0F" }}
+          >
             <span className="text-sm md:text-base">View all</span>
             <img
               src="/nextarrow.svg"
@@ -39,7 +42,7 @@ export default function BestSellersSection() {
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
                 <img
-                  src="/best1.png"
+                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/Dove-Nutritive-Solutions-Shampoo-Intensive-Repair-12-oz_26f70c89-b2fd-4a72-8d5e-c825aea4a74d.298b021af0c2ed36673b9536677c7f06.webp"
                   alt="7hz Salnotes Zero 2 Wired IEM"
                   className="w-full h-full object-contain"
                 />
@@ -53,7 +56,7 @@ export default function BestSellersSection() {
                     className="w-16 h-10 md:w-20 md:h-12"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold" >
+                    <span className="text-white text-xs md:text-sm font-bold">
                       A1
                     </span>
                   </div>
@@ -62,21 +65,22 @@ export default function BestSellersSection() {
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Dove Nutritive Solutions
               </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
-              </p>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">Hair Care</p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
+                <span
+                  className="text-sm md:text-lg font-bold"
+                  style={{ color: "#035F0F" }}
+                >
+                  ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
+                  ₹1,299
                 </span>
               </div>
               <div className="flex justify-start">
-                <button 
+                <button
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
                   style={{
                     display: "flex",
@@ -86,7 +90,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F"
+                    border: "1px solid #035F0F",
                   }}
                 >
                   Add to cart
@@ -100,7 +104,7 @@ export default function BestSellersSection() {
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
                 <img
-                  src="/best2.png"
+                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
                   alt="7hz Salnotes Zero 2 Wired IEM"
                   className="w-full h-full object-contain"
                 />
@@ -123,21 +127,24 @@ export default function BestSellersSection() {
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Lux Body Wash
               </h3>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
+                Body & Shower
               </p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
+                <span
+                  className="text-sm md:text-lg font-bold"
+                  style={{ color: "#035F0F" }}
+                >
+                  ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
+                  ₹1,299
                 </span>
               </div>
               <div className="flex justify-start">
-                <button 
+                <button
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
                   style={{
                     display: "flex",
@@ -147,7 +154,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F"
+                    border: "1px solid #035F0F",
                   }}
                 >
                   Add to cart
@@ -161,7 +168,7 @@ export default function BestSellersSection() {
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
                 <img
-                  src="/best3.png"
+                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/51bCJJss6GL._UF894%2C1000_QL80_.jpg"
                   alt="7hz Salnotes Zero 2 Wired IEM"
                   className="w-full h-full object-contain"
                 />
@@ -184,13 +191,16 @@ export default function BestSellersSection() {
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Rexona / Sure Deo
               </h3>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
+                Soap & Deodorants
               </p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                <span
+                  className="text-sm md:text-lg font-bold"
+                  style={{ color: "#035F0F" }}
+                >
                   ₹1,899
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
@@ -198,7 +208,7 @@ export default function BestSellersSection() {
                 </span>
               </div>
               <div className="flex justify-start">
-                <button 
+                <button
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
                   style={{
                     display: "flex",
@@ -208,7 +218,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F"
+                    border: "1px solid #035F0F",
                   }}
                 >
                   Add to cart
@@ -222,7 +232,7 @@ export default function BestSellersSection() {
             <div className="relative">
               <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
                 <img
-                  src="/best4.png"
+                  src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
                   alt="7hz Salnotes Zero 2 Wired IEM"
                   className="w-full h-full object-contain"
                 />
@@ -230,21 +240,22 @@ export default function BestSellersSection() {
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Vaseline Body Lotion
               </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
-              </p>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">Skin Care</p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
+                <span
+                  className="text-sm md:text-lg font-bold"
+                  style={{ color: "#035F0F" }}
+                >
+                  ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
+                  ₹1,299
                 </span>
               </div>
               <div className="flex justify-start">
-                <button 
+                <button
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
                   style={{
                     display: "flex",
@@ -254,7 +265,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F"
+                    border: "1px solid #035F0F",
                   }}
                 >
                   Add to cart
