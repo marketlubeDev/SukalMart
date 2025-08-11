@@ -1,34 +1,32 @@
 export default function ProductShowcaseBanner({ fullWidth = false }) {
   const showcaseItems = [
     {
-      
-      image: "/probanner1.png",
-  
+      image: "/abc1.jpg",
     },
     {
-   
-      image: "/probanner2.png", 
-      
+      image: "/abc2.jpg",
     },
     {
-    
-      image: "/probanner3.png",
-     
-    }
+      image: "/abc3.jpg",
+    },
   ];
 
   return (
-    <div className={`py-6 md:py-8 lg:py-10 ${fullWidth ? 'px-0' : 'px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]'}`}>
+    <div
+      className={`py-6 md:py-8 lg:py-10 ${
+        fullWidth ? "px-0" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
+      }`}
+    >
       {/* Mobile: Carousel with one item at a time */}
       <div className="lg:hidden">
         <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
           {showcaseItems.map((item) => (
             <div key={item.id} className="flex-shrink-0 w-full snap-start">
-              <div 
+              <div
                 className="relative overflow-hidden rounded-lg"
                 style={{
                   height: "300px",
-                  background: item.background
+                  background: item.background,
                 }}
               >
                 {/* Product Image - Center */}
@@ -42,13 +40,13 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
 
                 {/* Content - Left Side */}
                 <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
-                  <h3 
+                  <h3
                     className="text-xl sm:text-2xl font-bold mb-2"
                     style={{ color: item.textColor }}
                   >
                     {item.title}
                   </h3>
-                  <p 
+                  <p
                     className="text-sm sm:text-base text-gray-600"
                     style={{ color: item.textColor }}
                   >
@@ -59,7 +57,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             </div>
           ))}
         </div>
-        
+
         {/* Mobile scroll indicator */}
         <div className="w-full mt-4">
           <div className="flex justify-center">
@@ -73,15 +71,15 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
       {/* Desktop: Custom layout - Left card full height, right cards stacked */}
       <div className="hidden lg:flex lg:gap-4 lg:h-[426px]">
         {/* First Card - Full Image */}
-        <div 
+        <div
           className="relative overflow-hidden flex-1"
           style={{
             height: "100%",
-            borderRadius: "3.324px"
+            borderRadius: "3.324px",
           }}
         >
           <img
-            src="/probanner1.png"
+            src="/abc1.jpg"
             alt="First Banner"
             className="w-full h-full object-cover"
           />
@@ -90,30 +88,30 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
         {/* Right Column - Stacked cards with gap */}
         <div className="flex-1 flex flex-col gap-4">
           {/* Second Card - Full Image */}
-          <div 
+          <div
             className="relative overflow-hidden"
             style={{
               height: "calc(50% - 8px)", // Half height minus gap
-              borderRadius: "3.324px"
+              borderRadius: "3.324px",
             }}
           >
             <img
-              src="/probanner2.png"
+              src="/abc2.jpg"
               alt="Second Banner"
               className="w-full h-full object-cover"
             />
           </div>
 
           {/* Third Card - Full Image */}
-          <div 
+          <div
             className="relative overflow-hidden"
             style={{
               height: "calc(50% - 8px)", // Half height minus gap
-              borderRadius: "3.324px"
+              borderRadius: "3.324px",
             }}
           >
             <img
-              src="/probanner3.png"
+              src="/abc3.jpg"
               alt="Third Banner"
               className="w-full h-full object-cover"
             />
@@ -122,4 +120,4 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
       </div>
     </div>
   );
-} 
+}

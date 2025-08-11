@@ -9,12 +9,11 @@ export default function ProductSidebar({
   setPriceRange,
 }) {
   const categories = [
-    "In-Ear Monitors",
-    "Headphones",
-    "True Wireless",
-    "Amps & DACs",
-    "High Res Players",
-    "Accessories",
+    "Hair Care",
+    "Body & Shower",
+    "Soap & Deodorants",
+    "Skin Care",
+    "Oral & Misc",
   ];
 
   const discountOptions = [
