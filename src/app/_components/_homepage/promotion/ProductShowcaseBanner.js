@@ -1,13 +1,16 @@
 export default function ProductShowcaseBanner({ fullWidth = false }) {
   const showcaseItems = [
     {
-      image: "/abc1.jpg",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif",
     },
     {
-      image: "/abc2.jpg",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp",
     },
     {
-      image: "/abc3.jpg",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp",
     },
   ];
 
@@ -79,7 +82,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
           }}
         >
           <img
-            src="/abc1.jpg"
+            src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif"
             alt="First Banner"
             className="w-full h-full object-cover"
           />
@@ -96,7 +99,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             }}
           >
             <img
-              src="/abc2.jpg"
+              src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp"
               alt="Second Banner"
               className="w-full h-full object-cover"
             />
@@ -111,7 +114,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             }}
           >
             <img
-              src="/abc3.jpg"
+              src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp"
               alt="Third Banner"
               className="w-full h-full object-cover"
             />
