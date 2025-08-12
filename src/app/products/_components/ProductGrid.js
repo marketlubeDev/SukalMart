@@ -18,6 +18,43 @@ export default function ProductGrid({
     "Popular",
   ];
 
+  // Function to get modified products based on selected category
+  const getModifiedProducts = () => {
+    if (selectedCategory === "Hair Care") {
+      // Use haircare3.jpg and haircare2.jpg for Hair Care category
+      const haircareImages = ["/haircare3.jpg", "/haircare2.jpg"];
+      return products.map((product, index) => ({
+        ...product,
+        image: haircareImages[index % haircareImages.length], // Cycle through the two images
+      }));
+    } else if (selectedCategory === "Soap & Deodorants") {
+      // Use soap1.jpeg, soap2.jpg, and soap3.jpg for Soap & Deodorants category
+      const soapImages = ["/soap1.jpeg", "/soap2.jpg", "/soap3.jpg"];
+      return products.map((product, index) => ({
+        ...product,
+        image: soapImages[index % soapImages.length], // Cycle through the three images
+      }));
+    } else if (selectedCategory === "Skin Care") {
+      // Use skin1.jpg, skin2.jpg, skin3.jpg, and skin5.jpg for Skin Care category
+      const skinImages = ["/skin1.jpg", "/skin2.jpg", "/skin3.jpg", "/skin5.jpg"];
+      return products.map((product, index) => ({
+        ...product,
+        image: skinImages[index % skinImages.length], // Cycle through the four images
+      }));
+    } else if (selectedCategory === "Oral & Misc") {
+      // Use tooth1.jpg, tooth2.jpg, tooth3.jpg, and tooth4.jpg for Oral & Misc category
+      const oralImages = ["/tooth1.jpg", "/tooth2.jpg", "/tooth3.jpg", "/tooth4.jpg"];
+      return products.map((product, index) => ({
+        ...product,
+        image: oralImages[index % oralImages.length], // Cycle through the four images
+      }));
+    }
+    // For other categories, return original products
+    return products;
+  };
+
+  const modifiedProducts = getModifiedProducts();
+
   return (
     <div className="bg-white">
       {/* Header */}
@@ -215,7 +252,7 @@ export default function ProductGrid({
 
       {/* Products Grid */}
       <div className="grid grid-cols-4 gap-4">
-        {products.map((product) => (
+        {modifiedProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
           </div>
@@ -227,7 +264,7 @@ export default function ProductGrid({
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        {products.map((product) => (
+        {modifiedProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
           </div>
@@ -239,7 +276,7 @@ export default function ProductGrid({
       </div>
 
       <div className="mt-8 grid grid-cols-4 gap-4">
-        {products.map((product) => (
+        {modifiedProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
           </div>

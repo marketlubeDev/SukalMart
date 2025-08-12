@@ -1,16 +1,13 @@
 export default function ProductShowcaseBanner({ fullWidth = false }) {
   const showcaseItems = [
     {
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif",
+      image: "/banner/haircarebanner1.jpg",
     },
     {
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp",
+      image: "/banner/haircarebanner2.jpg",
     },
     {
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp",
+      image: "/banner/haircarebanner3.jpg",
     },
   ];
 
@@ -23,8 +20,8 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
       {/* Mobile: Carousel with one item at a time */}
       <div className="lg:hidden">
         <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-          {showcaseItems.map((item) => (
-            <div key={item.id} className="flex-shrink-0 w-full snap-start">
+          {showcaseItems.map((item, index) => (
+            <div key={index} className="flex-shrink-0 w-full snap-start">
               <div
                 className="relative overflow-hidden rounded-lg"
                 style={{
@@ -36,7 +33,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                   <img
                     src={item.image}
-                    alt={item.alt}
+                    alt={`Haircare Banner ${index + 1}`}
                     className="w-40 h-40 sm:w-48 sm:h-48 object-contain"
                   />
                 </div>
@@ -82,8 +79,8 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
           }}
         >
           <img
-            src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif"
-            alt="First Banner"
+            src="/banner/haircarebanner1.jpg"
+            alt="Haircare Banner 1"
             className="w-full h-full object-cover"
           />
         </div>
@@ -99,8 +96,8 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             }}
           >
             <img
-              src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp"
-              alt="Second Banner"
+              src="/banner/haircarebanner2.jpg"
+              alt="Haircare Banner 2"
               className="w-full h-full object-cover"
             />
           </div>
@@ -114,8 +111,8 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             }}
           >
             <img
-              src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp"
-              alt="Third Banner"
+              src="/banner/haircarebanner3.jpg"
+              alt="Haircare Banner 3"
               className="w-full h-full object-cover"
             />
           </div>

@@ -23,6 +23,7 @@ export default function Home() {
       <CrystalClearBanner />
       <EngineeredBy7Hz />
       <InstagramSection />
+      
 
       {/* <Footer /> */}
     </div>

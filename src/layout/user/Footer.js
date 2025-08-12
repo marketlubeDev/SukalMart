@@ -130,7 +130,7 @@ export default function Footer() {
                     textEdge: "cap",
                   }}
                 >
-                  © 2025 Logoipsum All rights reserved
+                  © 2025 Souqalmart All rights reserved
                 </p>
               </div>
               <div className="h-full w-0">

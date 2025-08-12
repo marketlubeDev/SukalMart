@@ -216,9 +216,9 @@ export default function HeroBanner() {
             </div>
 
             {/* Shop Now Button */}
-            <button className="bg-[#035f0f] text-white px-4 py-3 rounded flex items-center justify-center self-start">
+            <button className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start">
               <span
-                className="text-[12px] font-medium"
+                className="text-[10px] font-medium"
                 style={{
                   letterSpacing: "-0.36px",
                 }}
