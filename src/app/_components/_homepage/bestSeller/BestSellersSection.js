@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function BestSellersSection() {
   return (
-    <div className="bg-white py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
-      <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]">
+    <div className="bg-white container mx-auto py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
+      <div className="px-4 sm:px-6 md:px-12 lg:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2
@@ -25,6 +25,7 @@ export default function BestSellersSection() {
           <button
             className="flex items-center gap-1 md:gap-2 font-medium transition-colors"
             style={{ color: "#035F0F" }}
+            onClick={() => window.location.href = "/products"}
           >
             <span className="text-sm md:text-base">View all</span>
             <img

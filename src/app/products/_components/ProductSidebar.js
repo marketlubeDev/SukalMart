@@ -56,7 +56,10 @@ export default function ProductSidebar({
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => {
+                setSelectedCategory(category);
+                localStorage.setItem('selectedCategory', category);
+              }}
               className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
                 selectedCategory === category
                   ? "bg-green-100"

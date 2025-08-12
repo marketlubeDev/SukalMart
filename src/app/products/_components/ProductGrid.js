@@ -20,35 +20,162 @@ export default function ProductGrid({
 
   // Function to get modified products based on selected category
   const getModifiedProducts = () => {
-    if (selectedCategory === "Hair Care") {
-      // Use haircare3.jpg and haircare2.jpg for Hair Care category
-      const haircareImages = ["/haircare3.jpg", "/haircare2.jpg"];
+    // All available products from all categories
+    const allAvailableProducts = [
+      // Hair Care products
+      {
+        id: "hc1",
+        image: "/haircare3.jpg",
+        name: "Professional Hair Shampoo",
+        type: "Hair Care",
+        price: 899,
+        originalPrice: 1099,
+      },
+      {
+        id: "hc2",
+        image: "/haircare2.jpg",
+        name: "Nourishing Hair Conditioner",
+        type: "Hair Care",
+        price: 799,
+        originalPrice: 999,
+      },
+      {
+        id: "hc3",
+        image: "/haircare3.jpg",
+        name: "Anti-Dandruff Treatment",
+        type: "Hair Care",
+        price: 699,
+        originalPrice: 899,
+      },
+      {
+        id: "hc4",
+        image: "/haircare2.jpg",
+        name: "Hair Growth Serum",
+        type: "Hair Care",
+        price: 1299,
+        originalPrice: 1599,
+      },
+      // Soap & Deodorants products
+      {
+        id: "sd1",
+        image: "/soap1.jpeg",
+        name: "Natural Handmade Soap",
+        type: "Soap & Deodorants",
+        price: 299,
+        originalPrice: 399,
+      },
+      {
+        id: "sd2",
+        image: "/soap2.jpg",
+        name: "Antibacterial Body Wash",
+        type: "Soap & Deodorants",
+        price: 449,
+        originalPrice: 599,
+      },
+      {
+        id: "sd3",
+        image: "/soap3.jpg",
+        name: "Long-lasting Deodorant",
+        type: "Soap & Deodorants",
+        price: 199,
+        originalPrice: 299,
+      },
+      {
+        id: "sd4",
+        image: "/soap1.jpeg",
+        name: "Moisturizing Bath Soap",
+        type: "Soap & Deodorants",
+        price: 349,
+        originalPrice: 449,
+      },
+      // Skin Care products
+      {
+        id: "sc1",
+        image: "/skin1.jpg",
+        name: "Hydrating Face Moisturizer",
+        type: "Skin Care",
+        price: 899,
+        originalPrice: 1099,
+      },
+      {
+        id: "sc2",
+        image: "/skin2.jpg",
+        name: "Vitamin C Brightening Serum",
+        type: "Skin Care",
+        price: 1299,
+        originalPrice: 1599,
+      },
+      {
+        id: "sc3",
+        image: "/skin3.jpg",
+        name: "Gentle Facial Cleanser",
+        type: "Skin Care",
+        price: 599,
+        originalPrice: 799,
+      },
+      {
+        id: "sc4",
+        image: "/skin5.jpg",
+        name: "Anti-Aging Night Cream",
+        type: "Skin Care",
+        price: 1499,
+        originalPrice: 1899,
+      },
+      // Oral Care products
+      {
+        id: "oc1",
+        image: "/tooth1.jpg",
+        name: "Whitening Toothpaste",
+        type: "Oral Care",
+        price: 199,
+        originalPrice: 299,
+      },
+      {
+        id: "oc2",
+        image: "/tooth2.jpg",
+        name: "Electric Toothbrush",
+        type: "Oral Care",
+        price: 899,
+        originalPrice: 1199,
+      },
+      {
+        id: "oc3",
+        image: "/tooth3.jpg",
+        name: "Mouthwash Fresh Mint",
+        type: "Oral Care",
+        price: 299,
+        originalPrice: 399,
+      },
+      {
+        id: "oc4",
+        image: "/tooth4.jpg",
+        name: "Dental Floss Set",
+        type: "Oral Care",
+        price: 149,
+        originalPrice: 249,
+      },
+    ];
+
+    // If no specific category is selected (Products page), show all products in random order
+    if (!selectedCategory || selectedCategory === "All Products" || selectedCategory === "Products") {
+      // Create a shuffled copy of all products
+      const shuffledProducts = [...allAvailableProducts].sort(() => Math.random() - 0.5);
       return products.map((product, index) => ({
         ...product,
-        image: haircareImages[index % haircareImages.length], // Cycle through the two images
-      }));
-    } else if (selectedCategory === "Soap & Deodorants") {
-      // Use soap1.jpeg, soap2.jpg, and soap3.jpg for Soap & Deodorants category
-      const soapImages = ["/soap1.jpeg", "/soap2.jpg", "/soap3.jpg"];
-      return products.map((product, index) => ({
-        ...product,
-        image: soapImages[index % soapImages.length], // Cycle through the three images
-      }));
-    } else if (selectedCategory === "Skin Care") {
-      // Use skin1.jpg, skin2.jpg, skin3.jpg, and skin5.jpg for Skin Care category
-      const skinImages = ["/skin1.jpg", "/skin2.jpg", "/skin3.jpg", "/skin5.jpg"];
-      return products.map((product, index) => ({
-        ...product,
-        image: skinImages[index % skinImages.length], // Cycle through the four images
-      }));
-    } else if (selectedCategory === "Oral & Misc") {
-      // Use tooth1.jpg, tooth2.jpg, tooth3.jpg, and tooth4.jpg for Oral & Misc category
-      const oralImages = ["/tooth1.jpg", "/tooth2.jpg", "/tooth3.jpg", "/tooth4.jpg"];
-      return products.map((product, index) => ({
-        ...product,
-        image: oralImages[index % oralImages.length], // Cycle through the four images
+        ...shuffledProducts[index % shuffledProducts.length],
       }));
     }
+
+    // If a specific category is selected, filter products by that category
+    const filteredProducts = allAvailableProducts.filter(product => product.type === selectedCategory);
+    
+    if (filteredProducts.length > 0) {
+      return products.map((product, index) => ({
+        ...product,
+        ...filteredProducts[index % filteredProducts.length],
+      }));
+    }
+
     // For other categories, return original products
     return products;
   };
@@ -61,7 +188,7 @@ export default function ProductGrid({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-semibold text-gray-800">
-            Showing result for &quot;{selectedCategory}&quot;
+            Showing result for &quot;{selectedCategory || "All Products"}&quot;
           </h1>
         </div>
 

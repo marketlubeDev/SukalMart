@@ -1,7 +1,7 @@
 export default function CrystalClearBanner() {
   return (
     <>
-      <div className="px-0 sm:px-6 md:px-12 lg:px-8 xl:px-[200px] py-6 md:py-8 lg:py-10">
+      <div className="px-0 sm:px-6 md:px-12 lg:px-8 py-6 md:py-8 lg:py-10 container mx-auto">
         <div className="relative h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] w-full overflow-hidden rounded-none sm:rounded-lg">
           {/* Background with crystal image */}
           <div
@@ -41,7 +41,7 @@ export default function CrystalClearBanner() {
                 >
                   Premium skincare essentials for radiant, healthy skin. Limited
                   time offer
-                </p>
+                </p>   
               </div>
 
               <button

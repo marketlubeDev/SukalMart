@@ -70,7 +70,7 @@ export default function HeroBanner() {
   console.log("Current banner:", currentBanner);
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative container-fluid w-full overflow-hidden">
       {/* Desktop Version */}
       <div className="hidden lg:block relative h-[640px] bg-white">
         {/* Background with banner image */}
@@ -111,7 +111,7 @@ export default function HeroBanner() {
 
         {/* Content - Bottom Left */}
         <div className="relative z-10 h-full flex items-end">
-          <div className="container mx-auto px-8 pb-16">
+          <div className="container mx-auto pb-16">
             <div className="max-w-2xl">
               {/* Row 2: Heading */}
               <h1 className="text-[2.8rem] font-semibold text-white mb-6 leading-tight transition-all duration-500">

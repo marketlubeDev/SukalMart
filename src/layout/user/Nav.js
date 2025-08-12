@@ -127,6 +127,16 @@ export default function Nav() {
                     <Link
                       href={item.href}
                       className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                      onClick={(e) => {
+                        // Reset category when Products is clicked
+                        if (item.label === "Products") {
+                          e.preventDefault();
+                          // Clear any stored category selection
+                          localStorage.removeItem('selectedCategory');
+                          // Force page reload to reset state
+                          window.location.href = '/products';
+                        }
+                      }}
                     >
                       <span>{item.label}</span>
                     </Link>
@@ -345,21 +355,40 @@ export default function Nav() {
                 key={index}
                 className="border-b border-gray-100 last:border-b-0"
               >
-                <button
-                  className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
-                  onClick={() => item.hasDropdown && toggleDropdown(item.label)}
-                >
-                  <span>{item.label}</span>
-                  {item.hasDropdown && (
-                    <img
-                      src="/dropdownicon.svg"
-                      alt="dropdown"
-                      className={`w-[7px] h-[4px] transition-transform duration-200 ${
-                        activeDropdown === item.label ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
-                </button>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
+                    onClick={(e) => {
+                      // Reset category when Products is clicked
+                      if (item.label === "Products") {
+                        e.preventDefault();
+                        localStorage.removeItem('selectedCategory');
+                        // Force page reload to reset state
+                        window.location.href = '/products';
+                      }
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                ) : (
+                  <button
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
+                    onClick={() => item.hasDropdown && toggleDropdown(item.label)}
+                  >
+                    <span>{item.label}</span>
+                    {item.hasDropdown && (
+                      <img
+                        src="/dropdownicon.svg"
+                        alt="dropdown"
+                        className={`w-[7px] h-[4px] transition-transform duration-200 ${
+                          activeDropdown === item.label ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                  </button>
+                )}
 
                 {/* Mobile Submenu */}
                 {item.hasDropdown && activeDropdown === item.label && (

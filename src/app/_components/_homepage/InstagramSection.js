@@ -75,15 +75,15 @@ export default function InstagramSection() {
         }
         @media only screen and (min-width: 1200px) {
           .custom-padding {
-            padding-left: 200px !important;
-            padding-right: 200px !important;
+            // padding-left: 200px !important;
+            // padding-right: 200px !important;
           }
         }
       `}</style>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden container mx-auto">
         <div
           className="flex flex-row gap-3 sm:gap-4 auto-scroll"
-          style={{ padding: "0 24px", width: "max-content" }}
+          style={{ padding: "0 24px" }}
         >
           {/* Thumbnail 1 */}
           <div

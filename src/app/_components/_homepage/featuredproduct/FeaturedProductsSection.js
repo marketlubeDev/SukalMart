@@ -18,7 +18,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
         className={
           isProductPage
             ? "py-6 md:py-8 lg:py-10 overflow-hidden"
-            : "featured-products-section-base py-6 md:py-8 lg:py-10 overflow-hidden"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto"
         }
       >
         <div className="flex flex-col gap-6">
@@ -32,11 +32,12 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
                 letterSpacing: "-0.22px",
               }}
             >
-              Featured IEMs
+              Featured Shampoos
             </h2>
             <button
               className="flex items-center gap-2 font-medium transition-colors"
               style={{ color: "#035F0F" }}
+              onClick={() => window.location.href = "/products"}
             >
               <span>View all</span>
               <img src="/nextarrow.svg" alt="Next arrow" className="w-7 h-7" />
@@ -74,38 +75,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             </div>
           </div>
         </div>
-        <style jsx>{`
-          .featured-products-section-base {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-          @media (min-width: 640px) {
-            .featured-products-section-base {
-              padding-left: 1.5rem;
-              padding-right: 1.5rem;
-            }
-          }
-          @media (min-width: 768px) {
-            .featured-products-section-base {
-              padding-left: 3rem;
-              padding-right: 3rem;
-            }
-          }
-          /* BigTablets: 992px - 1199.98px, remove 200px paddings, use px-8 */
-          @media (min-width: 992px) and (max-width: 1199.98px) {
-            .featured-products-section-base {
-              padding-left: 2rem;
-              padding-right: 2rem;
-            }
-          }
-          /* Desktop: >=1200px, add 200px paddings */
-          @media (min-width: 1200px) {
-            .featured-products-section-base {
-              padding-left: 200px;
-              padding-right: 200px;
-            }
-          }
-        `}</style>
+
       </div>
       <div className="border-b border-black/10 w-[80%] mt-6 mx-auto"></div>
     </>

@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function EngineeredBy7Hz() {
   return (
     <>
-      <div className="engineered-by-7hz-section py-6 md:py-8 lg:py-10 overflow-hidden">
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto">
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">
@@ -192,47 +192,13 @@ export default function EngineeredBy7Hz() {
           </div>
         </div>
         <style jsx>{`
-          .engineered-by-7hz-section {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-          @media (min-width: 640px) {
-            .engineered-by-7hz-section {
-              padding-left: 1.5rem;
-              padding-right: 1.5rem;
-            }
-          }
-          @media (min-width: 768px) {
-            .engineered-by-7hz-section {
-              padding-left: 3rem;
-              padding-right: 3rem;
-            }
-          }
-          /* BigTablets: 992px - 1199.98px, remove 200px paddings, use px-8 */
-          @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
-            .engineered-by-7hz-section {
-              padding-left: 2rem;
-              padding-right: 2rem;
-            }
-            /* Reduce gap between product cards on big tablets */
-            .engineered-by-7hz-cards-row {
-              gap: 1rem !important;
-            }
-          }
-          /* Desktop: >=1200px, add 200px paddings */
-          @media only screen and (min-width: 1200px) {
-            .engineered-by-7hz-section {
-              padding-left: 200px;
-              padding-right: 200px;
-            }
-          }
           /* Card layout fix for desktop and big tablets */
           @media (min-width: 992px) {
-            .engineered-by-7hz-section .flex-1 > .flex {
+            .flex-1 > .flex {
               flex-wrap: nowrap;
               gap: 2rem;
             }
-            .engineered-by-7hz-section .flex-1 > .flex > div {
+            .flex-1 > .flex > div {
               min-width: 0;
               width: 33.3333%;
               max-width: 33.3333%;
@@ -240,7 +206,7 @@ export default function EngineeredBy7Hz() {
           }
           /* Override card row gap for big tablets (992px - 1199.98px) */
           @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
-            .engineered-by-7hz-section .engineered-by-7hz-cards-row {
+            .engineered-by-7hz-cards-row {
               gap: 1rem !important;
             }
           }

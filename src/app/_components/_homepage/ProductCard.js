@@ -12,6 +12,7 @@ export default function ProductCard({
   const router = useRouter();
 
   const handleProductClick = () => {
+    console.log("Product clicked:", product.id, product.name);
     router.push(`/products/${product.id}`);
   };
   return (
@@ -56,35 +57,13 @@ export default function ProductCard({
           {product.name}
         </h3>
         <p className="text-xs text-gray-600 mb-3">{product.type || product.category}</p>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2">
           <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
             ₹{product.price?.toLocaleString() || product.price}
           </span>
           <span className="text-sm text-gray-500 line-through">
             ₹{product.originalPrice?.toLocaleString() || product.originalPrice}
           </span>
-        </div>
-        <div className="flex justify-start">
-          <button
-            className="bg-white text-black font-medium transition-colors"
-            style={{
-              display: "flex",
-              height: "40px",
-              padding: "14px 24px",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "8px",
-              borderRadius: "4px",
-              border: "1px solid #035F0F",
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              // Add to cart functionality
-              console.log(`Adding ${product.name} to cart`);
-            }}
-          >
-            Add to cart
-          </button>
         </div>
       </div>
     </div>

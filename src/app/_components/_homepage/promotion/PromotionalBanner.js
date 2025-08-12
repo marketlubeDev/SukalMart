@@ -26,9 +26,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
   return (
     <>
       <div
-        className={`py-6 md:py-8 lg:py-10 ${
-          fullWidth ? "px-0" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
-        }`}
+        className={`py-6 md:py-8 lg:py-10 container mx-auto px-0`}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">

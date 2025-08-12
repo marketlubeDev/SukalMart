@@ -1,0 +1,169 @@
+import ProductCard from "./ProductCard";
+
+export default function SunsilkShampooSection({ selectedCategory }) {
+  // Function to get products based on category
+  const getProducts = (category) => {
+    if (category === "Body & Shower") {
+      return [
+        {
+          id: 1,
+          name: "Premium Body Wash Gel",
+          type: "Body Care",
+          price: 299,
+          originalPrice: 399,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          category: "Body Wash",
+        },
+        {
+          id: 2,
+          name: "Luxury Body Wash Cream",
+          type: "Body Care",
+          price: 349,
+          originalPrice: 449,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          category: "Body Wash",
+        },
+        {
+          id: 3,
+          name: "Moisturizing Body Wash",
+          type: "Body Care",
+          price: 279,
+          originalPrice: 379,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          category: "Body Wash",
+        },
+        {
+          id: 4,
+          name: "Refreshing Body Wash",
+          type: "Body Care",
+          price: 259,
+          originalPrice: 359,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          category: "Body Wash",
+        },
+      ];
+    }
+    
+    // Sunsilk shampoo products for Hair Care category
+    if (category === "Hair Care") {
+      return [
+        {
+          id: 1,
+          name: "Sunsilk Naturals Shampoo",
+          type: "Hair Care",
+          price: 299,
+          originalPrice: 399,
+          image: "/sunsilk1.jpg",
+          category: "Shampoo",
+        },
+        {
+          id: 2,
+          name: "Sunsilk Perfect Straight Shampoo",
+          type: "Hair Care",
+          price: 349,
+          originalPrice: 449,
+          image: "/sunsilk2.jpg",
+          category: "Shampoo",
+        },
+        {
+          id: 3,
+          name: "Sunsilk Black Shine Shampoo",
+          type: "Hair Care",
+          price: 279,
+          originalPrice: 379,
+          image: "/sunsilk3.jpg",
+          category: "Shampoo",
+        },
+        {
+          id: 4,
+          name: "Sunsilk Soft & Smooth Shampoo",
+          type: "Hair Care",
+          price: 259,
+          originalPrice: 359,
+          image: "/sunsilk4.jpg",
+          category: "Shampoo",
+        },
+      ];
+    }
+    
+    // Default products for other categories
+    return [
+      {
+        id: 1,
+        name: "Premium Beauty Product",
+        type: "Beauty",
+        price: 299,
+        originalPrice: 399,
+        image: "/sunsilk1.jpg",
+        category: "Beauty",
+      },
+      {
+        id: 2,
+        name: "Luxury Beauty Product",
+        type: "Beauty",
+        price: 349,
+        originalPrice: 449,
+        image: "/sunsilk2.jpg",
+        category: "Beauty",
+      },
+      {
+        id: 3,
+        name: "Natural Beauty Product",
+        type: "Beauty",
+        price: 279,
+        originalPrice: 379,
+        image: "/sunsilk3.jpg",
+        category: "Beauty",
+      },
+      {
+        id: 4,
+        name: "Organic Beauty Product",
+        type: "Beauty",
+        price: 259,
+        originalPrice: 359,
+        image: "/sunsilk4.jpg",
+        category: "Beauty",
+      },
+    ];
+  };
+
+  const products = getProducts(selectedCategory);
+
+  return (
+    <div className="py-8 container mx-auto">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
+          </h2>
+          <div className="flex items-center gap-2 text-green-600 hover:text-green-700 transition-colors cursor-pointer">
+            <span className="text-sm font-semibold">View all</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg overflow-hidden">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+} 
