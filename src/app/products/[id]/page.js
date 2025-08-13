@@ -336,7 +336,7 @@ export default function ProductDetailPage() {
           originalPrice: 899,
           discount: 22,
           image: "/haircare3.jpg",
-          images: ["/haircare3.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg"],
           description: "Effective anti-dandruff treatment that eliminates flakes and soothes scalp irritation for healthy hair.",
           features: [
             "Anti-dandruff formula",
@@ -362,7 +362,7 @@ export default function ProductDetailPage() {
           originalPrice: 1599,
           discount: 19,
           image: "/haircare2.jpg",
-          images: ["/haircare2.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg"],
           description: "Advanced hair growth serum with natural ingredients that promote hair growth and strengthen hair follicles.",
           features: [
             "Promotes hair growth",
@@ -389,7 +389,7 @@ export default function ProductDetailPage() {
           originalPrice: 399,
           discount: 25,
           image: "/soap1.jpeg",
-          images: ["/soap1.jpeg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
           description: "Handcrafted natural soap made with pure ingredients for gentle cleansing and moisturizing skin.",
           features: [
             "Handcrafted natural soap",
@@ -415,7 +415,7 @@ export default function ProductDetailPage() {
           originalPrice: 599,
           discount: 25,
           image: "/soap2.jpg",
-          images: ["/soap2.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/soap2.jpg", "/soap2.jpg", "/soap2.jpg", "/soap2.jpg"],
           description: "Antibacterial body wash that provides thorough cleansing while protecting against germs and bacteria.",
           features: [
             "Antibacterial protection",
@@ -441,7 +441,7 @@ export default function ProductDetailPage() {
           originalPrice: 299,
           discount: 33,
           image: "/soap3.jpg",
-          images: ["/soap3.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/soap3.jpg", "/soap3.jpg", "/soap3.jpg", "/soap3.jpg"],
           description: "Long-lasting deodorant that provides 48-hour protection against odor and wetness.",
           features: [
             "48-hour protection",
@@ -467,7 +467,7 @@ export default function ProductDetailPage() {
           originalPrice: 449,
           discount: 22,
           image: "/soap1.jpeg",
-          images: ["/soap1.jpeg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
           description: "Moisturizing bath soap enriched with natural oils for soft, hydrated skin after every wash.",
           features: [
             "Moisturizing formula",
@@ -494,7 +494,7 @@ export default function ProductDetailPage() {
           originalPrice: 1099,
           discount: 18,
           image: "/skin1.jpg",
-          images: ["/skin1.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/skin1.jpg", "/skin1.jpg", "/skin1.jpg", "/skin1.jpg"],
           description: "Intensive hydrating face moisturizer that provides long-lasting moisture for soft, supple skin.",
           features: [
             "Intensive hydration",
@@ -520,7 +520,7 @@ export default function ProductDetailPage() {
           originalPrice: 1599,
           discount: 19,
           image: "/skin2.jpg",
-          images: ["/skin2.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/skin2.jpg", "/skin2.jpg", "/skin2.jpg", "/skin2.jpg"],
           description: "Powerful Vitamin C serum that brightens skin tone and reduces dark spots for radiant complexion.",
           features: [
             "Vitamin C formula",
@@ -546,7 +546,7 @@ export default function ProductDetailPage() {
           originalPrice: 799,
           discount: 25,
           image: "/skin3.jpg",
-          images: ["/skin3.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/skin3.jpg", "/skin3.jpg", "/skin3.jpg", "/skin3.jpg"],
           description: "Gentle facial cleanser that removes impurities without stripping natural oils from your skin.",
           features: [
             "Gentle formula",
@@ -572,7 +572,7 @@ export default function ProductDetailPage() {
           originalPrice: 1899,
           discount: 21,
           image: "/skin5.jpg",
-          images: ["/skin5.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/skin5.jpg", "/skin5.jpg", "/skin5.jpg", "/skin5.jpg"],
           description: "Advanced anti-aging night cream that works while you sleep to reduce fine lines and wrinkles.",
           features: [
             "Anti-aging formula",
@@ -599,7 +599,7 @@ export default function ProductDetailPage() {
           originalPrice: 299,
           discount: 33,
           image: "/tooth1.jpg",
-          images: ["/tooth1.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/tooth1.jpg", "/tooth1.jpg", "/tooth1.jpg", "/tooth1.jpg"],
           description: "Advanced whitening toothpaste that removes stains and brightens your smile for confident oral hygiene.",
           features: [
             "Whitening formula",
@@ -625,7 +625,7 @@ export default function ProductDetailPage() {
           originalPrice: 1199,
           discount: 25,
           image: "/tooth2.jpg",
-          images: ["/tooth2.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/tooth2.jpg", "/tooth2.jpg", "/tooth2.jpg", "/tooth2.jpg"],
           description: "Advanced electric toothbrush with multiple cleaning modes for thorough oral hygiene and gum care.",
           features: [
             "Multiple cleaning modes",
@@ -651,7 +651,7 @@ export default function ProductDetailPage() {
           originalPrice: 399,
           discount: 25,
           image: "/tooth3.jpg",
-          images: ["/tooth3.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg"],
           description: "Refreshing mouthwash with fresh mint flavor that kills bacteria and provides long-lasting fresh breath.",
           features: [
             "Fresh mint flavor",
@@ -677,7 +677,7 @@ export default function ProductDetailPage() {
           originalPrice: 249,
           discount: 40,
           image: "/tooth4.jpg",
-          images: ["/tooth4.jpg", "/banner1.png", "/banner2.png", "/banner3.jpg"],
+          images: ["/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg"],
           description: "Complete dental floss set with waxed floss and floss picks for thorough interdental cleaning.",
           features: [
             "Waxed floss",
@@ -1024,13 +1024,31 @@ export default function ProductDetailPage() {
                 About product
               </h3>
               <p className="text-gray-700 leading-relaxed mb-2">
-                The 7Hz Salnotes Zero is a budget-friendly IEM designed for
-                high-fidelity sound with a clean and balanced tuning. Built with
-                a sleek, ergonomic design and quality components, it offers
-                impressive detail, clarity, and comfort for everyday listening.
-                Whether you&apos;re into casual music enjoyment or critical
-                listening, the Zero delivers a well-rounded audio experience
-                that punches above its price.
+                {product.type === "Hair Care" && (
+                  <>
+                    Our premium hair care products are formulated with advanced ingredients to address specific hair concerns. Whether you're dealing with dryness, dandruff, or hair loss, our scientifically-backed formulas work to restore hair health and vitality. Each product is carefully crafted to provide deep nourishment, strengthen hair follicles, and promote natural growth while maintaining the perfect balance for your hair type.
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    Experience the perfect blend of natural ingredients and modern science in our soap and deodorant collection. Our products are designed to provide thorough cleansing while being gentle on your skin. From antibacterial protection to long-lasting freshness, each item is crafted to meet your daily hygiene needs. We use carefully selected natural oils and essential ingredients to ensure your skin stays healthy, clean, and refreshed throughout the day.
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    Transform your skincare routine with our advanced formulations designed to address various skin concerns. Our products combine cutting-edge dermatological science with natural ingredients to deliver visible results. From hydration and brightening to anti-aging and acne treatment, each product is formulated to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+                  </>
+                )}
+                {product.type === "Oral Care" && (
+                  <>
+                    Maintain optimal oral health with our comprehensive range of dental care products. Our oral care solutions are designed to provide thorough cleaning, fresh breath, and long-term dental health benefits. From advanced whitening formulas to gentle yet effective cleaning systems, each product is engineered to work together for complete oral hygiene. We prioritize both effectiveness and comfort to ensure your daily dental routine is both beneficial and enjoyable.
+                  </>
+                )}
+                {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+                  <>
+                    Discover our carefully curated collection of premium products designed to enhance your daily routine. Each item is crafted with attention to detail, using quality ingredients and innovative formulations to deliver exceptional results. Whether you're looking for personal care essentials or specialized treatments, our products are designed to meet your needs while providing the quality and reliability you deserve.
+                  </>
+                )}
               </p>
               <a
                 href="#"
@@ -1047,15 +1065,56 @@ export default function ProductDetailPage() {
                 Specification
               </h3>
               <ul className="list-disc pl-5 text-gray-700 space-y-1">
-                <li>
-                  Driver Type: 10mm dynamic driver with metal composite
-                  diaphragm
-                </li>
-                <li>Impedance: 32Ω</li>
-                <li>Sensitivity: 108dB ±1dB</li>
-                <li>Frequency Response: 20Hz – 20kHz</li>
-                <li>Connector: 0.78mm 2-pin detachable cable</li>
-                <li>Cable: High-quality oxygen-free copper (OFC) cable</li>
+                {product.type === "Hair Care" && (
+                  <>
+                    <li>Formulated with advanced hair care technology</li>
+                    <li>Suitable for all hair types and textures</li>
+                    <li>Contains natural and nourishing ingredients</li>
+                    <li>Free from harmful chemicals and sulfates</li>
+                    <li>Clinically tested for safety and effectiveness</li>
+                    <li>Designed for daily use and long-term results</li>
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    <li>Made with natural and gentle ingredients</li>
+                    <li>Provides long-lasting freshness and protection</li>
+                    <li>Suitable for sensitive skin types</li>
+                    <li>Antibacterial and antimicrobial properties</li>
+                    <li>Eco-friendly and biodegradable formulas</li>
+                    <li>Dermatologically tested for safety</li>
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    <li>Advanced dermatological formulations</li>
+                    <li>Contains active ingredients for targeted results</li>
+                    <li>Suitable for various skin concerns and types</li>
+                    <li>Non-comedogenic and hypoallergenic</li>
+                    <li>Clinically proven effectiveness</li>
+                    <li>Designed for daily skincare routines</li>
+                  </>
+                )}
+                {product.type === "Oral Care" && (
+                  <>
+                    <li>Advanced dental care technology</li>
+                    <li>Provides comprehensive oral hygiene</li>
+                    <li>Suitable for daily use and maintenance</li>
+                    <li>Contains fluoride and protective ingredients</li>
+                    <li>Dentist-recommended formulations</li>
+                    <li>Designed for long-term oral health benefits</li>
+                  </>
+                )}
+                {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+                  <>
+                    <li>Premium quality ingredients and formulations</li>
+                    <li>Designed for optimal performance and results</li>
+                    <li>Suitable for regular daily use</li>
+                    <li>Safety tested and approved</li>
+                    <li>Long-lasting effectiveness and reliability</li>
+                    <li>User-friendly and convenient application</li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -1099,8 +1158,15 @@ export default function ProductDetailPage() {
           </div>
           <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
             <img
-              src="/productfeaturesimage.png"
-              alt="Product features"
+              src={
+                product.type === "Hair Care" ? "/haircarebanner.png" :
+                product.type === "Skin Care" ? "/skinacrebanner.png" :
+                product.type === "Soap & Deodorants" ? "/soap.png" :
+                product.type === "Body & Wash" ? "/bodywash.png" :
+                product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&misc.png" :
+                "/skinacrebanner.png"
+              }
+              alt={`${product.type} Product Features`}
               className="object-cover"
               style={{
                 width: "100%",
@@ -1129,26 +1195,124 @@ export default function ProductDetailPage() {
                   textEdge: "cap",
                 }}
               >
-                Choose from Type-C and 3.5mm
+                {product.type === "Hair Care" && (
+                  <>
+                    Advanced Hair Care Technology
                 <br />
-                Terminations
+                    for Professional Results
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    Advanced Skincare Formulations
+                    <br />
+                    for Radiant Skin
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    Natural Cleansing Solutions
+                    <br />
+                    for Daily Hygiene
+                  </>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>
+                    Premium Body Care Products
+                    <br />
+                    for Complete Wellness
+                  </>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" && (
+                  <>
+                    Advanced Oral Care Technology
+                    <br />
+                    for Complete Dental Health
+                  </>
+                )}
+                {!["Hair Care", "Skin Care", "Soap & Deodorants", "Body & Wash", "Oral Care", "Oral & Misc"].includes(product.type) && (
+                  <>
+                    Premium Product Technology
+                    <br />
+                    for Optimal Results
+                  </>
+                )}
               </div>
               <ul className="list-disc pl-5 text-gray-700 space-y-2 text-base">
+                {product.type === "Hair Care" && (
+                  <>
                 <li>
-                  The 7Hz Zero 2 IEMs are available in detachable cable with
-                  gold-plated 0.78mm 2-pin or 3.5mm termination.
+                      Our advanced hair care technology uses scientifically proven ingredients to address specific hair concerns and promote healthy growth.
                 </li>
                 <li>
-                  Choose upgrade to balanced cable with a detachable module, for
-                  fine-tuning to various music sources.
+                      Each product is formulated with natural extracts and advanced compounds that work together to restore hair vitality and strength.
                 </li>
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    <li>
+                      Our dermatologically tested formulations combine cutting-edge science with natural ingredients for visible skin improvements.
+                    </li>
+                    <li>
+                      Each product targets specific skin concerns while maintaining the skin's natural balance and promoting long-term health.
+                    </li>
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    <li>
+                      Our natural cleansing solutions provide thorough hygiene while being gentle on your skin and environmentally friendly.
+                    </li>
+                    <li>
+                      Each product is crafted with carefully selected natural ingredients for effective cleansing and long-lasting freshness.
+                    </li>
+                  </>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>
+                    <li>
+                      Our premium body care products are designed to nourish and protect your skin while providing a luxurious bathing experience.
+                    </li>
+                    <li>
+                      Each formulation combines therapeutic ingredients with indulgent textures for complete body wellness and care.
+                    </li>
+                  </>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" && (
+                  <>
+                    <li>
+                      Our advanced oral care technology provides comprehensive dental hygiene with innovative cleaning systems and protective formulas.
+                    </li>
+                    <li>
+                      Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
+                    </li>
+                  </>
+                )}
+                {!["Hair Care", "Skin Care", "Soap & Deodorants", "Body & Wash", "Oral Care", "Oral & Misc"].includes(product.type) && (
+                  <>
+                    <li>
+                      Our premium products are crafted with the highest quality ingredients and advanced technology to deliver exceptional results.
+                    </li>
+                    <li>
+                      Each formulation is designed to meet your specific needs while providing the quality and reliability you deserve.
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
             {/* Right: Product Image */}
             <div className="flex-1 flex justify-center items-center w-full">
               <img
-                src="/productfeaturesimage2.png"
-                alt="Choose from Type-C and 3.5mm Terminations"
+                src={
+                  product.type === "Hair Care" ? "/haircarebanner2.png" :
+                  product.type === "Skin Care" ? "/skincarebanner2.png" :
+                  product.type === "Soap & Deodorants" ? "/soapbanner2.png" :
+                  product.type === "Body & Wash" ? "/body&washbanner2.png" :
+                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner2.png" :
+                  "/skincarebanner2.png"
+                }
+                alt={`${product.type} Features`}
                 className="object-contain"
                 style={{ width: "100%", maxWidth: "500px", height: "auto" }}
               />
@@ -1156,14 +1320,21 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Features a 10mm Dynamic Driver */}
+        {/* Category-specific Features Section */}
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center px-4 py-8 ">
             {/* Left: Product Image (aligned left most) */}
             <div className="flex-1 flex justify-start items-center w-full mb-6 md:mb-0">
               <img
-                src="/productfeaturesimage3.png"
-                alt="Features a 10mm Dynamic Driver"
+                src={
+                  product.type === "Hair Care" ? "/haircarebanner3.png" :
+                  product.type === "Skin Care" ? "/skincarebanner3.png" :
+                  product.type === "Soap & Deodorants" ? "/soapbanner4.png" :
+                  product.type === "Body & Wash" ? "/body&washbanner3.png" :
+                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner3.png" :
+                  "/skincarebanner3.png"
+                }
+                alt={`${product.type} Advanced Features`}
                 className="object-contain"
                 style={{
                   width: "100%",
@@ -1188,56 +1359,77 @@ export default function ProductDetailPage() {
                   textEdge: "cap",
                 }}
               >
-                Features a 10mm Dynamic Driver
+                {product.type === "Hair Care" && (
+                  <>Advanced Hair Growth Technology</>
+                )}
+                {product.type === "Skin Care" && (
+                  <>Advanced Anti-Aging Technology</>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>Advanced Cleansing Technology</>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>Advanced Body Care Technology</>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                  <>Advanced Dental Care Technology</>
+                ) : (
+                  <>Advanced Anti-Aging Technology</>
+                )}
               </div>
               <p className="text-gray-700 text-base self-start">
-                The 7Hz Salnotes Zero 2 sports a full-range earphone that uses
-                cutting-edge technology enabled by 7Hz and hosts a 10mm dynamic
-                driver with a metal composite diaphragm.
+                {product.type === "Hair Care" && (
+                  <>
+                    Our advanced hair growth technology utilizes cutting-edge formulations that penetrate deep into hair follicles to stimulate natural growth and strengthen hair from the roots. Each product is scientifically formulated to address specific hair concerns and promote healthy, vibrant hair.
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    Our advanced anti-aging technology combines revolutionary ingredients with proven dermatological science to target fine lines, wrinkles, and age spots. Each formulation is designed to work at the cellular level to promote skin regeneration and maintain youthful radiance.
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    Our advanced cleansing technology provides superior hygiene protection while maintaining skin's natural moisture balance. Each product is engineered with antibacterial properties and natural ingredients to ensure thorough cleansing without compromising skin health.
+                  </>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>
+                    Our advanced body care technology delivers comprehensive skin nourishment and protection through innovative formulations. Each product combines therapeutic ingredients with luxurious textures to provide complete body wellness and rejuvenation.
+                  </>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                  <>
+                    Our advanced dental care technology provides superior oral hygiene through innovative cleaning systems and protective formulas. Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
+                  </>
+                ) : (
+                  <>
+                  Our advanced anti-aging technology combines revolutionary ingredients with proven dermatological science to target fine lines, wrinkles, and age spots. Each formulation is designed to work at the cellular level to promote skin regeneration and maintain youthful radiance.
+
+                  </>
+                )}
               </p>
             </div>
           </div>
         </div>
 
-        {/* New Section: Product Image 4 */}
+       
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white relative">
-            <img
-              src="/productfeaturesiamge4.png"
-              alt="Product features"
+            <video
+              src="/video2.mp4"
               className="w-full h-[600px] object-cover"
               style={{ objectPosition: "center" }}
-            />
-            {/* Video Play Button Centered */}
-            <button
-              type="button"
-              className="absolute inset-0 flex items-center justify-center focus:outline-none"
-              aria-label="Play Video"
-              style={{ pointerEvents: "auto" }}
+              controls
+              poster="/soapbanner3.png" // Updated thumbnail image
             >
-              <span className="rounded-full flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 36 36"
-                  fill="none"
-                >
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="18"
-                    fill="white"
-                    fillOpacity="0.7"
-                  />
-                  <polygon points="14,11 26,18 14,25" fill="#D1D5DB" />
-                </svg>
-              </span>
-            </button>
+              Your browser does not support the video tag.
+            </video>
+            {/* Optionally, you can add a custom play button overlay if you want to control playback via JS */}
           </div>
         </div>
 
-        {/* New Section: Detachable High-Purity OFC Cable */}
+        {/* Category-specific Features Section */}
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center px-4 py-8">
             {/* Left: Text Content */}
@@ -1255,27 +1447,120 @@ export default function ProductDetailPage() {
                   textEdge: "cap",
                 }}
               >
-                Detachable High-Purity OFC <br />
-                Cable
+                {product.type === "Hair Care" && (
+                  <>
+                    Professional Hair Care <br />
+                    Solutions
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    Advanced Skincare <br />
+                    Technology
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    Natural Hygiene <br />
+                    Solutions
+                  </>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>
+                    Premium Body Care <br />
+                    Technology
+                  </>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                  <>
+                    Advanced Dental Care <br />
+                    Technology
+                  </>
+                ) : (
+                  <>
+                    Detachable High-Purity OFC <br />
+                    Cable
+                  </>
+                )}
               </div>
               <ul className="list-disc pl-5 text-gray-700 text-base self-start space-y-2">
-                <li>
-                  Choose your cable termination: 3.5mm or Type-C (with mic). You
-                  can now choose the termination and choose design during your
-                  purchase.
-                </li>
-                <li>
-                  The advantage of a detachable termination is you can pair
-                  these with a preferred DAC & Amp or cable for further
-                  performance if you ever wanted to in the near future.
-                </li>
+                {product.type === "Hair Care" && (
+                  <>
+                    <li>
+                      Our professional hair care solutions are designed to address specific hair concerns with scientifically proven formulations that deliver visible results.
+                    </li>
+                    <li>
+                      Each product is crafted with premium ingredients and advanced technology to provide salon-quality results in the comfort of your home.
+                    </li>
+                  </>
+                )}
+                {product.type === "Skin Care" && (
+                  <>
+                    <li>
+                      Our advanced skincare technology combines cutting-edge dermatological science with natural ingredients to target specific skin concerns effectively.
+                    </li>
+                    <li>
+                      Each formulation is designed to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+                    </li>
+                  </>
+                )}
+                {product.type === "Soap & Deodorants" && (
+                  <>
+                    <li>
+                      Our natural hygiene solutions provide thorough cleansing while being gentle on your skin and environmentally friendly for daily use.
+                    </li>
+                    <li>
+                      Each product is crafted with carefully selected natural ingredients to ensure effective hygiene without compromising skin health.
+                    </li>
+                  </>
+                )}
+                {product.type === "Body & Wash" && (
+                  <>
+                    <li>
+                      Our premium body care technology delivers comprehensive skin nourishment and protection through innovative formulations and luxurious textures.
+                    </li>
+                    <li>
+                      Each product combines therapeutic ingredients with indulgent formulations to provide complete body wellness and rejuvenation.
+                    </li>
+                  </>
+                )}
+                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                  <>
+                    <li>
+                      Our advanced dental care technology provides superior oral hygiene through innovative cleaning systems and protective formulas.
+                    </li>
+                    <li>
+                      Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      Choose your cable termination: 3.5mm or Type-C (with mic). You
+                      can now choose the termination and choose design during your
+                      purchase.
+                    </li>
+                    <li>
+                      The advantage of a detachable termination is you can pair
+                      these with a preferred DAC & Amp or cable for further
+                      performance if you ever wanted to in the near future.
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
             {/* Right: Product Image */}
             <div className="flex-1 flex justify-center items-center w-full">
               <img
-                src="/productfeaturesimage5.png"
-                alt="Detachable High-Purity OFC Cable"
+                src={
+                  product.type === "Hair Care" ? "/haircarebanner2.png" :
+                  product.type === "Skin Care" ? "/skincarebanner2.png" :
+                  product.type === "Soap & Deodorants" ? "/soapbanner2.png" :
+                  product.type === "Body & Wash" ? "/body&washbanner2.png" :
+                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner2.png" :
+                  "/productfeaturesimage5.png"
+                }
+                alt={`${product.type} Advanced Features`}
                 className="object-contain"
                 style={{ width: "100%", maxWidth: "500px", height: "auto" }}
               />
@@ -1362,18 +1647,11 @@ export default function ProductDetailPage() {
                     Review images
                   </h5>
                   <div className="flex gap-2 overflow-x-auto">
-                    {[
-                      "/shop1.png",
-                      "/shop2.png",
-                      "/shop3.png",
-                      "/shop4.png",
-                      "/shop5.png",
-                      "/shop6.png",
-                    ].map((img, idx) => (
+                    {Array.from({ length: 6 }).map((_, idx) => (
                       <img
                         key={idx}
-                        src={img}
-                        alt={`Review image ${idx + 1}`}
+                        src={product.images && product.images.length > 0 ? product.images[selectedImage] : product.image}
+                        alt="Selected product"
                         className="w-16 h-16 rounded object-cover border border-gray-200"
                       />
                     ))}
@@ -1425,13 +1703,13 @@ export default function ProductDetailPage() {
                   <div className="flex flex-col gap-1">
                     <div className="flex gap-2">
                       <img
-                        src="/shop1.png"
-                        alt="Review image 1"
+                        src={product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image}
+                        alt="Selected product review 1"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
                       <img
-                        src="/shop2.png"
-                        alt="Review image 2"
+                        src={product.images && product.images[0] ? product.images[0] : product.image}
+                        alt="Selected product review 2"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
                     </div>
@@ -1498,8 +1776,8 @@ export default function ProductDetailPage() {
                   <div className="flex flex-col gap-1">
                     <div className="flex gap-2">
                       <img
-                        src="/shop2.png"
-                        alt="Review image 2"
+                        src={product?.images?.[selectedImage] || product?.image || "/shop2.png"}
+                        alt="Selected product image"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
                     </div>

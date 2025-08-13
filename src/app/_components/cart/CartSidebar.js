@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import CouponSidebar from "./CouponSidebar";
 
 export default function CartSidebar({ isOpen, onClose }) {
+  const router = useRouter();
   const [quantities, setQuantities] = useState({
     1: 1,
     2: 1,
@@ -65,6 +67,11 @@ export default function CartSidebar({ isOpen, onClose }) {
   const removeItem = (itemId) => {
     // Handle item removal logic here
     console.log(`Remove item ${itemId}`);
+  };
+
+  const handleProceedToCheckout = () => {
+    onClose(); // Close the cart sidebar
+    router.push('/checkout'); // Navigate to checkout page
   };
 
   const subtotal = cartItems.reduce(
@@ -735,6 +742,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 </button>
               </div>
               <button
+                onClick={handleProceedToCheckout}
                 style={{
                   display: "flex",
                   width: "200px",

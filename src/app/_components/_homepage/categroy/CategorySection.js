@@ -16,7 +16,7 @@ export default function     CategorySection() {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center w-full overflow-hidden"
+        className="flex flex-col items-center justify-center w-full overflow-hidden px-4 sm:px-0"
         style={{
           display: "flex",
           flexDirection: "column",

@@ -1,6 +1,16 @@
 import Image from "next/image";
+import { useState } from "react";
 
 export default function InstagramSection() {
+  const [playingVideo, setPlayingVideo] = useState(null);
+
+  const handlePlayClick = (videoId) => {
+    setPlayingVideo(videoId);
+  };
+
+  const handleVideoEnd = () => {
+    setPlayingVideo(null);
+  };
   return (
     <div
       className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-12 py-6 md:py-8 lg:py-10 custom-padding"
@@ -97,25 +107,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail1.jpg"
-              alt="Instagram Video 1"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video1' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail1.jpg"
+                  alt="Instagram Video 1"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video1')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Thumbnail 2 */}
@@ -130,25 +156,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail2.jpg"
-              alt="Instagram Video 2"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video2' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail2.jpg"
+                  alt="Instagram Video 2"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video2')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Thumbnail 3 */}
@@ -163,25 +205,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail3.jpg"
-              alt="Instagram Video 3"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video3' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail3.jpg"
+                  alt="Instagram Video 3"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video3')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Thumbnail 4 */}
@@ -196,25 +254,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail4.jpg"
-              alt="Instagram Video 4"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video4' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail4.jpg"
+                  alt="Instagram Video 4"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video4')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Thumbnail 5 */}
@@ -229,25 +303,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail1.jpg"
-              alt="Instagram Video 5"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video5' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail1.jpg"
+                  alt="Instagram Video 5"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video5')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Thumbnail 6 */}
@@ -262,25 +352,41 @@ export default function InstagramSection() {
               aspectRatio: "122/217",
             }}
           >
-            <Image
-              src="/thumbnail2.jpg"
-              alt="Instagram Video 6"
-              fill
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
-              className="object-cover"
-            />
-            {/* Play Button Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
+            {playingVideo === 'video6' ? (
+              <video
+                src="/video1.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                onEnded={handleVideoEnd}
+                controls
+              />
+            ) : (
+              <>
+                <Image
+                  src="/thumbnail2.jpg"
+                  alt="Instagram Video 6"
+                  fill
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, (max-width: 1024px) 220px, 253px"
+                  className="object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div 
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => handlePlayClick('video6')}
+                  >
+                    <svg
+                      className="w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-800 ml-0.5 sm:ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Duplicate thumbnails for seamless infinite scroll */}

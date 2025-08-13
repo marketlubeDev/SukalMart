@@ -156,28 +156,81 @@ export default function ProductGrid({
       },
     ];
 
-    // If no specific category is selected (Products page), show all products in random order
+    // If no specific category is selected (Products page), show all products from all categories
     if (!selectedCategory || selectedCategory === "All Products" || selectedCategory === "Products") {
-      // Create a shuffled copy of all products
-      const shuffledProducts = [...allAvailableProducts].sort(() => Math.random() - 0.5);
-      return products.map((product, index) => ({
-        ...product,
-        ...shuffledProducts[index % shuffledProducts.length],
-      }));
+      // Interleave products from different categories for better distribution
+      const hairCareProducts = allAvailableProducts.filter(p => p.type === "Hair Care");
+      const soapProducts = allAvailableProducts.filter(p => p.type === "Soap & Deodorants");
+      const skinCareProducts = allAvailableProducts.filter(p => p.type === "Skin Care");
+      const oralCareProducts = allAvailableProducts.filter(p => p.type === "Oral Care");
+      
+      const interleavedProducts = [];
+      const maxLength = Math.max(hairCareProducts.length, soapProducts.length, skinCareProducts.length, oralCareProducts.length);
+      
+      for (let i = 0; i < maxLength; i++) {
+        if (hairCareProducts[i]) interleavedProducts.push({ ...hairCareProducts[i], id: `${hairCareProducts[i].id}_${i}` });
+        if (soapProducts[i]) interleavedProducts.push({ ...soapProducts[i], id: `${soapProducts[i].id}_${i}` });
+        if (skinCareProducts[i]) interleavedProducts.push({ ...skinCareProducts[i], id: `${skinCareProducts[i].id}_${i}` });
+        if (oralCareProducts[i]) interleavedProducts.push({ ...oralCareProducts[i], id: `${oralCareProducts[i].id}_${i}` });
+      }
+      
+      return interleavedProducts;
     }
 
     // If a specific category is selected, filter products by that category
-    const filteredProducts = allAvailableProducts.filter(product => product.type === selectedCategory);
+    let filteredProducts = allAvailableProducts.filter(product => product.type === selectedCategory);
+    
+    // Special handling for "Oral & Misc" category
+    if (selectedCategory === "Oral & Misc") {
+      filteredProducts = [
+        {
+          id: "oc1",
+          image: "/tooth1.jpg",
+          name: "Whitening Toothpaste",
+          type: "Oral & Misc",
+          price: 199,
+          originalPrice: 299,
+        },
+        {
+          id: "oc2",
+          image: "/tooth2.jpg",
+          name: "Electric Toothbrush",
+          type: "Oral & Misc",
+          price: 899,
+          originalPrice: 1199,
+        },
+        {
+          id: "oc3",
+          image: "/tooth3.jpg",
+          name: "Mouthwash Fresh Mint",
+          type: "Oral & Misc",
+          price: 299,
+          originalPrice: 399,
+        },
+        {
+          id: "oc4",
+          image: "/tooth4.jpg",
+          name: "Dental Floss Set",
+          type: "Oral & Misc",
+          price: 149,
+          originalPrice: 249,
+        },
+      ];
+    }
     
     if (filteredProducts.length > 0) {
       return products.map((product, index) => ({
         ...product,
         ...filteredProducts[index % filteredProducts.length],
+        id: `${filteredProducts[index % filteredProducts.length].id}_${index}`, // Ensure unique ID
       }));
     }
 
     // For other categories, return original products
-    return products;
+    return products.map((product, index) => ({
+      ...product,
+      id: product.id || `product_${index}`, // Use original ID or generate fallback
+    }));
   };
 
   const modifiedProducts = getModifiedProducts();
@@ -390,21 +443,25 @@ export default function ProductGrid({
         <PromotionalBanner fullWidth={true} />
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        {modifiedProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg overflow-hidden">
+      {/* Second row of products */}
+      <div className="mt-8 grid grid-cols-4 gap-4">
+        {modifiedProducts.map((product, index) => (
+          <div key={`second-${product.id}`} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
           </div>
         ))}
       </div>
 
+   
+
       <div className="mt-8 w-full">
-        <ProductShowcaseBanner fullWidth={true} />
+        <ProductShowcaseBanner fullWidth={true} category={selectedCategory} />
       </div>
 
-      <div className="mt-8 grid grid-cols-4 gap-4">
-        {modifiedProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg overflow-hidden">
+         {/* Third row of products */}
+         <div className="mt-8 grid grid-cols-4 gap-4">
+        {modifiedProducts.map((product, index) => (
+          <div key={`third-${product.id}`} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
           </div>
         ))}

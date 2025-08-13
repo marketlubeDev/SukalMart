@@ -3,7 +3,7 @@ import { bestSellers } from "../../../../lib/data";
 export default function RecommendedSection() {
   return (
     <div className="bg-white py-8 md:py-16 overflow-hidden">
-      <div className="px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]">
+      <div className="container mx-auto">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2
@@ -32,23 +32,118 @@ export default function RecommendedSection() {
 
         {/* Recommended Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-3">
-          {/* Product 1 */}
+          {/* Product 1 - A1 Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="/best1.png"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+                alt="Dove Nutritive Solutions"
+                className="w-full h-full aspect-square object-cover"
+              />
+              {/* A1 Badge */}
+              <div className="absolute top-1 md:top-2 left-[-16px]">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold">
+                      #1
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Dove Nutritive Solutions
+              </h3>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">Hair Care</p>
+              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
+                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                  ₹1,099
+                </span>
+                <span className="text-xs md:text-sm text-gray-500 line-through">
+                  ₹1,299
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Product 2 - #2 Badge */}
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+            <div className="relative">
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                alt="Lux Body Wash"
+                className="w-full h-full aspect-square object-cover"
+              />
+              {/* #2 Badge */}
+              <div className="absolute top-1 md:top-2 left-[-16px]">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold">
+                      #2
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-2 md:p-4">
+              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+                Lux Body Wash
               </h3>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
+                Body & Shower
+              </p>
+              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
+                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                  ₹1,099
+                </span>
+                <span className="text-xs md:text-sm text-gray-500 line-through">
+                  ₹1,299
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Product 3 - #3 Badge */}
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+            <div className="relative">
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+                alt="Rexona / Sure Deo"
+                className="w-full h-full aspect-square object-cover"
+              />
+              {/* #3 Badge */}
+              <div className="absolute top-1 md:top-2 left-[-16px]">
+                <div className="relative">
+                  <img
+                    src="/badge.svg"
+                    alt="Badge"
+                    className="w-16 h-10 md:w-20 md:h-12"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-white text-xs md:text-sm font-bold">
+                      #3
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-2 md:p-4">
+              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+                Rexona / Sure Deo
+              </h3>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">
+                Soap & Deodorants
               </p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
@@ -61,88 +156,26 @@ export default function RecommendedSection() {
             </div>
           </div>
 
-          {/* Product 2 */}
+          {/* Product 4 - No Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="/best2.png"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <img
+                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+                alt="Vaseline Body Lotion"
+                className="w-full h-full aspect-square object-cover"
+              />
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
+                Vaseline Body Lotion
               </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
-              </p>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">Skin Care</p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
+                  ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 3 */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
-            <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="/best3.png"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-            <div className="p-2 md:p-4">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
-              </p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 4 */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
-            <div className="relative">
-              <div className="aspect-square bg-gray-50 flex items-center justify-center p-2 md:p-4">
-                <img
-                  src="/best4.png"
-                  alt="7hz Salnotes Zero 2 Wired IEM"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-            <div className="p-2 md:p-4">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                7hz Salnotes Zero 2 Wired IEM(type c)
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                In-ear monitors
-              </p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
-                  ₹1,899
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
+                  ₹1,299
                 </span>
               </div>
             </div>
