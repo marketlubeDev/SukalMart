@@ -213,12 +213,12 @@ export default function Nav() {
                 {/* User Dropdown */}
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   <div className="py-2">
-                    <a
-                      href="#"
+                    <Link
+                      href="/my-account"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                     >
                       My Account
-                    </a>
+                    </Link>
                     <a
                       href="#"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
@@ -411,7 +411,7 @@ export default function Nav() {
             <div className="pt-4 mt-4 border-t border-gray-200">
               <div className="space-y-2">
                 <a
-                  href="#"
+                  href="/my-account"
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
                 >
                   <img src="/usericon.svg" alt="user" className="w-5 h-5" />
@@ -419,7 +419,7 @@ export default function Nav() {
                 </a>
 
                 <a
-                  href="#"
+                  href="/"
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
                 >
                   <svg

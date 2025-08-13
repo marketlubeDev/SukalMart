@@ -34,6 +34,31 @@ body {
   display: none;  /* Safari and Chrome */
 }
 
+/* Thin scrollbar styling */
+.thin-scrollbar {
+  scrollbar-width: thin;  /* Firefox */
+  scrollbar-color: #cbd5e0 #f7fafc;  /* Firefox: thumb and track colors */
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px;  /* Very thin scrollbar width */
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: #f7fafc;  /* Light gray track */
+  border-radius: 3px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;  /* Gray thumb */
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;  /* Darker gray on hover */
+}
+
 /* Line clamp utility for text truncation */
 .line-clamp-2 {
   display: -webkit-box;

@@ -22,16 +22,20 @@ export default function CategoryPage() {
 
   // Convert URL slug back to readable category name
   const getCategoryDisplayName = (slug) => {
+    // Normalize slug to match our slugify rules
+    const normalized = String(slug)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
     const categoryMap = {
       'hair-care': 'Hair Care',
       'body-shower': 'Body & Shower',
-      'body-&-shower': 'Body & Shower', // Handle URL encoded version
       'soap-deodorants': 'Soap & Deodorants',
-      'soap-&-deodorants': 'Soap & Deodorants', // Handle URL encoded version
       'skin-care': 'Skin Care',
       'oral-misc': 'Oral & Misc'
     };
-    return categoryMap[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    return categoryMap[normalized] || normalized.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   const displayName = getCategoryDisplayName(categoryName);

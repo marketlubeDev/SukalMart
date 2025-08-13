@@ -4,14 +4,23 @@ import { useRouter } from "next/navigation";
 export default function ShopOtherCategoriesSection({ currentCategory }) {
   const router = useRouter();
   
+  // Normalize strings to consistent slugs (e.g., "Body & Shower" -> "body-shower")
+  const normalizeSlug = (value) =>
+    String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+  const currentSlug = normalizeSlug(currentCategory);
+
   // Filter out the current category and get remaining categories
-  const otherCategories = categories.filter(category => 
-    category.name.toLowerCase().replace(/\s+/g, '-') !== currentCategory
+  const otherCategories = categories.filter((category) =>
+    normalizeSlug(category.name) !== currentSlug
   );
 
   const handleCategoryClick = (categoryName) => {
-    // Navigate to category-specific page
-    router.push(`/category/${categoryName.toLowerCase().replace(/\s+/g, '-')}`);
+    // Navigate to category-specific page using normalized slug
+    router.push(`/category/${normalizeSlug(categoryName)}`);
   };
 
   return (

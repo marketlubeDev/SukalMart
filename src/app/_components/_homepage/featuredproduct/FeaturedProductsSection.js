@@ -18,7 +18,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
         className={
           isProductPage
             ? "py-6 md:py-8 lg:py-10 overflow-hidden px-4 sm:px-0"
-            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 sm:px-0"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-10 "
         }
       >
         <div className="flex flex-col gap-6">

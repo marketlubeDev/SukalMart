@@ -8,15 +8,21 @@ export default function     CategorySection() {
   const firstRowCategories = categories.slice(0, 3);
   const secondRowCategories = categories.slice(3, 5);
 
+  const normalizeSlug = (value) =>
+    String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
   const handleCategoryClick = (categoryName) => {
-    // Navigate to category-specific page
-    router.push(`/category/${categoryName.toLowerCase().replace(/\s+/g, '-')}`);
+    // Navigate to category-specific page using normalized slug
+    router.push(`/category/${normalizeSlug(categoryName)}`);
   };
 
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center w-full overflow-hidden px-4 sm:px-0"
+        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 sm:px-0"
         style={{
           display: "flex",
           flexDirection: "column",

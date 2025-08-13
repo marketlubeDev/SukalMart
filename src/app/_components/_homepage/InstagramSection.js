@@ -11,6 +11,14 @@ export default function InstagramSection() {
   const handleVideoEnd = () => {
     setPlayingVideo(null);
   };
+
+  const handleMouseEnter = (videoId) => {
+    setPlayingVideo(videoId);
+  };
+
+  const handleMouseLeave = () => {
+    setPlayingVideo(null);
+  };
   return (
     <div
       className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-12 py-6 md:py-8 lg:py-10 custom-padding"
@@ -92,12 +100,12 @@ export default function InstagramSection() {
       `}</style>
       <div className="relative w-full overflow-hidden container mx-auto">
         <div
-          className="flex flex-row gap-3 sm:gap-4 auto-scroll"
-          style={{ padding: "0 24px" }}
+          className="flex px-10 flex-row gap-3 sm:gap-4 auto-scroll"
+        
         >
           {/* Thumbnail 1 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -106,6 +114,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video1')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video1' ? (
               <video
@@ -114,7 +124,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>
@@ -146,7 +156,7 @@ export default function InstagramSection() {
 
           {/* Thumbnail 2 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -155,6 +165,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video2')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video2' ? (
               <video
@@ -163,7 +175,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>
@@ -195,7 +207,7 @@ export default function InstagramSection() {
 
           {/* Thumbnail 3 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -204,6 +216,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video3')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video3' ? (
               <video
@@ -212,7 +226,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>
@@ -244,7 +258,7 @@ export default function InstagramSection() {
 
           {/* Thumbnail 4 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -253,6 +267,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video4')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video4' ? (
               <video
@@ -261,7 +277,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>
@@ -293,7 +309,7 @@ export default function InstagramSection() {
 
           {/* Thumbnail 5 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -302,6 +318,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video5')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video5' ? (
               <video
@@ -310,7 +328,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>
@@ -342,7 +360,7 @@ export default function InstagramSection() {
 
           {/* Thumbnail 6 */}
           <div
-            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px]"
+            className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -351,6 +369,8 @@ export default function InstagramSection() {
               flexShrink: 0,
               aspectRatio: "122/217",
             }}
+            onMouseEnter={() => handleMouseEnter('video6')}
+            onMouseLeave={handleMouseLeave}
           >
             {playingVideo === 'video6' ? (
               <video
@@ -359,7 +379,7 @@ export default function InstagramSection() {
                 autoPlay
                 muted
                 onEnded={handleVideoEnd}
-                controls
+                loop
               />
             ) : (
               <>

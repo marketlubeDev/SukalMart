@@ -13,8 +13,49 @@ export default function HaircareBanner({ selectedCategory }) {
         accentAlt: "Body Care Product"
       };
     }
-    
-        if (category === "Hair Care") {
+
+    if (category === "Soap & Deodorants") {
+      return {
+        title: "Premium Beauty Collection",
+        description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
+        mainImage: "/soap1.jpeg",
+        secondaryImage: "/soap1.jpeg",
+        accentImage: "/soap1.jpeg",
+        mainAlt: "Soap & Deodorants Product",
+        secondaryAlt: "Soap & Deodorants Product",
+        accentAlt: "Soap & Deodorants Product"
+      };
+    }
+
+    // Inserted: Skin Care banner uses /skin1.jpg
+    if (category === "Skin Care") {
+      return {
+        title: "Premium Beauty Collection",
+        description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
+        mainImage: "/skin1.jpg",
+        secondaryImage: "/skin1.jpg",
+        accentImage: "/skin1.jpg",
+        mainAlt: "Skin Care Product",
+        secondaryAlt: "Skin Care Product",
+        accentAlt: "Skin Care Product"
+      };
+    }
+
+    // Inserted: Oral & Misc banner uses /tooth1.jpg
+    if (category === "Oral & Misc") {
+      return {
+        title: "Premium Beauty Collection",
+        description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
+        mainImage: "/tooth1.jpg",
+        secondaryImage: "/tooth1.jpg",
+        accentImage: "/tooth1.jpg",
+        mainAlt: "Oral & Misc Product",
+        secondaryAlt: "Oral & Misc Product",
+        accentAlt: "Oral & Misc Product"
+      };
+    }
+
+    if (category === "Hair Care") {
       return {
         title: "Hair That Speaks With Confidence",
         description: "Precision-crafted haircare products deliver transformative results, rich nourishment and immersive care - engineered for true beauty enthusiasts.",
@@ -26,7 +67,7 @@ export default function HaircareBanner({ selectedCategory }) {
         accentAlt: "Haircare Product"
       };
     }
-    
+
     // Default content for other categories
     return {
       title: "Premium Beauty Collection",

@@ -119,24 +119,28 @@ export default function ProductsPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <div className="lg:w-1/5">
-            <ProductSidebar
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              selectedDiscount={selectedDiscount}
-              setSelectedDiscount={setSelectedDiscount}
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-            />
+            <div className="sticky top-8">
+              <ProductSidebar
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                selectedDiscount={selectedDiscount}
+                setSelectedDiscount={setSelectedDiscount}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+              />
+            </div>
           </div>
 
           {/* Main Content */}
           <div className="lg:w-4/5">
-            <ProductGrid
-              products={products}
-              selectedCategory={selectedCategory}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-            />
+            <div className="overflow-y-auto max-h-screen thin-scrollbar">
+              <ProductGrid
+                products={products}
+                selectedCategory={selectedCategory}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+              />
+            </div>
           </div>
         </div>
       </div>

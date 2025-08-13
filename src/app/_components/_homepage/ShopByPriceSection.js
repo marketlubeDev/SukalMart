@@ -35,6 +35,36 @@ export default function ShopByPriceSection({ selectedCategory }) {
       ];
     }
     
+    // Soap & Deodorants-specific price ranges
+    if (category === "Soap & Deodorants") {
+      return [
+        {
+          range: "Under ₹500",
+          image: "/soap1.jpeg",
+        },
+        {
+          range: "₹500 - ₹1000",
+          image: "/soap2.jpg",
+        },
+        {
+          range: "₹1000 - ₹1500",
+          image: "/soap1.jpeg",
+        },
+        {
+          range: "₹1500 - ₹2000",
+          image: "/soap2.jpg",
+        },
+        {
+          range: "₹2000 - ₹2500",
+          image: "/soap1.jpeg",
+        },
+        {
+          range: "Over ₹2500",
+          image: "/soap2.jpg",
+        },
+      ];
+    }
+    
     // Haircare-specific price ranges, otherwise use default
     if (category === "Hair Care") {
       return [
@@ -61,6 +91,66 @@ export default function ShopByPriceSection({ selectedCategory }) {
         {
           range: "Over ₹5000",
           image: "/haircare3.jpg",
+        },
+      ];
+    }
+    
+    // Skin Care-specific price ranges
+    if (category === "Skin Care") {
+      return [
+        {
+          range: "Under ₹500",
+          image: "/skin1.jpg",
+        },
+        {
+          range: "₹500 - ₹1000",
+          image: "/skin2.jpg",
+        },
+        {
+          range: "₹1000 - ₹1500",
+          image: "/skin1.jpg",
+        },
+        {
+          range: "₹1500 - ₹2000",
+          image: "/skin2.jpg",
+        },
+        {
+          range: "₹2000 - ₹2500",
+          image: "/skin1.jpg",
+        },
+        {
+          range: "Over ₹2500",
+          image: "/skin2.jpg",
+        },
+      ];
+    }
+    
+    // Oral & Misc-specific price ranges
+    if (category === "Oral & Misc") {
+      return [
+        {
+          range: "Under ₹500",
+          image: "/tooth1.jpg",
+        },
+        {
+          range: "₹500 - ₹1000",
+          image: "/tooth2.jpg",
+        },
+        {
+          range: "₹1000 - ₹1500",
+          image: "/tooth1.jpg",
+        },
+        {
+          range: "₹1500 - ₹2000",
+          image: "/tooth2.jpg",
+        },
+        {
+          range: "₹2000 - ₹2500",
+          image: "/tooth1.jpg",
+        },
+        {
+          range: "Over ₹2500",
+          image: "/tooth2.jpg",
         },
       ];
     }

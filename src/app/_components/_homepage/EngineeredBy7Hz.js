@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function EngineeredBy7Hz() {
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 sm:px-0">
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-10">
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">
@@ -50,7 +50,7 @@ export default function EngineeredBy7Hz() {
 
           {/* Right Section - Product Cards */}
           <div className="flex-1 w-full">
-            <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row">
+            <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-0">
               {/* Product Card 1 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
@@ -196,7 +196,7 @@ export default function EngineeredBy7Hz() {
           @media (min-width: 992px) {
             .flex-1 > .flex {
               flex-wrap: nowrap;
-              gap: 2rem;
+              gap: 0;
             }
             .flex-1 > .flex > div {
               min-width: 0;
@@ -204,11 +204,9 @@ export default function EngineeredBy7Hz() {
               max-width: 33.3333%;
             }
           }
-          /* Override card row gap for big tablets (992px - 1199.98px) */
-          @media only screen and (min-width: 992px) and (max-width: 1199.98px) {
-            .engineered-by-7hz-cards-row {
-              gap: 1rem !important;
-            }
+          /* Remove gap for all screen sizes */
+          .engineered-by-7hz-cards-row {
+            gap: 0 !important;
           }
           /* Show two cards per screen on mobile */
           @media (max-width: 639.98px) {
