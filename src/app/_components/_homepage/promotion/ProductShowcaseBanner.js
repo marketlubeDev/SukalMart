@@ -1,3 +1,4 @@
+"use client";
 export default function ProductShowcaseBanner({ fullWidth = false }) {
   const showcaseItems = [
     {
@@ -17,7 +18,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
         fullWidth ? "px-0" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
       }`}
     >
-      {/* Mobile: Carousel with one item at a time */}
+      {/* Mobile: one item at a time with horizontal scroll */}
       <div className="lg:hidden">
         <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
           {showcaseItems.map((item, index) => (
@@ -25,34 +26,16 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
               <div
                 className="relative overflow-hidden rounded-lg"
                 style={{
-                  height: "300px",
+                  height: "220px",
                   background: item.background,
                 }}
               >
-                {/* Product Image - Center */}
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <img
-                    src={item.image}
-                    alt={`Haircare Banner ${index + 1}`}
-                    className="w-40 h-40 sm:w-48 sm:h-48 object-contain"
-                  />
-                </div>
-
-                {/* Content - Left Side */}
-                <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
-                  <h3
-                    className="text-xl sm:text-2xl font-bold mb-2"
-                    style={{ color: item.textColor }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    className="text-sm sm:text-base text-gray-600"
-                    style={{ color: item.textColor }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
+                {/* Full-width image */}
+                <img
+                  src={item.image}
+                  alt={`Haircare Banner ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           ))}

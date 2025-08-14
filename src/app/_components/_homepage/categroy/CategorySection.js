@@ -1,3 +1,5 @@
+"use client";
+
 import { categories } from "../../../../lib/data";
 import { useRouter } from "next/navigation";
 

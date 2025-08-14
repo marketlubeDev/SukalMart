@@ -1,6 +1,5 @@
 "use client";
-
-import Footer from "@/layout/user/Footer";
+    import Footer from "@/layout/user/Footer";
 import BestSellersSection from "./_components/_homepage/bestSeller/BestSellersSection";
 import CategorySection from "./_components/_homepage/categroy/CategorySection";
 import FeaturedProductsSection from "./_components/_homepage/featuredproduct/FeaturedProductsSection";

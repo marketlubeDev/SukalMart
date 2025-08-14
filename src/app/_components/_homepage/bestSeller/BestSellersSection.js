@@ -1,3 +1,4 @@
+"use client";
 import ProductCard from "../ProductCard";
 import { bestSellers } from "../../../../lib/data";
 import Image from "next/image";

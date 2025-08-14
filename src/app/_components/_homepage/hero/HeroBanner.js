@@ -87,31 +87,37 @@ export default function HeroBanner() {
         {/* Readability overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
 
-        {/* Previous Icon - Positioned above content with left spacing */}
-        <div className="absolute left-52 top-60 z-20">
-          <button
-            onClick={prevSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-            aria-label="Previous slide"
-          >
-            <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
-          </button>
+
+        <div className="w-full flex justify-between items-center top-50 absolute z-10 ">
+        <div className=" flex justify-between container mx-auto px-10">
+          {/* Previous Icon - Positioned above content with left spacing */}
+          <div>
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Previous slide"
+            >
+              <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Next Icon - Top Right */}
+          <div>
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Next slide"
+            >
+              <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Next Icon - Top Right */}
-        <div className="absolute right-52 top-62 z-20">
-          <button
-            onClick={nextSlide}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-            aria-label="Next slide"
-          >
-            <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
-          </button>
         </div>
-
+        
         {/* Content - Bottom Left */}
         <div className="relative z-10 h-full flex items-end">
-          <div className="container mx-auto pb-16">
+          <div className="container mx-auto pb-18 px-10">
             <div className="max-w-2xl">
               {/* Row 2: Heading */}
               <h1 className="text-[2.8rem] font-semibold text-white mb-6 leading-tight transition-all duration-500">
@@ -143,11 +149,10 @@ export default function HeroBanner() {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-20 h-1 rounded-full transition-all duration-300 ${
-                  index === currentSlide
+                className={`w-20 h-1 rounded-full transition-all duration-300 ${index === currentSlide
                     ? "bg-green-700 opacity-70"
                     : "bg-gray-300"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -236,11 +241,10 @@ export default function HeroBanner() {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 ${
-                  index === currentSlide
+                className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 ${index === currentSlide
                     ? "bg-[rgba(3,95,15,0.7)]"
                     : "bg-[rgba(51,51,51,0.2)]"
-                }`}
+                  }`}
               />
             ))}
           </div>

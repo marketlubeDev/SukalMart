@@ -1,3 +1,5 @@
+"use client";
+
 import { categories } from "../../../lib/data";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +26,7 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
   };
 
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">

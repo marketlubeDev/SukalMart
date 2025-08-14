@@ -205,7 +205,7 @@ export default function EngineeredBy7Hz() {
             }
           }
           /* Remove gap for all screen sizes */
-          .engineered-by-7hz-cards-row {
+            .engineered-by-7hz-cards-row {
             gap: 0 !important;
           }
           /* Show two cards per screen on mobile */

@@ -1,3 +1,4 @@
+"use client";
 export default function NewLaunchesSection() {
   // New launches products data
   const newLaunchesProducts = [
@@ -28,17 +29,17 @@ export default function NewLaunchesSection() {
   ];
 
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        <div className="mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
             New Launches
           </h2>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {newLaunchesProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg overflow-hidden">
               {/* Product Image */}
@@ -53,11 +54,11 @@ export default function NewLaunchesSection() {
               </div>
               
               {/* Product Info */}
-              <div className="p-4 bg-gray-900 text-white">
-                <h3 className="text-sm font-semibold mb-1">
+              <div className="p-3 sm:p-4 bg-gray-900 text-white">
+                <h3 className="text-xs sm:text-sm font-semibold mb-1">
                   {product.name}
                 </h3>
-                <p className="text-xs text-gray-300">
+                <p className="text-[10px] sm:text-xs text-gray-300">
                   {product.description}
                 </p>
               </div>

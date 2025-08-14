@@ -1,4 +1,6 @@
+"use client";
 
+import { useRouter } from "next/navigation";
 
 export default function FeaturedProductCard({ product }) {
   return (

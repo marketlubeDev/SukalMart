@@ -1,3 +1,4 @@
+"use client";
 import ProductCard from "./ProductCard";
 
 export default function SunsilkShampooSection({ selectedCategory }) {
@@ -130,33 +131,25 @@ export default function SunsilkShampooSection({ selectedCategory }) {
   const products = getProducts(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
             {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
           </h2>
-          <div className="flex items-center gap-2 text-green-600 hover:text-green-700 transition-colors cursor-pointer">
-            <span className="text-sm font-semibold">View all</span>
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <button
+              className="flex items-center gap-2 font-medium transition-colors"
+              style={{ color: "#035F0F" }}
+              onClick={() => window.location.href = "/products"}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </div>
+              <span>View all</span>
+              <img src="/nextarrow.svg" alt="Next arrow" className="w-7 h-7" />
+            </button>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {products.map((product) => (
             <div key={product.id} className="bg-white rounded-lg overflow-hidden">
               <ProductCard product={product} />

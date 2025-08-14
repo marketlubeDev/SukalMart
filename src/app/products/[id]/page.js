@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import ProductServiceBenefits from "./_components/ProductServiceBenefits";
 import FeaturedProductsSection from "../../_components/_homepage/featuredproduct/FeaturedProductsSection";
-import BestSellersSection from "@/app/_components/_homepage/bestSeller/BestSellersSection";
+import BestSellersSection from "../../_components/_homepage/bestSeller/BestSellersSection";
 import RecommendedSection from "./_components/RecommendedSection";
 
 export default function ProductDetailPage() {
@@ -1716,9 +1716,9 @@ export default function ProductDetailPage() {
                     <p className="text-sm text-gray-700 mt-2">
                       I bought these after reading all the hype. The sound is
                       clear, but the bass was too light for my taste. I listen
-                      mostly to hip-hop and pop, and it didn’t give me that
+                      mostly to hip-hop and pop, and it didn't give me that
                       satisfying thump. However, for podcasts or instrumental
-                      music, it’s really clean.
+                      music, it's really clean.
                     </p>
                     <span className="block text-xs text-gray-500 mt-1">
                       -Sample user
@@ -1746,9 +1746,9 @@ export default function ProductDetailPage() {
                     <p className="text-sm text-gray-700 mt-2">
                       I bought these after reading all the hype. The sound is
                       clear, but the bass was too light for my taste. I listen
-                      mostly to hip-hop and pop, and it didn’t give me that
+                      mostly to hip-hop and pop, and it didn't give me that
                       satisfying thump. However, for podcasts or instrumental
-                      music, it’s really clean.
+                      music, it's really clean.
                     </p>
                     <span className="block text-xs text-gray-500 mt-1">
                       -Sample user
@@ -1784,9 +1784,9 @@ export default function ProductDetailPage() {
                     <p className="text-sm text-gray-700 mt-2">
                       I bought these after reading all the hype. The sound is
                       clear, but the bass was too light for my taste. I listen
-                      mostly to hip-hop and pop, and it didn’t give me that
+                      mostly to hip-hop and pop, and it didn't give me that
                       satisfying thump. However, for podcasts or instrumental
-                      music, it’s really clean.
+                      music, it's really clean.
                     </p>
                     <span className="block text-xs text-gray-500 mt-1">
                       -Sample user
@@ -1816,9 +1816,9 @@ export default function ProductDetailPage() {
                     <p className="text-sm text-gray-700 mt-2">
                       I bought these after reading all the hype. The sound is
                       clear, but the bass was too light for my taste. I listen
-                      mostly to hip-hop and pop, and it didn’t give me that
+                      mostly to hip-hop and pop, and it didn't give me that
                       satisfying thump. However, for podcasts or instrumental
-                      music, it’s really clean.
+                      music, it's really clean.
                     </p>
                     <span className="block text-xs text-gray-500 mt-1">
                       -Sample user
@@ -1847,9 +1847,9 @@ export default function ProductDetailPage() {
                     <p className="text-sm text-gray-700 mt-2">
                       I bought these after reading all the hype. The sound is
                       clear, but the bass was too light for my taste. I listen
-                      mostly to hip-hop and pop, and it didn’t give me that
+                      mostly to hip-hop and pop, and it didn't give me that
                       satisfying thump. However, for podcasts or instrumental
-                      music, it’s really clean.
+                      music, it's really clean.
                     </p>
                     <span className="block text-xs text-gray-500 mt-1">
                       -Sample user

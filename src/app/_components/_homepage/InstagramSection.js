@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -21,7 +22,7 @@ export default function InstagramSection() {
   };
   return (
     <div
-      className="flex flex-col items-center justify-center w-full px-4 sm:px-6 md:px-12 py-6 md:py-8 lg:py-10 custom-padding"
+      className="flex flex-col items-center justify-center w-full px-0 py-6 md:py-8 lg:py-10 custom-padding"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -98,11 +99,8 @@ export default function InstagramSection() {
           }
         }
       `}</style>
-      <div className="relative w-full overflow-hidden container mx-auto">
-        <div
-          className="flex px-10 flex-row gap-3 sm:gap-4 auto-scroll"
-        
-        >
+      <div className="relative overflow-hidden container mx-auto px-10">
+        <div className="flex flex-row gap-3 sm:gap-4 auto-scroll container mx-auto">
           {/* Thumbnail 1 */}
           <div
             className="relative flex-shrink-0 rounded-lg overflow-hidden w-[180px] h-[320px] sm:w-[200px] sm:h-[360px] md:w-[220px] md:h-[400px] lg:w-[253px] lg:h-[450px] cursor-pointer"

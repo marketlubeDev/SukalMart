@@ -1,3 +1,4 @@
+"use client";
 import FeaturedProductCard from "./FeaturedProductCard";
 import { featuredProducts } from "../../../../lib/data";
 import React from "react";
@@ -17,8 +18,8 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
       <div
         className={
           isProductPage
-            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-4 sm:px-0"
-            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-10 "
+            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-4 md:px-4"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden mx-auto w-full max-w-screen-xl px-4 md:px-10 "
         }
       >
         <div className="flex flex-col gap-6">

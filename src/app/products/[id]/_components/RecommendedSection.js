@@ -1,4 +1,5 @@
-import { bestSellers } from "../../../../lib/data";
+"use client";
+  import { bestSellers } from "../../../../lib/data";
 
 export default function RecommendedSection() {
   return (
@@ -43,7 +44,7 @@ export default function RecommendedSection() {
               {/* A1 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                  <img
+                <img
                     src="/badge.svg"
                     alt="Badge"
                     className="w-16 h-10 md:w-20 md:h-12"
@@ -83,7 +84,7 @@ export default function RecommendedSection() {
               {/* #2 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                  <img
+                <img
                     src="/badge.svg"
                     alt="Badge"
                     className="w-16 h-10 md:w-20 md:h-12"
@@ -125,7 +126,7 @@ export default function RecommendedSection() {
               {/* #3 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                  <img
+                <img
                     src="/badge.svg"
                     alt="Badge"
                     className="w-16 h-10 md:w-20 md:h-12"
@@ -159,11 +160,11 @@ export default function RecommendedSection() {
           {/* Product 4 - No Badge */}
           <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
             <div className="relative">
-              <img
+                <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
                 alt="Vaseline Body Lotion"
                 className="w-full h-full aspect-square object-cover"
-              />
+                />
             </div>
             <div className="p-2 md:p-4">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">

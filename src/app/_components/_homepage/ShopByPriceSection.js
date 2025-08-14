@@ -1,3 +1,4 @@
+"use client";
 export default function ShopByPriceSection({ selectedCategory }) {
   console.log("ShopByPriceSection - selectedCategory:", selectedCategory);
   
@@ -187,16 +188,64 @@ export default function ShopByPriceSection({ selectedCategory }) {
   const priceRanges = getPriceRanges(selectedCategory);
   console.log("Final priceRanges:", priceRanges);
 
+  // Prepare rows for mobile (3 per row)
+  const firstRow = priceRanges.slice(0, 3);
+  const secondRow = priceRanges.slice(3, 6);
+
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0">
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
           Shop by Price
         </h2>
       </div>
       
-      {/* Price Range Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+      {/* Mobile Layout - mirror CategorySection style */}
+      <div className="w-full sm:hidden">
+        {/* First row - 3 items */}
+        <div
+          className="flex w-full mb-2"
+          style={{ justifyContent: "space-between", gap: "8px" }}
+        >
+          {firstRow.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-start cursor-pointer"
+              style={{ flex: "0 0 32%", maxWidth: "120px" }}
+            >
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
+                <img src={item.image} alt={item.range} className="w-full h-full object-cover" />
+              </div>
+              <div className="text-[#000000] text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
+                {item.range}
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Second row - 3 items */}
+        <div
+          className="flex w-full"
+          style={{ justifyContent: "space-between", gap: "8px" }}
+        >
+          {secondRow.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-start cursor-pointer"
+              style={{ flex: "0 0 32%", maxWidth: "120px" }}
+            >
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
+                <img src={item.image} alt={item.range} className="w-full h-full object-cover" />
+              </div>
+              <div className="text-[#000000] text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
+                {item.range}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Desktop/Tablet Grid */}
+      <div className="hidden sm:grid grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
         {priceRanges.map((item, index) => (
           <div
             key={index}

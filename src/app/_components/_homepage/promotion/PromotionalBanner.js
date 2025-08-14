@@ -1,3 +1,4 @@
+"use client";
 export default function PromotionalBanner({ fullWidth = false }) {
   const banners = [
     {
@@ -25,7 +26,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
   return (
     <>
       <div
-        className={`px-10 py-6 md:py-8 lg:py-10 container mx-auto`}
+        className={`px-0 md:px-10 py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">
@@ -35,7 +36,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                 <div
                   className="relative overflow-hidden rounded-lg"
                   style={{
-                    height: "300px",
+                    height: "250px",
                     background: banner.background,
                   }}
                 >
