@@ -4,12 +4,12 @@ import Image from "next/image";
 export default function EngineeredBy7Hz() {
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-10">
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 md:px-10">
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">
             <h2
-              className="mb-4 sm:mb-6 text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px]"
+              className="mb-4 sm:mb-6 text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px]"
               style={{
                 color: "#333",
 
@@ -23,7 +23,6 @@ export default function EngineeredBy7Hz() {
               style={{
                 color: "rgba(51, 51, 51, 0.8)",
                 fontStyle: "normal",
-                fontSize: "18px",
                 letterSpacing: "-0.28px",
               }}
             >

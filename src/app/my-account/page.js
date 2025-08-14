@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import AccountInfo from "./_components/AccountInfo";
 import SavedAddress from "./_components/SavedAddress";
 import MyOrders from "./_components/MyOrders";
@@ -8,7 +9,35 @@ import HelpSupport from "./_components/HelpSupport";
 import PrivacyPolicy from "./_components/PrivacyPolicy";
 
 export default function MyAccountPage() {
-  const [activeTab, setActiveTab] = useState("Account Info");
+  const searchParams = useSearchParams();
+  const tabParam = (searchParams.get("tab") || "").toLowerCase();
+
+  const mapParamToTab = (param) => {
+    switch (param) {
+      case "account":
+      case "info":
+        return "Account Info";
+      case "addresses":
+      case "saved-address":
+      case "saved-addresses":
+        return "Saved Address";
+      case "orders":
+      case "my-orders":
+      case "order-history":
+        return "My Orders";
+      case "help":
+      case "support":
+        return "Help & Support";
+      case "privacy":
+      case "policy":
+      case "privacy-policy":
+        return "Privacy & Policy";
+      default:
+        return "Account Info";
+    }
+  };
+
+  const [activeTab, setActiveTab] = useState(mapParamToTab(tabParam));
 
   const tabs = [
     "Account Info",

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function BestSellersSection() {
   return (
-    <div className="bg-white container mx-auto px-10 py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
+    <div className="bg-white container mx-auto px-4 md:px-10 py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
       <div>
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">

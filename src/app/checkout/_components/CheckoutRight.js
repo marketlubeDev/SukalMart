@@ -112,13 +112,13 @@ export default function CheckoutRight() {
               <label htmlFor="online" className="block font-medium text-gray-800 cursor-pointer">
                 Online Payment
               </label>
-              <div className="flex items-center justify-between mt-1">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-1 gap-2">
                 <p className="text-sm text-gray-600">
                   UPI, Netbanking, Debit Card/Credit Card can be used
                 </p>
-                <div className="flex items-center space-x-2">
-                  <img src="/upi.png" alt="UPI" className="h-6 w-auto" />
-                  <img src="/rupay.png" alt="RuPay" className="h-6 w-auto" />
+                <div className="flex items-center space-x-2 md:justify-end">
+                  <img src="/upi.png" alt="UPI" className="h-4 w-auto md:h-6" />
+                  <img src="/rupay.png" alt="RuPay" className="h-4 w-auto md:h-6" />
                   <span className="text-xs text-gray-500">+more</span>
                 </div>
               </div>

@@ -3,6 +3,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FaHeart } from "react-icons/fa6";
+import { CiHeart } from "react-icons/ci";
+import { useWishlist } from "../../_components/context/WishlistContext";
 
 export default function ProductCard({
   product,
@@ -10,6 +13,8 @@ export default function ProductCard({
   badgeText = "",
 }) {
   const router = useRouter();
+  const { toggleWishlistItem, isInWishlist } = useWishlist();
+  const wishlisted = isInWishlist(product.id);
 
   const handleProductClick = () => {
     // Extract original product ID (remove _index suffix if present)
@@ -17,6 +22,7 @@ export default function ProductCard({
     console.log("Product clicked:", originalId, product.name);
     router.push(`/products/${originalId}`);
   };
+
   return (
     <div 
       className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
@@ -30,6 +36,22 @@ export default function ProductCard({
             className="w-full h-full object-cover"
           />
         </div>
+        {/* Wishlist Heart */}
+        <button
+          type="button"
+          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-2 shadow hover:scale-105 transition-transform"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlistItem(product);
+          }}
+        >
+          {wishlisted ? (
+            <FaHeart className="w-4 h-4 text-red-600" />
+          ) : (
+            <CiHeart className="w-5 h-5 text-gray-800" />
+          )}
+        </button>
         {/* Badge */}
         {showBadge && (
           <div className="absolute top-2 left-0 flex items-center shadow-lg">

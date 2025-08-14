@@ -60,7 +60,7 @@ export default function CheckoutPage() {
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row ">
         {/* Left Column - Gray Background */}
-        <div className="lg:w-1/2 bg-[#F5F5F5] pl-25 pr-8 py-8">
+        		<div className="w-full lg:w-1/2 bg-[#F5F5F5] px-4 py-6 lg:pl-25 lg:pr-8 lg:py-8">
           <CheckoutLeft 
             cartItems={cartItems}
             quantities={quantities}
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Right Column - White Background */}
-        <div className="lg:w-1/2 bg-white pr-25 pl-8 py-8">
+        		<div className="w-full lg:w-1/2 bg-white px-4 py-6 lg:pr-25 lg:pl-8 lg:py-8">
           <CheckoutRight />
         </div>
       </div>

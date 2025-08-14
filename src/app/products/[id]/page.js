@@ -733,13 +733,13 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             {/* Thumbnail Images - Left Side */}
-            <div className="flex flex-col gap-2">
+            <div className="hidden md:flex flex-col gap-2">
               {product.images.map((image, index) => (
                 <button
                   key={index}
@@ -775,6 +775,26 @@ export default function ProductDetailPage() {
                     className="w-5 h-5"
                   />
                 </button>
+              </div>
+              {/* Mobile Thumbnails Row */}
+              <div className="md:hidden mt-3">
+                <div className="flex gap-2 overflow-x-auto">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
+                        selectedImage === index ? "border-[#035F0F]" : "border-gray-200"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -918,7 +938,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Quantity and Add to Cart */}
-            <div className="space-y-4" style={{ maxWidth: "260px" }}>
+            <div className="space-y-4 w-full md:max-w-[260px]">
               <div className="flex items-center gap-3">
                 <label className="text-sm font-medium text-gray-700">
                   Qty :
@@ -945,12 +965,11 @@ export default function ProductDetailPage() {
                 </div>
               </div>
 
-              <div className="flex gap-4" style={{ width: "460px" }}>
+              <div className="flex gap-4 w-full md:w-[460px]">
                 <button
                   onClick={buyNow}
-                  className="flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px]"
                   style={{
-                    width: "220px",
                     padding: "16px 24px",
                     justifyContent: "center",
                     alignItems: "center",
@@ -974,9 +993,8 @@ export default function ProductDetailPage() {
                 </button>
                 <button
                   onClick={addToCart}
+                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px]"
                   style={{
-                    display: "flex",
-                    width: "220px",
                     padding: "16px 24px",
                     justifyContent: "center",
                     alignItems: "center",
@@ -1179,7 +1197,7 @@ export default function ProductDetailPage() {
         </div>
 
         <div className="my-8">
-          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center px-4 py-8 gap-8">
+          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8">
             {/* Left: Text and Features */}
             <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0">
               <div
@@ -1322,7 +1340,7 @@ export default function ProductDetailPage() {
 
         {/* Category-specific Features Section */}
         <div className="my-8">
-          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center px-4 py-8 ">
+          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center py-8 ">
             {/* Left: Product Image (aligned left most) */}
             <div className="flex-1 flex justify-start items-center w-full mb-6 md:mb-0">
               <img
@@ -1345,7 +1363,7 @@ export default function ProductDetailPage() {
               />
             </div>
             {/* Right: Text and Features */}
-            <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pl-0 pl-2">
+            <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pl-0">
               <div
                 className="mb-4 self-start"
                 style={{
@@ -1431,7 +1449,7 @@ export default function ProductDetailPage() {
 
         {/* Category-specific Features Section */}
         <div className="my-8">
-          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center px-4 py-8">
+          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center py-8">
             {/* Left: Text Content */}
             <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pr-8 mb-6 md:mb-0">
               <div
@@ -1571,10 +1589,10 @@ export default function ProductDetailPage() {
         <FeaturedProductsSection isProductPage={true} />
 
         {/* Reviews & Ratings Section */}
-        <div className="my-12 w-full mx-auto px-0">
+        <div className="my-12 w-full mx-auto md:px-0">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Left: Ratings Summary */}
-            <div className="md:w-1/3 w-full flex flex-col items-center md:items-start">
+            <div className="md:w-1/3 w-full flex flex-col items-start md:items-start">
               <h3
                 className="text-xl font-semibold mb-2"
                 style={{ color: "#333" }}
@@ -1599,28 +1617,28 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               </div>
-              <span className="text-gray-600 mb-4">Based on 111 reviews</span>
+                              <span className="text-gray-600 mb-4 text-sm">Based on 181 reviews</span>
               {/* Ratings Bar */}
-              <div className="w-full max-w-xs space-y-1 mb-4">
+                              <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
                 {[5, 4, 3, 2, 1].map((star, idx) => (
                   <div key={star} className="flex items-center gap-2">
                     <span className="text-sm text-gray-700 w-4">{star}</span>
                     <img src="/filledstar.svg" alt="star" className="w-3 h-3" />
-                    <div className="flex-1 h-2 bg-gray-200 rounded">
+                    <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                       <div
-                        className="h-2 bg-[#035F0F] rounded"
+                        className="h-1.5 bg-[#035F0F] rounded-full"
                         style={{
                           width: ["60%", "20%", "10%", "5%", "5%"][idx],
                         }}
                       ></div>
                     </div>
-                    <span className="text-xs text-gray-500 ml-2">
-                      {[67, 22, 11, 6, 5][idx]}
+                    <span className="text-[10px] text-gray-500 ml-2">
+                      {[73, 38, 52, 13, 105][idx]}
                     </span>
                   </div>
                 ))}
               </div>
-              <button className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition">
+                              <button className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm">
                 Rate Product
               </button>
             </div>

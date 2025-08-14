@@ -219,24 +219,31 @@ export default function Nav() {
                     >
                       My Account
                     </Link>
-                    <a
-                      href="#"
+                    <Link
+                      href="/my-account?tab=my-orders"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                     >
                       Order History
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      href="/wishlist"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                     >
                       Wishlist
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      href="/my-account?tab=help"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                     >
-                      Settings
-                    </a>
+                      Help & Support
+                    </Link>
+
+                    <Link
+                      href="/my-account?tab=privacy-policy"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                    >
+                      Privacy Policy
+                    </Link>
                     <hr className="my-2" />
                     <a
                       href="#"
@@ -418,9 +425,10 @@ export default function Nav() {
                   <span>My Account</span>
                 </a>
 
-                <a
-                  href="/"
+                <Link
+                  href="/wishlist"
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
                     className="w-5 h-5"
@@ -436,11 +444,12 @@ export default function Nav() {
                     />
                   </svg>
                   <span>Wishlist</span>
-                </a>
+                </Link>
 
-                <a
-                  href="#"
+                <Link
+                  href="/my-account?tab=my-orders"
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
                     className="w-5 h-5"
@@ -456,7 +465,49 @@ export default function Nav() {
                     />
                   </svg>
                   <span>Order History</span>
-                </a>
+                </Link>
+
+                <Link
+                  href="/my-account?tab=help"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
+                    />
+                  </svg>
+                  <span>Help & Support</span>
+                </Link>
+
+                <Link
+                  href="/my-account?tab=privacy-policy"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z"
+                    />
+                  </svg>
+                  <span>Privacy Policy</span>
+                </Link>
 
                 <a
                   href="#"

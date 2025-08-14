@@ -29,7 +29,7 @@ export default function NewLaunchesSection() {
   ];
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0">
+    <div className="py-8 container mx-auto">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-4 sm:mb-6">
