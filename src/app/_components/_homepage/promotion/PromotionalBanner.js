@@ -26,7 +26,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
   return (
     <>
       <div
-        className={`px-0 md:px-10 py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
+        className={`px-0 sm:px-10 md:px-4 lg:px-4 py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">
@@ -36,35 +36,35 @@ export default function PromotionalBanner({ fullWidth = false }) {
                 <div
                   className="relative overflow-hidden rounded-lg"
                   style={{
-                    height: "250px",
+                    height: "200px sm:h-[250px]",
                     background: banner.background,
                   }}
                 >
                   {/* Product Image - Right Side */}
-                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                  <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2">
                     <img
                       src={banner.image}
                       alt={banner.alt}
-                      className="w-32 h-32 sm:w-40 sm:h-40 object-contain"
+                      className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain"
                     />
                   </div>
 
                   {/* Content - Left Side */}
-                  <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
+                  <div className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 max-w-[200px] sm:max-w-xs">
                     <h3
-                      className="text-xl sm:text-2xl font-bold mb-3"
+                      className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3"
                       style={{ color: "#333333" }}
                     >
                       {banner.title}
                     </h3>
                     <p
-                      className="text-sm sm:text-base mb-4 text-gray-600"
+                      className="text-xs sm:text-sm md:text-base mb-3 sm:mb-4 text-gray-600"
                       style={{ color: "#333333" }}
                     >
                       {banner.description}
                     </p>
                     <button
-                      className="text-gray-800 font-medium px-4 py-2 sm:px-6 sm:py-3 rounded text-sm sm:text-base hover:bg-gray-50 transition-colors duration-200"
+                      className="text-gray-800 font-medium px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded text-xs sm:text-sm md:text-base hover:bg-gray-50 transition-colors duration-200"
                       style={{
                         color: "#333333",
                         border: "1px solid #333",

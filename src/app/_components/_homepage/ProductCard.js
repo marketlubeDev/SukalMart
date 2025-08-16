@@ -40,16 +40,16 @@ export default function ProductCard({
         <button
           type="button"
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className="absolute top-2 right-2 bg-white/90 rounded-full p-2 shadow hover:scale-105 transition-transform"
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 sm:p-2 shadow hover:scale-105 transition-transform"
           onClick={(e) => {
             e.stopPropagation();
             toggleWishlistItem(product);
           }}
         >
           {wishlisted ? (
-            <FaHeart className="w-4 h-4 text-red-600" />
+            <FaHeart className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
           ) : (
-            <CiHeart className="w-5 h-5 text-gray-800" />
+            <CiHeart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
           )}
         </button>
         {/* Badge */}
@@ -76,16 +76,16 @@ export default function ProductCard({
           </div>
         )}
       </div>
-      <div className="p-4">
-        <h3 className="text-sm font-semibold text-gray-900 mb-1">
+      <div className="p-3 sm:p-4">
+        <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
           {product.name}
         </h3>
-        <p className="text-xs text-gray-600 mb-3">{product.type || product.category}</p>
+        <p className="text-xs text-gray-600 mb-2 sm:mb-3">{product.type || product.category}</p>
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+          <span className="text-base sm:text-lg font-bold" style={{ color: "#035F0F" }}>
             ₹{product.price?.toLocaleString() || product.price}
           </span>
-          <span className="text-sm text-gray-500 line-through">
+          <span className="text-xs sm:text-sm text-gray-500 line-through">
             ₹{product.originalPrice?.toLocaleString() || product.originalPrice}
           </span>
         </div>

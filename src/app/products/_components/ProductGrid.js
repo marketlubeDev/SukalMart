@@ -236,11 +236,11 @@ export default function ProductGrid({
 	const modifiedProducts = getModifiedProducts();
 
 	return (
-		<div className="bg-white">
+		<div className="bg-white px-4 sm:px-10 md:px-4 lg:px-4">
 			{/* Header */}
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
 				<div className="flex items-center gap-2">
-					<h1 className="text-xl font-semibold text-gray-800">
+					<h1 className="text-lg sm:text-xl font-semibold text-gray-800">
 						Showing result for &quot;{selectedCategory || "All Products"}&quot;
 					</h1>
 				</div>
@@ -294,7 +294,7 @@ export default function ProductGrid({
 			</div>
 
 			{/* Products Grid */}
-			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
 				{modifiedProducts.map((product) => (
 					<div key={product.id} className="bg-white rounded-lg overflow-hidden">
 						<ProductCard product={product} />
@@ -307,7 +307,7 @@ export default function ProductGrid({
 			</div>
 
 			{/* Second row of products */}
-			<div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+			<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
 				{modifiedProducts.map((product, index) => (
 					<div key={`second-${product.id}`} className="bg-white rounded-lg overflow-hidden">
 						<ProductCard product={product} />
@@ -320,7 +320,7 @@ export default function ProductGrid({
 			</div>
 
 			{/* Third row of products */}
-			<div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+			<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
 				{modifiedProducts.map((product, index) => (
 					<div key={`third-${product.id}`} className="bg-white rounded-lg overflow-hidden">
 						<ProductCard product={product} />

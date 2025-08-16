@@ -24,7 +24,7 @@ export default function     CategorySection() {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 sm:px-0"
+        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -110,22 +110,45 @@ export default function     CategorySection() {
             </div>
         </div>
         
-        {/* Desktop/Tablet Layout - Only show on sm and above */}
-        <div className="hidden sm:flex sm:flex-nowrap sm:justify-center sm:items-center sm:gap-3 md:gap-4 lg:gap-3 xl:gap-6 w-full">
+        {/* Tablet Layout - Show on sm and md */}
+        <div className="hidden sm:flex lg:hidden sm:flex-wrap sm:justify-center sm:items-center sm:gap-2 md:gap-3 w-full">
           {categories.map((category, index) => (
             <div 
               key={index} 
-              className="flex flex-col items-center justify-start cursor-pointer"
+              className="flex flex-col items-center justify-start cursor-pointer mb-4"
+              style={{ flex: "0 0 calc(33.333% - 8px)" }}
               onClick={() => handleCategoryClick(category.name)}
             >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] md:w-[220px] md:h-[220px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[160px] h-[160px] md:w-[180px] md:h-[180px]">
                 <img
                   src={category.image}
                   alt={category.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[14px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
+              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[13px] font-medium leading-normal tracking-[-0.28px]">
+                {category.name}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Desktop Layout - Show on lg and above */}
+        <div className="hidden lg:flex lg:flex-nowrap lg:justify-center lg:items-center lg:gap-3 xl:gap-6 w-full">
+          {categories.map((category, index) => (
+            <div 
+              key={index} 
+              className="flex flex-col items-center justify-start cursor-pointer"
+              onClick={() => handleCategoryClick(category.name)}
+            >
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] xl:w-[220px] xl:h-[220px]">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
                 {category.name}
               </div>
             </div>

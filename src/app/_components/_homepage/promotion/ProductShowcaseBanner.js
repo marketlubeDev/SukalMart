@@ -15,7 +15,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
   return (
     <div
       className={`py-6 md:py-8 lg:py-10 ${
-        fullWidth ? "px-0" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
+        fullWidth ? "px-4 sm:px-10 md:px-4 lg:px-4" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
       }`}
     >
       {/* Mobile: one item at a time with horizontal scroll */}
@@ -24,9 +24,9 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
           {showcaseItems.map((item, index) => (
             <div key={index} className="flex-shrink-0 w-full snap-start">
               <div
-                className="relative overflow-hidden rounded-lg"
+                className="relative overflow-hidden rounded-lg showcase-banner-item"
                 style={{
-                  height: "220px",
+                  height: "180px sm:h-[220px] md:h-[240px]",
                   background: item.background,
                 }}
               >
@@ -101,6 +101,19 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @media (min-width: 640px) and (max-width: 819px) {
+          .showcase-banner-item {
+            height: 320px !important;
+          }
+        }
+        @media (min-width: 820px) and (max-width: 1023px) {
+          .showcase-banner-item {
+            height: 350px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

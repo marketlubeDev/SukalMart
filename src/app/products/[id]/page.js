@@ -1363,7 +1363,7 @@ export default function ProductDetailPage() {
               />
             </div>
             {/* Right: Text and Features */}
-            <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pl-0">
+            <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pl-8 sm:pl-6">
               <div
                 className="mb-4 self-start"
                 style={{
