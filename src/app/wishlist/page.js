@@ -62,60 +62,62 @@ export default function WishlistPage() {
   }, [items, sortBy]);
 
   return (
-    <div className="bg-white mx-auto w-full max-w-screen-xl px-4 md:px-10 py-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold text-gray-800">Wishlist</h1>
-        </div>
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="bg-white mx-auto w-full max-w-screen-xl px-4 md:px-10 py-6 flex-1">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-semibold text-gray-800">Wishlist</h1>
+          </div>
 
-        <div className="flex items-center gap-1 relative">
-          <span className="text-sm text-gray-600">Sort by :</span>
-          <div className="relative flex items-center" style={{ marginRight: "12px" }}>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="pl-0 pr-6 py-0 text-sm bg-white appearance-none focus:outline-none font-semibold text-gray-800"
-              style={{
-                border: "none",
-                boxShadow: "none",
-                outline: "none",
-                WebkitAppearance: "none",
-                MozAppearance: "none",
-                appearance: "none",
-                paddingLeft: "0rem",
-                paddingRight: "1.5rem",
-                height: "24px",
-                lineHeight: "24px",
-                minWidth: "80px",
-                cursor: "pointer",
-              }}
-            >
-              {sortOptions.map((option) => (
-                <option key={option} value={option} className="font-normal">
-                  {option}
-                </option>
-              ))}
-            </select>
-            <img
-              src="/dropdownicon.svg"
-              alt="dropdown"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
-              style={{ minWidth: "12px", minHeight: "12px" }}
-            />
+          <div className="flex items-center gap-1 relative">
+            <span className="text-sm text-gray-600">Sort by :</span>
+            <div className="relative flex items-center" style={{ marginRight: "12px" }}>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="pl-0 pr-6 py-0 text-sm bg-white appearance-none focus:outline-none font-semibold text-gray-800"
+                style={{
+                  border: "none",
+                  boxShadow: "none",
+                  outline: "none",
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+                  appearance: "none",
+                  paddingLeft: "0rem",
+                  paddingRight: "1.5rem",
+                  height: "24px",
+                  lineHeight: "24px",
+                  minWidth: "80px",
+                  cursor: "pointer",
+                }}
+              >
+                {sortOptions.map((option) => (
+                  <option key={option} value={option} className="font-normal">
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <img
+                src="/dropdownicon.svg"
+                alt="dropdown"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
+                style={{ minWidth: "12px", minHeight: "12px" }}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {products.length === 0 ? (
-        <div className="text-center text-gray-600 py-16">Your wishlist is empty.</div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
-            <WishlistCard key={product.id} product={product} onRemove={remove} />
-          ))}
-        </div>
-      )}
+        {products.length === 0 ? (
+          <div className="text-center text-gray-600 py-16">Your wishlist is empty.</div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {products.map((product) => (
+              <WishlistCard key={product.id} product={product} onRemove={remove} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 } 
