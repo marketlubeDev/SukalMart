@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AccountInfo from "./_components/AccountInfo";
 import SavedAddress from "./_components/SavedAddress";
@@ -8,7 +8,7 @@ import MyOrders from "./_components/MyOrders";
 import HelpSupport from "./_components/HelpSupport";
 import PrivacyPolicy from "./_components/PrivacyPolicy";
 
-export default function MyAccountPage() {
+function MyAccountContent() {
   const searchParams = useSearchParams();
   const tabParam = (searchParams.get("tab") || "").toLowerCase();
 
@@ -104,5 +104,20 @@ export default function MyAccountPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function MyAccountPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#035F0F] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <MyAccountContent />
+    </Suspense>
   );
 } 
