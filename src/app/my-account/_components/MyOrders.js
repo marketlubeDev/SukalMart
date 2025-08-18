@@ -71,7 +71,7 @@ export default function MyOrders() {
 						</div>
 
 						<div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
-							<button className="text-[#035F0F] hover:text-[#035F0F]/80 text-xs sm:text-sm">
+							<button className="text-[#035F0F] hover:text-[#035F0F]/80 text-xs sm:text-sm cursor-pointer">
 								View Details
 							</button>
 						</div>

@@ -21,7 +21,7 @@ export default function AccountInfo() {
         <h2 className="text-xl font-semibold text-gray-900">Personal Info</h2>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="px-4 py-2 bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors"
+          className="px-4 py-2 bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors cursor-pointer"
         >
           Edit Info
         </button>
@@ -49,7 +49,7 @@ export default function AccountInfo() {
         {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="px-4 py-2 bg-transparent border border-[#035F0F] text-[#035F0F] rounded-md hover:bg-[#035F0F]/10 transition-colors"
+          className="px-4 py-2 bg-transparent border border-[#035F0F] text-[#035F0F] rounded-md hover:bg-[#035F0F]/10 transition-colors cursor-pointer"
         >
           Logout
         </button>

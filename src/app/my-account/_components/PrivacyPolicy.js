@@ -76,10 +76,10 @@ export default function PrivacyPolicy() {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
-          <button className="w-full sm:w-auto px-4 py-2 bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors text-sm">
+          <button className="w-full sm:w-auto px-4 py-2 bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors text-sm cursor-pointer">
             Download PDF
           </button>
-          <button className="w-full sm:w-auto px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded-md hover:bg-[#035F0F]/10 transition-colors text-sm">
+          <button className="w-full sm:w-auto px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded-md hover:bg-[#035F0F]/10 transition-colors text-sm cursor-pointer">
             Print Policy
           </button>
         </div>

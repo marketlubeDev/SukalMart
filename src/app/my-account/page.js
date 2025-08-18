@@ -84,7 +84,7 @@ function MyAccountContent() {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors ${
+                className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer ${
                   activeTab === tab
                     ? "border-[#035F0F] text-[#035F0F]"
                     : "border-transparent text-gray-500 hover:text-gray-700"

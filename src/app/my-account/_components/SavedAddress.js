@@ -24,7 +24,7 @@ export default function SavedAddress() {
 		<div className="bg-white rounded-lg p-4 sm:p-6">
 			<div className="flex items-center justify-between mb-4 sm:mb-6">
 				<h2 className="text-lg sm:text-xl font-semibold text-gray-900">Saved Addresses</h2>
-				<button className="px-3 py-2 sm:px-4 sm:py-2 text-sm bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors">
+				<button className="px-3 py-2 sm:px-4 sm:py-2 text-sm bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors cursor-pointer">
 					Add New Address
 				</button>
 			</div>
@@ -46,8 +46,8 @@ export default function SavedAddress() {
 								<p className="text-gray-600 text-xs sm:text-sm">{address.phone}</p>
 							</div>
 							<div className="flex space-x-3 sm:space-x-2 sm:self-start sm:mt-0 mt-1">
-								<button className="text-[#035F0F] hover:text-[#035F0F]/80 text-xs sm:text-sm">Edit</button>
-								<button className="text-red-600 hover:text-red-700 text-xs sm:text-sm">Delete</button>
+								<button className="text-[#035F0F] hover:text-[#035F0F]/80 text-xs sm:text-sm cursor-pointer">Edit</button>
+								<button className="text-red-600 hover:text-red-700 text-xs sm:text-sm cursor-pointer">Delete</button>
 							</div>
 						</div>
 					</div>
