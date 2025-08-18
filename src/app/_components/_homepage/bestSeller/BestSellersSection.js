@@ -24,8 +24,8 @@ export default function BestSellersSection() {
             Best Sellers
           </h2>
           <button
-            className="flex items-center gap-1 md:gap-2 font-medium transition-colors"
-            style={{ color: "#035F0F" }}
+            className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
+            style={{ color: "#035F0F", cursor: 'pointer' }}
             onClick={() => window.location.href = "/products"}
           >
             <span className="text-sm md:text-base">View all</span>

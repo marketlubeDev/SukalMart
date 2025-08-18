@@ -68,8 +68,8 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
               Featured Shampoos
             </h2>
             <button
-              className="flex items-center gap-2 font-medium transition-colors"
-              style={{ color: "#035F0F" }}
+              className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
+              style={{ color: "#035F0F", cursor: 'pointer' }}
               onClick={() => window.location.href = "/products"}
             >
               <span className="text-sm sm:text-base">View all</span>

@@ -39,12 +39,13 @@ export default function EngineeredBy7Hz() {
               performance. Experience the transformation.
             </p>
             <button
-              className="flex justify-center items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 md:px-5 md:py-4 lg:px-6 lg:py-4 text-sm sm:text-base md:text-lg lg:text-lg font-medium"
+              className="flex justify-center items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 md:px-5 md:py-4 lg:px-6 lg:py-4 text-sm sm:text-base md:text-lg lg:text-lg font-medium cursor-pointer"
               style={{
                 borderRadius: "4px",
                 background: "#035F0F",
                 color: "#fff",
                 transition: "background 0.2s",
+                cursor: 'pointer'
               }}
               onMouseOver={(e) =>
                 (e.currentTarget.style.background = "#035F0FE6")

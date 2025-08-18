@@ -60,8 +60,8 @@ export default function CrystalClearBanner() {
               </div>
 
               <button
-                className="bg-transparent text-white font-medium px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-4 xl:px-10 xl:py-4 rounded-[4px] text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg hover:bg-gray-700 transition-colors duration-200"
-                style={{ border: "1px solid #FFF" }}
+                className="bg-transparent text-white font-medium px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-4 xl:px-10 xl:py-4 rounded-[4px] text-sm sm:text-base md:text-lg lg:text-lg xl:text-lg hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+                style={{ border: "1px solid #FFF", cursor: 'pointer' }}
               >
                 Shop now
               </button>
