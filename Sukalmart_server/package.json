@@ -1,5 +1,5 @@
 {
-  "name": "sukalmart-server",
+  "name": "Souqalmart-server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "SukalMart E-commerce Backend API Server",
+  "description": "Souqalmart E-commerce Backend API Server",
   "dependencies": {
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
