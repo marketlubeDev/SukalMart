@@ -46,6 +46,23 @@ export default function Nav() {
     setIsCartOpen(false);
   };
 
+  // Allow global triggers to open the cart
+  useEffect(() => {
+    const openCart = () => setIsCartOpen(true);
+    const handler = () => openCart();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('open-cart', handler);
+      // Expose helper for direct calls as well
+      window.__openCart = openCart;
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('open-cart', handler);
+        delete window.__openCart;
+      }
+    };
+  }, []);
+
   const navigationItems = [
     {
       label: "Products",

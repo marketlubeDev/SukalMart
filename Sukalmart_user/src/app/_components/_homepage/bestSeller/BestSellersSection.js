@@ -4,6 +4,30 @@ import { bestSellers } from "../../../../lib/data";
 import Image from "next/image";
 
 export default function BestSellersSection() {
+  const addToCart = (product) => {
+    try {
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const items = raw ? JSON.parse(raw) : [];
+      const index = items.findIndex((it) => String(it.id) === String(product.id));
+      if (index >= 0) {
+        const existing = items[index];
+        items[index] = { ...existing, quantity: (existing.quantity || 1) + (product.quantity || 1) };
+      } else {
+        items.push({ ...product, quantity: product.quantity || 1 });
+      }
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('cartItems', JSON.stringify(items));
+        window.dispatchEvent(new Event('cart-updated'));
+        if (window.__openCart) {
+          window.__openCart();
+        } else {
+          window.dispatchEvent(new Event('open-cart'));
+        }
+      }
+    } catch (err) {
+      console.error('Failed to add to cart', err);
+    }
+  };
   return (
     <div className="bg-white container mx-auto px-4 py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
       <div className="px-4">
@@ -40,7 +64,7 @@ export default function BestSellersSection() {
         {/* Best Sellers Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6">
           {/* Product 1 - A1 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/1")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
@@ -80,7 +104,7 @@ export default function BestSellersSection() {
                 </span>
               </div>
               <div className="flex justify-start">
-                <button
+                <button onClick={(e) => { e.stopPropagation(); addToCart({ id: 1, name: 'Dove Nutritive Solutions', price: 1099, originalPrice: 1299, image: 'https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg', color: 'Hair Care', plug: 'Default' }); }}
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
@@ -100,7 +124,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 2 - #2 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/2")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -142,7 +166,7 @@ export default function BestSellersSection() {
                 </span>
               </div>
               <div className="flex justify-start">
-                <button
+                <button onClick={(e) => { e.stopPropagation(); addToCart({ id: 2, name: 'Lux Body Wash', price: 1099, originalPrice: 1299, image: 'https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp', color: 'Body & Shower', plug: 'Default' }); }}
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
@@ -162,7 +186,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 3 - #3 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/3")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -204,7 +228,7 @@ export default function BestSellersSection() {
                 </span>
               </div>
               <div className="flex justify-start">
-                <button
+                <button onClick={(e) => { e.stopPropagation(); addToCart({ id: 3, name: 'Rexona / Sure Deo', price: 1899, originalPrice: 2099, image: 'https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp', color: 'Soap & Deodorants', plug: 'Default' }); }}
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
@@ -224,7 +248,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 4 - No Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/4")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
@@ -249,7 +273,7 @@ export default function BestSellersSection() {
                 </span>
               </div>
               <div className="flex justify-start">
-                <button
+                <button onClick={(e) => { e.stopPropagation(); addToCart({ id: 4, name: 'Vaseline Body Lotion', price: 1099, originalPrice: 1299, image: 'https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg', color: 'Skin Care', plug: 'Default' }); }}
                   className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",

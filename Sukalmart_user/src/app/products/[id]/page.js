@@ -19,19 +19,19 @@ export default function ProductDetailPage() {
   const getProductData = (id) => {
     // Sample product database - you can replace this with actual API call
     const productDatabase = [
-      {
-        id: "1",
-        name: "Glow & Hydrate Face Serum",
-        type: "Skincare",
-        price: 899,
-        originalPrice: 1099,
+      		{
+			id: "1",
+			name: "Dove Nutritive Solutions",
+			type: "Hair Care",
+			price: 1099,
+			originalPrice: 1299,
         discount: 18,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
         ],
         description: "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
     features: [
@@ -50,19 +50,19 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "2",
-        name: "Luxury Beauty Collection Set",
-        type: "Beauty Essentials",
-        price: 2499,
-        originalPrice: 3199,
+      		{
+			id: "2",
+			name: "Lux Body Wash",
+			type: "Body & Shower",
+			price: 1099,
+			originalPrice: 1299,
         discount: 22,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
         ],
         description: "Complete beauty collection featuring premium skincare and makeup essentials. Everything you need for a flawless beauty routine.",
         features: [
@@ -81,12 +81,12 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "3",
-        name: "Anti-Aging Night Cream",
-        type: "Anti-Aging",
-        price: 1299,
-        originalPrice: 1599,
+      		{
+			id: "3",
+			name: "Rexona / Sure Deo",
+			type: "Soap & Deodorants",
+			price: 1899,
+			originalPrice: 2099,
         discount: 19,
         image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
@@ -112,19 +112,19 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "4",
-        name: "Vitamin C Brightening Serum",
-        type: "Skincare",
-        price: 799,
-        originalPrice: 999,
+      		{
+			id: "4",
+			name: "Vaseline Body Lotion",
+			type: "Skin Care",
+			price: 1099,
+			originalPrice: 1299,
         discount: 20,
         image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "/banner1.png",
-          "/banner2.png",
-          "/banner3.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
         ],
         description: "Powerful Vitamin C serum for brightening and evening skin tone. Reduces dark spots and promotes collagen production.",
         features: [
@@ -723,8 +723,37 @@ export default function ProductDetailPage() {
   console.log("Product Data:", product);
 
   const addToCart = () => {
-    // Add to cart functionality
-    console.log(`Adding ${quantity} of ${product.name} to cart`);
+    try {
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const items = raw ? JSON.parse(raw) : [];
+      const idx = items.findIndex((it) => String(it.id) === String(product.id));
+      if (idx >= 0) {
+        const existing = items[idx];
+        items[idx] = { ...existing, quantity: (existing.quantity || 1) + quantity };
+      } else {
+        items.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          image: product.image || (product.images && product.images[0]) || '/banner1.png',
+          color: product.type,
+          plug: 'Default',
+          quantity,
+        });
+      }
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('cartItems', JSON.stringify(items));
+        window.dispatchEvent(new Event('cart-updated'));
+        if (window.__openCart) {
+          window.__openCart();
+        } else {
+          window.dispatchEvent(new Event('open-cart'));
+        }
+      }
+    } catch (err) {
+      console.error('Failed to add to cart', err);
+    }
   };
 
   const buyNow = () => {

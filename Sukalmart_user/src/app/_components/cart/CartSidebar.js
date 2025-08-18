@@ -12,29 +12,35 @@ export default function CartSidebar({ isOpen, onClose }) {
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
   const [showCouponSidebar, setShowCouponSidebar] = useState(false);
   const [drawerWidth, setDrawerWidth] = useState(550);
+  const [cartItems, setCartItems] = useState([]);
 
-  const cartItems = [
-    {
-      id: 1,
-      name: "Glow & Hydrate Face Serum",
-      color: "Clear",
-      plug: "30ml bottle",
-      price: 899,
-      originalPrice: 1099,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-    },
-    {
-      id: 2,
-      name: "Luxury Beauty Collection Set",
-      color: "Multi",
-      plug: "Complete set",
-      price: 2499,
-      originalPrice: 3199,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-    },
-  ];
+  const loadCart = () => {
+    try {
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const parsed = raw ? JSON.parse(raw) : [];
+      setCartItems(Array.isArray(parsed) ? parsed : []);
+      const initialQuantities = {};
+      (Array.isArray(parsed) ? parsed : []).forEach((item) => {
+        initialQuantities[item.id] = Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+      });
+      setQuantities((prev) => ({ ...prev, ...initialQuantities }));
+    } catch (err) {
+      console.error('Failed to load cart from localStorage', err);
+      setCartItems([]);
+    }
+  };
+
+  const persistCart = (items) => {
+    try {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('cartItems', JSON.stringify(items));
+        // Notify listeners
+        window.dispatchEvent(new Event('cart-updated'));
+      }
+    } catch (err) {
+      console.error('Failed to persist cart to localStorage', err);
+    }
+  };
 
   // Prevent background scrolling when cart is open
   useEffect(() => {
@@ -73,18 +79,46 @@ export default function CartSidebar({ isOpen, onClose }) {
     };
   }, []);
 
+  // Load cart when opened and when external updates happen
+  useEffect(() => {
+    if (isOpen) loadCart();
+  }, [isOpen]);
+
+  useEffect(() => {
+    const onCartUpdated = () => loadCart();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('cart-updated', onCartUpdated);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('cart-updated', onCartUpdated);
+      }
+    };
+  }, []);
+
   const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity >= 1) {
       setQuantities((prev) => ({
         ...prev,
         [itemId]: newQuantity,
       }));
+      // Also persist to localStorage
+      setCartItems((prev) => {
+        const next = prev.map((item) =>
+          item.id === itemId ? { ...item, quantity: newQuantity } : item
+        );
+        persistCart(next);
+        return next;
+      });
     }
   };
 
   const removeItem = (itemId) => {
-    // Handle item removal logic here
-    console.log(`Remove item ${itemId}`);
+    const next = cartItems.filter((item) => item.id !== itemId);
+    setCartItems(next);
+    const { [itemId]: _, ...rest } = quantities;
+    setQuantities(rest);
+    persistCart(next);
   };
 
   const handleProceedToCheckout = () => {
@@ -93,7 +127,7 @@ export default function CartSidebar({ isOpen, onClose }) {
   };
 
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * quantities[item.id],
+    (sum, item) => sum + (item.price || 0) * (quantities[item.id] || item.quantity || 1),
     0
   );
   const total = subtotal + 400; // Adding delivery cost
@@ -303,13 +337,13 @@ export default function CartSidebar({ isOpen, onClose }) {
                       <span style={{ marginRight: "16px" }}>
                         Type:{" "}
                         <span style={{ color: "#222", fontWeight: 500 }}>
-                          {item.color}
+                          {item.color || 'Standard'}
                         </span>
                       </span>
                       <span>
                         Size:{" "}
                         <span style={{ color: "#222", fontWeight: 500 }}>
-                          {item.plug}
+                          {item.plug || 'Default'}
                         </span>
                       </span>
                     </div>
@@ -337,7 +371,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         >
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, quantities[item.id] - 1)
+                              updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) - 1)
                             }
                             style={{
                               width: "28px",
@@ -379,11 +413,11 @@ export default function CartSidebar({ isOpen, onClose }) {
                               height: "100%",
                             }}
                           >
-                            {String(quantities[item.id]).padStart(2, "0")}
+                            {String(quantities[item.id] || item.quantity || 1).padStart(2, "0")}
                           </span>
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, quantities[item.id] + 1)
+                              updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) + 1)
                             }
                             style={{
                               width: "28px",
@@ -431,10 +465,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                             padding: "0 2px",
                           }}
                         >
-                          ₹{item.price.toLocaleString()}
+                          ₹{(item.price || 0).toLocaleString()}
                         </span>
                         <span className="text-xs text-gray-400 line-through">
-                          ₹{item.originalPrice.toLocaleString()}
+                          ₹{(item.originalPrice || 0).toLocaleString()}
                         </span>
                       </div>
                     </div>
