@@ -41,7 +41,7 @@ export default function NewLaunchesSection() {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {newLaunchesProducts.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg overflow-hidden">
+            <div key={product.id} className="bg-white rounded-lg overflow-hidden cursor-pointer">
               {/* Product Image */}
               <div className="relative">
                 <div className="aspect-square">

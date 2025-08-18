@@ -993,7 +993,7 @@ export default function ProductDetailPage() {
                 </button>
                 <button
                   onClick={addToCart}
-                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px]"
+                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
                   style={{
                     padding: "16px 24px",
                     justifyContent: "center",

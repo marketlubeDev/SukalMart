@@ -81,7 +81,7 @@ export default function BestSellersSection() {
               </div>
               <div className="flex justify-start">
                 <button
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
+                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
                     height: "32px",
@@ -143,7 +143,7 @@ export default function BestSellersSection() {
               </div>
               <div className="flex justify-start">
                 <button
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
+                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
                     height: "32px",
@@ -205,7 +205,7 @@ export default function BestSellersSection() {
               </div>
               <div className="flex justify-start">
                 <button
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
+                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
                     height: "32px",
@@ -250,7 +250,7 @@ export default function BestSellersSection() {
               </div>
               <div className="flex justify-start">
                 <button
-                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm"
+                  className="bg-white text-black font-medium transition-colors text-xs md:text-sm cursor-pointer"
                   style={{
                     display: "flex",
                     height: "32px",

@@ -32,7 +32,7 @@ export default function CheckoutLeft({
               {/* Remove Button */}
               <button
                 onClick={() => removeItem(item.id)}
-                className="absolute top-4 right-4 p-1 hover:bg-gray-200 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-1 hover:bg-gray-200 rounded-full transition-colors cursor-pointer"
               >
                 <svg
                   className="w-4 h-4"
@@ -80,7 +80,7 @@ export default function CheckoutLeft({
                     <div className="flex items-center border border-[#035F0F] bg-[#035F0F]/10 rounded">
                       <button
                         onClick={() => updateQuantity(item.id, quantities[item.id] - 1)}
-                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors"
+                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors cursor-pointer"
                       >
                         -
                       </button>
@@ -89,7 +89,7 @@ export default function CheckoutLeft({
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, quantities[item.id] + 1)}
-                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors"
+                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors cursor-pointer"
                       >
                         +
                       </button>
@@ -118,7 +118,7 @@ export default function CheckoutLeft({
           <h3 className="text-xl font-semibold text-gray-800">Order Summary</h3>
           <button
             onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
-            className="p-1 hover:bg-gray-100 rounded transition-colors"
+            className="p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
           >
             <svg
               className={`w-5 h-5 text-gray-400 transition-transform ${
@@ -173,7 +173,7 @@ export default function CheckoutLeft({
             </div>
 
             {/* Proceed to Pay Button */}
-            <button className="w-full bg-[#035F0F] text-white py-3 px-4 rounded font-medium hover:bg-[#035F0F]/90 transition-colors">
+            <button className="w-full bg-[#035F0F] text-white py-3 px-4 rounded font-medium hover:bg-[#035F0F]/90 transition-colors cursor-pointer">
               Proceed to Pay
             </button>
           </div>

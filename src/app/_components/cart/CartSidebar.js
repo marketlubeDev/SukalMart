@@ -443,7 +443,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               </h3>
               <button
                 onClick={() => setShowCouponSidebar(true)}
-                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">

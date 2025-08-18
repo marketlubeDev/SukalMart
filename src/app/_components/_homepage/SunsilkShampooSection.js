@@ -139,7 +139,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
             {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
           </h2>
           <button
-              className="flex items-center gap-2 font-medium transition-colors"
+              className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
               style={{ color: "#035F0F" }}
               onClick={() => window.location.href = "/products"}
             >

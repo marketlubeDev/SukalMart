@@ -109,7 +109,7 @@ export default function FeaturedProductCard({ product }) {
             </span>
           </div>
           <button
-            className="bg-white text-[#035F0F] font-medium transition-colors self-start md:h-8 md:px-4 md:py-2 lg:h-10 lg:px-6 lg:py-3"
+            className="bg-white text-[#035F0F] font-medium transition-colors self-start md:h-8 md:px-4 md:py-2 lg:h-10 lg:px-6 lg:py-3 cursor-pointer"
             style={{
               display: "flex",
               height: "32px",

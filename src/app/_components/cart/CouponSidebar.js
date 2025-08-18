@@ -153,7 +153,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
               <div className="ml-3 sm:ml-4">
                 <button
                   onClick={onClose}
-                  className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base"
+                  className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base cursor-pointer"
                   style={{ backgroundColor: "#035F0F" }}
                 >
                   Apply

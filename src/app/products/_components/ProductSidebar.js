@@ -60,7 +60,7 @@ export default function ProductSidebar({
                 setSelectedCategory(category);
                 localStorage.setItem('selectedCategory', category);
               }}
-              className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+              className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedCategory === category
                   ? "bg-green-100"
                   : "hover:bg-gray-50"
@@ -108,7 +108,7 @@ export default function ProductSidebar({
             <button
               key={discount}
               onClick={() => setSelectedDiscount(discount)}
-              className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+              className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedDiscount === discount
                   ? "bg-green-100"
                   : "hover:bg-gray-50"
@@ -272,7 +272,7 @@ export default function ProductSidebar({
           {priceRanges.map((range) => (
             <button
               key={range}
-              className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
               style={{
                 color: "rgba(51, 51, 51, 0.70)",
                 leadingTrim: "both",

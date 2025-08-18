@@ -126,7 +126,7 @@ export default function Nav() {
                   {item.href ? (
                     <Link
                       href={item.href}
-                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
                       onClick={(e) => {
                         // Reset category when Products is clicked
                         if (item.label === "Products") {
@@ -142,7 +142,7 @@ export default function Nav() {
                     </Link>
                   ) : (
                     <button
-                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2"
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
                       onClick={() =>
                         item.hasDropdown && toggleDropdown(item.label)
                       }
@@ -168,7 +168,7 @@ export default function Nav() {
                           <a
                             key={subIndex}
                             href="#"
-                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                           >
                             {subItem}
                           </a>
@@ -183,14 +183,14 @@ export default function Nav() {
             {/* Desktop Action Buttons - Rightmost with same padding */}
             <div className="hidden lg:flex lg:items-center lg:space-x-4 pl-4">
               {/* Search */}
-              <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
+              <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
                 <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
               </button>
 
               {/* Cart */}
               <button
                 onClick={toggleCart}
-                className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200"
+                className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
               >
                 <img
                   src="/Carticon.svg"
@@ -201,7 +201,7 @@ export default function Nav() {
 
               {/* User Profile */}
               <div className="relative group">
-                <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
+                <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
                   <img src="/usericon.svg" alt="user" className="w-6 h-6" />
                   <img
                     src="/dropdownicon.svg"
@@ -215,39 +215,39 @@ export default function Nav() {
                   <div className="py-2">
                     <Link
                       href="/my-account"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       My Account
                     </Link>
                     <Link
                       href="/my-account?tab=my-orders"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Order History
                     </Link>
                     <Link
                       href="/wishlist"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Wishlist
                     </Link>
                     <Link
                       href="/my-account?tab=help"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Help & Support
                     </Link>
 
                     <Link
                       href="/my-account?tab=privacy-policy"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Privacy Policy
                     </Link>
                     <hr className="my-2" />
                     <a
                       href="#"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Sign Out
                     </a>
@@ -313,14 +313,14 @@ export default function Nav() {
               {/* Right Group - Search and Cart */}
               <div className="flex items-center">
                 {/* Mobile Search */}
-                <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200">
+                <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
                   <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
                 </button>
 
                 {/* Mobile Cart */}
                 <button
                   onClick={toggleCart}
-                  className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200"
+                  className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                 >
                   <img
                     src="/Carticon.svg"
@@ -365,7 +365,7 @@ export default function Nav() {
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 cursor-pointer"
                     onClick={(e) => {
                       // Reset category when Products is clicked
                       if (item.label === "Products") {
@@ -381,7 +381,7 @@ export default function Nav() {
                   </Link>
                 ) : (
                   <button
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200"
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 cursor-pointer"
                     onClick={() => item.hasDropdown && toggleDropdown(item.label)}
                   >
                     <span>{item.label}</span>
@@ -404,7 +404,7 @@ export default function Nav() {
                       <a
                         key={subIndex}
                         href="#"
-                        className="block py-2 text-gray-600 hover:text-green-700 transition-colors duration-200"
+                        className="block py-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                       >
                         {subItem}
                       </a>
@@ -419,7 +419,7 @@ export default function Nav() {
               <div className="space-y-2">
                 <a
                   href="/my-account"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                 >
                   <img src="/usericon.svg" alt="user" className="w-5 h-5" />
                   <span>My Account</span>
@@ -427,7 +427,7 @@ export default function Nav() {
 
                 <Link
                   href="/wishlist"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
@@ -448,7 +448,7 @@ export default function Nav() {
 
                 <Link
                   href="/my-account?tab=my-orders"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
@@ -469,7 +469,7 @@ export default function Nav() {
 
                 <Link
                   href="/my-account?tab=help"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
@@ -490,7 +490,7 @@ export default function Nav() {
 
                 <Link
                   href="/my-account?tab=privacy-policy"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <svg
@@ -511,7 +511,7 @@ export default function Nav() {
 
                 <a
                   href="#"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200"
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                 >
                   <svg
                     className="w-5 h-5"

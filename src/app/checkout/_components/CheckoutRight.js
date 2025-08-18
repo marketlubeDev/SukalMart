@@ -28,7 +28,7 @@ export default function CheckoutRight() {
           <div className="bg-white rounded-lg">
             <div className="flex items-center justify-between px-4 pt-4 pb-2">
               <h3 className="text-xl font-semibold text-gray-800">Account info</h3>
-              <button className="text-sm text-[#035F0F] hover:text-[#035F0F]/80 underline">
+              <button className="text-sm text-[#035F0F] hover:text-[#035F0F]/80 underline cursor-pointer">
                 Logout
               </button>
             </div>
@@ -54,7 +54,7 @@ export default function CheckoutRight() {
               <div className="border-b border-gray-200 mt-4 px-6"></div>
               <button 
                 onClick={() => setShowAddressForm(true)}
-                className="ml-4 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded hover:bg-[#035F0F]/10 transition-colors" 
+                className="ml-4 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded hover:bg-[#035F0F]/10 transition-colors cursor-pointer" 
                 style={{ marginTop: 0, alignSelf: "flex-start" }}
               >
                 Edit Address
