@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function HeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const intervalRef = useRef(null);
 
   const banners = [
     {
@@ -42,28 +44,56 @@ export default function HeroBanner() {
     {
       id: 5,
       image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/basnner5.jpg",
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner5.jpg",
       title: "Oral & Misc",
       subtitle: "Toothpaste, brushes, and essentials",
       description: "Brighten your smile with daily care",
     },
   ];
 
+  // Auto-slide functionality
+  useEffect(() => {
+    if (isAutoPlaying) {
+      intervalRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % banners.length);
+      }, 5000); // Change slide every 5 seconds
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlaying, banners.length]);
+
   const nextSlide = () => {
-    console.log("Next button clicked, current slide:", currentSlide);
-    setCurrentSlide((prev) => {
-      const newSlide = (prev + 1) % banners.length;
-      console.log("New slide:", newSlide);
-      return newSlide;
-    });
+    setIsAutoPlaying(false); // Pause auto-slide
+    setCurrentSlide((prev) => (prev + 1) % banners.length);
+    
+    // Resume auto-slide after 3 seconds of inactivity
+    setTimeout(() => {
+      setIsAutoPlaying(true);
+    }, 3000);
   };
 
   const prevSlide = () => {
+    setIsAutoPlaying(false); // Pause auto-slide
     setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
+    
+    // Resume auto-slide after 3 seconds of inactivity
+    setTimeout(() => {
+      setIsAutoPlaying(true);
+    }, 3000);
   };
 
   const goToSlide = (index) => {
+    setIsAutoPlaying(false); // Pause auto-slide
     setCurrentSlide(index);
+    
+    // Resume auto-slide after 3 seconds of inactivity
+    setTimeout(() => {
+      setIsAutoPlaying(true);
+    }, 3000);
   };
 
   const currentBanner = banners[currentSlide];
