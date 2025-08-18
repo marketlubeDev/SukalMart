@@ -1,4 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SukalMart Frontend
+
+A modern e-commerce frontend built with Next.js 15, React 19, and Tailwind CSS.
+
+## Features
+
+- Modern, responsive UI design
+- Product browsing and search
+- Shopping cart functionality
+- User authentication
+- Order management
+- Wishlist functionality
+- Mobile-first design
+- Fast performance with Next.js
+
+## Tech Stack
+
+- Next.js 15
+- React 19
+- Tailwind CSS
+- React Icons
+- Modern JavaScript (ES6+)
+
+## Getting Started
 
 ## Getting Started
 
