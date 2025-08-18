@@ -44,7 +44,7 @@ export default function HeroBanner() {
     {
       id: 5,
       image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner5.jpg",
+        "/banner5.png",
       title: "Oral & Misc",
       subtitle: "Toothpaste, brushes, and essentials",
       description: "Brighten your smile with daily care",
@@ -179,7 +179,7 @@ export default function HeroBanner() {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-20 h-1 rounded-full transition-all duration-300 ${index === currentSlide
+                className={`w-20 h-1 rounded-full transition-all duration-300 cursor-pointer ${index === currentSlide
                     ? "bg-green-700 opacity-70"
                     : "bg-gray-300"
                   }`}
@@ -212,7 +212,7 @@ export default function HeroBanner() {
             <div className="flex justify-between items-center mb-2">
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5"
+                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
               >
                 <img
                   src="/previousicon.svg"
@@ -222,7 +222,7 @@ export default function HeroBanner() {
               </button>
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5"
+                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
               >
                 <img src="/nexticon.svg" alt="Next" className="w-4 h-4" />
               </button>
@@ -251,7 +251,7 @@ export default function HeroBanner() {
             </div>
 
             {/* Shop Now Button */}
-            <button className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start">
+            <button className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start cursor-pointer">
               <span
                 className="text-[10px] font-medium"
                 style={{
@@ -271,7 +271,7 @@ export default function HeroBanner() {
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 ${index === currentSlide
+                className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 cursor-pointer ${index === currentSlide
                     ? "bg-[rgba(3,95,15,0.7)]"
                     : "bg-[rgba(51,51,51,0.2)]"
                   }`}
