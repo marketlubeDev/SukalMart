@@ -2,8 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function HeroBanner() {
+  const router = useRouter();
+
+  const normalizeSlug = (value) =>
+    String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
@@ -167,8 +175,9 @@ export default function HeroBanner() {
 
               {/* Row 5: Shop Now Button */}
               <button 
-                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-6 py-4 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-4 py-3 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
                 style={{ cursor: 'pointer' }}
+                onClick={() => router.push(`/category/${normalizeSlug(currentBanner.title)}`)}
               >
                 Shop now
               </button>
@@ -260,6 +269,7 @@ export default function HeroBanner() {
             <button 
               className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start cursor-pointer"
               style={{ cursor: 'pointer' }}
+              onClick={() => router.push(`/category/${normalizeSlug(currentBanner.title)}`)}
             >
               <span
                 className="text-[10px] font-medium"

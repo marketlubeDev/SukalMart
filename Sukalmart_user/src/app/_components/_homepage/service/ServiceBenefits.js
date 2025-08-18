@@ -43,7 +43,7 @@ export default function ServiceBenefits() {
 					</div>
 				</div>
 			</div>
-			<div className="border-b border-black/10 w-[80%] mt-6 mx-auto"></div>
+			<div className="border-b border-black/10 w-[85%] mt-6 mx-auto"></div>
 		</>
 	);
 }
