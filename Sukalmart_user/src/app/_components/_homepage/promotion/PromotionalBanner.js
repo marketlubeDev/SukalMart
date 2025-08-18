@@ -134,7 +134,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                     {banner.description}
                   </p>
                   <button
-                    className="text-gray-800 font-medium px-6 py-3 xl:px-6 xl:py-3 rounded text-base xl:text-base hover:bg-gray-50 transition-colors duration-200"
+                    className="text-gray-800 font-medium px-4 py-2 xl:px-4 xl:py-2 rounded text-base xl:text-base hover:bg-gray-50 transition-colors duration-200"
                     style={{
                       color: "#333333",
                       border: "1px solid #333",
@@ -147,8 +147,8 @@ export default function PromotionalBanner({ fullWidth = false }) {
             );
           })}
         </div>
+        <div className="border-b border-black/10 w-full mt-6"></div>
       </div>
-      <div className="border-b border-black/10 w-[80%] mt-6 mx-auto"></div>
     </>
   );
 }

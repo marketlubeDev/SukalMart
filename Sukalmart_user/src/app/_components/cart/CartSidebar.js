@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Drawer } from "antd";
 import CouponSidebar from "./CouponSidebar";
 
 export default function CartSidebar({ isOpen, onClose }) {
-
   const [quantities, setQuantities] = useState({
     1: 1,
     2: 1,
   });
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
   const [showCouponSidebar, setShowCouponSidebar] = useState(false);
+  const [drawerWidth, setDrawerWidth] = useState(550);
 
   const cartItems = [
     {
@@ -54,6 +55,24 @@ export default function CartSidebar({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
+  // Update drawer width responsively on client only
+  useEffect(() => {
+    const updateWidth = () => {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      setDrawerWidth(isMobile ? '100%' : 550);
+    };
+
+    updateWidth();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', updateWidth);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', updateWidth);
+      }
+    };
+  }, []);
+
   const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity >= 1) {
       setQuantities((prev) => ({
@@ -81,27 +100,28 @@ export default function CartSidebar({ isOpen, onClose }) {
   const discount = 400;
   const couponDiscount = 199;
 
-  if (!isOpen) return null;
-
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 transition-opacity duration-300 ease-in-out z-40 ${
-          isOpen ? "bg-opacity-70" : "bg-opacity-0 pointer-events-none"
-        }`}
-        onClick={onClose}
-        style={{
-          background:
-            "linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 100%)",
+      <Drawer
+        title={null}
+        placement="right"
+        onClose={onClose}
+        open={isOpen}
+        width={drawerWidth}
+        className="cart-drawer-custom"
+        styles={{
+          body: {
+            padding: 0,
+            backgroundColor: '#F5F5F5',
+          },
+          header: {
+            display: 'none',
+          },
+          mask: {
+            backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          },
         }}
-      />
-
-      {/* Cart Sidebar */}
-      <div
-        className={`fixed top-0 right-0 h-screen w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-[#F5F5F5] shadow-2xl z-50 transform transition-all duration-300 ease-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        closeIcon={null}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
@@ -128,7 +148,6 @@ export default function CartSidebar({ isOpen, onClose }) {
               className="font-[600]"
               style={{
                 color: "#333333",
-
                 fontSize: "22px",
                 fontStyle: "normal",
                 lineHeight: "normal",
@@ -152,7 +171,6 @@ export default function CartSidebar({ isOpen, onClose }) {
               <h3
                 style={{
                   color: "#333333",
-
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
@@ -165,7 +183,6 @@ export default function CartSidebar({ isOpen, onClose }) {
               <span
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
-
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
@@ -474,13 +491,6 @@ export default function CartSidebar({ isOpen, onClose }) {
               </button>
             </div>
 
-            {/*
-              To make this work, you must:
-              1. Import useState from React at the top of your file:
-                 import React, { useState } from "react";
-              2. Add this line at the top of your component (before return):
-                 const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
-            */}
             {/* Order Summary */}
             <div className="mt-6">
               <div className="flex items-center justify-between mb-3 px-4">
@@ -694,14 +704,11 @@ export default function CartSidebar({ isOpen, onClose }) {
           <div
             className="border-t border-gray-200 p-4 bg-white"
             style={{
-              position: "fixed",
+              position: "sticky",
               bottom: 0,
-              right: 0,
-              left: 0,
               zIndex: 20,
               boxShadow: "0 -2px 8px rgba(0,0,0,0.03)",
               width: "100%",
-              maxWidth: "100vw",
             }}
           >
             <div className="flex items-center justify-between mb-2">
@@ -773,7 +780,7 @@ export default function CartSidebar({ isOpen, onClose }) {
             </div>
           </div>
         </div>
-      </div>
+      </Drawer>
 
       {/* Coupon Sidebar */}
       <CouponSidebar

@@ -167,7 +167,7 @@ export default function HeroBanner() {
 
               {/* Row 5: Shop Now Button */}
               <button 
-                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-6 py-4 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-4 py-3 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
                 style={{ cursor: 'pointer' }}
               >
                 Shop now

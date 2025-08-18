@@ -155,8 +155,8 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             </div>
           </div>
         </div>
+        <div className="border-b border-black/10 w-full mt-6"></div>
       </div>
-      <div className="border-b border-black/10 w-[80%] mt-6 mx-auto"></div>
     </>
   );
 }

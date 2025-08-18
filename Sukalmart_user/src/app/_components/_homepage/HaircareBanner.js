@@ -102,7 +102,7 @@ export default function HaircareBanner({ selectedCategory }) {
               <p className="text-white/90 text-sm mb-3 leading-relaxed line-clamp-3">
                 {content.description}
               </p>
-              <button className="bg-[#035F0F] text-white px-4 py-2 rounded text-sm font-medium cursor-pointer">
+              <button className="bg-[#035F0F] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer">
                 Shop now
               </button>
             </div>
@@ -128,7 +128,7 @@ export default function HaircareBanner({ selectedCategory }) {
                 <p className="text-lg md:text-xl mb-6 opacity-90 leading-relaxed">
                   {content.description}
                 </p>
-                <button className="inline-flex items-center px-6 py-3 bg-transparent text-gray-800 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200 border-2 border-gray-800 cursor-pointer">
+                <button className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200 border-2 border-gray-800 cursor-pointer">
                   Shop now
                 </button>
               </div>
