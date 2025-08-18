@@ -126,6 +126,7 @@ export default function HeroBanner() {
               onClick={prevSlide}
               className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
               aria-label="Previous slide"
+              style={{ cursor: 'pointer' }}
             >
               <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
             </button>
@@ -137,6 +138,7 @@ export default function HeroBanner() {
               onClick={nextSlide}
               className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
               aria-label="Next slide"
+              style={{ cursor: 'pointer' }}
             >
               <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
             </button>
@@ -165,7 +167,10 @@ export default function HeroBanner() {
               </p>
 
               {/* Row 5: Shop Now Button */}
-              <button className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-6 py-4 rounded transition-colors duration-200 flex items-center justify-center gap-2">
+              <button 
+                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-6 py-4 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                style={{ cursor: 'pointer' }}
+              >
                 Shop now
               </button>
             </div>
@@ -213,6 +218,7 @@ export default function HeroBanner() {
               <button
                 onClick={prevSlide}
                 className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
+                style={{ cursor: 'pointer' }}
               >
                 <img
                   src="/previousicon.svg"
@@ -223,6 +229,7 @@ export default function HeroBanner() {
               <button
                 onClick={nextSlide}
                 className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
+                style={{ cursor: 'pointer' }}
               >
                 <img src="/nexticon.svg" alt="Next" className="w-4 h-4" />
               </button>
@@ -251,7 +258,10 @@ export default function HeroBanner() {
             </div>
 
             {/* Shop Now Button */}
-            <button className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start cursor-pointer">
+            <button 
+              className="bg-[#035f0f] text-white px-2 py-1 rounded flex items-center justify-center self-start cursor-pointer"
+              style={{ cursor: 'pointer' }}
+            >
               <span
                 className="text-[10px] font-medium"
                 style={{
