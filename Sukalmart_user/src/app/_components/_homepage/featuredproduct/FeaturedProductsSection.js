@@ -51,8 +51,8 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
       <div
         className={
           isProductPage
-            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-0 sm:px-0 lg:px-0"
-            : "py-6 md:py-8 lg:py-10 overflow-hidden mx-auto w-full max-w-screen-xl px-4 sm:px-0 lg:px-0"
+            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-0 sm:px-0 lg:px-4"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden mx-auto w-full max-w-screen-xl px-4 sm:px-0 lg:px-4"
         }
       >
         <div className="flex flex-col gap-6">

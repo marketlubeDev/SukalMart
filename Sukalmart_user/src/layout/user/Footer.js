@@ -8,14 +8,17 @@ export default function Footer() {
       <div className="flex flex-col items-center px-4 py-8 sm:py-12 md:py-16">
         <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 items-center justify-start w-full max-w-6xl">
           {/* Logo */}
-          <div className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center">
+          <div 
+            className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
             <img
               src="/logo1.svg"
               alt="Souqalmart Logo"
               className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2"
             />
             <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold">
-              souqalmart
+              Souqalmart
             </span>
           </div>
 
@@ -138,14 +141,10 @@ export default function Footer() {
                   <rect width="1" height="14" fill="rgba(255, 255, 255, 0.2)" />
                 </svg>
               </div>
-              <a
-                href="https://www.marketlube.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal hover:opacity-60 transition-opacity"
+              <span
+                className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal transition-opacity"
                 style={{
                   color: "#FFF",
-
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",
@@ -153,8 +152,15 @@ export default function Footer() {
                   textEdge: "cap",
                 }}
               >
-                Powered by Marketlube
-              </a>
+                Powered by{" "}
+                <span
+                  className="hover:opacity-50 transition-opacity"
+                  style={{ textDecoration: "underline", cursor: "pointer", color: "#FFF" }}
+                  onClick={() => window.open("https://www.marketlube.in/", "_blank", "noopener,noreferrer")}
+                >
+                  Marketlube
+                </span>
+              </span>
             </div>
           </div>
         </div>
