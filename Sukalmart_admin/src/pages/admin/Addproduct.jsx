@@ -28,6 +28,12 @@ function Addproduct() {
     label: "",
     activeStatus: true,
     priority: 0,
+    about: "",
+    specifications: [""],
+    returnPolicyDays: 7,
+    returnPolicyText: "",
+    featureImages: [null, null, null],
+    featureVideoUrl: "",
   });
   const [variants, setVariants] = useState([
     {
@@ -57,6 +63,9 @@ function Addproduct() {
   const [variantToDelete, setVariantToDelete] = useState(null);
   const [isDeletingVariant, setIsDeletingVariant] = useState(false);
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+  const [showBulkSpecAdd, setShowBulkSpecAdd] = useState(false);
+  const [bulkSpecText, setBulkSpecText] = useState("");
+  const SPEC_CHAR_LIMIT = 140;
 
   useEffect(() => {
     if (productData.category && categories.length > 0) {
@@ -86,8 +95,7 @@ function Addproduct() {
     fetchUtilities();
   }, []);
 
-  useEffect(() => {
-  }, [showSubcategory]);
+  useEffect(() => {}, [showSubcategory]);
 
   useEffect(() => {
     if (productId) {
@@ -106,6 +114,15 @@ function Addproduct() {
             label: prod.label?._id || "",
             activeStatus: prod.activeStatus ?? true,
             priority: prod.priority ?? 0,
+            about: prod.about || "",
+            specifications:
+              prod.specifications && prod.specifications.length > 0
+                ? prod.specifications
+                : [""],
+            returnPolicyDays: prod.returnPolicyDays ?? 7,
+            returnPolicyText: prod.returnPolicyText || "",
+            featureImages: prod.featureImages || [null, null, null],
+            featureVideoUrl: prod.featureVideoUrl || "",
           });
           setVariants(
             (prod.variants || []).map((v) => ({
@@ -198,6 +215,18 @@ function Addproduct() {
     );
   };
 
+  // Remove an already selected image from a specific slot in current variant
+  const handleRemoveImage = (idx) => {
+    setVariants((prev) =>
+      prev.map((variant, i) => {
+        if (i !== activeVariant) return variant;
+        const nextImages = [...(variant.images || [])];
+        nextImages[idx] = null;
+        return { ...variant, images: nextImages };
+      })
+    );
+  };
+
   // Handle stock status checkbox
   const handleStockStatus = (status) => {
     setVariants((prev) =>
@@ -278,6 +307,112 @@ function Addproduct() {
     });
   };
 
+  const handleFeatureImageChange = (idx, file) => {
+    if (!file) return;
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only JPEG, JPG, PNG, and WebP image formats are allowed");
+      return;
+    }
+    const maxSizeInBytes = 1 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      toast.error(`Image size should not exceed 1MB.`);
+      return;
+    }
+    setProductData((prev) => {
+      const next = { ...prev };
+      const imgs = Array.isArray(next.featureImages)
+        ? [...next.featureImages]
+        : [];
+      imgs[idx] = file;
+      next.featureImages = imgs;
+      return next;
+    });
+  };
+
+  const addSpecification = () => {
+    setProductData((prev) => ({
+      ...prev,
+      specifications: [...(prev.specifications || []), ""],
+    }));
+  };
+
+  const removeSpecification = (idx) => {
+    setProductData((prev) => ({
+      ...prev,
+      specifications: (prev.specifications || []).filter((_, i) => i !== idx),
+    }));
+  };
+
+  const updateSpecification = (idx, value) => {
+    setProductData((prev) => {
+      const list = [...(prev.specifications || [])];
+      list[idx] = value;
+      return { ...prev, specifications: list };
+    });
+  };
+
+  const moveSpecification = (fromIndex, toIndex) => {
+    setProductData((prev) => {
+      const list = [...(prev.specifications || [])];
+      if (toIndex < 0 || toIndex >= list.length) return prev;
+      const [moved] = list.splice(fromIndex, 1);
+      list.splice(toIndex, 0, moved);
+      return { ...prev, specifications: list };
+    });
+  };
+
+  const moveSpecificationUp = (idx) => moveSpecification(idx, idx - 1);
+  const moveSpecificationDown = (idx) => moveSpecification(idx, idx + 1);
+
+  const duplicateSpecification = (idx) => {
+    setProductData((prev) => {
+      const list = [...(prev.specifications || [])];
+      list.splice(idx + 1, 0, list[idx] || "");
+      return { ...prev, specifications: list };
+    });
+  };
+
+  const clearSpecifications = () => {
+    setProductData((prev) => ({ ...prev, specifications: [""] }));
+  };
+
+  const handleBulkAddSpecifications = () => {
+    const lines = (bulkSpecText || "")
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean)
+      .map((l) => l.slice(0, SPEC_CHAR_LIMIT));
+    if (lines.length === 0) return;
+    setProductData((prev) => ({
+      ...prev,
+      specifications: [...(prev.specifications || []), ...lines],
+    }));
+    setBulkSpecText("");
+    setShowBulkSpecAdd(false);
+  };
+
+  const handlePasteIntoSpecInput = (idx, e) => {
+    const text = e.clipboardData?.getData("text") || "";
+    if (/\r?\n/.test(text)) {
+      e.preventDefault();
+      const lines = text
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter(Boolean)
+        .map((l) => l.slice(0, SPEC_CHAR_LIMIT));
+      if (lines.length === 0) return;
+      setProductData((prev) => {
+        const list = [...(prev.specifications || [])];
+        list[idx] = lines[0];
+        if (lines.length > 1) {
+          list.splice(idx + 1, 0, ...lines.slice(1));
+        }
+        return { ...prev, specifications: list };
+      });
+    }
+  };
+
   const handlePublishProduct = async () => {
     setIsLoading(true);
 
@@ -312,7 +447,17 @@ function Addproduct() {
     const formData = new FormData();
     Object.entries(productData).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        formData.append(key, value);
+        if (key === "specifications" && Array.isArray(value)) {
+          value.forEach((v) => formData.append("specifications", v));
+        } else if (key === "featureImages" && Array.isArray(value)) {
+          value.forEach((img, idx) => {
+            if (img && typeof img !== "string") {
+              formData.append(`featureImages[${idx}]`, img);
+            }
+          });
+        } else {
+          formData.append(key, value);
+        }
       }
     });
     formData.append("isDeleted", false);
@@ -385,6 +530,7 @@ function Addproduct() {
           {isEditMode ? "Edit Product" : "Add Product"}
         </h3>
 
+        {/* Product Name, Active Status, Priority */}
         <div className="mb-4">
           <div className="flex items-center justify-between gap-6">
             <label className="block mb-1 font-medium">
@@ -403,7 +549,7 @@ function Addproduct() {
                 />
                 <span>Is Active</span>
               </label>
-              <label className="flex items-center gap-2">
+              {/* <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   name="priority"
@@ -418,7 +564,7 @@ function Addproduct() {
                   disabled={isLoadingProduct}
                 />
                 <span>Mark as Priority</span>
-              </label>
+              </label> */}
             </div>
           </div>
           <input
@@ -437,23 +583,28 @@ function Addproduct() {
           )}
         </div>
 
+        {/* About product */}
+        <div className="mb-4">
+          <div>
+            <label className="block mb-1 font-medium">About product</label>
+            <textarea
+              name="about"
+              value={productData.about}
+              onChange={handleProductChange}
+              className={`w-full border rounded-lg px-3 py-2 ${
+                isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""
+              }`}
+              rows={4}
+              placeholder={
+                isLoadingProduct ? "Loading..." : "Describe the product..."
+              }
+              disabled={isLoadingProduct}
+            />
+          </div>
+        </div>
+
         {/* Brand, Category, Subcategory */}
         <div className="flex gap-4 mb-4">
-          {/* <div className="flex-1">
-            <label className="block mb-1 font-medium">Brand</label>
-            <select
-              name="brand"
-              value={productData?.brand}
-              onChange={handleProductChange}
-              className={`w-full border rounded-lg px-3 py-2 ${getError('brand') ? 'border-red-500' : ''}`}
-            >
-              <option value="" disabled>Select Brand</option>
-              {brands?.map((brand) => (
-                <option key={brand._id} value={brand._id}>{brand.name}</option>
-              ))}
-            </select>
-            {getError('brand') && <p className="text-red-500 text-sm mt-1">{getError('brand')}</p>}
-          </div> */}
           <div className="flex-1">
             <label className="block mb-1 font-medium">Category</label>
             <select
@@ -533,71 +684,197 @@ function Addproduct() {
             )}
           </div>
         </div>
-        {/* Store, Label */}
-        <div className="flex gap-4 mb-4">
-          {/* <div className="flex-1">
-            <label className="block mb-1 font-medium">Store</label>
-            <select 
-              className={`w-full border rounded-lg px-3 py-2 ${getError('store') ? 'border-red-500' : ''}`} 
-              name="store" 
-              value={productData.store} 
-              onChange={handleProductChange}
-              disabled = {store && Object.keys(store).length > 0}
-            >
-              <option value="" disabled>Select Store</option>
-              {stores.map((store) => (
-                <option key={store._id} value={store._id}>{store.store_name}</option>
-              ))}
-            </select>
-            {getError('store') && <p className="text-red-500 text-sm mt-1">{getError('store')}</p>}
-          </div> */}
-        </div>
-        {/* Variant Tabs */}
-        <div className="flex gap-2 mb-4 items-center flex-wrap">
-          {variants.map((v, idx) => (
-            <div key={idx} className="flex items-center">
-              <button
-                className={`flex items-center gap-1 px-4 py-1 rounded-md border text-sm font-medium transition-colors
-                  ${
-                    activeVariant === idx
-                      ? "bg-teal-500 text-black border-teal-500"
-                      : "bg-white text-black border-teal-400 hover:bg-teal-50"
-                  }
-                `}
-                onClick={() => handleTabClick(idx)}
-                type="button"
-              >
-                Variant {idx + 1}
-                {variants.length > 1 && (
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setVariantToDelete(isEditMode ? variants[idx]._id : idx);
-                      setShowDeleteModal(true);
-                    }}
-                    className="ml-1 cursor-pointer text-red-500 hover:text-red-700 text-base"
-                    title="Remove Variant"
-                  >
-                    &#10005;
-                  </span>
-                )}
-              </button>
+        {/* Specifications */}
+        <div className="mb-4">
+          <div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <label className="block mb-1 font-medium">
+                  Specifications (bullets)
+                </label>
+                <span className="text-xs text-gray-500">
+                  {(productData.specifications || []).length} items
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="px-3 py-1 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+                  onClick={() => setShowBulkSpecAdd((s) => !s)}
+                  disabled={isLoadingProduct}
+                >
+                  {showBulkSpecAdd ? "Close bulk add" : "Bulk add"}
+                </button>
+                <button
+                  type="button"
+                  className="px-3 py-1 rounded-md border border-red-400 text-red-500 bg-white hover:bg-red-50"
+                  onClick={clearSpecifications}
+                  disabled={isLoadingProduct}
+                >
+                  Clear all
+                </button>
+                <button
+                  type="button"
+                  className="px-3 py-1 rounded-md border border-teal-400 text-teal-500 bg-white hover:bg-teal-50"
+                  onClick={addSpecification}
+                  disabled={isLoadingProduct}
+                >
+                  + Add
+                </button>
+              </div>
             </div>
-          ))}
-          <button
-            className="px-3 py-1 rounded-md border border-teal-400 text-teal-500 bg-white hover:bg-teal-50 flex items-center justify-center text-lg font-bold"
-            onClick={handleAddVariant}
-            type="button"
-            style={{ minWidth: "2.25rem", minHeight: "2.25rem" }}
-          >
-            +
-          </button>
+
+            {showBulkSpecAdd && (
+              <div className="mt-3 border rounded-lg p-3 bg-gray-50">
+                <label className="block mb-1 text-sm text-gray-600">
+                  Paste multiple specifications (one per line)
+                </label>
+                <textarea
+                  value={bulkSpecText}
+                  onChange={(e) => setBulkSpecText(e.target.value)}
+                  rows={3}
+                  className={`w-full border rounded-lg px-3 py-2 ${
+                    isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""
+                  }`}
+                  placeholder="e.g. Durable build\nFast charging\n2-year warranty"
+                  disabled={isLoadingProduct}
+                />
+                <div className="flex justify-end gap-2 mt-2">
+                  <button
+                    type="button"
+                    className="px-3 py-1 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+                    onClick={() => setBulkSpecText("")}
+                    disabled={isLoadingProduct}
+                  >
+                    Clear
+                  </button>
+                  <button
+                    type="button"
+                    className="px-3 py-1 rounded-md border border-teal-400 text-teal-600 bg-white hover:bg-teal-50"
+                    onClick={handleBulkAddSpecifications}
+                    disabled={isLoadingProduct}
+                  >
+                    Add lines
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-2 mt-2">
+              {(productData.specifications || []).map((spec, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full border border-teal-300 text-teal-600 text-xs flex items-center justify-center">
+                    {idx + 1}
+                  </span>
+                  <input
+                    type="text"
+                    value={spec || ""}
+                    maxLength={SPEC_CHAR_LIMIT}
+                    onPaste={(e) => handlePasteIntoSpecInput(idx, e)}
+                    onChange={(e) => updateSpecification(idx, e.target.value)}
+                    className={`flex-1 border rounded-lg px-3 py-2 ${
+                      isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""
+                    }`}
+                    placeholder={`Bullet ${idx + 1}`}
+                    disabled={isLoadingProduct}
+                  />
+                  <span className="text-xs text-gray-400 whitespace-nowrap">
+                    {(spec || "").length}/{SPEC_CHAR_LIMIT}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      title="Move up"
+                      className="px-2 py-1 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                      onClick={() => moveSpecificationUp(idx)}
+                      disabled={idx === 0 || isLoadingProduct}
+                    >
+                      ▲
+                    </button>
+                    <button
+                      type="button"
+                      title="Move down"
+                      className="px-2 py-1 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                      onClick={() => moveSpecificationDown(idx)}
+                      disabled={
+                        idx === (productData.specifications || []).length - 1 ||
+                        isLoadingProduct
+                      }
+                    >
+                      ▼
+                    </button>
+                    <button
+                      type="button"
+                      title="Duplicate"
+                      className="px-2 py-1 rounded-md border border-teal-300 text-teal-600 bg-white hover:bg-teal-50"
+                      onClick={() => duplicateSpecification(idx)}
+                      disabled={isLoadingProduct}
+                    >
+                      ⧉
+                    </button>
+                    <button
+                      type="button"
+                      className="px-3 py-2 rounded-md border border-red-400 text-red-500 bg-white hover:bg-red-50"
+                      onClick={() => removeSpecification(idx)}
+                      disabled={isLoadingProduct}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Variant Tabs */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center flex-wrap gap-2 bg-gray-50 border rounded-lg p-2">
+              {variants.map((v, idx) => (
+                <button
+                  key={idx}
+                  className={`group flex items-center gap-2 px-4 py-1.5 rounded-full border text-sm font-medium transition-all ${
+                    activeVariant === idx
+                      ? "bg-teal-600 text-white border-teal-600 shadow"
+                      : "bg-white text-gray-700 border-teal-300 hover:bg-teal-50"
+                  }`}
+                  onClick={() => handleTabClick(idx)}
+                  type="button"
+                >
+                  <span>Variant {idx + 1}</span>
+                  {variants.length > 1 && (
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setVariantToDelete(
+                          isEditMode ? variants[idx]._id : idx
+                        );
+                        setShowDeleteModal(true);
+                      }}
+                      className="ml-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10 text-white/90 group-[.bg-teal-600]:bg-white/20 hover:opacity-90"
+                      title="Remove Variant"
+                    >
+                      ×
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <button
+              className="px-3 py-1.5 rounded-md border-2 border-dashed border-teal-400 text-teal-600 bg-white hover:bg-teal-50 font-semibold"
+              onClick={handleAddVariant}
+              type="button"
+            >
+              + Add Variant
+            </button>
+          </div>
         </div>
         {/* Variant Form */}
-        <div className="flex gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left: Variant fields */}
           <div className="flex-1 space-y-4">
-            <div className="flex gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex-1">
                 <label className="block mb-1 font-medium">Variant name</label>
                 <input
@@ -647,7 +924,7 @@ function Addproduct() {
                 )}
               </div>
             </div>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="flex-1">
                 <label className="block mb-1 font-medium">MRP</label>
                 <div className="relative">
@@ -747,11 +1024,11 @@ function Addproduct() {
               <p className="text-xs text-gray-500 mb-2">
                 Maximum size: 1MB per image | Formats: JPEG, JPG, PNG, WebP
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 {[0, 1, 2, 3].map((idx) => (
                   <label
                     key={idx}
-                    className={`w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 transition ${
+                    className={`relative group w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition ${
                       getError("images", true, activeVariant)
                         ? "border-red-500"
                         : ""
@@ -777,8 +1054,24 @@ function Addproduct() {
                     ) : (
                       <>
                         <span className="text-3xl text-gray-300">📷</span>
-                        <span className="text-xs text-gray-400 mt-2">Add</span>
+                        <span className="text-xs text-gray-400 mt-2">
+                          Click to upload
+                        </span>
                       </>
+                    )}
+                    {variants?.[activeVariant]?.images?.[idx] && (
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 z-10 bg-black/60 text-white text-xs rounded px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleRemoveImage(idx);
+                        }}
+                        title="Remove image"
+                      >
+                        Remove
+                      </button>
                     )}
                     <input
                       type="file"
@@ -786,7 +1079,6 @@ function Addproduct() {
                       accept="image/jpeg,image/jpg,image/png,image/webp"
                       onChange={(e) => {
                         handleImageChange(idx, e.target.files[0]);
-                        // Reset the input value to allow selecting the same file again after error
                         e.target.value = "";
                       }}
                     />
@@ -812,7 +1104,7 @@ function Addproduct() {
                     ? "border-red-500"
                     : ""
                 } ${isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""}`}
-                rows={3}
+                rows={4}
                 placeholder={
                   isLoadingProduct
                     ? "Loading..."
@@ -832,7 +1124,8 @@ function Addproduct() {
                 <div className="flex gap-4 items-center">
                   <label className="flex items-center gap-2">
                     <input
-                      type="checkbox"
+                      type="radio"
+                      name="stockStatus"
                       checked={
                         variants[activeVariant].stockStatus === "instock"
                       }
@@ -843,7 +1136,8 @@ function Addproduct() {
                   </label>
                   <label className="flex items-center gap-2">
                     <input
-                      type="checkbox"
+                      type="radio"
+                      name="stockStatus"
                       checked={
                         variants[activeVariant].stockStatus === "outofstock"
                       }
@@ -885,6 +1179,7 @@ function Addproduct() {
             </div>
           </div>
         </div>
+
         {/* Bottom Buttons */}
         <div className="flex justify-between mt-8">
           <button

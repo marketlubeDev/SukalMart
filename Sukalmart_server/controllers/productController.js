@@ -23,6 +23,8 @@ const addProduct = catchAsync(async (req, res, next) => {
     label,
     priority,
     activeStatus,
+    about,
+    specifications,
   } = req.body;
 
   if (variantsArray && variantsArray.length > 0) {
@@ -103,6 +105,12 @@ const addProduct = catchAsync(async (req, res, next) => {
     label,
     priority,
     activeStatus,
+    about,
+    specifications: Array.isArray(specifications)
+      ? specifications.filter((s) => s && String(s).trim().length > 0)
+      : specifications
+      ? [specifications]
+      : [],
   };
 
   if (variantsArray && variantsArray.length > 0) {
@@ -548,6 +556,15 @@ const getProductDetails = catchAsync(async (req, res, next) => {
 const updateProduct = catchAsync(async (req, res, next) => {
   const { productId } = req.query;
   const updateData = req.body;
+
+  // Normalize complex fields coming via multipart
+  if (updateData.specifications) {
+    updateData.specifications = Array.isArray(updateData.specifications)
+      ? updateData.specifications.filter(
+          (s) => s && String(s).trim().length > 0
+        )
+      : [updateData.specifications];
+  }
 
   if (updateData.variants) {
     try {
