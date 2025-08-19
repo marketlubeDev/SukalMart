@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import useBanner from "@/lib/hooks/useBanner";
+// import useBanner from "@/lib/hooks/useBanner";
 
 export default function HeroBanner() {
   const router = useRouter();
@@ -17,7 +17,55 @@ export default function HeroBanner() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
 
-  const { banners, loading, error } = useBanner({ bannerFor: "hero" });
+  // const { banners, loading, error } = useBanner({ bannerFor: "hero" });
+  
+  // Temporary dummy data
+  const banners = [
+    {
+      id: 1,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner1.jpg",
+      title: "Hair Care",
+      subtitle: "Shampoos, conditioners, and treatments",
+      description: "Nourish, strengthen, and style with top brands",
+    },
+    {
+      id: 2,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner2.jpg",
+      title: "Body & Shower",
+      subtitle: "Body wash, scrubs, and lotions",
+      description: "Refresh your daily ritual",
+    },
+    {
+      id: 3,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner3.jpg",
+      title: "Soap & Deodorants",
+      subtitle: "Bars, liquids, and long‑lasting freshness",
+      description: "Stay clean and confident all day",
+    },
+    {
+      id: 4,
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner4.jpg",
+      title: "Skin Care",
+      subtitle: "Cleansers, serums, and moisturizers",
+      description: "Healthy, glowing skin starts here",
+    },
+    {
+      id: 5,
+      image:
+        "/banner5.png",
+      title: "Oral & Misc",
+      subtitle: "Toothpaste, brushes, and essentials",
+      description: "Brighten your smile with daily care",
+    },
+  ];
+  
+  // Set loading and error to false since we're using dummy data
+  const loading = false;
+  const error = null;
 
 
 
