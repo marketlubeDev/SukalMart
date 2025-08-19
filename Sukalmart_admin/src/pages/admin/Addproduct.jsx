@@ -513,7 +513,7 @@ function Addproduct() {
   };
 
   return (
-    <div className="space-y-3 w-full bg-white p-8 flex flex-col min-h-full relative">
+    <div className="space-y-2 w-full bg-white p-4 flex flex-col min-h-full relative">
       {isLoadingProduct && (
         <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
           <div className="text-center">
@@ -524,58 +524,95 @@ function Addproduct() {
           </div>
         </div>
       )}
-      <div className="shadow p-4 rounded-lg border">
-        <h2 className="font-bold text-xl mb-2">Products</h2>
-        <h3 className="font-semibold text-lg mb-4">
-          {isEditMode ? "Edit Product" : "Add Product"}
-        </h3>
+      <div className="shadow p-3 rounded-lg border">
+        <div className="-mx-4 -mt-4 mb-4 p-3 rounded-t-lg border-b bg-gradient-to-r from-teal-50 to-white">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg bg-teal-600 text-white grid place-items-center">
+                <span>🛍️</span>
+              </div>
+              <div>
+                <h2 className="font-bold text-xl text-gray-900">Products</h2>
+                <div className="mt-0.5 flex items-center gap-2">
+                  <span className="text-sm text-gray-600">
+                    {isEditMode ? "Edit Product" : "Add Product"}
+                  </span>
+                  <span
+                    className={`inline-flex items-center px-2 py-0.5 text-xs rounded-full ${
+                      isEditMode
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-emerald-100 text-emerald-700"
+                    }`}
+                  >
+                    {isEditMode ? "Edit mode" : "Create mode"}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="hidden md:flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="px-3 py-1.5 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: "smooth",
+                  })
+                }
+                className="px-3 py-1.5 rounded-md border border-teal-400 text-teal-600 bg-white hover:bg-teal-50"
+              >
+                Go to Actions
+              </button>
+            </div>
+          </div>
+        </div>
 
-        {/* Product Name, Active Status, Priority */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between gap-6">
-            <label className="block mb-1 font-medium">
-              Product Name <span className="text-red-500">*</span>
-            </label>
+        {/* Product Name, Active Status */}
+        <div className="mb-3 border rounded-lg p-3 bg-gray-50">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <label className="font-medium">
+                Product Name <span className="text-red-500">*</span>
+              </label>
+              <span className="text-xs text-gray-500">
+                {(productData.name || "").length}/120
+              </span>
+            </div>
 
-            <div className="mb-4 flex items-center gap-6">
-              <label className="flex items-center gap-2">
+            <label className="flex items-center gap-3 cursor-pointer select-none">
+              <span className="text-sm text-gray-700">Active</span>
+              <span className="relative inline-flex items-center">
                 <input
                   type="checkbox"
                   name="activeStatus"
                   checked={!!productData.activeStatus}
                   onChange={handleProductChange}
-                  className="accent-blue-600"
                   disabled={isLoadingProduct}
+                  className="sr-only peer"
                 />
-                <span>Is Active</span>
-              </label>
-              {/* <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="priority"
-                  checked={!!productData.priority}
-                  onChange={(e) =>
-                    setProductData((prev) => ({
-                      ...prev,
-                      priority: e.target.checked ? 1 : 0,
-                    }))
-                  }
-                  className="accent-blue-600"
-                  disabled={isLoadingProduct}
-                />
-                <span>Mark as Priority</span>
-              </label> */}
-            </div>
+                <span className="w-11 h-6 rounded-full bg-gray-300 peer-checked:bg-teal-600 transition-colors"></span>
+                <span className="absolute left-0.5 top-0.5 h-5 w-5 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></span>
+              </span>
+            </label>
           </div>
           <input
             type="text"
             name="name"
-            className={`w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            maxLength={120}
+            className={`mt-2 w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 ${
               getError("name") ? "border-red-500" : ""
             } ${isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""}`}
             value={productData.name}
             onChange={handleProductChange}
-            placeholder={isLoadingProduct ? "Loading..." : ""}
+            placeholder={
+              isLoadingProduct ? "Loading..." : "Enter product title"
+            }
             disabled={isLoadingProduct}
           />
           {getError("name") && (
@@ -584,7 +621,7 @@ function Addproduct() {
         </div>
 
         {/* About product */}
-        <div className="mb-4">
+        <div className="mb-3">
           <div>
             <label className="block mb-1 font-medium">About product</label>
             <textarea
@@ -604,7 +641,7 @@ function Addproduct() {
         </div>
 
         {/* Brand, Category, Subcategory */}
-        <div className="flex gap-4 mb-4">
+        <div className="flex gap-3 mb-3">
           <div className="flex-1">
             <label className="block mb-1 font-medium">Category</label>
             <select
@@ -685,7 +722,7 @@ function Addproduct() {
           </div>
         </div>
         {/* Specifications */}
-        <div className="mb-4">
+        <div className="mb-3">
           <div>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -725,7 +762,7 @@ function Addproduct() {
             </div>
 
             {showBulkSpecAdd && (
-              <div className="mt-3 border rounded-lg p-3 bg-gray-50">
+              <div className="mt-2 border rounded-lg p-2 bg-gray-50">
                 <label className="block mb-1 text-sm text-gray-600">
                   Paste multiple specifications (one per line)
                 </label>
@@ -739,7 +776,7 @@ function Addproduct() {
                   placeholder="e.g. Durable build\nFast charging\n2-year warranty"
                   disabled={isLoadingProduct}
                 />
-                <div className="flex justify-end gap-2 mt-2">
+                <div className="flex justify-end gap-2 mt-1">
                   <button
                     type="button"
                     className="px-3 py-1 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
@@ -760,7 +797,7 @@ function Addproduct() {
               </div>
             )}
 
-            <div className="space-y-2 mt-2">
+            <div className="space-y-1 mt-1">
               {(productData.specifications || []).map((spec, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full border border-teal-300 text-teal-600 text-xs flex items-center justify-center">
@@ -772,7 +809,7 @@ function Addproduct() {
                     maxLength={SPEC_CHAR_LIMIT}
                     onPaste={(e) => handlePasteIntoSpecInput(idx, e)}
                     onChange={(e) => updateSpecification(idx, e.target.value)}
-                    className={`flex-1 border rounded-lg px-3 py-2 ${
+                    className={`flex-1 border rounded-lg px-3 py-1.5 ${
                       isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""
                     }`}
                     placeholder={`Bullet ${idx + 1}`}
@@ -814,7 +851,7 @@ function Addproduct() {
                     </button>
                     <button
                       type="button"
-                      className="px-3 py-2 rounded-md border border-red-400 text-red-500 bg-white hover:bg-red-50"
+                      className="px-3 py-1.5 rounded-md border border-red-400 text-red-500 bg-white hover:bg-red-50"
                       onClick={() => removeSpecification(idx)}
                       disabled={isLoadingProduct}
                     >
@@ -828,13 +865,13 @@ function Addproduct() {
         </div>
 
         {/* Variant Tabs */}
-        <div className="mb-6">
+        <div className="mb-3">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center flex-wrap gap-2 bg-gray-50 border rounded-lg p-2">
               {variants.map((v, idx) => (
                 <button
                   key={idx}
-                  className={`group flex items-center gap-2 px-4 py-1.5 rounded-full border text-sm font-medium transition-all ${
+                  className={`group flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium transition-all ${
                     activeVariant === idx
                       ? "bg-teal-600 text-white border-teal-600 shadow"
                       : "bg-white text-gray-700 border-teal-300 hover:bg-teal-50"
@@ -871,10 +908,10 @@ function Addproduct() {
           </div>
         </div>
         {/* Variant Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Left: Variant fields */}
-          <div className="flex-1 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex-1 space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex-1">
                 <label className="block mb-1 font-medium">Variant name</label>
                 <input
@@ -882,7 +919,7 @@ function Addproduct() {
                   name="name"
                   value={variants[activeVariant].name}
                   onChange={handleVariantChange}
-                  className={`w-full border rounded-lg px-3 py-2 ${
+                  className={`w-full border rounded-lg px-3 py-1.5 ${
                     getError("name", true, activeVariant)
                       ? "border-red-500"
                       : ""
@@ -907,7 +944,7 @@ function Addproduct() {
                   name="sku"
                   value={variants[activeVariant].sku}
                   onChange={handleVariantChange}
-                  className={`w-full border rounded-lg px-3 py-2 ${
+                  className={`w-full border rounded-lg px-3 py-1.5 ${
                     getError("sku", true, activeVariant) ? "border-red-500" : ""
                   } ${
                     isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""
@@ -924,7 +961,7 @@ function Addproduct() {
                 )}
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="flex-1">
                 <label className="block mb-1 font-medium">MRP</label>
                 <div className="relative">
@@ -938,7 +975,7 @@ function Addproduct() {
                     onChange={handleVariantChange}
                     onWheel={(e) => e.target.blur()}
                     min="0"
-                    className={`w-full border rounded-lg px-8 py-2 ${
+                    className={`w-full border rounded-lg px-8 py-1.5 ${
                       getError("mrp", true, activeVariant)
                         ? "border-red-500"
                         : ""
@@ -968,7 +1005,7 @@ function Addproduct() {
                     onChange={handleVariantChange}
                     onWheel={(e) => e.target.blur()}
                     min="0"
-                    className={`w-full border rounded-lg px-8 py-2 ${
+                    className={`w-full border rounded-lg px-8 py-1.5 ${
                       getError("offerPrice", true, activeVariant)
                         ? "border-red-500"
                         : ""
@@ -998,7 +1035,7 @@ function Addproduct() {
                     onChange={handleVariantChange}
                     onWheel={(e) => e.target.blur()}
                     min="0"
-                    className={`w-full border rounded-lg px-8 py-2 ${
+                    className={`w-full border rounded-lg px-8 py-1.5 ${
                       getError("costPrice", true, activeVariant)
                         ? "border-red-500"
                         : ""
@@ -1018,17 +1055,17 @@ function Addproduct() {
             </div>
           </div>
           {/* Right: Images, Description, Stock */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-3">
             <div>
               <label className="block mb-1 font-medium">Variant Images</label>
               <p className="text-xs text-gray-500 mb-2">
                 Maximum size: 1MB per image | Formats: JPEG, JPG, PNG, WebP
               </p>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-3 flex-wrap">
                 {[0, 1, 2, 3].map((idx) => (
                   <label
                     key={idx}
-                    className={`relative group w-32 h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition ${
+                    className={`relative group w-28 h-28 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition ${
                       getError("images", true, activeVariant)
                         ? "border-red-500"
                         : ""
@@ -1104,7 +1141,7 @@ function Addproduct() {
                     ? "border-red-500"
                     : ""
                 } ${isLoadingProduct ? "bg-gray-100 cursor-not-allowed" : ""}`}
-                rows={4}
+                rows={3}
                 placeholder={
                   isLoadingProduct
                     ? "Loading..."
@@ -1118,7 +1155,7 @@ function Addproduct() {
                 </p>
               )}
             </div>
-            <div className="flex gap-4 items-end">
+            <div className="flex gap-3 items-end">
               <div className="flex flex-col gap-2">
                 <label className="block mb-1 font-medium">Stock Status</label>
                 <div className="flex gap-4 items-center">
@@ -1157,7 +1194,7 @@ function Addproduct() {
                 <label className="block mb-1 font-medium">Stock Quantity</label>
                 <input
                   type="number"
-                  className={`w-full border rounded-lg px-3 py-2 ${
+                  className={`w-full border rounded-lg px-3 py-1.5 ${
                     getError("stockQuantity", true, activeVariant)
                       ? "border-red-500"
                       : ""
@@ -1181,16 +1218,16 @@ function Addproduct() {
         </div>
 
         {/* Bottom Buttons */}
-        <div className="flex justify-between mt-8">
+        <div className="flex justify-between mt-4">
           <button
             onClick={() => navigate("/admin/product")}
-            className="bg-red-600 text-white px-8 py-2 rounded-full font-semibold"
+            className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold"
           >
             Cancel
           </button>
           <div className="flex gap-4">
             <button
-              className="bg-green-700 text-white px-8 py-2 rounded-full font-semibold"
+              className="bg-green-700 text-white px-6 py-2 rounded-full font-semibold"
               onClick={handlePublishProduct}
               disabled={isLoading}
             >
