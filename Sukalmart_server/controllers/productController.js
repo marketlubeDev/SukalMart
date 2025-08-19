@@ -68,10 +68,10 @@ const addProduct = catchAsync(async (req, res, next) => {
     const filteredFiles = files.filter((file) => file);
     if (filteredFiles.length > 0) {
       try {
+        const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
         const imageUrls = await uploadMultipleToS3(filteredFiles, {
-          folder: `Vinsara/products/${name
-            .toLowerCase()
-            .replace(/[^a-z0-9]/g, "-")}/variant-${variantIndex}`,
+          folder: "products",
+          filename: `${productSlug}/variant-${variantIndex}/image`,
         });
         variantImagesMap[variantIndex] = imageUrls;
       } catch (error) {
@@ -103,10 +103,10 @@ const addProduct = catchAsync(async (req, res, next) => {
   );
   if (featureImageFiles.length > 0) {
     try {
+      const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
       const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
-        folder: `Vinsara/products/${name
-          .toLowerCase()
-          .replace(/[^a-z0-9]/g, "-")}/features`,
+        folder: "products",
+        filename: `${productSlug}/features/feature`,
       });
       uploadedFeatureImages = featureImageUrls;
     } catch (error) {
@@ -649,10 +649,12 @@ const updateProduct = catchAsync(async (req, res, next) => {
       const filteredFiles = files.filter((file) => file); // Remove any undefined entries
       if (filteredFiles.length > 0) {
         try {
+          const productSlug = product.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "-");
           const imageUrls = await uploadMultipleToS3(filteredFiles, {
-            folder: `Vinsara/products/${product.name
-              .toLowerCase()
-              .replace(/[^a-z0-9]/g, "-")}/variant-${variantIndex}`,
+            folder: "products",
+            filename: `${productSlug}/variant-${variantIndex}/image`,
           });
 
           // Merge new URLs with existing ones at the correct positions
@@ -687,10 +689,10 @@ const updateProduct = catchAsync(async (req, res, next) => {
     [];
   if (featureImageFiles.length > 0) {
     try {
+      const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]/g, "-");
       const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
-        folder: `Vinsara/products/${product.name
-          .toLowerCase()
-          .replace(/[^a-z0-9]/g, "-")}/features`,
+        folder: "products",
+        filename: `${productSlug}/features/feature`,
       });
       uploadedFeatureImages = featureImageUrls;
     } catch (error) {
