@@ -1,7 +1,7 @@
 const catchAsync = require("../utilities/errorHandlings/catchAsync");
 const Offer = require("../model/offerModel");
 const AppError = require("../utilities/errorHandlings/appError");
-const {uploadToCloudinary} = require("../utilities/cloudinaryUpload");
+const { uploadToCloudinary } = require("../utilities/cloudinaryUpload");
 const Product = require("../model/productModel");
 const mongoose = require("mongoose");
 const Variant = require("../model/variantsModel");
@@ -15,8 +15,6 @@ const createOffer = catchAsync(async (req, res, next) => {
       offerData.products = [offerData.products]; // fallback: single id as string
     }
   }
-
-
 
   if (offerData.offerType === "brandCategory") {
     offerData.products = [];
@@ -36,7 +34,9 @@ const createOffer = catchAsync(async (req, res, next) => {
 
   if (req.files && req.files.length > 0) {
     const imageFile = req.files[0];
-    const uploadedImage = await uploadToCloudinary(imageFile.buffer);
+    const uploadedImage = await uploadToCloudinary(imageFile.buffer, {
+      folder: "offers",
+    });
     offerData.bannerImage = uploadedImage;
   }
 
@@ -80,7 +80,6 @@ const createOffer = catchAsync(async (req, res, next) => {
   const aggregationPipeline = [{ $match: matchQuery }];
 
   const products = await Product.aggregate(aggregationPipeline);
-
 
   for (const product of products) {
     if (product.variants && product.variants.length > 0) {

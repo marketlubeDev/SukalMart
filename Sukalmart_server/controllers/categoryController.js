@@ -14,7 +14,9 @@ const addCategory = catchAsync(async (req, res, next) => {
   }
   const categoryData = { name, description };
   if (req.files[0]) {
-    const uploadedImage = await uploadToCloudinary(req.files[0].buffer);
+    const uploadedImage = await uploadToCloudinary(req.files[0].buffer, {
+      folder: "categories",
+    });
     categoryData.image = uploadedImage;
   }
 
@@ -29,7 +31,6 @@ const addCategory = catchAsync(async (req, res, next) => {
 });
 
 const getAllCategories = catchAsync(async (req, res) => {
-
   const categories = await Category.find().populate("subcategories");
 
   res.status(200).json({
@@ -80,7 +81,9 @@ const editCategory = catchAsync(async (req, res, next) => {
   if (name) category.name = name;
   if (description) category.description = description;
   if (req.files[0]) {
-    const uploadedImage = await uploadToCloudinary(req.files[0].buffer);
+    const uploadedImage = await uploadToCloudinary(req.files[0].buffer, {
+      folder: "categories",
+    });
     category.image = uploadedImage;
   }
 

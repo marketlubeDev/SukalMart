@@ -1,5 +1,8 @@
 const Banner = require("../model/bannerModel");
-const {uploadToCloudinary, deleteFromS3} = require("../utilities/cloudinaryUpload");
+const {
+  uploadToCloudinary,
+  deleteFromS3,
+} = require("../utilities/cloudinaryUpload");
 const AppError = require("../utilities/errorHandlings/appError");
 const catchAsync = require("../utilities/errorHandlings/catchAsync");
 const path = require("path");
@@ -24,24 +27,23 @@ const createBanner = catchAsync(async (req, res, next) => {
   }
 
   if (req.files && req.files.length > 0) {
-    
     // Handle images based on fieldname
     for (const file of req.files) {
       const uploadedImage = await uploadToCloudinary(file.buffer, {
-        folder: (file?.fieldname === "image" || file?.fieldname === "editImage") ? "Northlux/banners/desktop" : "Northlux/banners/mobile",
+        folder: "banners",
       });
-      
+
       switch (file.fieldname) {
-        case 'image':
+        case "image":
           bannerData.image = uploadedImage;
           break;
-        case 'mobileImage':
+        case "mobileImage":
           bannerData.mobileImage = uploadedImage;
           break;
-        case 'editImage':
+        case "editImage":
           bannerData.image = uploadedImage;
           break;
-        case 'editMobileImage':
+        case "editMobileImage":
           bannerData.mobileImage = uploadedImage;
           break;
       }
@@ -84,17 +86,16 @@ const deleteBanner = catchAsync(async (req, res, next) => {
 
   try {
     // Delete images and banner in parallel
-    await Promise.all([
-      ...deletePromises,
-      Banner.findByIdAndDelete(id)
-    ]);
+    await Promise.all([...deletePromises, Banner.findByIdAndDelete(id)]);
 
     res.status(200).json({
       status: "success",
       message: "Banner deleted successfully",
     });
   } catch (error) {
-    return next(new AppError("Failed to delete banner or associated images", 500));
+    return next(
+      new AppError("Failed to delete banner or associated images", 500)
+    );
   }
 });
 
@@ -108,24 +109,23 @@ const updateBanner = catchAsync(async (req, res, next) => {
   }
 
   if (req.files && req.files.length > 0) {
-    
     // Handle images based on fieldname
     for (const file of req.files) {
       const uploadedImage = await uploadToCloudinary(file.buffer, {
-        folder: (file?.fieldname === "image" || file?.fieldname === "editImage") ? "Northlux/banners/desktop" : "Northlux/banners/mobile",
+        folder: "banners",
       });
-      
+
       switch (file.fieldname) {
-        case 'image':
+        case "image":
           banner.image = uploadedImage;
           break;
-        case 'mobileImage':
+        case "mobileImage":
           banner.mobileImage = uploadedImage;
           break;
-        case 'editImage':
+        case "editImage":
           banner.image = uploadedImage;
           break;
-        case 'editMobileImage':
+        case "editMobileImage":
           banner.mobileImage = uploadedImage;
           break;
       }
@@ -164,7 +164,7 @@ const getAllBannersByCategory = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: "success", data: banners });
 });
 
-module.exports = {  
+module.exports = {
   createBanner,
   getAllBanners,
   deleteBanner,

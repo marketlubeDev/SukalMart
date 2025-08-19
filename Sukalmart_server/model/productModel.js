@@ -15,6 +15,10 @@ const productSchema = new Schema(
     priority: { type: Number, enum: [0, 1], default: 0 },
     averageRating: { type: Number, default: 0 },
     totalRatings: { type: Number, default: 0 },
+    // Additional merchandising fields for detailed product page
+    about: { type: String },
+    specifications: [{ type: String }],
+    featureImages: [{ type: String }],
   },
   { timestamps: true }
 );

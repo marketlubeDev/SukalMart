@@ -16,13 +16,15 @@ const RatingModal = require("../model/ratingModel");
 const addProduct = catchAsync(async (req, res, next) => {
   const {
     name,
-
     category,
     subcategory,
     variants: variantsArray,
     label,
     priority,
     activeStatus,
+    about,
+    specifications,
+    featureImages,
   } = req.body;
 
   if (variantsArray && variantsArray.length > 0) {
@@ -66,10 +68,10 @@ const addProduct = catchAsync(async (req, res, next) => {
     const filteredFiles = files.filter((file) => file);
     if (filteredFiles.length > 0) {
       try {
+        const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
         const imageUrls = await uploadMultipleToS3(filteredFiles, {
-          folder: `Vinsara/products/${name
-            .toLowerCase()
-            .replace(/[^a-z0-9]/g, "-")}/variant-${variantIndex}`,
+          folder: "products",
+          filename: `${productSlug}/variant-${variantIndex}/image`,
         });
         variantImagesMap[variantIndex] = imageUrls;
       } catch (error) {
@@ -94,6 +96,25 @@ const addProduct = catchAsync(async (req, res, next) => {
     );
   });
 
+  // Handle feature images upload
+  let uploadedFeatureImages = [];
+  const featureImageFiles = req.files.filter((file) =>
+    file.fieldname.startsWith("featureImages")
+  );
+  if (featureImageFiles.length > 0) {
+    try {
+      const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
+        folder: "products",
+        filename: `${productSlug}/features/feature`,
+      });
+      uploadedFeatureImages = featureImageUrls;
+    } catch (error) {
+      console.error("Error uploading feature images:", error);
+      return next(new AppError("Failed to upload feature images", 500));
+    }
+  }
+
   // Prepare product data
   const productData = {
     name,
@@ -103,6 +124,13 @@ const addProduct = catchAsync(async (req, res, next) => {
     label,
     priority,
     activeStatus,
+    about,
+    specifications: Array.isArray(specifications)
+      ? specifications.filter((s) => s && String(s).trim().length > 0)
+      : specifications
+      ? [specifications]
+      : [],
+    featureImages: uploadedFeatureImages,
   };
 
   if (variantsArray && variantsArray.length > 0) {
@@ -549,6 +577,15 @@ const updateProduct = catchAsync(async (req, res, next) => {
   const { productId } = req.query;
   const updateData = req.body;
 
+  // Normalize complex fields coming via multipart
+  if (updateData.specifications) {
+    updateData.specifications = Array.isArray(updateData.specifications)
+      ? updateData.specifications.filter(
+          (s) => s && String(s).trim().length > 0
+        )
+      : [updateData.specifications];
+  }
+
   if (updateData.variants) {
     try {
       await Promise.all(
@@ -612,10 +649,12 @@ const updateProduct = catchAsync(async (req, res, next) => {
       const filteredFiles = files.filter((file) => file); // Remove any undefined entries
       if (filteredFiles.length > 0) {
         try {
+          const productSlug = product.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "-");
           const imageUrls = await uploadMultipleToS3(filteredFiles, {
-            folder: `Vinsara/products/${product.name
-              .toLowerCase()
-              .replace(/[^a-z0-9]/g, "-")}/variant-${variantIndex}`,
+            folder: "products",
+            filename: `${productSlug}/variant-${variantIndex}/image`,
           });
 
           // Merge new URLs with existing ones at the correct positions
@@ -641,6 +680,30 @@ const updateProduct = catchAsync(async (req, res, next) => {
         }
       }
     }
+  }
+
+  // Handle feature images upload for updates
+  let uploadedFeatureImages = [];
+  const featureImageFiles =
+    req.files?.filter((file) => file.fieldname.startsWith("featureImages")) ||
+    [];
+  if (featureImageFiles.length > 0) {
+    try {
+      const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
+        folder: "products",
+        filename: `${productSlug}/features/feature`,
+      });
+      uploadedFeatureImages = featureImageUrls;
+    } catch (error) {
+      console.error("Error uploading feature images:", error);
+      return next(new AppError("Failed to upload feature images", 500));
+    }
+  }
+
+  // Update feature data if new images were uploaded
+  if (uploadedFeatureImages.length > 0) {
+    updateData.featureImages = uploadedFeatureImages;
   }
 
   let variantIds = [];
