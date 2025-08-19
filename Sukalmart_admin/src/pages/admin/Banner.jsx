@@ -340,8 +340,8 @@ function Banner() {
                     Select Banner For
                   </option>
                   <option value="hero">Hero</option>
-                  <option value="category">Category</option>
-                  <option value="product">Product</option>
+                  <option value="doubleOffer">Double Offer Banner</option>
+                  <option value="singleOffer">Single Offer Banner</option>
                 </select>
               </div>
 
