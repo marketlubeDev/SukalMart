@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 
 // Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
 import { useEffect, useState as useReactState } from "react";
+import { featuredProducts as fp, bestSellers as bs, catalogProducts } from "../../lib/data";
 
 function useBigTablet() {
   const [isBigTablet, setIsBigTablet] = useReactState(false);
@@ -27,8 +29,56 @@ export default function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const resultsRef = useRef(null);
+  const router = useRouter();
 
   const isBigTablet = useBigTablet();
+
+  // Build a simple in-memory product list for search suggestions
+  const allProducts = Array.from(
+    new Map(
+      (
+        (fp || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price, originalPrice: p.originalPrice, category: p.category }))
+        .concat((bs || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price, originalPrice: p.originalPrice, category: p.category })))
+        .concat((catalogProducts || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price ? `₹${p.price}` : undefined, originalPrice: p.originalPrice, category: p.category || p.type })))
+      ).map(item => [item.id + '-' + item.name, item])
+    ).values()
+  );
+
+  useEffect(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) {
+      setSearchResults([]);
+      return;
+    }
+    const results = allProducts
+      .filter(p => p.name.toLowerCase().includes(q))
+      .filter(p => !/(iem|earbud|headphone|wired|dac|amp|audio)/i.test(p.name))
+      .slice(0, 8);
+    setSearchResults(results);
+  }, [searchQuery]);
+
+  // Close results when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (!resultsRef.current) return;
+      if (!resultsRef.current.contains(e.target)) {
+        setSearchQuery("");
+        setSearchResults([]);
+      }
+    }
+    if (showSearchBar) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showSearchBar]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -44,6 +94,16 @@ export default function Nav() {
 
   const closeCart = () => {
     setIsCartOpen(false);
+  };
+
+  const handleSignOut = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('selectedCategory');
+    sessionStorage.clear();
+    setIsMobileMenuOpen(false);
+    router.push('/login');
   };
 
   // Allow global triggers to open the cart
@@ -126,7 +186,7 @@ export default function Nav() {
           className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5"
           style={bigTabletPadding}
         >
-          <div className="flex items-center h-20">
+          <div className="flex items-center h-20 justify-between">
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-4 hidden lg:block">
               <Link href="/" className="flex items-center">
@@ -138,71 +198,131 @@ export default function Nav() {
 
             {/* Desktop Navigation - Center with more gap */}
             <div className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
-              {navigationItems.map((item, index) => (
-                <div key={index} className="relative group">
-                  {item.href ? (
-                    <Link
-                      href={item.href}
-                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
-                      onClick={(e) => {
-                        // Reset category when Products is clicked
-                        if (item.label === "Products") {
-                          e.preventDefault();
-                          // Clear any stored category selection
-                          localStorage.removeItem('selectedCategory');
-                          // Force page reload to reset state
-                          window.location.href = '/products';
-                        }
-                      }}
-                    >
-                      <span>{item.label}</span>
-                    </Link>
-                  ) : (
-                    <button
-                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
-                      onClick={() =>
-                        item.hasDropdown && toggleDropdown(item.label)
-                      }
-                    >
-                      <span>{item.label}</span>
-                      {item.hasDropdown && (
-                        <img
-                          src="/dropdownicon.svg"
-                          alt="dropdown"
-                          className={`w-[7px] h-[4px] transition-transform duration-200 ${
-                            activeDropdown === item.label ? "rotate-180" : ""
-                          }`}
-                        />
+              {showSearchBar ? (
+                <div className="relative">
+                  <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 w-[520px] xl:w-[640px] bg-white">
+                    <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Find your next favorite product..."
+                      className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                    />
+                  </div>
+                  {searchQuery.trim().length > 0 && (
+                    <div ref={resultsRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto">
+                      {searchResults.length > 0 ? (
+                        searchResults.map((p) => (
+                          <div key={`${p.id}-${p.name}`} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                            {p.image && (
+                              <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
+                            )}
+                            <div className="flex flex-col min-w-0">
+                              <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                              {(p.category || p.price) && (
+                                <span className="text-xs text-gray-500 truncate">
+                                  {p.category ? `${p.category}` : ''}
+                                  {p.category && p.price ? ' · ' : ''}
+                                  {p.price ? `${p.price}` : ''}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
+                          <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
+                          <span className="text-sm">No products found</span>
+                        </div>
                       )}
-                    </button>
-                  )}
-
-                  {/* Desktop Dropdown Menu */}
-                  {item.hasDropdown && (
-                    <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                      <div className="py-2">
-                        {item.submenu.map((subItem, subIndex) => (
-                          <a
-                            key={subIndex}
-                            href="#"
-                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                          >
-                            {subItem}
-                          </a>
-                        ))}
-                      </div>
                     </div>
                   )}
                 </div>
-              ))}
+              ) : (
+                <>
+                  {navigationItems.map((item, index) => (
+                    <div key={index} className="relative group">
+                      {item.href ? (
+                        <Link
+                          href={item.href}
+                          className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
+                          onClick={(e) => {
+                            // Reset category when Products is clicked
+                            if (item.label === "Products") {
+                              e.preventDefault();
+                              // Clear any stored category selection
+                              localStorage.removeItem('selectedCategory');
+                              // Force page reload to reset state
+                              window.location.href = '/products';
+                            }
+                          }}
+                        >
+                          <span>{item.label}</span>
+                        </Link>
+                      ) : (
+                        <button
+                          className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
+                          onClick={() =>
+                            item.hasDropdown && toggleDropdown(item.label)
+                          }
+                        >
+                          <span>{item.label}</span>
+                          {item.hasDropdown && (
+                            <img
+                              src="/dropdownicon.svg"
+                              alt="dropdown"
+                              className={`w-[7px] h-[4px] transition-transform duration-200 ${
+                                activeDropdown === item.label ? "rotate-180" : ""
+                              }`}
+                            />
+                          )}
+                        </button>
+                      )}
+
+                      {/* Desktop Dropdown Menu */}
+                      {item.hasDropdown && (
+                        <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                          <div className="py-2">
+                            {item.submenu.map((subItem, subIndex) => (
+                              <a
+                                key={subIndex}
+                                href="#"
+                                className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                              >
+                                {subItem}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
 
             {/* Desktop Action Buttons - Rightmost with same padding */}
-            <div className="hidden lg:flex lg:items-center lg:space-x-4 pl-4">
-              {/* Search */}
-              <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
-                <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
-              </button>
+            <div className="hidden lg:flex lg:items-center lg:space-x-4">
+              {/* Search / Close icon area */}
+              {showSearchBar ? (
+                <button
+                  className="p-2 text-black hover:text-black transition-colors duration-200 cursor-pointer"
+                  onClick={() => setShowSearchBar(false)}
+                  aria-label="Close search"
+                  style={{ fontSize: '34px', lineHeight: 1 }}
+                >
+                  ×
+                </button>
+              ) : (
+                <button
+                  className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  onClick={() => setShowSearchBar(true)}
+                  aria-label="Open search"
+                >
+                  <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
+                </button>
+              )}
 
               {/* Cart */}
               <button
@@ -262,12 +382,12 @@ export default function Nav() {
                       Privacy Policy
                     </Link>
                     <hr className="my-2" />
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    <button
+                      onClick={handleSignOut}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Sign Out
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -526,9 +646,9 @@ export default function Nav() {
                   <span>Privacy Policy</span>
                 </Link>
 
-                <a
-                  href="#"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
                     className="w-5 h-5"
@@ -544,7 +664,7 @@ export default function Nav() {
                     />
                   </svg>
                   <span>Sign Out</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>

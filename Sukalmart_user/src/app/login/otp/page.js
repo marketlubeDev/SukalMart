@@ -108,7 +108,7 @@ export default function OTPPage() {
                 </svg>
               </div>
               <span className="text-xl sm:text-2xl font-bold text-gray-700">
-                Logoipsum
+                Souqalmart
               </span>
             </div>
           </div>

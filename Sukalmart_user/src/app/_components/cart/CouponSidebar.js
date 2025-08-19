@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Drawer } from "antd";
 
 export default function CouponSidebar({ isOpen, onClose }) {
   const [selectedCoupon, setSelectedCoupon] = useState("SAVE100");
@@ -49,56 +50,94 @@ export default function CouponSidebar({ isOpen, onClose }) {
   const selectedCouponData = coupons.find(coupon => coupon.id === selectedCoupon);
   const finalTotal = subtotal - (selectedCouponData ? selectedCouponData.discount : 0);
 
-  if (!isOpen) return null;
-
   return (
-    <>
-      {/* Backdrop */}
-      <div 
-        className={`fixed inset-0 transition-opacity duration-300 ease-in-out z-40 ${isOpen ? 'bg-opacity-70' : 'bg-opacity-0 pointer-events-none'}`}
-        onClick={onClose}
-        style={{
-          background: "linear-gradient(120deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 100%)"
+          <Drawer
+        title={null}
+        placement="right"
+        onClose={onClose}
+        open={isOpen}
+        width={550}
+        className="coupon-drawer-custom"
+        styles={{
+          body: {
+            padding: 0,
+            backgroundColor: '#F5F5F5',
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
+          },
+          header: {
+            display: 'none',
+          },
+          mask: {
+            backgroundColor: 'rgba(0, 0, 0, 0.45)',
+          },
+          wrapper: {
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
+          },
+          content: {
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
+          },
         }}
-      />
-      
-      {/* Coupon Sidebar */}
-      <div className={`fixed top-0 right-0 h-screen w-full sm:w-[450px] md:w-[500px] lg:w-[550px] bg-white shadow-2xl z-50 transform transition-all duration-300 ease-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-white flex-shrink-0">
-          <div className="flex items-center">
-            <button 
-              onClick={onClose}
-              className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h2
-              className="font-[600] text-lg sm:text-xl"
-              style={{
-                color: "#333333",
-                fontStyle: "normal",
-                fontWeight: 600,
-                lineHeight: "normal",
-                letterSpacing: "-0.44px",
-               
-              }}
-            >
-              Coupon & Offers
-            </h2>
-          </div>
+        closeIcon={null}
+      >
+              {/* Header - Fixed height */}
+        <div 
+          className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-white flex-shrink-0"
+          style={{
+            backgroundColor: "white",
+            height: "80px",
+            minHeight: "80px",
+            maxHeight: "80px",
+            flexShrink: 0
+          }}
+        >
+        <div className="flex items-center">
+          <button 
+            onClick={onClose}
+            className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
+            style={{ cursor: "pointer" }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h2
+            className="font-[600] text-lg sm:text-xl"
+            style={{
+              color: "#333333",
+              fontStyle: "normal",
+              fontWeight: 600,
+              lineHeight: "normal",
+              letterSpacing: "-0.44px",
+            }}
+          >
+            Coupon & Offers
+          </h2>
         </div>
+      </div>
 
-        {/* Content */}
-        <div className="flex flex-col h-full bg-[#F5F5F5] flex-1">
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto py-3 sm:py-4 px-3 sm:px-4">
-            {/* Main Content Wrapper */}
-            <div className="bg-white p-3 sm:p-4">
-              {/* Coupon Code Input */}
-              <div className="mb-4 sm:mb-6">
+              {/* Content */}
+        <div className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
+          {/* Content Section - Flexible height to fit 100vh */}
+          <div
+            className="flex-1 overflow-hidden"
+            style={{ 
+              paddingTop: "16px",
+              paddingBottom: "16px",
+              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px) = 160px
+              maxHeight: "calc(100vh - 80px - 80px)",
+              overflow: "hidden"
+            }}
+          >
+                      {/* Main Content Wrapper */}
+            <div className="bg-white">
+                          {/* Coupon Code Input */}
+              <div className="mb-4 sm:mb-6 px-3 sm:px-4">
                 <input
                   type="text"
                   placeholder="Enter your coupon code.."
@@ -108,61 +147,75 @@ export default function CouponSidebar({ isOpen, onClose }) {
                 />
               </div>
 
-              {/* Available Offers */}
-              <div className="space-y-3 sm:space-y-4">
-                {/* <h3 className="text-lg font-semibold text-gray-900 mb-4">Available Offers</h3> */}
-                
-                {coupons.map((coupon) => (
-                  <div key={coupon.id} className="border-b border-gray-200 pb-3 sm:pb-4">
+                                        {/* Available Offers */}
+              <div>
+                {coupons.map((coupon, idx) => (
+                  <div 
+                    key={coupon.id} 
+                    className="py-3 sm:py-4 px-3 sm:px-4"
+                    style={{
+                      backgroundColor: selectedCoupon === coupon.id ? "rgba(3, 95, 15, 0.08)" : "transparent",
+                      borderBottom: idx !== coupons.length - 1 ? "1px dashed rgba(229, 231, 235, 1)" : "none"
+                    }}
+                  >
                     <label className="flex items-start space-x-2 sm:space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="coupon"
-                        value={coupon.id}
-                        checked={selectedCoupon === coupon.id}
-                        onChange={(e) => setSelectedCoupon(e.target.value)}
-                        className="mt-1 w-4 h-4 border-transparent focus:outline-none"
-                        style={{ 
-                          accentColor: "#035F0F"
-                        }}
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <span className="font-semibold text-gray-900 text-sm sm:text-base">{coupon.code}</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-gray-600">{coupon.description}</p>
+                    <input
+                      type="radio"
+                      name="coupon"
+                      value={coupon.id}
+                      checked={selectedCoupon === coupon.id}
+                      onChange={(e) => setSelectedCoupon(e.target.value)}
+                      className="mt-1 w-4 h-4 border-transparent focus:outline-none"
+                      style={{ 
+                        accentColor: "#035F0F"
+                      }}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="font-semibold text-gray-900 text-sm sm:text-base">{coupon.code}</span>
                       </div>
-                    </label>
-                  </div>
-                ))}
-              </div>
+                      <p className="text-xs sm:text-sm text-gray-600">{coupon.description}</p>
+                    </div>
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Bottom Action Bar */}
-          <div className="border-t border-gray-200 bg-white p-3 sm:p-4 flex-shrink-0">
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-base sm:text-lg font-semibold text-gray-900">₹{subtotal.toLocaleString()}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs sm:text-sm" style={{ color: "#035F0F" }}>- ₹{selectedCouponData ? selectedCouponData.discount : 0}</span>
-                </div>
+                  {/* Bottom Action Bar - Fixed height */}
+          <div 
+            className="border-t border-gray-200 bg-white p-3 sm:p-4 flex-shrink-0"
+            style={{
+              width: "100%",
+              backgroundColor: "white",
+              height: "80px",
+              minHeight: "80px",
+              maxHeight: "80px",
+              flexShrink: 0
+            }}
+          >
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <span className="text-base sm:text-lg font-semibold text-gray-900">₹{subtotal.toLocaleString()}</span>
               </div>
-              <div className="ml-3 sm:ml-4">
-                <button
-                  onClick={onClose}
-                  className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base cursor-pointer"
-                  style={{ backgroundColor: "#035F0F" }}
-                >
-                  Apply
-                </button>
+              <div className="flex items-center justify-between">
+                <span className="text-xs sm:text-sm" style={{ color: "#035F0F" }}>- ₹{selectedCouponData ? selectedCouponData.discount : 0}</span>
               </div>
+            </div>
+            <div className="ml-3 sm:ml-4">
+              <button
+                onClick={onClose}
+                className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base cursor-pointer"
+                style={{ backgroundColor: "#035F0F" }}
+              >
+                Apply
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </Drawer>
   );
 } 

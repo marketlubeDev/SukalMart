@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import ProductServiceBenefits from "./_components/ProductServiceBenefits";
 import FeaturedProductsSection from "../../_components/_homepage/featuredproduct/FeaturedProductsSection";
@@ -14,6 +14,7 @@ export default function ProductDetailPage() {
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [showMoreCoupons, setShowMoreCoupons] = useState(false);
 
   // Function to get product data based on ID
   const getProductData = (id) => {
@@ -717,10 +718,27 @@ export default function ProductDetailPage() {
   };
 
   const product = getProductData(productId);
+
+  // Volume options
+  const defaultVolumes = ["100ml", "200ml", "500ml"];
+  const initialVolume = product?.specifications?.Volume || defaultVolumes[0];
+  const volumes = Array.from(new Set([initialVolume, ...defaultVolumes]));
+  const [selectedVolume, setSelectedVolume] = useState(initialVolume);
+
+  // Dynamic coupons for this product (replace with API data when available)
+  const coupons = [
+    { code: "FLAT20", description: "Get 20% discount on products above ₹1,999" },
+    { code: "SAVE100", description: "Flat ₹100 OFF on orders above ₹999" },
+    { code: "GET250", description: "₹250 OFF when you spend ₹2,499 or more" },
+  ];
+  const visibleCoupons = coupons.slice(0, 2);
+  const remainingCouponsCount = Math.max(coupons.length - visibleCoupons.length, 0);
+  const remainingCoupons = coupons.slice(2);
   
   // Debug logging
   console.log("Product ID:", productId);
   console.log("Product Data:", product);
+  console.log("Coupons:", coupons);
 
   const addToCart = () => {
     try {
@@ -763,10 +781,23 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+      <style jsx>{`
+        .sticky-left {
+          position: sticky;
+          top: 6rem;
+          align-self: flex-start;
+          height: fit-content;
+        }
+        @media (max-width: 768px) {
+          .sticky-left {
+            position: static;
+          }
+        }
+      `}</style>
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Product Images */}
-          <div className="flex flex-col md:flex-row gap-4">
+                     <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
             {/* Thumbnail Images - Left Side */}
             <div className="hidden md:flex flex-col gap-2">
               {product.images.map((image, index) => (
@@ -797,7 +828,7 @@ export default function ProductDetailPage() {
                   className="w-full h-full object-contain"
                 />
                 {/* Like Button */}
-                <button className="absolute top-4 right-4 w-10 h-10 bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all">
+                <button className="absolute top-4 right-4 w-10 h-10 bg-opacity-30 rounded-full flex items-center justify-center hover:bg-opacity-50 transition-all cursor-pointer">
                   <img
                     src="/blacklike.svg"
                     alt="Add to wishlist"
@@ -807,7 +838,7 @@ export default function ProductDetailPage() {
               </div>
               {/* Mobile Thumbnails Row */}
               <div className="md:hidden mt-3">
-                <div className="flex gap-2 overflow-x-auto">
+                <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                   {product.images.map((image, index) => (
                     <button
                       key={index}
@@ -907,8 +938,12 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Coupon Section */}
+              {coupons.length > 0 && (
               <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3 min-w-0">
+                    {visibleCoupons.map((c, idx) => (
                 <div
+                        key={idx}
                   className="px-2 py-3 rounded flex items-center gap-2"
                   style={{
                     borderRadius: "4px",
@@ -920,48 +955,81 @@ export default function ProductDetailPage() {
                   <div className="flex items-center justify-center">
                     <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-333333 text-sm">
-                      FLAT20
-                    </h4>
-                    <p
-                      className="text-xs"
-                      style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                        <div className="truncate">
+                          <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                          <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                            {c.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {remainingCouponsCount > 0 && !showMoreCoupons && (
+                                         <button
+                      className="text-sm font-medium hover:underline ml-4 whitespace-nowrap cursor-pointer"
+                      style={{ color: "#035F0F" }}
+                      onClick={() => setShowMoreCoupons(true)}
                     >
-                      Get 20% discount on products above ₹1,999
+                      +{remainingCouponsCount} more
+                    </button>
+                  )}
+                                </div>
+              )}
+              {showMoreCoupons && remainingCoupons.length > 0 && (
+                  <>
+                    <div className="flex items-center gap-3 mt-3">
+                      {remainingCoupons.map((c, idx) => (
+                        <div
+                          key={`rest-${idx}`}
+                          className="px-2 py-3 rounded flex items-center gap-2"
+                          style={{
+                            borderRadius: "4px",
+                            border: "1px dashed rgba(3, 95, 15, 0.64)",
+                            background: "rgba(3, 95, 15, 0.02)",
+                            minWidth: "0",
+                          }}
+                        >
+                          <div className="flex items-center justify-center">
+                            <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                          </div>
+                          <div className="truncate">
+                            <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                            <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                              {c.description}
                     </p>
                   </div>
                 </div>
+                      ))}
+                    </div>
+                    <div className="mt-2">
                 <button
-                  className="text-sm font-medium hover:underline ml-4"
+                        className="text-sm font-medium hover:underline cursor-pointer"
                   style={{ color: "#035F0F" }}
+                        onClick={() => setShowMoreCoupons(false)}
                 >
-                  +4 more
+                        Show less
                 </button>
               </div>
+                  </>
+                )}
 
-              {/* Color Selection */}
+              {/* Volume Selection */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-gray-700 font-medium">Color:</span>
-                  <span className="text-gray-900 font-semibold">Red</span>
+                  <span className="text-gray-700 font-medium">Volume:</span>
+                  <span className="text-gray-900 font-semibold">{selectedVolume}</span>
                 </div>
                 <div className="flex items-center gap-3">
+                                     {volumes.map((vol) => (
                   <button
-                    className="px-4 py-2 border-2 text-black rounded-md text-sm font-medium"
-                    style={{ borderColor: "#035F0F" }}
+                      key={vol}
+                      onClick={() => setSelectedVolume(vol)}
+                      className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
+                      style={{ borderColor: selectedVolume === vol ? "#02490C" : "#D1D5DB", color: "#333" }}
                   >
-                    Red
+                      {vol}
                   </button>
-                  <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:border-gray-400">
-                    Black
-                  </button>
-                  <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:border-gray-400">
-                    Orange
-                  </button>
-                  <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md text-sm font-medium hover:border-gray-400">
-                    Blue
-                  </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -975,7 +1043,7 @@ export default function ProductDetailPage() {
                 <div className="flex items-center bg-[#F4F8F5] border border-[#B6D7C9] rounded-md px-1">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded"
+                    className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
                   >
                     -
                   </button>
@@ -987,7 +1055,7 @@ export default function ProductDetailPage() {
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded"
+                    className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
                   >
                     +
                   </button>
@@ -997,7 +1065,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-4 w-full md:w-[460px]">
                 <button
                   onClick={buyNow}
-                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px]"
+                   className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
                   style={{
                     padding: "16px 24px",
                     justifyContent: "center",
@@ -1619,9 +1687,9 @@ export default function ProductDetailPage() {
 
         {/* Reviews & Ratings Section */}
         <div className="my-12 w-full mx-auto md:px-0">
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* Left: Ratings Summary */}
-            <div className="md:w-1/3 w-full flex flex-col items-start md:items-start">
+            <div className="md:w-1/3 w-full flex flex-col items-start md:items-start sticky-left">
               <h3
                 className="text-xl font-semibold mb-2"
                 style={{ color: "#333" }}
@@ -1667,7 +1735,7 @@ export default function ProductDetailPage() {
                   </div>
                 ))}
               </div>
-                              <button className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm">
+                              <button className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer">
                 Rate Product
               </button>
             </div>
@@ -1693,7 +1761,7 @@ export default function ProductDetailPage() {
                   >
                     Review images
                   </h5>
-                  <div className="flex gap-2 overflow-x-auto">
+                  <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                     {Array.from({ length: 6 }).map((_, idx) => (
                       <img
                         key={idx}
