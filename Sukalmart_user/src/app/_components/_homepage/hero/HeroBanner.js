@@ -17,7 +17,9 @@ export default function HeroBanner() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
 
-  const { banners, loading, error } = useBanner({ type: "all" });
+  const { banners, loading, error } = useBanner({ bannerFor: "hero" });
+
+
 
   // Auto-slide functionality
   useEffect(() => {

@@ -59,7 +59,14 @@ const createBanner = catchAsync(async (req, res, next) => {
 });
 
 const getAllBanners = catchAsync(async (req, res, next) => {
-  const banners = await Banner.find();
+  const { bannerFor } = req.query;
+  
+  let query = {};
+  if (bannerFor) {
+    query.bannerFor = bannerFor;
+  }
+  
+  const banners = await Banner.find(query);
   res.status(200).json({
     status: "success",
     data: banners,

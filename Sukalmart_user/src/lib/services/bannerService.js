@@ -5,8 +5,8 @@ export async function fetchAllBanners(signal) {
     return response.data;
 }
 
-export async function fetchCategoryBanners(signal) {
-    const response = await axiosInstance.get("/banner/get-all-banners-by-category", { signal });
+export async function fetchBannersByType(bannerFor, signal) {
+    const response = await axiosInstance.get(`/banner?bannerFor=${bannerFor}`, { signal });
     return response.data;
 }
 
