@@ -32,8 +32,7 @@ function Addproduct() {
     specifications: [""],
     returnPolicyDays: 7,
     returnPolicyText: "",
-    featureImages: [null, null, null],
-    featureVideoUrl: "",
+    featureImages: [null],
   });
   const [variants, setVariants] = useState([
     {
@@ -121,8 +120,7 @@ function Addproduct() {
                 : [""],
             returnPolicyDays: prod.returnPolicyDays ?? 7,
             returnPolicyText: prod.returnPolicyText || "",
-            featureImages: prod.featureImages || [null, null, null],
-            featureVideoUrl: prod.featureVideoUrl || "",
+            featureImages: prod.featureImages || [null],
           });
           setVariants(
             (prod.variants || []).map((v) => ({
@@ -325,6 +323,18 @@ function Addproduct() {
         ? [...next.featureImages]
         : [];
       imgs[idx] = file;
+      next.featureImages = imgs;
+      return next;
+    });
+  };
+
+  const handleRemoveFeatureImage = (idx) => {
+    setProductData((prev) => {
+      const next = { ...prev };
+      const imgs = Array.isArray(next.featureImages)
+        ? [...next.featureImages]
+        : [];
+      imgs[idx] = null;
       next.featureImages = imgs;
       return next;
     });
@@ -1212,6 +1222,86 @@ function Addproduct() {
                     {getError("stockQuantity", true, activeVariant)}
                   </p>
                 )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Features Section */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">
+            Product Features Banner
+          </h3>
+          <div className="bg-white border rounded-lg p-6">
+            {/* Feature Images */}
+            <div className="mb-6">
+              <label className="block mb-2 font-medium text-gray-700">
+                Feature Image
+              </label>
+              <p className="text-xs text-gray-500 mb-3">
+                Upload a feature image to showcase product highlights | Maximum
+                size: 1MB | Formats: JPEG, JPG, PNG, WebP
+              </p>
+              <div className="flex justify-center">
+                <div className="relative w-full max-w-md">
+                  <label
+                    className={`relative group w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition ${
+                      isLoadingProduct ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {productData.featureImages?.[0] ? (
+                      typeof productData.featureImages[0] === "string" ? (
+                        <img
+                          src={productData.featureImages[0]}
+                          alt="Feature"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                      ) : (
+                        <img
+                          src={URL.createObjectURL(
+                            productData.featureImages[0]
+                          )}
+                          alt="Feature"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                      )
+                    ) : (
+                      <>
+                        <span className="text-4xl text-gray-300 mb-2">📷</span>
+                        <span className="text-sm text-gray-400 text-center">
+                          Feature Image
+                        </span>
+                        <span className="text-xs text-gray-400 mt-1">
+                          Click to upload
+                        </span>
+                      </>
+                    )}
+                    {productData.featureImages?.[0] && (
+                      <button
+                        type="button"
+                        className="absolute top-2 right-2 z-10 bg-black/60 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleRemoveFeatureImage(0);
+                        }}
+                        title="Remove image"
+                      >
+                        Remove
+                      </button>
+                    )}
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={(e) => {
+                        handleFeatureImageChange(0, e.target.files[0]);
+                        e.target.value = "";
+                      }}
+                      disabled={isLoadingProduct}
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>

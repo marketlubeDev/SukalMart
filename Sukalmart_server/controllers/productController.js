@@ -16,7 +16,6 @@ const RatingModal = require("../model/ratingModel");
 const addProduct = catchAsync(async (req, res, next) => {
   const {
     name,
-
     category,
     subcategory,
     variants: variantsArray,
@@ -25,6 +24,7 @@ const addProduct = catchAsync(async (req, res, next) => {
     activeStatus,
     about,
     specifications,
+    featureImages,
   } = req.body;
 
   if (variantsArray && variantsArray.length > 0) {
@@ -96,6 +96,25 @@ const addProduct = catchAsync(async (req, res, next) => {
     );
   });
 
+  // Handle feature images upload
+  let uploadedFeatureImages = [];
+  const featureImageFiles = req.files.filter((file) =>
+    file.fieldname.startsWith("featureImages")
+  );
+  if (featureImageFiles.length > 0) {
+    try {
+      const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
+        folder: `Vinsara/products/${name
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "-")}/features`,
+      });
+      uploadedFeatureImages = featureImageUrls;
+    } catch (error) {
+      console.error("Error uploading feature images:", error);
+      return next(new AppError("Failed to upload feature images", 500));
+    }
+  }
+
   // Prepare product data
   const productData = {
     name,
@@ -111,6 +130,7 @@ const addProduct = catchAsync(async (req, res, next) => {
       : specifications
       ? [specifications]
       : [],
+    featureImages: uploadedFeatureImages,
   };
 
   if (variantsArray && variantsArray.length > 0) {
@@ -658,6 +678,30 @@ const updateProduct = catchAsync(async (req, res, next) => {
         }
       }
     }
+  }
+
+  // Handle feature images upload for updates
+  let uploadedFeatureImages = [];
+  const featureImageFiles =
+    req.files?.filter((file) => file.fieldname.startsWith("featureImages")) ||
+    [];
+  if (featureImageFiles.length > 0) {
+    try {
+      const featureImageUrls = await uploadMultipleToS3(featureImageFiles, {
+        folder: `Vinsara/products/${product.name
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "-")}/features`,
+      });
+      uploadedFeatureImages = featureImageUrls;
+    } catch (error) {
+      console.error("Error uploading feature images:", error);
+      return next(new AppError("Failed to upload feature images", 500));
+    }
+  }
+
+  // Update feature data if new images were uploaded
+  if (uploadedFeatureImages.length > 0) {
+    updateData.featureImages = uploadedFeatureImages;
   }
 
   let variantIds = [];

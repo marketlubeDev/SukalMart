@@ -18,6 +18,7 @@ const productSchema = new Schema(
     // Additional merchandising fields for detailed product page
     about: { type: String },
     specifications: [{ type: String }],
+    featureImages: [{ type: String }],
   },
   { timestamps: true }
 );
