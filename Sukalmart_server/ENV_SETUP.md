@@ -25,7 +25,13 @@ FRONTEND_URL=http://localhost:3000
 ### Optional Variables (for full functionality)
 
 ```env
-# Cloudinary Configuration (for image uploads)
+# AWS S3 Configuration (for image uploads)
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+AWS_REGION=us-east-1
+S3_BUCKET_NAME=your_s3_bucket_name
+
+# Cloudinary Configuration (legacy - optional)
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
@@ -60,37 +66,63 @@ FACEBOOK_APP_SECRET=your_facebook_app_secret
 - **Local**: Install MongoDB locally or use Docker
 - **Atlas**: Create account at [MongoDB Atlas](https://www.mongodb.com/atlas)
 
-### 2. Cloudinary
+### 2. AWS S3
+
+1. Sign up for AWS account at [AWS Console](https://aws.amazon.com/)
+2. Create an S3 bucket:
+   - Go to S3 service
+   - Click "Create bucket"
+   - Choose a unique bucket name
+   - Select your preferred region
+   - Configure bucket settings (recommend: block public access = false for public images)
+3. Create IAM user for S3 access:
+   - Go to IAM service
+   - Create a new user
+   - Attach policy: `AmazonS3FullAccess` (or create custom policy for specific bucket)
+   - Generate Access Key ID and Secret Access Key
+4. Configure CORS for your bucket (if needed for direct uploads):
+   ```json
+   [
+     {
+       "AllowedHeaders": ["*"],
+       "AllowedMethods": ["GET", "PUT", "POST", "DELETE"],
+       "AllowedOrigins": ["*"],
+       "ExposeHeaders": []
+     }
+   ]
+   ```
+
+### 3. Cloudinary (Legacy - Optional)
 
 1. Sign up at [Cloudinary](https://cloudinary.com/)
 2. Go to Dashboard → Account Details
 3. Copy Cloud Name, API Key, and API Secret
 
-### 3. Razorpay
+### 4. Razorpay
 
 1. Sign up at [Razorpay](https://razorpay.com/)
 2. Go to Settings → API Keys
 3. Generate API keys
 
-### 4. Stripe
+### 5. Stripe
 
 1. Sign up at [Stripe](https://stripe.com/)
 2. Go to Developers → API Keys
 3. Copy Publishable Key and Secret Key
 
-### 5. Gmail App Password
+### 6. Gmail App Password
 
 1. Enable 2-factor authentication on your Gmail
 2. Go to Google Account → Security → App Passwords
 3. Generate an app password for "Mail"
 
-### 6. Google OAuth
+### 7. Google OAuth
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a project and enable Google+ API
 3. Create OAuth 2.0 credentials
 
-### 7. Facebook OAuth
+### 8. Facebook OAuth
 
 1. Go to [Facebook Developers](https://developers.facebook.com/)
 2. Create an app and get App ID and App Secret

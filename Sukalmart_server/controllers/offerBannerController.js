@@ -1,10 +1,9 @@
 const OfferBanner = require("../model/offerBannerModel");
-const {uploadToCloudinary} = require("../utilities/cloudinaryUpload");
+const { uploadToCloudinary } = require("../utilities/cloudinaryUpload");
 const AppError = require("../utilities/errorHandlings/appError");
 const catchAsync = require("../utilities/errorHandlings/catchAsync");
 const path = require("path");
 const fs = require("fs");
-
 
 const createOfferBanner = catchAsync(async (req, res, next) => {
   const { link, section } = req.body;
@@ -15,23 +14,31 @@ const createOfferBanner = catchAsync(async (req, res, next) => {
   };
 
   if (!req.files || req.files.length < 2) {
-    return next(new AppError("Both desktop and mobile images are required", 400));
+    return next(
+      new AppError("Both desktop and mobile images are required", 400)
+    );
   }
 
   // Process desktop image
-  const desktopImage = req.files.find(file => file.fieldname === 'image');
+  const desktopImage = req.files.find((file) => file.fieldname === "image");
   if (!desktopImage) {
     return next(new AppError("Desktop image is required", 400));
   }
-  const uploadedDesktopImage = await uploadToCloudinary(desktopImage.buffer);
+  const uploadedDesktopImage = await uploadToCloudinary(desktopImage.buffer, {
+    folder: "offers",
+  });
   bannerData.image = uploadedDesktopImage;
 
   // Process mobile image
-  const mobileImage = req.files.find(file => file.fieldname === 'mobileImage');
+  const mobileImage = req.files.find(
+    (file) => file.fieldname === "mobileImage"
+  );
   if (!mobileImage) {
     return next(new AppError("Mobile image is required", 400));
   }
-  const uploadedMobileImage = await uploadToCloudinary(mobileImage.buffer);
+  const uploadedMobileImage = await uploadToCloudinary(mobileImage.buffer, {
+    folder: "offers",
+  });
   bannerData.mobileImage = uploadedMobileImage;
 
   const newBanner = await OfferBanner.create(bannerData);
@@ -47,21 +54,20 @@ const getAllOfferBanners = catchAsync(async (req, res, next) => {
     {
       $group: {
         _id: "$section",
-        banners: { $push: "$$ROOT" }
-      }
+        banners: { $push: "$$ROOT" },
+      },
     },
     {
       $project: {
         _id: 0,
         section: "$_id",
-        banners: 1
-      }
+        banners: 1,
+      },
     },
     {
-      $sort: { section: 1 }
-    }
+      $sort: { section: 1 },
+    },
   ]);
-
 
   res.status(200).json({
     status: "success",
@@ -103,25 +109,33 @@ const updateOfferBanner = catchAsync(async (req, res, next) => {
 
   if (req.files && req.files.length > 0) {
     // Process desktop image if provided
-    const desktopImage = req.files.find(file => file.fieldname === 'image');
+    const desktopImage = req.files.find((file) => file.fieldname === "image");
     if (desktopImage) {
-      const uploadedDesktopImage = await uploadToCloudinary(desktopImage.buffer);
+      const uploadedDesktopImage = await uploadToCloudinary(
+        desktopImage.buffer,
+        {
+          folder: "offers",
+        }
+      );
       bannerData.image = uploadedDesktopImage;
     }
 
     // Process mobile image if provided
-    const mobileImage = req.files.find(file => file.fieldname === 'mobileImage');
+    const mobileImage = req.files.find(
+      (file) => file.fieldname === "mobileImage"
+    );
     if (mobileImage) {
-      const uploadedMobileImage = await uploadToCloudinary(mobileImage.buffer);
+      const uploadedMobileImage = await uploadToCloudinary(mobileImage.buffer, {
+        folder: "offers",
+      });
       bannerData.mobileImage = uploadedMobileImage;
     }
   }
 
-  const updatedBanner = await OfferBanner.findByIdAndUpdate(
-    id,
-    bannerData,
-    { new: true, runValidators: true }
-  );
+  const updatedBanner = await OfferBanner.findByIdAndUpdate(id, bannerData, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!updatedBanner) {
     return next(new AppError("Banner not found", 404));
@@ -133,4 +147,9 @@ const updateOfferBanner = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { createOfferBanner, getAllOfferBanners, deleteOfferBanner, updateOfferBanner };
+module.exports = {
+  createOfferBanner,
+  getAllOfferBanners,
+  deleteOfferBanner,
+  updateOfferBanner,
+};

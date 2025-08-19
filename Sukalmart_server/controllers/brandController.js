@@ -1,5 +1,5 @@
 const Brand = require("../model/brandModel");
-const {uploadToCloudinary} = require("../utilities/cloudinaryUpload");
+const { uploadToCloudinary } = require("../utilities/cloudinaryUpload");
 const AppError = require("../utilities/errorHandlings/appError");
 const catchAsync = require("../utilities/errorHandlings/catchAsync");
 // const { saveImage } = require("../utilities/imageUpload"); // Use the same helper from categories
@@ -20,7 +20,9 @@ const createBrand = catchAsync(async (req, res, next) => {
     // Handle main brand image
     const imageFile = req.files.find((file) => file.fieldname === "image");
     if (imageFile) {
-      const uploadedImage = await uploadToCloudinary(imageFile.buffer);
+      const uploadedImage = await uploadToCloudinary(imageFile.buffer, {
+        folder: "brands",
+      });
       brandData.image = uploadedImage;
     }
 
@@ -29,7 +31,9 @@ const createBrand = catchAsync(async (req, res, next) => {
       (file) => file.fieldname === "bannerImage"
     );
     if (bannerFile) {
-      const uploadedBanner = await uploadToCloudinary(bannerFile.buffer);
+      const uploadedBanner = await uploadToCloudinary(bannerFile.buffer, {
+        folder: "brands",
+      });
       brandData.bannerImage = uploadedBanner;
     }
 
@@ -38,7 +42,10 @@ const createBrand = catchAsync(async (req, res, next) => {
     );
     if (mobileBannerFile) {
       const uploadedMobileBanner = await uploadToCloudinary(
-        mobileBannerFile.buffer
+        mobileBannerFile.buffer,
+        {
+          folder: "brands",
+        }
       );
       brandData.mobileBannerImage = uploadedMobileBanner;
     }
@@ -58,19 +65,17 @@ const createBrand = catchAsync(async (req, res, next) => {
 const getAllBrands = catchAsync(async (req, res, next) => {
   const { page = 1, limit = 18, search } = req.query;
 
-
   const pageNumber = parseInt(page, 10);
   const limitNumber = parseInt(limit, 10);
 
   let matchStage = { $match: {} };
 
-  
   if (search) {
     matchStage = {
       $match: { name: { $regex: search, $options: "i" } },
     };
   }
-  const sortStage = { $sort: { isPriority: -1 , createdAt: -1 } };
+  const sortStage = { $sort: { isPriority: -1, createdAt: -1 } };
 
   const facetStage = {
     $facet: {
@@ -96,7 +101,6 @@ const getAllBrands = catchAsync(async (req, res, next) => {
   const priorityBrandCount = aggregation[0].priorityBrandCount[0]?.count || 0;
   const totalCount = aggregation[0].totalCount[0]?.count || 0;
   const totalPages = Math.ceil(totalCount / limitNumber);
-  
 
   res.status(200).json({
     status: "success",
@@ -142,7 +146,9 @@ const updateBrand = catchAsync(async (req, res, next) => {
     // Handle main brand image
     const imageFile = req.files.find((file) => file.fieldname === "image");
     if (imageFile) {
-      const uploadedImage = await uploadToCloudinary(imageFile.buffer);
+      const uploadedImage = await uploadToCloudinary(imageFile.buffer, {
+        folder: "brands",
+      });
       brand.image = uploadedImage;
     }
 
@@ -151,7 +157,9 @@ const updateBrand = catchAsync(async (req, res, next) => {
       (file) => file.fieldname === "bannerImage"
     );
     if (bannerFile) {
-      const uploadedBanner = await uploadToCloudinary(bannerFile.buffer);
+      const uploadedBanner = await uploadToCloudinary(bannerFile.buffer, {
+        folder: "brands",
+      });
       brand.bannerImage = uploadedBanner;
     }
 
@@ -160,7 +168,10 @@ const updateBrand = catchAsync(async (req, res, next) => {
     );
     if (mobileBannerFile) {
       const uploadedMobileBanner = await uploadToCloudinary(
-        mobileBannerFile.buffer
+        mobileBannerFile.buffer,
+        {
+          folder: "brands",
+        }
       );
       brand.mobileBannerImage = uploadedMobileBanner;
     }
