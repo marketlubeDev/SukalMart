@@ -15,6 +15,7 @@ function Banner() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
+    description: "",
     bannerFor: "",
     image: null,
     mobileImage: null,
@@ -56,6 +57,7 @@ function Banner() {
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("title", formData.title);
+      formDataToSend.append("description", formData.description);
       formDataToSend.append("bannerFor", formData.bannerFor);
 
       if (formData.image) {
@@ -86,6 +88,7 @@ function Banner() {
     setEditingBanner(banner);
     setFormData({
       title: banner.title,
+      description: banner.description,
       bannerFor: banner.bannerFor,
       image: null,
       mobileImage: null,
@@ -98,6 +101,7 @@ function Banner() {
   const resetForm = () => {
     setFormData({
       title: "",
+      description: "",
       bannerFor: "",
       image: null,
       mobileImage: null,
@@ -167,6 +171,9 @@ function Banner() {
                 Banner Title
               </th>
               <th scope="col" className="px-6 py-3">
+                Description
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Banner For
               </th>
               <th scope="col" className="px-6 py-3">
@@ -189,6 +196,9 @@ function Banner() {
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {banner.title}
+                </td>
+                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                  {banner.description}
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {banner.bannerFor}
@@ -323,6 +333,18 @@ function Banner() {
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded-md"
                   required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Banner Description
+                </label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                  rows="3"
                 />
               </div>
               <div className="mb-4">

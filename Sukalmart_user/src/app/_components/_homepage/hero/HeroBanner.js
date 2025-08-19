@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import useBanner from "@/lib/hooks/useBanner";
 
 export default function HeroBanner() {
   const router = useRouter();
@@ -16,52 +17,11 @@ export default function HeroBanner() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
 
-  const banners = [
-    {
-      id: 1,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner1.jpg",
-      title: "Hair Care",
-      subtitle: "Shampoos, conditioners, and treatments",
-      description: "Nourish, strengthen, and style with top brands",
-    },
-    {
-      id: 2,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner2.jpg",
-      title: "Body & Shower",
-      subtitle: "Body wash, scrubs, and lotions",
-      description: "Refresh your daily ritual",
-    },
-    {
-      id: 3,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner3.jpg",
-      title: "Soap & Deodorants",
-      subtitle: "Bars, liquids, and long‑lasting freshness",
-      description: "Stay clean and confident all day",
-    },
-    {
-      id: 4,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/banner/banner4.jpg",
-      title: "Skin Care",
-      subtitle: "Cleansers, serums, and moisturizers",
-      description: "Healthy, glowing skin starts here",
-    },
-    {
-      id: 5,
-      image:
-        "/banner5.png",
-      title: "Oral & Misc",
-      subtitle: "Toothpaste, brushes, and essentials",
-      description: "Brighten your smile with daily care",
-    },
-  ];
+  const { banners, loading, error } = useBanner({ type: "all" });
 
   // Auto-slide functionality
   useEffect(() => {
-    if (isAutoPlaying) {
+    if (isAutoPlaying && banners.length > 0) {
       intervalRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % banners.length);
       }, 5000); // Change slide every 5 seconds
@@ -106,6 +66,62 @@ export default function HeroBanner() {
 
   const currentBanner = banners[currentSlide];
   console.log("Current banner:", currentBanner);
+
+  // Show loading state first
+  if (loading) {
+    return (
+      <div className="relative container-fluid w-full overflow-hidden">
+        <div className="h-[640px] lg:h-[500px] flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading banners...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state second
+  if (error) {
+    console.error("Banner loading error:", error);
+    return (
+      <div className="relative container-fluid w-full overflow-hidden">
+        <div className="h-[640px] lg:h-[500px] flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <p className="text-red-600 text-lg">Failed to load banners</p>
+            <p className="text-gray-500 text-sm mt-2">Please try again later</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show message when no banners are available third
+  if (!banners || banners.length === 0) {
+    return (
+      <div className="relative container-fluid w-full overflow-hidden">
+        <div className="h-[640px] lg:h-[500px] flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <p className="text-gray-600 text-lg">No banners available</p>
+            <p className="text-gray-500 text-sm mt-2">Please add some banners in the admin panel</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Safety check for currentBanner last
+  if (!currentBanner) {
+    return (
+      <div className="relative container-fluid w-full overflow-hidden">
+        <div className="h-[640px] lg:h-[500px] flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <p className="text-gray-600 text-lg">Banner data is invalid</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative container-fluid w-full overflow-hidden">
@@ -164,9 +180,9 @@ export default function HeroBanner() {
               </h1>
 
               {/* Row 3: Paragraph 1 */}
-              <p className="text-[1.3rem] text-gray-200 mb-0 leading-relaxed transition-all duration-500">
+              {/* <p className="text-[1.3rem] text-gray-200 mb-0 leading-relaxed transition-all duration-500">
                 {currentBanner.subtitle}
-              </p>
+              </p> */}
 
               {/* Row 4: Paragraph 2 */}
               <p className="text-[1.3rem] text-gray-200 mb-8 leading-relaxed transition-all duration-500">

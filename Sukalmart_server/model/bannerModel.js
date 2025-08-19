@@ -6,6 +6,10 @@ const bannerSchema = new Schema({
     type: String,
     required: [true, "Title is required"],
   },
+  description: {
+    type: String,
+    default: null,
+  },
   bannerFor: {
     type: String,
   },
