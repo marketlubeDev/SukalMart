@@ -1,11 +1,44 @@
 "use client";
 
-import useCategories from "../../../../lib/hooks/useCategories";
+// import useCategories from "../../../../lib/hooks/useCategories";
 import { useRouter } from "next/navigation";
 
 export default function CategorySection() {
   const router = useRouter();
-  const { categories, loading, error } = useCategories();
+  // const { categories, loading, error } = useCategories();
+  
+  // Temporary static categories data
+  const categories = [
+    {
+      name: "Hair Care",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp",
+    },
+    {
+      name: "Body & Shower",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif",
+    },
+    {
+      name: "Soap & Deodorants",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/JBX_Soap_Deo_Mix_Pack.webp",
+    },
+    {
+      name: "Skin Care",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp",
+    },
+    {
+      name: "Oral & Misc",
+      image:
+        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/mouthwash-other-oral-hygiene-products-colored-table-top-view-with-copy-space-flat-lay-dental-hygiene-oral-care-products-space-text-light-background-concept_79075-26657.avif",
+    },
+  ];
+  
+  // Set loading and error to false since we're using static data
+  const loading = false;
+  const error = null;
 
   
   // Get first 3 categories for first row and remaining 2 for second row
