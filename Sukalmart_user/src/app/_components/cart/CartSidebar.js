@@ -147,6 +147,9 @@ export default function CartSidebar({ isOpen, onClose }) {
           body: {
             padding: 0,
             backgroundColor: '#F5F5F5',
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
           },
           header: {
             display: 'none',
@@ -154,15 +157,35 @@ export default function CartSidebar({ isOpen, onClose }) {
           mask: {
             backgroundColor: 'rgba(0, 0, 0, 0.45)',
           },
+          wrapper: {
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
+          },
+          content: {
+            height: '100vh',
+            maxHeight: '100vh',
+            overflow: 'hidden',
+          },
         }}
         closeIcon={null}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
+        {/* Header - Fixed height */}
+        <div 
+          className="flex items-center justify-between p-4 border-b border-gray-200 bg-white"
+          style={{
+            backgroundColor: "white",
+            height: "80px",
+            minHeight: "80px",
+            maxHeight: "80px",
+            flexShrink: 0
+          }}
+        >
           <div className="flex items-center">
             <button
               onClick={onClose}
               className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
+              style={{ cursor: "pointer" }}
             >
               <svg
                 className="w-5 h-5"
@@ -194,14 +217,20 @@ export default function CartSidebar({ isOpen, onClose }) {
         </div>
 
         {/* Cart Content */}
-        <div className="flex flex-col h-full">
-          {/* Items Section */}
+        <div className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
+          {/* Items Section - Flexible height to fit 100vh */}
           <div
-            className="flex-1 overflow-y-auto py-4"
-            style={{ maxHeight: "calc(100vh - 200px)" }}
+            className="flex-1 overflow-hidden"
+            style={{ 
+              paddingTop: "16px",
+              paddingBottom: "16px",
+              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px) = 160px
+              maxHeight: "calc(100vh - 80px - 80px)",
+              overflow: "hidden"
+            }}
           >
             {/* Items Header */}
-            <div className="flex justify-between items-center mb-4 px-4">
+            <div className="flex justify-between items-center mb-4 px-4" style={{ overflow: "hidden" }}>
               <h3
                 style={{
                   color: "#333333",
@@ -236,6 +265,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 boxShadow: "none",
                 padding: 0,
                 margin: 0,
+                overflow: "hidden"
               }}
             >
               {cartItems.map((item, idx) => (
@@ -261,6 +291,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   <button
                     onClick={() => removeItem(item.id)}
                     className="absolute top-3 right-3 p-1 hover:bg-gray-200 rounded-full transition-colors"
+                    style={{ cursor: "pointer" }}
                   >
                     <svg
                       className="w-4 h-4"
@@ -478,7 +509,7 @@ export default function CartSidebar({ isOpen, onClose }) {
             </div>
 
             {/* Coupon Section */}
-            <div className="mt-6 bg-[#F5F5F5] ">
+            <div className="mt-6 bg-[#F5F5F5]" style={{ overflow: "hidden" }}>
               <h3
                 style={{
                   color: "#333333",
@@ -495,6 +526,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               <button
                 onClick={() => setShowCouponSidebar(true)}
                 className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors cursor-pointer"
+                style={{ cursor: "pointer" }}
               >
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
@@ -526,7 +558,7 @@ export default function CartSidebar({ isOpen, onClose }) {
             </div>
 
             {/* Order Summary */}
-            <div className="mt-6">
+            <div className="mt-6" style={{ overflow: "hidden" }}>
               <div className="flex items-center justify-between mb-3 px-4">
                 <h3
                   style={{
@@ -558,6 +590,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       alignItems: "center",
                       justifyContent: "center",
                       boxShadow: "none",
+                      cursor: "pointer",
                     }}
                     tabIndex={0}
                   >
@@ -734,18 +767,19 @@ export default function CartSidebar({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Bottom Action Bar */}
+          {/* Bottom Action Bar - Fixed height */}
           <div
-            className="border-t border-gray-200 p-4 bg-white"
+            className="border-t border-gray-200 p-3 bg-white"
             style={{
-              position: "sticky",
-              bottom: 0,
-              zIndex: 20,
-              boxShadow: "0 -2px 8px rgba(0,0,0,0.03)",
               width: "100%",
+              backgroundColor: "white",
+              height: "80px",
+              minHeight: "80px",
+              maxHeight: "80px",
+              flexShrink: 0
             }}
           >
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between">
               <div>
                 <div
                   className="text-[18px] sm:text-[20px]"

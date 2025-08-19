@@ -54,7 +54,7 @@ export default function LoginPage() {
                 </svg>
               </div>
               <span className="text-xl sm:text-2xl font-bold text-gray-700">
-                Logoipsum
+               Souqalmart
               </span>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function LoginPage() {
             }}
             className="sm:text-[40px]"
           >
-            Welcome <span style={{ color: "#035F0F" }}>Audiophiles</span>
+            Welcome <span style={{ color: "#035F0F" }}>Shoppers</span>
           </h2>
           <p
             style={{

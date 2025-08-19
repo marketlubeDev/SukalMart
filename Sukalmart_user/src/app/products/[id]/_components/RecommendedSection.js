@@ -21,7 +21,7 @@ export default function RecommendedSection() {
           >
             Recommended for you
           </h2>
-          <button className="flex items-center gap-1 md:gap-2 font-medium transition-colors" style={{ color: "#035F0F" }}>
+          <button className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer" style={{ color: "#035F0F" }}>
             <span className="text-sm md:text-base">View all</span>
             <img
               src="/nextarrow.svg"
@@ -34,7 +34,7 @@ export default function RecommendedSection() {
         {/* Recommended Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-3">
           {/* Product 1 - A1 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
@@ -74,7 +74,7 @@ export default function RecommendedSection() {
           </div>
 
           {/* Product 2 - #2 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -116,7 +116,7 @@ export default function RecommendedSection() {
           </div>
 
           {/* Product 3 - #3 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -158,7 +158,7 @@ export default function RecommendedSection() {
           </div>
 
           {/* Product 4 - No Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300">
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
                 <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
