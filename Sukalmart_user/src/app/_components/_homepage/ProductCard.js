@@ -18,7 +18,9 @@ export default function ProductCard({
 
   const handleProductClick = () => {
     // Extract original product ID (remove _index suffix if present)
-    const originalId = product.id.split('_')[0];
+    const rawId = product && product.id != null ? String(product.id) : "";
+    const originalId = rawId.includes('_') ? rawId.split('_')[0] : rawId;
+    if (!originalId) return;
     console.log("Product clicked:", originalId, product.name);
     router.push(`/products/${originalId}`);
   };

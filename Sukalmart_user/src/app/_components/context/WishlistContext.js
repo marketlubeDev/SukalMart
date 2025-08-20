@@ -25,16 +25,26 @@ export function WishlistProvider({ children }) {
     () => ({
       items,
       toggleWishlistItem: (product) => {
+        const normalizeId = (val) => String(val).split('_')[0];
+        const normalized = normalizeId(product.id);
         setItems((prev) => {
-          const exists = prev.some((p) => p.id === product.id);
+          const exists = prev.some((p) => normalizeId(p.id) === normalized);
           if (exists) {
-            return prev.filter((p) => p.id !== product.id);
+            return prev.filter((p) => normalizeId(p.id) !== normalized);
           }
-          return [{ ...product }, ...prev];
+          return [{ ...product, id: normalized }, ...prev];
         });
       },
-      isInWishlist: (id) => items.some((p) => p.id === id),
-      remove: (id) => setItems((prev) => prev.filter((p) => p.id !== id)),
+      isInWishlist: (id) => {
+        const normalizeId = (val) => String(val).split('_')[0];
+        const normalized = normalizeId(id);
+        return items.some((p) => normalizeId(p.id) === normalized);
+      },
+      remove: (id) => {
+        const normalizeId = (val) => String(val).split('_')[0];
+        const normalized = normalizeId(id);
+        setItems((prev) => prev.filter((p) => normalizeId(p.id) !== normalized));
+      },
       clear: () => setItems([]),
     }),
     [items]

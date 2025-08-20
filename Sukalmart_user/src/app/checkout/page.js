@@ -1,37 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckoutLeft from "./_components/CheckoutLeft";
 import CheckoutRight from "./_components/CheckoutRight";
 
 export default function CheckoutPage() {
-  const [quantities, setQuantities] = useState({
-    1: 1,
-    2: 1,
-  });
+  const [quantities, setQuantities] = useState({});
+  const [cartItems, setCartItems] = useState([]);
 
-  const cartItems = [
-    {
-      id: 1,
-      name: "Glow & Hydrate Face Serum",
-      color: "Clear",
-      plug: "30ml bottle",
-      price: 899,
-      originalPrice: 1099,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-    },
-    {
-      id: 2,
-      name: "Luxury Beauty Collection Set",
-      color: "Multi",
-      plug: "Complete set",
-      price: 2499,
-      originalPrice: 3199,
-      image:
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-    },
-  ];
+  useEffect(() => {
+    try {
+      const rawCart = localStorage.getItem('cartItems');
+      const rawCheckout = localStorage.getItem('checkout_items');
+      const cart = rawCart ? JSON.parse(rawCart) : [];
+      const checkout = rawCheckout ? JSON.parse(rawCheckout) : [];
+
+      // Merge by id, sum quantities
+      const byId = new Map();
+      const pushItem = (it) => {
+        if (!it) return;
+        const id = it.id;
+        const existing = byId.get(id);
+        const qty = Number(it.quantity) > 0 ? Number(it.quantity) : 1;
+        if (existing) {
+          byId.set(id, { ...existing, quantity: (existing.quantity || 1) + qty });
+        } else {
+          byId.set(id, {
+            id: it.id,
+            name: it.name,
+            color: it.color,
+            plug: it.plug,
+            price: it.price,
+            originalPrice: it.originalPrice,
+            image: it.image,
+            quantity: qty,
+          });
+        }
+      };
+      (Array.isArray(cart) ? cart : []).forEach(pushItem);
+      (Array.isArray(checkout) ? checkout : []).forEach(pushItem);
+
+      const merged = Array.from(byId.values());
+      setCartItems(merged);
+
+      const initialQty = {};
+      merged.forEach((it) => { initialQty[it.id] = it.quantity || 1; });
+      setQuantities(initialQty);
+
+      // Optional: clear the one-time buy-now payload so refresh doesn't duplicate
+      localStorage.removeItem('checkout_items');
+    } catch {}
+  }, []);
 
   const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity >= 1) {
@@ -43,17 +62,27 @@ export default function CheckoutPage() {
   };
 
   const removeItem = (itemId) => {
-    // Handle item removal logic here
-    console.log(`Remove item ${itemId}`);
+    setCartItems((prev) => prev.filter((it) => String(it.id) !== String(itemId)));
+    setQuantities((prev) => {
+      const next = { ...prev };
+      delete next[itemId];
+      return next;
+    });
+    try {
+      const raw = localStorage.getItem('cartItems');
+      const arr = raw ? JSON.parse(raw) : [];
+      const next = (Array.isArray(arr) ? arr : []).filter((it) => String(it.id) !== String(itemId));
+      localStorage.setItem('cartItems', JSON.stringify(next));
+    } catch {}
   };
 
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * quantities[item.id],
+    (sum, item) => sum + item.price * (quantities[item.id] || 1),
     0
   );
-  const total = subtotal + 400; // Adding delivery cost
-  const discount = 400;
-  const couponDiscount = 199;
+  const total = subtotal + 0; // Delivery Free
+  const discount = 0;
+  const couponDiscount = 0;
 
   return (
     <div className="min-h-screen">

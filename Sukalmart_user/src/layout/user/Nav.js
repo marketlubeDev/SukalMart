@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 
 // Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
@@ -34,19 +34,42 @@ export default function Nav() {
   const [searchResults, setSearchResults] = useState([]);
   const resultsRef = useRef(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const isBigTablet = useBigTablet();
 
   // Build a simple in-memory product list for search suggestions
-  const allProducts = Array.from(
-    new Map(
-      (
-        (fp || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price, originalPrice: p.originalPrice, category: p.category }))
-        .concat((bs || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price, originalPrice: p.originalPrice, category: p.category })))
-        .concat((catalogProducts || []).map(p => ({ id: String(p.id), name: p.name, image: p.image, price: p.price ? `₹${p.price}` : undefined, originalPrice: p.originalPrice, category: p.category || p.type })))
-      ).map(item => [item.id + '-' + item.name, item])
-    ).values()
-  );
+  const allProducts = useMemo(() => {
+    const fpProducts = (fp || []).map(p => ({ 
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price, 
+      originalPrice: p.originalPrice, 
+      category: p.category 
+    }));
+    
+    const bsProducts = (bs || []).map(p => ({ 
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price, 
+      originalPrice: p.originalPrice, 
+      category: p.category 
+    }));
+    
+    const catalogProductsList = (catalogProducts || []).map(p => ({ 
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price ? `₹${p.price}` : undefined, 
+      originalPrice: p.originalPrice, 
+      category: p.category || p.type 
+    }));
+    
+    return [...fpProducts, ...bsProducts, ...catalogProductsList];
+  }, [fp, bs, catalogProducts]);
 
   useEffect(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -54,12 +77,12 @@ export default function Nav() {
       setSearchResults([]);
       return;
     }
-    const results = allProducts
-      .filter(p => p.name.toLowerCase().includes(q))
-      .filter(p => !/(iem|earbud|headphone|wired|dac|amp|audio)/i.test(p.name))
-      .slice(0, 8);
+    
+    const nameMatches = allProducts.filter(p => p.name.toLowerCase().includes(q));
+    const results = nameMatches.slice(0, 8);
+    
     setSearchResults(results);
-  }, [searchQuery]);
+  }, [searchQuery, allProducts]);
 
   // Close results when clicking outside
   useEffect(() => {
@@ -94,6 +117,19 @@ export default function Nav() {
 
   const closeCart = () => {
     setIsCartOpen(false);
+  };
+
+  const navigateToTab = (tab) => {
+    if (pathname === '/my-account') {
+      // If we're already on my-account page, just update the tab parameter
+      const params = new URLSearchParams(searchParams);
+      params.set('tab', tab);
+      router.push(`/my-account?${params.toString()}`);
+    } else {
+      // If we're on a different page, navigate to my-account with the tab
+      router.push(`/my-account?tab=${tab}`);
+    }
+    setIsMobileMenuOpen(false);
   };
 
   const handleSignOut = () => {
@@ -200,7 +236,7 @@ export default function Nav() {
             <div className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
               {showSearchBar ? (
                 <div className="relative">
-                  <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 w-[520px] xl:w-[640px] bg-white">
+                  <div className="flex items-center h-10 border border-gray-300 rounded-lg px-4 w-[520px] xl:w-[640px] bg-white">
                     <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
                     <input
                       type="text"
@@ -316,12 +352,13 @@ export default function Nav() {
               {/* Search / Close icon area */}
               {showSearchBar ? (
                 <button
-                  className="p-2 text-black hover:text-black transition-colors duration-200 cursor-pointer"
+                  className="p-2 text-gray-800 transition-colors duration-200 cursor-pointer"
                   onClick={() => setShowSearchBar(false)}
                   aria-label="Close search"
-                  style={{ fontSize: '34px', lineHeight: 1 }}
                 >
-                  ×
+                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               ) : (
                 <button
@@ -359,37 +396,37 @@ export default function Nav() {
                 {/* User Dropdown */}
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   <div className="py-2">
-                    <Link
-                      href="/my-account"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    <button
+                      onClick={() => navigateToTab('account')}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       My Account
-                    </Link>
-                    <Link
-                      href="/my-account?tab=my-orders"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    </button>
+                    <button
+                      onClick={() => navigateToTab('my-orders')}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
-                      Order History
-                    </Link>
+                      My Orders
+                    </button>
                     <Link
                       href="/wishlist"
                       className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Wishlist
                     </Link>
-                    <Link
-                      href="/my-account?tab=help"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    <button
+                      onClick={() => navigateToTab('help')}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Help & Support
-                    </Link>
+                    </button>
 
-                    <Link
-                      href="/my-account?tab=privacy-policy"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    <button
+                      onClick={() => navigateToTab('privacy-policy')}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
-                      Privacy Policy
-                    </Link>
+                      Privacy & Policy
+                    </button>
                     <hr className="my-2" />
                     <button
                       onClick={handleSignOut}
@@ -563,13 +600,13 @@ export default function Nav() {
             {/* Mobile User Section */}
             <div className="pt-4 mt-4 border-t border-gray-200">
               <div className="space-y-2">
-                <a
-                  href="/my-account"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                <button
+                  onClick={() => navigateToTab('account')}
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <img src="/usericon.svg" alt="user" className="w-5 h-5" />
                   <span>My Account</span>
-                </a>
+                </button>
 
                 <Link
                   href="/wishlist"
@@ -592,10 +629,9 @@ export default function Nav() {
                   <span>Wishlist</span>
                 </Link>
 
-                <Link
-                  href="/my-account?tab=my-orders"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button
+                  onClick={() => navigateToTab('my-orders')}
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
                     className="w-5 h-5"
@@ -610,13 +646,12 @@ export default function Nav() {
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  <span>Order History</span>
-                </Link>
+                  <span>My Orders</span>
+                </button>
 
-                <Link
-                  href="/my-account?tab=help"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button
+                  onClick={() => navigateToTab('help')}
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
                     className="w-5 h-5"
@@ -632,12 +667,11 @@ export default function Nav() {
                     />
                   </svg>
                   <span>Help & Support</span>
-                </Link>
+                </button>
 
-                <Link
-                  href="/my-account?tab=privacy-policy"
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button
+                  onClick={() => navigateToTab('privacy-policy')}
+                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
                     className="w-5 h-5"
@@ -652,8 +686,8 @@ export default function Nav() {
                       d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z"
                     />
                   </svg>
-                  <span>Privacy Policy</span>
-                </Link>
+                  <span>Privacy & Policy</span>
+                </button>
 
                 <button
                   onClick={handleSignOut}
