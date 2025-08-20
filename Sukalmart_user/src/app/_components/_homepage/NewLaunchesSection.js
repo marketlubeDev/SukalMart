@@ -1,32 +1,40 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 export default function NewLaunchesSection() {
-  // New launches products data
+  const router = useRouter();
+
+  // New launches products data with proper IDs for navigation
   const newLaunchesProducts = [
     {
-      id: 1,
-      name: "FatFrequency",
-      description: "Starting @ ₹150,509",
+      id: "13",
+      name: "THE ANSWER Super Shampoo",
+      description: "Hydrolyzed Keratin & Ceramide Formula",
       image: "/newlaunch1.jpg",
     },
     {
-      id: 2,
-      name: "64 Audio",
-      description: "Starting @ ₹1,03,200",
+      id: "14",
+      name: "NEWEST Onion Protein Shampoo",
+      description: "Almond & Onion Ultra Nourishing",
       image: "/newlaunch2.jpg",
     },
     {
-      id: 3,
-      name: "Noble Audio - Kublai Khan",
-      description: "Limited Edition - @ ₹1,79,999",
+      id: "15",
+      name: "FLAKES Anti-Dandruff Shampoo",
+      description: "Professional Anti-Dandruff Formula",
       image: "/newlaunch3.jpg",
     },
     {
-      id: 4,
-      name: "Dita Audio - Project M",
-      description: "In-Ears With 1 DD + 1 BA Drivers",
+      id: "16",
+      name: "REDKEN Anti-Dandruff Shampoo",
+      description: "Professional Hair Care Formula",
       image: "/newlaunch4.jpeg",
     },
   ];
+
+  const handleProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
 
   return (
     <div className="py-8 container mx-auto">
@@ -41,7 +49,11 @@ export default function NewLaunchesSection() {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {newLaunchesProducts.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg overflow-hidden cursor-pointer">
+            <div 
+              key={product.id} 
+              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              onClick={() => handleProductClick(product.id)}
+            >
               {/* Product Image */}
               <div className="relative">
                 <div className="aspect-square">

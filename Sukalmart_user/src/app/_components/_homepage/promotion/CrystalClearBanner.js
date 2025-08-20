@@ -7,7 +7,6 @@ export default function CrystalClearBanner() {
   const handleShopNowClick = () => {
     router.push('/category/skin-care');
   };
-
   return (
     <>
       <div className="container mx-auto px-4" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>

@@ -12,7 +12,6 @@ export default function EngineeredBy7Hz() {
   const handleProductClick = (productId) => {
     router.push(`/products/${productId}`);
   };
-
   return (
     <>
       <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 engineered-7hz-container" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
@@ -75,7 +74,7 @@ export default function EngineeredBy7Hz() {
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
                   className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("2")}
+                  onClick={() => handleProductClick("17")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image
@@ -121,7 +120,7 @@ export default function EngineeredBy7Hz() {
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
                   className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("1")}
+                  onClick={() => handleProductClick("18")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image
@@ -167,7 +166,7 @@ export default function EngineeredBy7Hz() {
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
                   className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("2")}
+                  onClick={() => handleProductClick("19")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image

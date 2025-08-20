@@ -3,11 +3,11 @@ import { useRouter } from "next/navigation";
 
 export default function PromotionalBanner({ fullWidth = false }) {
   const router = useRouter();
-  
+
   const banners = [
     {
       id: 1,
-      productId: "2", // Corresponds to "Lux Body Wash" in product database
+      productId: "2", // Changed: First banner now shows product ID 2 (Lux Body Wash)
       title: "Glow Up Your Skin, 20% OFF!",
       description: "Premium skincare essentials for radiant, healthy skin",
       image:
@@ -18,7 +18,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
     },
     {
       id: 2,
-      productId: "1", // Corresponds to "Dove Nutritive Solutions" in product database
+      productId: "1", // Changed: Second banner now shows product ID 1 (Dove Nutritive Solutions)
       title: "Anti-Aging Collection, 25% OFF!",
       description:
         "Advanced anti-aging formulas to restore youthful radiance. Limited time offer",
@@ -33,7 +33,6 @@ export default function PromotionalBanner({ fullWidth = false }) {
   const handleShopNowClick = (productId) => {
     router.push(`/products/${productId}`);
   };
-
   return (
     <>
       <div

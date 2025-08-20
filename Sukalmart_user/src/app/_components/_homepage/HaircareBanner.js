@@ -1,15 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
-
 export default function HaircareBanner({ selectedCategory }) {
-  const router = useRouter();
-
-  const handleShopNowClick = () => {
-    // Navigate to products page with the selected category
-    localStorage.setItem('selectedCategory', selectedCategory);
-    router.push('/products');
-  };
-
   // Function to get banner content based on category
   const getBannerContent = (category) => {
     if (category === "Body & Shower") {
@@ -112,10 +102,7 @@ export default function HaircareBanner({ selectedCategory }) {
               <p className="text-white/90 text-sm mb-3 leading-relaxed line-clamp-3">
                 {content.description}
               </p>
-              <button 
-                onClick={handleShopNowClick}
-                className="bg-[#035F0F] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer"
-              >
+              <button className="bg-[#035F0F] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer">
                 Shop now
               </button>
             </div>
@@ -141,10 +128,7 @@ export default function HaircareBanner({ selectedCategory }) {
                 <p className="text-lg md:text-xl mb-6 opacity-90 leading-relaxed">
                   {content.description}
                 </p>
-                <button 
-                  onClick={handleShopNowClick}
-                  className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg transition-colors duration-200 border-2 border-gray-800 cursor-pointer"
-                >
+                <button className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200 border-2 border-gray-800 cursor-pointer">
                   Shop now
                 </button>
               </div>
