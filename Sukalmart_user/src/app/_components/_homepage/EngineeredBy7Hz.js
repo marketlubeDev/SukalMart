@@ -1,7 +1,18 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function EngineeredBy7Hz() {
+  const router = useRouter();
+
+  const handleShopAllClick = () => {
+    router.push('/products');
+  };
+
+  const handleProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   return (
     <>
       <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 engineered-7hz-container" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
@@ -39,6 +50,7 @@ export default function EngineeredBy7Hz() {
               performance. Experience the transformation.
             </p>
             <button
+              onClick={handleShopAllClick}
               className="flex justify-center items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-4 lg:py-2 text-xs sm:text-sm md:text-base lg:text-base font-medium cursor-pointer"
               style={{
                 borderRadius: "4px",
@@ -61,7 +73,10 @@ export default function EngineeredBy7Hz() {
             <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-0">
               {/* Product Card 1 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
-                <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
+                <div 
+                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  onClick={() => handleProductClick("2")}
+                >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image
                       src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -104,7 +119,10 @@ export default function EngineeredBy7Hz() {
               </div>
               {/* Product Card 2 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
-                <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
+                <div 
+                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  onClick={() => handleProductClick("1")}
+                >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image
                       src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
@@ -147,7 +165,10 @@ export default function EngineeredBy7Hz() {
               </div>
               {/* Product Card 3 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
-                <div className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col">
+                <div 
+                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  onClick={() => handleProductClick("2")}
+                >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
                     <Image
                       src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"

@@ -1,5 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 export default function CrystalClearBanner() {
+  const router = useRouter();
+
+  const handleShopNowClick = () => {
+    router.push('/category/skin-care');
+  };
+
   return (
     <>
       <div className="container mx-auto px-4" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
@@ -60,7 +68,8 @@ export default function CrystalClearBanner() {
               </div>
 
               <button
-                className="bg-transparent text-white font-medium px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-4 lg:py-2 xl:px-4 xl:py-2 rounded-[4px] text-xs sm:text-sm md:text-base lg:text-base xl:text-base hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+                onClick={handleShopNowClick}
+                className="bg-transparent text-white font-medium px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-4 lg:py-2 xl:px-4 xl:py-2 rounded-[4px] text-xs sm:text-sm md:text-base lg:text-base xl:text-base transition-colors duration-200 cursor-pointer"
                 style={{ border: "1px solid #FFF", cursor: 'pointer' }}
               >
                 Shop now

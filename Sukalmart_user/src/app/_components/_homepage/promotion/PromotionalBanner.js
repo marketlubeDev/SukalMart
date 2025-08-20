@@ -1,8 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 export default function PromotionalBanner({ fullWidth = false }) {
+  const router = useRouter();
+  
   const banners = [
     {
       id: 1,
+      productId: "2", // Corresponds to "Lux Body Wash" in product database
       title: "Glow Up Your Skin, 20% OFF!",
       description: "Premium skincare essentials for radiant, healthy skin",
       image:
@@ -13,6 +18,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
     },
     {
       id: 2,
+      productId: "1", // Corresponds to "Dove Nutritive Solutions" in product database
       title: "Anti-Aging Collection, 25% OFF!",
       description:
         "Advanced anti-aging formulas to restore youthful radiance. Limited time offer",
@@ -23,6 +29,11 @@ export default function PromotionalBanner({ fullWidth = false }) {
       buttonText: "Shop now",
     },
   ];
+
+  const handleShopNowClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   return (
     <>
       <div
@@ -64,7 +75,8 @@ export default function PromotionalBanner({ fullWidth = false }) {
                       {banner.description}
                     </p>
                     <button
-                      className="text-gray-800 font-medium px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded text-xs sm:text-sm md:text-base hover:bg-gray-50 transition-colors duration-200"
+                      onClick={() => handleShopNowClick(banner.productId)}
+                      className="text-gray-800 font-medium px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded text-xs sm:text-sm md:text-base transition-colors duration-200 cursor-pointer"
                       style={{
                         color: "#333333",
                         border: "1px solid #333",
@@ -134,7 +146,8 @@ export default function PromotionalBanner({ fullWidth = false }) {
                     {banner.description}
                   </p>
                   <button
-                    className="text-gray-800 font-medium px-4 py-2 xl:px-4 xl:py-2 rounded text-base xl:text-base hover:bg-gray-50 transition-colors duration-200"
+                    onClick={() => handleShopNowClick(banner.productId)}
+                    className="text-gray-800 font-medium px-4 py-2 xl:px-4 xl:py-2 rounded text-base xl:text-base transition-colors duration-200 cursor-pointer"
                     style={{
                       color: "#333333",
                       border: "1px solid #333",

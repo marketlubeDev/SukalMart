@@ -113,7 +113,7 @@ export default function HeroBanner() {
       <div className="hidden lg:block relative h-[640px] bg-white">
         {/* Background with banner image */}
         <div
-          className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-all duration-500 ease-in-out"
+          className="absolute inset-0 bg-contain bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${currentBanner.image}')`,
             backgroundSize: "cover",
@@ -159,17 +159,17 @@ export default function HeroBanner() {
           <div className="container mx-auto pb-18 px-10">
             <div className="max-w-2xl">
               {/* Row 2: Heading */}
-              <h1 className="text-[2.8rem] font-semibold text-white mb-6 leading-tight transition-all duration-500">
+              <h1 className="text-[2.8rem] font-semibold text-white mb-6 leading-tight">
                 {currentBanner.title}
               </h1>
 
               {/* Row 3: Paragraph 1 */}
-              <p className="text-[1.3rem] text-gray-200 mb-0 leading-relaxed transition-all duration-500">
+              <p className="text-[1.3rem] text-gray-200 mb-0 leading-relaxed">
                 {currentBanner.subtitle}
               </p>
 
               {/* Row 4: Paragraph 2 */}
-              <p className="text-[1.3rem] text-gray-200 mb-8 leading-relaxed transition-all duration-500">
+              <p className="text-[1.3rem] text-gray-200 mb-8 leading-relaxed">
                 {currentBanner.description}
               </p>
 
@@ -206,7 +206,7 @@ export default function HeroBanner() {
       <div className="lg:hidden relative h-[500px] w-full overflow-hidden">
         {/* Background */}
         <div
-          className="absolute inset-0 w-full h-full transition-all duration-500 ease-in-out"
+          className="absolute inset-0 w-full h-full"
           style={{
             backgroundImage: `url('${currentBanner.image}')`,
             backgroundSize: "contain",
@@ -246,7 +246,7 @@ export default function HeroBanner() {
             {/* Text Content */}
             <div className="flex flex-col gap-3">
               <h1
-                className="text-[24px] font-semibold text-white leading-tight transition-all duration-500"
+                className="text-[24px] font-semibold text-white leading-tight"
                 style={{
                   letterSpacing: "-0.88px",
                 }}
@@ -254,7 +254,7 @@ export default function HeroBanner() {
                 {currentBanner.title}
               </h1>
               <p
-                className="text-[12px] font-normal text-gray-200 leading-relaxed transition-all duration-500"
+                className="text-[12px] font-normal text-gray-200 leading-relaxed"
                 style={{
                   letterSpacing: "-0.36px",
                 }}

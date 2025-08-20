@@ -1,8 +1,21 @@
 "use client";
 
 import { navigationLinks } from "../../lib/data";
+import { useRouter } from "next/navigation";
 
 export default function Footer() {
+  const router = useRouter();
+
+  const normalizeSlug = (value) =>
+    String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+  const handleCategoryClick = (categoryName) => {
+    router.push(`/category/${normalizeSlug(categoryName)}`);
+  };
+
   return (
     <footer className="bg-[#202020] text-white overflow-hidden">
       <div className="flex flex-col items-center px-4 py-8 sm:py-12 md:py-16">
@@ -37,31 +50,36 @@ export default function Footer() {
             >
               <a
                 href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
+                className="hover:text-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                onClick={() => handleCategoryClick("Hair Care")}
               >
                 Hair Care
               </a>
               <a
                 href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
+                className="hover:text-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                onClick={() => handleCategoryClick("Body & Shower")}
               >
                 Body & Shower
               </a>
               <a
                 href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
+                className="hover:text-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                onClick={() => handleCategoryClick("Soap & Deodorants")}
               >
                 Soap & Deodorants
               </a>
               <a
                 href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
+                className="hover:text-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                onClick={() => handleCategoryClick("Skin Care")}
               >
                 Skin Care
               </a>
               <a
                 href="#"
-                className="hover:text-gray-300 transition-colors whitespace-nowrap"
+                className="hover:text-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                onClick={() => handleCategoryClick("Oral & Misc")}
               >
                 Oral & Misc
               </a>

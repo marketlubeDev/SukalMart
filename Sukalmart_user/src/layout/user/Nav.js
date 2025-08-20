@@ -199,45 +199,57 @@ export default function Nav() {
             {/* Desktop Navigation - Center with more gap */}
             <div className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
               {showSearchBar ? (
-                <div className="relative">
-                  <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 w-[520px] xl:w-[640px] bg-white">
-                    <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Find your next favorite product..."
-                      className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
-                    />
-                  </div>
-                  {searchQuery.trim().length > 0 && (
-                    <div ref={resultsRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto">
-                      {searchResults.length > 0 ? (
-                        searchResults.map((p) => (
-                          <div key={`${p.id}-${p.name}`} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
-                            {p.image && (
-                              <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
-                            )}
-                            <div className="flex flex-col min-w-0">
-                              <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
-                              {(p.category || p.price) && (
-                                <span className="text-xs text-gray-500 truncate">
-                                  {p.category ? `${p.category}` : ''}
-                                  {p.category && p.price ? ' · ' : ''}
-                                  {p.price ? `${p.price}` : ''}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
-                          <span className="text-sm">No products found</span>
-                        </div>
-                      )}
+                <div className="flex items-center justify-center w-full">
+                  {/* Search Bar */}
+                  <div className="relative w-[400px] xl:w-[500px]">
+                    <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-white">
+                      <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Find your next favorite product..."
+                        className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                      />
                     </div>
-                  )}
+                    {searchQuery.trim().length > 0 && (
+                      <div ref={resultsRef} className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50">
+                        {searchResults.length > 0 ? (
+                          searchResults.map((p) => (
+                            <div 
+                              key={`${p.id}-${p.name}`} 
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
+                              onClick={() => {
+                                router.push(`/products/${p.id}`);
+                                setSearchQuery("");
+                                setSearchResults([]);
+                                setShowSearchBar(false);
+                              }}
+                            >
+                              {p.image && (
+                                <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
+                              )}
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                                {(p.category || p.price) && (
+                                  <span className="text-xs text-gray-500 truncate">
+                                    {p.category ? `${p.category}` : ''}
+                                    {p.category && p.price ? ' · ' : ''}
+                                    {p.price ? `${p.price}` : ''}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
+                            <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
+                            <span className="text-sm">No products found</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <>
@@ -306,91 +318,165 @@ export default function Nav() {
             <div className="hidden lg:flex lg:items-center lg:space-x-4">
               {/* Search / Close icon area */}
               {showSearchBar ? (
-                <button
-                  className="p-2 text-black hover:text-black transition-colors duration-200 cursor-pointer"
-                  onClick={() => setShowSearchBar(false)}
-                  aria-label="Close search"
-                  style={{ fontSize: '34px', lineHeight: 1 }}
-                >
-                  ×
-                </button>
-              ) : (
-                <button
-                  className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                  onClick={() => setShowSearchBar(true)}
-                  aria-label="Open search"
-                >
-                  <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
-                </button>
-              )}
+                <div className="flex items-center space-x-4">
+                  {/* Close button */}
+                  <button
+                    className="p-2 text-gray-600 hover:text-gray-800 transition-colors duration-200 cursor-pointer flex items-center justify-center"
+                    onClick={() => setShowSearchBar(false)}
+                    aria-label="Close search"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
 
-              {/* Cart */}
-              <button
-                onClick={toggleCart}
-                className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-              >
-                <img
-                  src="/Carticon.svg"
-                  alt="cart"
-                  className="w-[44px] h-[44px]"
-                />
-              </button>
+                  {/* Cart */}
+                  <button
+                    onClick={toggleCart}
+                    className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  >
+                    <img
+                      src="/Carticon.svg"
+                      alt="cart"
+                      className="w-[44px] h-[44px]"
+                    />
+                  </button>
 
-              {/* User Profile */}
-              <div className="relative group">
-                <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
-                  <img src="/usericon.svg" alt="user" className="w-6 h-6" />
-                  <img
-                    src="/dropdownicon.svg"
-                    alt="dropdown"
-                    className="w-[8px] h-[5px]"
-                  />
-                </button>
-
-                {/* User Dropdown */}
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                    <Link
-                      href="/my-account"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      My Account
-                    </Link>
-                    <Link
-                      href="/my-account?tab=my-orders"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      Order History
-                    </Link>
-                    <Link
-                      href="/wishlist"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      Wishlist
-                    </Link>
-                    <Link
-                      href="/my-account?tab=help"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      Help & Support
-                    </Link>
-
-                    <Link
-                      href="/my-account?tab=privacy-policy"
-                      className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      Privacy Policy
-                    </Link>
-                    <hr className="my-2" />
-                    <button
-                      onClick={handleSignOut}
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                      Sign Out
+                  {/* User Profile */}
+                  <div className="relative group">
+                    <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                      <img src="/usericon.svg" alt="user" className="w-6 h-6" />
+                      <img
+                        src="/dropdownicon.svg"
+                        alt="dropdown"
+                        className="w-[8px] h-[5px]"
+                      />
                     </button>
+
+                    {/* User Dropdown */}
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      <div className="py-2">
+                        <Link
+                          href="/my-account"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          My Account
+                        </Link>
+                        <Link
+                          href="/my-account?tab=my-orders"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Order History
+                        </Link>
+                        <Link
+                          href="/wishlist"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Wishlist
+                        </Link>
+                        <Link
+                          href="/my-account?tab=help"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Help & Support
+                        </Link>
+
+                        <Link
+                          href="/my-account?tab=privacy-policy"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Privacy Policy
+                        </Link>
+                        <hr className="my-2" />
+                        <button
+                          onClick={handleSignOut}
+                          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <button
+                    className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    onClick={() => setShowSearchBar(true)}
+                    aria-label="Open search"
+                  >
+                    <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
+                  </button>
+
+                  {/* Cart */}
+                  <button
+                    onClick={toggleCart}
+                    className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  >
+                    <img
+                      src="/Carticon.svg"
+                      alt="cart"
+                      className="w-[44px] h-[44px]"
+                    />
+                  </button>
+
+                  {/* User Profile */}
+                  <div className="relative group">
+                    <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                      <img src="/usericon.svg" alt="user" className="w-6 h-6" />
+                      <img
+                        src="/dropdownicon.svg"
+                        alt="dropdown"
+                        className="w-[8px] h-[5px]"
+                      />
+                    </button>
+
+                    {/* User Dropdown */}
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      <div className="py-2">
+                        <Link
+                          href="/my-account"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          My Account
+                        </Link>
+                        <Link
+                          href="/my-account?tab=my-orders"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Order History
+                        </Link>
+                        <Link
+                          href="/wishlist"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Wishlist
+                        </Link>
+                        <Link
+                          href="/my-account?tab=help"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Help & Support
+                        </Link>
+
+                        <Link
+                          href="/my-account?tab=privacy-policy"
+                          className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Privacy Policy
+                        </Link>
+                        <hr className="my-2" />
+                        <button
+                          onClick={handleSignOut}
+                          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Mobile Layout - Two Groups: Left (Hamburger + Title) and Right (Search + Cart) */}

@@ -3,6 +3,46 @@
 import { useRouter } from "next/navigation";
 
 export default function FeaturedProductCard({ product }) {
+  const router = useRouter();
+
+  const addToCart = () => {
+    try {
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const items = raw ? JSON.parse(raw) : [];
+      const idx = items.findIndex((it) => String(it.id) === String(product.id));
+      
+      if (idx >= 0) {
+        const existing = items[idx];
+        items[idx] = { ...existing, quantity: (existing.quantity || 1) + 1 };
+      } else {
+        items.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          image: product.image,
+          color: product.category,
+          plug: 'Default',
+          quantity: 1,
+        });
+      }
+      
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('cartItems', JSON.stringify(items));
+        window.dispatchEvent(new Event('cart-updated'));
+        
+        // Open the cart
+        if (window.__openCart) {
+          window.__openCart();
+        } else {
+          window.dispatchEvent(new Event('open-cart'));
+        }
+      }
+    } catch (err) {
+      console.error('Failed to add to cart', err);
+    }
+  };
+
   return (
     <div className="flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-2 sm:py-3 md:py-4 lg:p-6 lg:pl-0 md:h-full">
       {/* Product Image - Mobile: 35%, Tablet: 40%, Desktop: 50% of card */}
@@ -109,6 +149,7 @@ export default function FeaturedProductCard({ product }) {
             </span>
           </div>
           <button
+            onClick={addToCart}
             className="bg-white text-[#035F0F] font-medium transition-colors self-start md:h-8 md:px-4 md:py-2 lg:h-10 lg:px-6 lg:py-3 cursor-pointer"
             style={{
               display: "flex",

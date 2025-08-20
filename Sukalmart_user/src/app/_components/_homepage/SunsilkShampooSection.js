@@ -1,7 +1,20 @@
 "use client";
 import ProductCard from "./ProductCard";
+import { useRouter } from "next/navigation";
 
 export default function SunsilkShampooSection({ selectedCategory }) {
+  const router = useRouter();
+
+  const handleViewAllClick = () => {
+    // Navigate to products page with Hair Care category selected
+    localStorage.setItem('selectedCategory', 'Hair Care');
+    router.push('/products');
+  };
+
+  const handleProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   // Function to get products based on category
   const getProducts = (category) => {
     if (category === "Body & Shower") {
@@ -141,7 +154,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
               style={{ color: "#035F0F" }}
-              onClick={() => window.location.href = "/products"}
+              onClick={handleViewAllClick}
             >
               <span>View all</span>
               <img src="/nextarrow.svg" alt="Next arrow" className="w-7 h-7" />
@@ -151,7 +164,11 @@ export default function SunsilkShampooSection({ selectedCategory }) {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {products.map((product) => (
-            <div key={product.id} className="bg-white rounded-lg overflow-hidden">
+            <div 
+              key={product.id} 
+              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              onClick={() => handleProductClick(product.id)}
+            >
               <ProductCard product={product} />
             </div>
           ))}
