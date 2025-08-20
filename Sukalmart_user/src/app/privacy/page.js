@@ -1,8 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function PrivacyPage() {
+  const [lastUpdated, setLastUpdated] = useState("");
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString());
+  }, []);
+
   return (
     <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -11,8 +18,8 @@ export default function PrivacyPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             Privacy Policy
           </h1>
-          <p className="text-gray-600">
-            Last updated: {new Date().toLocaleDateString()}
+          <p className="text-gray-600" suppressHydrationWarning>
+            Last updated: {lastUpdated}
           </p>
         </div>
 

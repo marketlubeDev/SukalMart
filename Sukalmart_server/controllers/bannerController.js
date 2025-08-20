@@ -9,9 +9,9 @@ const path = require("path");
 const fs = require("fs");
 
 const createBanner = catchAsync(async (req, res, next) => {
-  const { title, bannerFor, image, category, percentage } = req.body;
+  const { title, description, bannerFor, image, category, percentage } = req.body;
 
-  const bannerData = { title, bannerFor, image };
+  const bannerData = { title, description, bannerFor, image };
 
   if (bannerFor === "category") {
     const alreadyExist = await Banner.findOne({
@@ -59,7 +59,14 @@ const createBanner = catchAsync(async (req, res, next) => {
 });
 
 const getAllBanners = catchAsync(async (req, res, next) => {
-  const banners = await Banner.find();
+  const { bannerFor } = req.query;
+  
+  let query = {};
+  if (bannerFor) {
+    query.bannerFor = bannerFor;
+  }
+  
+  const banners = await Banner.find(query);
   res.status(200).json({
     status: "success",
     data: banners,
@@ -101,7 +108,7 @@ const deleteBanner = catchAsync(async (req, res, next) => {
 
 const updateBanner = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { title, bannerFor, image, category, percentage } = req.body;
+  const { title, description, bannerFor, image, category, percentage } = req.body;
 
   const banner = await Banner.findById(id);
   if (!banner) {
@@ -133,6 +140,7 @@ const updateBanner = catchAsync(async (req, res, next) => {
   }
 
   banner.title = title || banner.title;
+  banner.description = description || banner.description;
   banner.bannerFor = bannerFor || banner.bannerFor;
   banner.image = image || banner.image;
   if (bannerFor === "category") {
