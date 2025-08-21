@@ -143,41 +143,31 @@ export default function HeroBanner() {
         {/* Readability overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
 
-        <div className="w-full flex justify-between items-center top-50 absolute z-20">
-          <div className=" flex justify-between container mx-auto px-10">
-            {/* Previous Icon - Positioned above content with left spacing */}
-            <div>
-              <button
-                onClick={prevSlide}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-                aria-label="Previous slide"
-                style={{ cursor: "pointer" }}
-              >
-                <img
-                  src="/previousicon.svg"
-                  alt="Previous"
-                  className="w-5 h-5"
-                />
-              </button>
-            </div>
-
-            {/* Next Icon - Top Right */}
-            <div>
-              <button
-                onClick={nextSlide}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
-                aria-label="Next slide"
-                style={{ cursor: "pointer" }}
-              >
-                <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
-              </button>
-            </div>
+        {/* Navigation Arrows - Centered vertically */}
+        <div className="absolute inset-0 flex items-center justify-between z-20">
+          <div className="container mx-auto px-10 flex justify-between items-center -mt-8">
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Previous slide"
+              style={{ cursor: "pointer" }}
+            >
+              <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Next slide"
+              style={{ cursor: "pointer" }}
+            >
+              <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
+            </button>
           </div>
         </div>
 
         {/* Content - Bottom Left */}
         <div className="relative z-10 h-full flex items-end">
-          <div className="container mx-auto pb-18 px-10">
+          <div className="container mx-auto pb-16 px-10">
             <div className="max-w-2xl">
               {/* Row 2: Heading */}
               <h1 className="text-[2.8rem] font-semibold text-white mb-6 leading-tight transition-all duration-500">

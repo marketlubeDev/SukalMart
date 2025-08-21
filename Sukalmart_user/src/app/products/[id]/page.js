@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { FaHeart } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
@@ -26,19 +26,20 @@ export default function ProductDetailPage() {
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-
+  const fileInputRef = useRef(null);
+  
   const { toggleWishlistItem, isInWishlist } = useWishlist();
 
   // Function to get product data based on ID
   const getProductData = (id) => {
     // Sample product database - you can replace this with actual API call
     const productDatabase = [
-      {
-        id: "1",
-        name: "Dove Nutritive Solutions",
-        type: "Hair Care",
-        price: 1099,
-        originalPrice: 1299,
+      		{
+			id: "1",
+			name: "Dove Nutritive Solutions",
+			type: "Hair Care",
+			price: 1099,
+			originalPrice: 1299,
         discount: 18,
         image:
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
@@ -50,14 +51,14 @@ export default function ProductDetailPage() {
         ],
         description:
           "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
-        features: [
+    features: [
           "Deep hydration formula",
           "Natural ingredients",
           "Suitable for all skin types",
           "Non-greasy texture",
           "Fast absorption",
-        ],
-        specifications: {
+    ],
+    specifications: {
           Volume: "30ml",
           "Skin Type": "All skin types",
           Texture: "Lightweight serum",
@@ -66,12 +67,12 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "2",
-        name: "Lux Body Wash",
-        type: "Body & Shower",
-        price: 1099,
-        originalPrice: 1299,
+      		{
+			id: "2",
+			name: "Lux Body Wash",
+			type: "Body & Shower",
+			price: 1099,
+			originalPrice: 1299,
         discount: 22,
         image:
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
@@ -99,12 +100,12 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "3",
-        name: "Rexona / Sure Deo",
-        type: "Soap & Deodorants",
-        price: 1899,
-        originalPrice: 2099,
+      		{
+			id: "3",
+			name: "Rexona / Sure Deo",
+			type: "Soap & Deodorants",
+			price: 1899,
+			originalPrice: 2099,
         discount: 19,
         image:
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
@@ -132,12 +133,12 @@ export default function ProductDetailPage() {
           "Country of Origin": "India",
         },
       },
-      {
-        id: "4",
-        name: "Vaseline Body Lotion",
-        type: "Skin Care",
-        price: 1099,
-        originalPrice: 1299,
+      		{
+			id: "4",
+			name: "Vaseline Body Lotion",
+			type: "Skin Care",
+			price: 1099,
+			originalPrice: 1299,
         discount: 20,
         image:
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
@@ -1269,7 +1270,7 @@ export default function ProductDetailPage() {
 
     // Find product by ID
     let foundProduct = productDatabase.find((p) => p.id === id);
-
+    
     // If not found in main database, check category-specific products
     if (!foundProduct) {
       const categoryProducts = {
@@ -1730,24 +1731,24 @@ export default function ProductDetailPage() {
           },
         },
       };
-
+      
       foundProduct = categoryProducts[id];
     }
-
+    
     // Return found product or default product
     return (
       foundProduct || {
-        id: productId,
-        name: "Product Not Found",
-        type: "Unknown",
-        price: 0,
-        originalPrice: 0,
-        discount: 0,
-        image: "/banner1.png",
-        images: ["/banner1.png", "/banner2.png", "/banner3.jpg"],
-        description: "This product could not be found.",
-        features: [],
-        specifications: {},
+      id: productId,
+      name: "Product Not Found",
+      type: "Unknown",
+      price: 0,
+      originalPrice: 0,
+      discount: 0,
+      image: "/banner1.png",
+      images: ["/banner1.png", "/banner2.png", "/banner3.jpg"],
+      description: "This product could not be found.",
+      features: [],
+      specifications: {},
       }
     );
   };
@@ -1775,7 +1776,7 @@ export default function ProductDetailPage() {
     0
   );
   const remainingCoupons = coupons.slice(2);
-
+  
   // Debug logging
   console.log("Product ID:", productId);
   console.log("Product Data:", product);
@@ -1859,12 +1860,16 @@ export default function ProductDetailPage() {
 
   const showReviewModal = () => {
     setIsReviewModalVisible(true);
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
   };
 
   const handleReviewModalCancel = () => {
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    // Restore background scrolling
+    document.body.style.overflow = 'unset';
   };
 
   const handleReviewSubmit = () => {
@@ -1874,6 +1879,8 @@ export default function ProductDetailPage() {
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    // Restore background scrolling
+    document.body.style.overflow = 'unset';
   };
 
   const clearRating = () => {
@@ -1894,27 +1901,27 @@ export default function ProductDetailPage() {
             position: static;
           }
         }
-
+        
         /* Custom star rating styles */
         .custom-rate .ant-rate-star {
           color: #ef9c16 !important;
         }
-
+        
         .custom-rate .ant-rate-star-first,
         .custom-rate .ant-rate-star-second {
           color: #ef9c16 !important;
         }
-
+        
         .custom-rate .ant-rate-star-half .ant-rate-star-first,
         .custom-rate .ant-rate-star-half .ant-rate-star-second {
           color: #ef9c16 !important;
         }
-
+        
         .custom-rate .ant-rate-star-full .ant-rate-star-first,
         .custom-rate .ant-rate-star-full .ant-rate-star-second {
           color: #ef9c16 !important;
         }
-
+        
         /* Remove blue border on textarea focus/hover */
         .ant-input:focus,
         .ant-input:hover,
@@ -1925,7 +1932,7 @@ export default function ProductDetailPage() {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-
+        
         .ant-input-textarea:focus,
         .ant-input-textarea:hover,
         .ant-input-textarea-focused,
@@ -1935,14 +1942,14 @@ export default function ProductDetailPage() {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-
+        
         /* Override Ant Design's default focus styles */
         .ant-input:focus,
         .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
           box-shadow: none !important;
         }
-
+        
         .ant-input-textarea .ant-input:focus,
         .ant-input-textarea .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
@@ -1952,7 +1959,7 @@ export default function ProductDetailPage() {
       <div className="container mx-auto px-4 md:px-8 py-8">
                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Product Images */}
-          <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
+                     <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
             {/* Thumbnail Images - Left Side */}
             <div className="hidden md:flex flex-col gap-2">
               {product.images.map((image, index) => (
@@ -1983,7 +1990,7 @@ export default function ProductDetailPage() {
                   className="w-full h-full object-contain"
                 />
                 {/* Like Button */}
-                <button
+                <button 
                   onClick={() => toggleWishlistItem(product)}
                   className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
                 >
@@ -2099,26 +2106,26 @@ export default function ProductDetailPage() {
 
               {/* Coupon Section */}
               {coupons.length > 0 && (
-                <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3 min-w-0">
                     {visibleCoupons.map((c, idx) => (
-                      <div
+                <div
                         key={idx}
-                        className="px-2 py-3 rounded flex items-center gap-2"
-                        style={{
-                          borderRadius: "4px",
-                          border: "1px dashed rgba(3, 95, 15, 0.64)",
-                          background: "rgba(3, 95, 15, 0.02)",
-                          minWidth: "0",
-                        }}
-                      >
-                        <div className="flex items-center justify-center">
+                  className="px-2 py-3 rounded flex items-center gap-2"
+                  style={{
+                    borderRadius: "4px",
+                    border: "1px dashed rgba(3, 95, 15, 0.64)",
+                    background: "rgba(3, 95, 15, 0.02)",
+                    minWidth: "0",
+                  }}
+                >
+                  <div className="flex items-center justify-center">
                           <img
                             src="/coupon.svg"
                             alt="coupon"
                             className="w-5 h-5"
                           />
-                        </div>
+                  </div>
                         <div className="truncate">
                           <h4 className="font-semibold text-333333 text-sm truncate">
                             {c.code}
@@ -2134,7 +2141,7 @@ export default function ProductDetailPage() {
                     ))}
                   </div>
                   {remainingCouponsCount > 0 && !showMoreCoupons && (
-                    <button
+                                         <button
                       className="text-sm font-medium hover:underline ml-4 whitespace-nowrap cursor-pointer"
                       style={{ color: "#035F0F" }}
                       onClick={() => setShowMoreCoupons(true)}
@@ -2142,30 +2149,30 @@ export default function ProductDetailPage() {
                       +{remainingCouponsCount} more
                     </button>
                   )}
-                </div>
+                                </div>
               )}
               {showMoreCoupons && remainingCoupons.length > 0 && (
-                <>
-                  <div className="flex items-center gap-3 mt-3">
-                    {remainingCoupons.map((c, idx) => (
-                      <div
-                        key={`rest-${idx}`}
-                        className="px-2 py-3 rounded flex items-center gap-2"
-                        style={{
-                          borderRadius: "4px",
-                          border: "1px dashed rgba(3, 95, 15, 0.64)",
-                          background: "rgba(3, 95, 15, 0.02)",
-                          minWidth: "0",
-                        }}
-                      >
-                        <div className="flex items-center justify-center">
+                  <>
+                    <div className="flex items-center gap-3 mt-3">
+                      {remainingCoupons.map((c, idx) => (
+                        <div
+                          key={`rest-${idx}`}
+                          className="px-2 py-3 rounded flex items-center gap-2"
+                          style={{
+                            borderRadius: "4px",
+                            border: "1px dashed rgba(3, 95, 15, 0.64)",
+                            background: "rgba(3, 95, 15, 0.02)",
+                            minWidth: "0",
+                          }}
+                        >
+                          <div className="flex items-center justify-center">
                           <img
                             src="/coupon.svg"
                             alt="coupon"
                             className="w-5 h-5"
                           />
-                        </div>
-                        <div className="truncate">
+                          </div>
+                          <div className="truncate">
                           <h4 className="font-semibold text-333333 text-sm truncate">
                             {c.code}
                           </h4>
@@ -2173,23 +2180,23 @@ export default function ProductDetailPage() {
                             className="text-xs truncate"
                             style={{ color: "rgba(51, 51, 51, 0.80)" }}
                           >
-                            {c.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                              {c.description}
+                    </p>
                   </div>
-                  <div className="mt-2">
-                    <button
-                      className="text-sm font-medium hover:underline cursor-pointer"
-                      style={{ color: "#035F0F" }}
-                      onClick={() => setShowMoreCoupons(false)}
-                    >
-                      Show less
-                    </button>
-                  </div>
-                </>
-              )}
+                </div>
+                      ))}
+                    </div>
+                    <div className="mt-2">
+                <button
+                        className="text-sm font-medium hover:underline cursor-pointer"
+                  style={{ color: "#035F0F" }}
+                        onClick={() => setShowMoreCoupons(false)}
+                >
+                        Show less
+                </button>
+              </div>
+                  </>
+                )}
 
               {/* Volume Selection */}
               <div className="mb-6">
@@ -2200,8 +2207,8 @@ export default function ProductDetailPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  {volumes.map((vol) => (
-                    <button
+                                     {volumes.map((vol) => (
+                  <button
                       key={vol}
                       onClick={() => setSelectedVolume(vol)}
                       className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${
@@ -2212,9 +2219,9 @@ export default function ProductDetailPage() {
                           selectedVolume === vol ? "#02490C" : "#D1D5DB",
                         color: "#333",
                       }}
-                    >
+                  >
                       {vol}
-                    </button>
+                  </button>
                   ))}
                 </div>
               </div>
@@ -2251,7 +2258,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-4 w-full md:w-[460px]">
                 <button
                   onClick={buyNow}
-                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+                   className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
                   style={{
                     padding: "16px 24px",
                     justifyContent: "center",
@@ -2616,12 +2623,12 @@ export default function ProductDetailPage() {
             </div>
           ))
         ) : product?.featuresSection ? (
-          <div className="my-8">
-            <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
-            <div
-              className="mb-4"
-              style={{
-                color: "#333",
+        <div className="my-8">
+          <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
+          <div
+            className="mb-4"
+            style={{
+              color: "#333",
                 fontSize: "20px",
                 fontStyle: "normal",
                 fontWeight: 700,
@@ -2720,20 +2727,20 @@ export default function ProductDetailPage() {
               className="mb-4"
               style={{
                 color: "#333",
-                fontSize: "20px",
-                fontStyle: "normal",
-                fontWeight: 700,
-                lineHeight: "normal",
-                letterSpacing: "-0.24px",
-                leadingTrim: "both",
-                textEdge: "cap",
-              }}
-            >
-              Product features
-            </div>
-            <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
-              <img
-                src={
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: 700,
+              lineHeight: "normal",
+              letterSpacing: "-0.24px",
+              leadingTrim: "both",
+              textEdge: "cap",
+            }}
+          >
+            Product features
+          </div>
+          <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
+            <img
+              src={
                   product.type === "Hair Care"
                     ? "/haircarebanner.png"
                     : product.type === "Skin Care"
@@ -2746,18 +2753,18 @@ export default function ProductDetailPage() {
                       product.type === "Oral & Misc"
                     ? "/oral&misc.png"
                     : "/skinacrebanner.png"
-                }
-                alt={`${product.type} Product Features`}
-                className="object-cover"
-                style={{
-                  width: "100%",
-                  maxWidth: "1500px",
-                  height: "500px",
-                  objectPosition: "center",
-                }}
-              />
-            </div>
+              }
+              alt={`${product.type} Product Features`}
+              className="object-cover"
+              style={{
+                width: "100%",
+                maxWidth: "1500px",
+                height: "500px",
+                objectPosition: "center",
+              }}
+            />
           </div>
+        </div>
         )}
 
         <div
@@ -2783,7 +2790,7 @@ export default function ProductDetailPage() {
                 {product.type === "Hair Care" && (
                   <>
                     Advanced Hair Care Technology
-                    <br />
+                <br />
                     for Professional Results
                   </>
                 )}
@@ -2810,11 +2817,11 @@ export default function ProductDetailPage() {
                 )}
                 {product.type === "Oral Care" ||
                   (product.type === "Oral & Misc" && (
-                    <>
-                      Advanced Oral Care Technology
-                      <br />
-                      for Complete Dental Health
-                    </>
+                  <>
+                    Advanced Oral Care Technology
+                    <br />
+                    for Complete Dental Health
+                  </>
                   ))}
                 {![
                   "Hair Care",
@@ -2834,16 +2841,16 @@ export default function ProductDetailPage() {
               <ul className="list-disc pl-5 text-gray-700 space-y-2 text-base">
                 {product.type === "Hair Care" && (
                   <>
-                    <li>
+                <li>
                       Our advanced hair care technology uses scientifically
                       proven ingredients to address specific hair concerns and
                       promote healthy growth.
-                    </li>
-                    <li>
+                </li>
+                <li>
                       Each product is formulated with natural extracts and
                       advanced compounds that work together to restore hair
                       vitality and strength.
-                    </li>
+                </li>
                   </>
                 )}
                 {product.type === "Skin Care" && (
@@ -2889,18 +2896,18 @@ export default function ProductDetailPage() {
                 )}
                 {product.type === "Oral Care" ||
                   (product.type === "Oral & Misc" && (
-                    <>
-                      <li>
+                  <>
+                    <li>
                         Our advanced oral care technology provides comprehensive
                         dental hygiene with innovative cleaning systems and
                         protective formulas.
-                      </li>
-                      <li>
+                    </li>
+                    <li>
                         Each product is designed to work together for complete
                         oral health, from daily maintenance to specialized
                         treatments.
-                      </li>
-                    </>
+                    </li>
+                  </>
                   ))}
                 {![
                   "Hair Care",
@@ -3187,7 +3194,7 @@ export default function ProductDetailPage() {
                 Based on 181 reviews
               </span>
               {/* Ratings Bar */}
-              <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
+                              <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
                 {[5, 4, 3, 2, 1].map((star, idx) => (
                   <div key={star} className="flex items-center gap-2">
                     <span className="text-sm text-gray-700 w-4">{star}</span>
@@ -3206,10 +3213,10 @@ export default function ProductDetailPage() {
                   </div>
                 ))}
               </div>
-              <button
-                onClick={showReviewModal}
-                className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
-              >
+                              <button 
+                                onClick={showReviewModal}
+                                className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
+                              >
                 Rate Product
               </button>
             </div>
@@ -3519,16 +3526,51 @@ export default function ProductDetailPage() {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Write your review <span className="text-red-500">*</span>
             </h3>
+            <div className="relative">
             <Input.TextArea
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
               placeholder="Tell us what you think.."
               rows={4}
-              style={{
-                resize: "none",
-                backgroundColor: "rgba(0, 0, 0, 0.01)",
-              }}
-            />
+              style={{ 
+                  resize: "none",
+                  backgroundColor: "rgba(0, 0, 0, 0.01)",
+                  paddingBottom: "30px", // Add space for the icon
+                }}
+              />
+              {/* Paperclip Icon - Bottom Right */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  console.log('Selected review images:', files);
+                  // You can store these files in state if you plan to upload them
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                className="absolute bottom-2 right-2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                aria-label="Attach images"
+              >
+                <svg 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Border Separator */}

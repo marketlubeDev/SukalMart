@@ -46,32 +46,32 @@ function NavContent() {
   // Build a simple in-memory product list for search suggestions
   const allProducts = useMemo(() => {
     const fpProducts = (fp || []).map((p) => ({
-      id: String(p.id),
-      name: p.name,
-      image: p.image,
-      price: p.price,
-      originalPrice: p.originalPrice,
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price, 
+      originalPrice: p.originalPrice, 
       category: p.category,
     }));
-
+    
     const bsProducts = (bs || []).map((p) => ({
-      id: String(p.id),
-      name: p.name,
-      image: p.image,
-      price: p.price,
-      originalPrice: p.originalPrice,
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price, 
+      originalPrice: p.originalPrice, 
       category: p.category,
     }));
-
+    
     const catalogProductsList = (catalogProducts || []).map((p) => ({
-      id: String(p.id),
-      name: p.name,
-      image: p.image,
-      price: p.price ? `₹${p.price}` : undefined,
-      originalPrice: p.originalPrice,
+      id: String(p.id), 
+      name: p.name, 
+      image: p.image, 
+      price: p.price ? `₹${p.price}` : undefined, 
+      originalPrice: p.originalPrice, 
       category: p.category || p.type,
     }));
-
+    
     return [...fpProducts, ...bsProducts, ...catalogProductsList];
   }, [fp, bs, catalogProducts]);
 
@@ -81,12 +81,12 @@ function NavContent() {
       setSearchResults([]);
       return;
     }
-
+    
     const nameMatches = allProducts.filter((p) =>
       p.name.toLowerCase().includes(q)
     );
     const results = nameMatches.slice(0, 8);
-
+    
     setSearchResults(results);
   }, [searchQuery, allProducts]);
 
@@ -263,8 +263,8 @@ function NavContent() {
                     >
                       {searchResults.length > 0 ? (
                         searchResults.map((p) => (
-                          <div
-                            key={`${p.id}-${p.name}`}
+                          <div 
+                            key={`${p.id}-${p.name}`} 
                             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
                             onClick={() => {
                               router.push(`/products/${p.id}`);
@@ -514,8 +514,9 @@ function NavContent() {
                   )}
                 </button>
 
-                {/* Mobile Logo - Always visible */}
-                <Link href="/" className="flex items-center ml-2">
+                {/* Mobile Logo - Hidden on small screens when search is open */}
+                {!showSearchBar && (
+                  <Link href="/" className="flex items-center ml-2">
                   <img
                     src="/logo1.svg"
                     alt="Souqalmart Logo"
@@ -525,14 +526,15 @@ function NavContent() {
                     Souqalmart
                   </div>
                 </Link>
+                )}
               </div>
 
               {/* Center Group - Search Bar */}
               {showSearchBar && (
-                <div className="flex-1 flex justify-center mx-4">
-                  <div className="w-full max-w-md">
+                <div className="flex-1 flex justify-center mx-2">
+                  <div className="w-full max-w-[200px] sm:max-w-[240px]">
                     <div className="relative">
-                      <div className="flex items-center h-10 border border-gray-300 rounded-lg px-4 bg-white">
+                      <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
                         <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
                         <input
                           type="text"
