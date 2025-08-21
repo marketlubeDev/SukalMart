@@ -5,6 +5,8 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+console.log(process.env.VITE_API_URL, "slajhldhslkh");
+
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
