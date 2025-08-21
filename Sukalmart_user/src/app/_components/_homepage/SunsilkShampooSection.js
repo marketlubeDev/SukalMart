@@ -144,11 +144,11 @@ export default function SunsilkShampooSection({ selectedCategory }) {
   const products = getProducts(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0">
-      <div className="max-w-6xl mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0 xl:px-10">
+      <div className="mx-auto">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+          <h2 className="text-xl sm:text-2xl md:text-3xl xl:text-[28px] font-bold text-gray-800">
             {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
           </h2>
           <button

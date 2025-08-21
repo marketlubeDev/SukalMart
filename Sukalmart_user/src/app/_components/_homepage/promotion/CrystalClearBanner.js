@@ -9,7 +9,7 @@ export default function CrystalClearBanner() {
   };
   return (
     <>
-      <div className="container mx-auto px-4" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+      <div className="container mx-auto px-4 sm:px-0 lg:px-4 xl:px-8">
         <style jsx>{`
           @media (min-width: 640px) and (max-width: 819px) {
             .container {

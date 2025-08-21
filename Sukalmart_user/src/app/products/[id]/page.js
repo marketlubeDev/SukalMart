@@ -8,6 +8,8 @@ import { CiHeart } from "react-icons/ci";
 import { Modal, Rate, Input, Button } from "antd";
 import { useWishlist } from "../../_components/context/WishlistContext";
 import ProductServiceBenefits from "./_components/ProductServiceBenefits";
+import ProductImageSection from "./_components/ProductImageSection";
+import ProductFeaturesText from "./_components/ProductFeaturesText";
 import FeaturedProductsSection from "../../_components/_homepage/featuredproduct/FeaturedProductsSection";
 import BestSellersSection from "../../_components/_homepage/bestSeller/BestSellersSection";
 import RecommendedSection from "./_components/RecommendedSection";
@@ -2449,93 +2451,15 @@ export default function ProductDetailPage() {
 
         {/* Category-specific Features Section */}
         <div className="my-8">
-          <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-stretch justify-center py-8 ">
-            {/* Left: Product Image (aligned left most) */}
-            <div className="flex-1 flex justify-start items-center w-full mb-6 md:mb-0">
-              <img
-                src={
-                  product.type === "Hair Care" ? "/haircarebanner3.png" :
-                  product.type === "Skin Care" ? "/skincarebanner3.png" :
-                  product.type === "Soap & Deodorants" ? "/soapbanner4.png" :
-                  product.type === "Body & Wash" ? "/body&washbanner3.png" :
-                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner3.png" :
-                  "/skincarebanner3.png"
-                }
-                alt={`${product.type} Advanced Features`}
-                className="object-contain"
-                style={{
-                  width: "100%",
-                  maxWidth: "500px",
-                  height: "auto",
-                  transform: "scaleX(-1)",
-                }}
-              />
+          <div className="w-full rounded-lg overflow-hidden bg-white py-8">
+            {/* Left: Product Image Section - Sticky */}
+            <div className="md:sticky md:top-20 md:self-start mb-6 md:mb-0">
+              <ProductImageSection productType={product.type} />
             </div>
-            {/* Right: Text and Features */}
-            <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full md:pl-8 sm:pl-6">
-              <div
-                className="mb-4 self-start"
-                style={{
-                  color: "#333",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  lineHeight: "normal",
-                  letterSpacing: "-0.24px",
-                  leadingTrim: "both",
-                  textEdge: "cap",
-                }}
-              >
-                {product.type === "Hair Care" && (
-                  <>Advanced Hair Growth Technology</>
-                )}
-                {product.type === "Skin Care" && (
-                  <>Advanced Anti-Aging Technology</>
-                )}
-                {product.type === "Soap & Deodorants" && (
-                  <>Advanced Cleansing Technology</>
-                )}
-                {product.type === "Body & Wash" && (
-                  <>Advanced Body Care Technology</>
-                )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
-                  <>Advanced Dental Care Technology</>
-                ) : (
-                  <>Advanced Anti-Aging Technology</>
-                )}
-              </div>
-              <p className="text-gray-700 text-base self-start">
-                {product.type === "Hair Care" && (
-                  <>
-                    Our advanced hair growth technology utilizes cutting-edge formulations that penetrate deep into hair follicles to stimulate natural growth and strengthen hair from the roots. Each product is scientifically formulated to address specific hair concerns and promote healthy, vibrant hair.
-                  </>
-                )}
-                {product.type === "Skin Care" && (
-                  <>
-                    Our advanced anti-aging technology combines revolutionary ingredients with proven dermatological science to target fine lines, wrinkles, and age spots. Each formulation is designed to work at the cellular level to promote skin regeneration and maintain youthful radiance.
-                  </>
-                )}
-                {product.type === "Soap & Deodorants" && (
-                  <>
-                    Our advanced cleansing technology provides superior hygiene protection while maintaining skin's natural moisture balance. Each product is engineered with antibacterial properties and natural ingredients to ensure thorough cleansing without compromising skin health.
-                  </>
-                )}
-                {product.type === "Body & Wash" && (
-                  <>
-                    Our advanced body care technology delivers comprehensive skin nourishment and protection through innovative formulations. Each product combines therapeutic ingredients with luxurious textures to provide complete body wellness and rejuvenation.
-                  </>
-                )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
-                  <>
-                    Our advanced dental care technology provides superior oral hygiene through innovative cleaning systems and protective formulas. Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
-                  </>
-                ) : (
-                  <>
-                  Our advanced anti-aging technology combines revolutionary ingredients with proven dermatological science to target fine lines, wrinkles, and age spots. Each formulation is designed to work at the cellular level to promote skin regeneration and maintain youthful radiance.
-
-                  </>
-                )}
-              </p>
+            
+            {/* Right: Text and Features Section - Scrollable */}
+            <div>
+              <ProductFeaturesText productType={product.type} />
             </div>
           </div>
         </div>

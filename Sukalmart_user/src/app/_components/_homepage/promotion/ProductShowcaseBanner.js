@@ -1,5 +1,13 @@
 "use client";
+import { useState, useRef } from "react";
+
 export default function ProductShowcaseBanner({ fullWidth = false }) {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const containerRef = useRef(null);
+
   const showcaseItems = [
     {
       image: "/banner/haircarebanner1.jpg",
@@ -12,40 +20,88 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
     },
   ];
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % showcaseItems.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + showcaseItems.length) % showcaseItems.length);
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    setCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    
+    const diff = startX - currentX;
+    const threshold = 50; // minimum swipe distance
+    
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        nextSlide(); // swipe left
+      } else {
+        prevSlide(); // swipe right
+      }
+    }
+    
+    setIsDragging(false);
+  };
+
   return (
     <div
       className={`py-6 md:py-8 lg:py-10 ${
-        fullWidth ? "px-4 sm:px-10 md:px-4 lg:px-4" : "px-4 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
+        fullWidth ? "px-0 sm:px-10 md:px-4 lg:px-4" : "px-0 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
       }`}
     >
-      {/* Mobile: one item at a time with horizontal scroll */}
+      {/* Mobile: Single banner swiper */}
       <div className="lg:hidden">
-        <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-          {showcaseItems.map((item, index) => (
-            <div key={index} className="flex-shrink-0 w-full snap-start">
-              <div
-                className="relative overflow-hidden rounded-lg showcase-banner-item"
-                style={{
-                  height: "180px sm:h-[220px] md:h-[240px]",
-                  background: item.background,
-                }}
-              >
-                {/* Full-width image */}
-                <img
-                  src={item.image}
-                  alt={`Haircare Banner ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+        <div 
+          ref={containerRef}
+          className="relative w-full"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Current Banner */}
+          <div className="w-full">
+            <div
+              className="relative overflow-hidden rounded-lg showcase-banner-item"
+              style={{
+                height: "200px",
+                background: showcaseItems[currentSlide].background,
+              }}
+            >
+              {/* Full-width image */}
+              <img
+                src={showcaseItems[currentSlide].image}
+                alt={`Haircare Banner ${currentSlide + 1}`}
+                className="w-full h-full object-cover"
+              />
             </div>
-          ))}
-        </div>
+          </div>
+          
 
-        {/* Mobile scroll indicator */}
+        </div>
+        
+        {/* Line Indicator */}
         <div className="w-full mt-4">
           <div className="flex justify-center">
             <div className="w-20 h-1 bg-gray-200 rounded-full">
-              <div className="w-7 h-1 bg-[#035F0F] rounded-full"></div>
+              <div 
+                className="h-1 bg-[#035F0F] rounded-full transition-all duration-300"
+                style={{
+                  width: `${((currentSlide + 1) / showcaseItems.length) * 100}%`
+                }}
+              ></div>
             </div>
           </div>
         </div>

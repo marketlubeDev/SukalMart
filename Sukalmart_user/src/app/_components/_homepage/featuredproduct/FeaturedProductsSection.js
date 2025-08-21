@@ -51,15 +51,15 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
       <div
         className={
           isProductPage
-            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-0 sm:px-0 lg:px-4"
-            : "py-6 md:py-8 lg:py-10 overflow-hidden mx-auto w-full max-w-screen-xl px-4 sm:px-0 lg:px-4"
+            ? "py-6 md:py-8 lg:py-10 overflow-hidden px-0 sm:px-0 lg:px-4 xl:px-4"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden mx-auto w-full max-w-screen-xl px-4 sm:px-0 lg:px-4 xl:px-10"
         }
       >
         <div className="flex flex-col gap-6">
           {/* Header */}
           <div className="flex flex-row gap-2 items-center justify-between w-full">
             <h2
-              className="text-[20px] sm:text-[22px] md:text-[24px] font-bold"
+              className="text-[20px] sm:text-[22px] md:text-[24px] xl:text-[28px] font-bold"
               style={{
                 color: "#333333",
                 letterSpacing: "-0.22px",
@@ -84,7 +84,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
               {featuredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="flex-shrink-0 w-full snap-start px-2"
+                  className="flex-shrink-0 w-full snap-start px-0 sm:px-2"
                 >
                   <FeaturedProductCard product={product} />
                 </div>

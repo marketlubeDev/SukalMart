@@ -36,7 +36,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
   return (
     <>
       <div
-        className={`px-0 sm:px-10 md:px-4 lg:px-8 py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
+        className={`${fullWidth ? 'px-0 sm:px-10 md:px-4 lg:px-8' : 'px-4 sm:px-10 md:px-4 lg:px-8'} py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">
@@ -46,7 +46,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                 <div
                   className="relative overflow-hidden rounded-lg"
                   style={{
-                    height: "200px sm:h-[250px]",
+                    height: "200px",
                     background: banner.background,
                   }}
                 >

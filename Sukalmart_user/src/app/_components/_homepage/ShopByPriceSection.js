@@ -193,9 +193,9 @@ export default function ShopByPriceSection({ selectedCategory }) {
   const secondRow = priceRanges.slice(3, 6);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0">
+    <div className="py-8 container mx-auto px-4 sm:px-0 xl:px-10">
       <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
           Shop by Price
         </h2>
       </div>
@@ -245,7 +245,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
       </div>
       
       {/* Desktop/Tablet Grid */}
-      <div className="hidden sm:grid grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+      <div className="hidden sm:grid grid-cols-3 lg:grid-cols-6 gap-4 mx-auto">
         {priceRanges.map((item, index) => (
           <div
             key={index}

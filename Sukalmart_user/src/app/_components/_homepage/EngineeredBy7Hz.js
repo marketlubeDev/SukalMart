@@ -14,7 +14,7 @@ export default function EngineeredBy7Hz() {
   };
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 engineered-7hz-container" style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 xl:px-8 engineered-7hz-container">
         <style jsx>{`
           @media (min-width: 640px) and (max-width: 819px) {
             .engineered-7hz-container {
@@ -69,11 +69,11 @@ export default function EngineeredBy7Hz() {
 
           {/* Right Section - Product Cards */}
           <div className="flex-1 w-full">
-            <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-0">
+            <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-2 sm:gap-0">
               {/* Product Card 1 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
-                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("17")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
@@ -119,7 +119,7 @@ export default function EngineeredBy7Hz() {
               {/* Product Card 2 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
-                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("18")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
@@ -165,7 +165,7 @@ export default function EngineeredBy7Hz() {
               {/* Product Card 3 */}
               <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
                 <div 
-                  className="bg-white rounded-lg p-3 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("19")}
                 >
                   <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
@@ -232,15 +232,20 @@ export default function EngineeredBy7Hz() {
               max-width: 33.3333%;
             }
           }
-          /* Remove gap for all screen sizes */
+          /* Remove gap for tablet and desktop only */
+          @media (min-width: 640px) {
             .engineered-by-7hz-cards-row {
-            gap: 0 !important;
+              gap: 0 !important;
+            }
           }
-          /* Show two cards per screen on mobile */
+          /* Show two cards per screen on mobile with gap */
           @media (max-width: 639.98px) {
             .engineered-by-7hz-cards-row > div {
               width: 50% !important;
               max-width: 50% !important;
+            }
+            .engineered-by-7hz-cards-row {
+              gap: 8px !important;
             }
           }
         `}</style>

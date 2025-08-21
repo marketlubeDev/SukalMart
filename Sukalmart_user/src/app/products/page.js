@@ -216,11 +216,11 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8 pb-0 lg:pb-8">
+      <div className="container mx-auto px-0 sm:px-4 py-8 pb-0 lg:pb-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <div className="hidden lg:block lg:w-1/5">
-            <div className="sticky top-8">
+          <div className="lg:w-1/5">
+            <div className="sticky top-20">
             <ProductSidebar
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -234,14 +234,12 @@ export default function ProductsPage() {
 
           {/* Main Content */}
           <div className="lg:w-4/5">
-            <div className="overflow-y-auto max-h-screen thin-scrollbar">
             <ProductGrid
               products={products}
               selectedCategory={selectedCategory}
               sortBy={sortBy}
               setSortBy={setSortBy}
             />
-            </div>
           </div>
         </div>
       </div>

@@ -97,7 +97,7 @@ export default function HaircareBanner({ selectedCategory }) {
   const content = getBannerContent(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 xl:px-10">
       {/* Mobile: full-width background banner with overlay and text */}
       <div className="lg:hidden">
         <div className="relative w-full h-[260px] overflow-hidden rounded-lg">
@@ -127,7 +127,7 @@ export default function HaircareBanner({ selectedCategory }) {
 
       {/* Desktop/Tablet: existing rich layout */}
       <div className="hidden lg:block">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto">
           <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 to-amber-200 p-8 md:p-12">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">

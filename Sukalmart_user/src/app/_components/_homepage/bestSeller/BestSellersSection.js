@@ -38,7 +38,7 @@ export default function BestSellersSection() {
             style={{
               color: "#333",
               // fontFamily: "'Nunito Sans', sans-serif",
-              fontSize: "clamp(18px, 4vw, 24px)",
+              fontSize: "clamp(18px, 4vw, 28px)",
               fontWeight: 700,
               fontStyle: "normal",
               lineHeight: "normal",
