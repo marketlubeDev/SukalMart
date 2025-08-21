@@ -5,8 +5,6 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-console.log(process.env.NEXT_PUBLIC_API_URL, "API URL from env");
-
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
