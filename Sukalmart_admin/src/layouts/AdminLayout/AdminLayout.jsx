@@ -14,6 +14,7 @@ function AdminLayout() {
     { name: "Dashboard", path: "/admin" },
     { name: "Products", path: "product" },
     // {name:"Enquiries", path:"enquiry"},
+
     { name: "Orders", path: "order" },
     // { name: "Stores", path: "store" },
     { name: "Categories", path: "category" },
@@ -27,6 +28,7 @@ function AdminLayout() {
     { name: "Sales", path: "sales" },
     { name: "Feedbacks", path: "feedback" },
     { name: "Inventory", path: "inventory" },
+    { name: "Reviews", path: "review" },
   ];
   const navigate = useNavigate();
 
