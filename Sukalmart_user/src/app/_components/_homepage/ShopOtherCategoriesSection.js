@@ -26,7 +26,7 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
   };
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 xl:px-10">
+    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 xl:px-10">
       <div className="mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
@@ -110,14 +110,14 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
               className="flex flex-col items-center justify-start cursor-pointer"
               onClick={() => handleCategoryClick(category.name)}
             >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] md:w-[220px] md:h-[220px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
                 <img
                   src={category.image}
                   alt={category.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[14px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
+              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[10px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
                 {category.name}
               </div>
             </div>

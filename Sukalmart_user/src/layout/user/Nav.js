@@ -474,11 +474,10 @@ function NavContent() {
               </div>
             </div>
 
-            {/* Mobile Layout - Two Groups: Left (Hamburger + Title) and Right (Search + Cart) */}
+                        {/* Mobile Layout - Three Groups: Left (Hamburger + Logo), Center (Search), Right (Cart) */}
             <div className="lg:hidden flex items-center justify-between w-full">
-              {/* Left Group - Hamburger and Title */}
+              {/* Left Group - Hamburger and Logo */}
               <div className="flex items-center">
-                {/* Hamburger Menu Button */}
                 <button
                   onClick={toggleMobileMenu}
                   className="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
@@ -515,8 +514,8 @@ function NavContent() {
                   )}
                 </button>
 
-                {/* Mobile Title */}
-                <Link href="/" className="flex items-center">
+                {/* Mobile Logo - Always visible */}
+                <Link href="/" className="flex items-center ml-2">
                   <img
                     src="/logo1.svg"
                     alt="Souqalmart Logo"
@@ -528,12 +527,82 @@ function NavContent() {
                 </Link>
               </div>
 
-              {/* Right Group - Search and Cart */}
+              {/* Center Group - Search Bar */}
+              {showSearchBar && (
+                <div className="flex-1 flex justify-center mx-4">
+                  <div className="w-full max-w-md">
+                    <div className="relative">
+                      <div className="flex items-center h-10 border border-gray-300 rounded-lg px-4 bg-white">
+                        <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Search products..."
+                          className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                        />
+                      </div>
+                      {searchQuery.trim().length > 0 && (
+                        <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50">
+                          {searchResults.length > 0 ? (
+                            searchResults.map((p) => (
+                              <div 
+                                key={`${p.id}-${p.name}`} 
+                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
+                                onClick={() => {
+                                  router.push(`/products/${p.id}`);
+                                  setSearchQuery("");
+                                  setSearchResults([]);
+                                  setShowSearchBar(false);
+                                }}
+                              >
+                                {p.image && (
+                                  <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
+                                )}
+                                <div className="flex flex-col min-w-0">
+                                  <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                                  {(p.category || p.price) && (
+                                    <span className="text-xs text-gray-500 truncate">
+                                      {p.category ? `${p.category}` : ''}
+                                      {p.category && p.price ? ' · ' : ''}
+                                      {p.price ? `${p.price}` : ''}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
+                              <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
+                              <span className="text-sm">No products found</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Right Group - Search Icon, Close Icon, or Cart */}
               <div className="flex items-center">
-                {/* Mobile Search */}
-                <button className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                {showSearchBar ? (
+                  <button 
+                    onClick={() => setShowSearchBar(false)}
+                    className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                ) : (
+                  <button 
+                    onClick={() => setShowSearchBar(true)}
+                    className="p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  >
                   <img src="/searchicon.svg" alt="search" className="w-5 h-5" />
                 </button>
+                )}
 
                 {/* Mobile Cart */}
                 <button
@@ -550,6 +619,8 @@ function NavContent() {
             </div>
           </div>
         </div>
+
+
 
         {/* Mobile Menu */}
         <div

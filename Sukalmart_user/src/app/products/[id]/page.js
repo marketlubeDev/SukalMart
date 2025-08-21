@@ -1948,9 +1948,9 @@ export default function ProductDetailPage() {
           border: 1px solid #d9d9d9 !important;
           box-shadow: none !important;
         }
-      `}</style>
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      `}      </style>
+      <div className="container mx-auto px-4 md:px-8 py-8">
+                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Product Images */}
           <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
             {/* Thumbnail Images - Left Side */}
@@ -2952,18 +2952,24 @@ export default function ProductDetailPage() {
         {/* Category-specific Features Section */}
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden bg-white py-8">
-            {/* Left: Product Image Section - Sticky */}
-            <div className="md:sticky md:top-20 md:self-start mb-6 md:mb-0">
-              <ProductImageSection productType={product.type} />
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left: Product Image Section - Sticky */}
+              <div className="md:w-1/2">
+                <div className="md:sticky md:top-20" style={{ height: 'fit-content' }}>
+                  <ProductImageSection productType={product.type} />
             </div>
-
-            {/* Right: Text and Features Section - Scrollable */}
-            <div>
-              <ProductFeaturesText productType={product.type} />
+              </div>
+              
+              {/* Right: Text and Features Section - Scrollable */}
+              <div className="md:w-1/2">
+                <ProductFeaturesText productType={product.type} />
+              </div>
             </div>
           </div>
         </div>
+       
 
+       
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white relative">
             <video

@@ -59,7 +59,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
   return (
     <div
       className={`py-6 md:py-8 lg:py-10 ${
-        fullWidth ? "px-0 sm:px-10 md:px-4 lg:px-4" : "px-0 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
+        fullWidth ? "px-0 sm:px-10 md:px-0 lg:px-4" : "px-0 sm:px-6 md:px-12 lg:px-8 xl:px-[200px]"
       }`}
     >
       {/* Mobile: Single banner swiper */}

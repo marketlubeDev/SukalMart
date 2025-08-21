@@ -14,15 +14,8 @@ export default function EngineeredBy7Hz() {
   };
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 xl:px-8 engineered-7hz-container">
-        <style jsx>{`
-          @media (min-width: 640px) and (max-width: 819px) {
-            .engineered-7hz-container {
-              padding-left: 2.5rem !important;
-              padding-right: 2.5rem !important;
-            }
-          }
-        `}</style>
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 md:px-8 xl:px-8 engineered-7hz-container">
+     
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">

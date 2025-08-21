@@ -226,8 +226,94 @@ export default function HeroBanner() {
         </div>
       </div>
 
+      {/* Medium Screen Version */}
+      <div className="hidden md:block lg:hidden relative h-[500px] bg-white">
+        {/* Background with banner image */}
+        <div
+          className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('${currentBanner.image}')`,
+            backgroundSize: "cover",
+            backgroundPosition: "bottom",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: "#f8f9fa",
+          }}
+        ></div>
+        {/* Readability overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+
+        {/* Navigation Arrows - Positioned at center */}
+        <div className="absolute inset-0 flex items-center justify-between z-20">
+          <div className="flex justify-between items-center w-full px-8 -mt-8">
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Previous slide"
+              style={{ cursor: 'pointer' }}
+            >
+              <img src="/previousicon.svg" alt="Previous" className="w-5 h-5" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
+              aria-label="Next slide"
+              style={{ cursor: 'pointer' }}
+            >
+              <img src="/nexticon.svg" alt="Next" className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        
+        {/* Content - Bottom Left */}
+        <div className="relative z-10 h-full flex items-end">
+          <div className="container mx-auto pb-12 px-8">
+            <div className="max-w-xl">
+              {/* Heading */}
+              <h1 className="text-[2rem] font-semibold text-white mb-4 leading-tight">
+                {currentBanner.title}
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-[1rem] text-gray-200 mb-2 leading-relaxed">
+                {currentBanner.subtitle}
+              </p>
+
+              {/* Description */}
+              <p className="text-[1rem] text-gray-200 mb-6 leading-relaxed">
+                {currentBanner.description}
+              </p>
+
+              {/* Shop Now Button */}
+              <button 
+                className="bg-[#035F0F] hover:bg-[#035F0F]/90 text-white font-medium px-4 py-3 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                style={{ cursor: 'pointer' }}
+                onClick={() => router.push(`/category/${normalizeSlug(currentBanner.title)}`)}
+              >
+                Shop now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress indicator */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="flex space-x-2">
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-16 h-1 rounded-full transition-all duration-300 cursor-pointer ${index === currentSlide
+                    ? "bg-green-700 opacity-70"
+                    : "bg-gray-300"
+                  }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Mobile Version - Clean Layout */}
-      <div className="lg:hidden relative h-[500px] w-full overflow-hidden">
+      <div className="md:hidden relative h-[500px] w-full overflow-hidden">
         {/* Background */}
         <div
           className="absolute inset-0 w-full h-full transition-all duration-500 ease-in-out"
