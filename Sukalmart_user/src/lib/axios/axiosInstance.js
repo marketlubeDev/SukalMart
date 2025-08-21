@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.VITE_API_URL || "http://localhost:5000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
   withCredentials: true,
 });
 
-console.log(process.env.VITE_API_URL, "slajhldhslkh");
+console.log(process.env.NEXT_PUBLIC_API_URL, "API URL from env");
 
 axiosInstance.interceptors.request.use(
   (config) => {
