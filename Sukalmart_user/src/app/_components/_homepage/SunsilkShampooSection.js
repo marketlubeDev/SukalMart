@@ -58,11 +58,11 @@ export default function SunsilkShampooSection({ selectedCategory }) {
       ];
     }
     
-    // Sunsilk shampoo products for Hair Care category
+    // Sunsilk shampoo products for Hair Care category with unique IDs
     if (category === "Hair Care") {
       return [
         {
-          id: 1,
+          id: 9,
           name: "Sunsilk Naturals Shampoo",
           type: "Hair Care",
           price: 299,
@@ -71,7 +71,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           category: "Shampoo",
         },
         {
-          id: 2,
+          id: 10,
           name: "Sunsilk Perfect Straight Shampoo",
           type: "Hair Care",
           price: 349,
@@ -80,7 +80,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           category: "Shampoo",
         },
         {
-          id: 3,
+          id: 11,
           name: "Sunsilk Black Shine Shampoo",
           type: "Hair Care",
           price: 279,
@@ -89,7 +89,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           category: "Shampoo",
         },
         {
-          id: 4,
+          id: 12,
           name: "Sunsilk Soft & Smooth Shampoo",
           type: "Hair Care",
           price: 259,
@@ -144,11 +144,11 @@ export default function SunsilkShampooSection({ selectedCategory }) {
   const products = getProducts(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0">
-      <div className="max-w-6xl mx-auto">
+    <div className="py-8 container mx-auto px-4 sm:px-0 xl:px-10">
+      <div className="mx-auto">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+          <h2 className="text-xl sm:text-2xl md:text-3xl xl:text-[28px] font-bold text-gray-800">
             {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
           </h2>
           <button

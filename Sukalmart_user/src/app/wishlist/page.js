@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa6";
 import { useWishlist } from "../_components/context/WishlistContext";
 
@@ -13,8 +14,22 @@ const sortOptions = [
 ];
 
 function WishlistCard({ product, onRemove }) {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    // Extract original product ID (remove _index suffix if present)
+    const rawId = product && product.id != null ? String(product.id) : "";
+    const originalId = rawId.includes('_') ? rawId.split('_')[0] : rawId;
+    if (!originalId) return;
+    console.log("Wishlist card clicked:", originalId, product.name);
+    router.push(`/products/${originalId}`);
+  };
+
   return (
-    <div className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <div 
+      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative">
         <div className="aspect-square flex items-center justify-center">
           <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
@@ -27,7 +42,7 @@ function WishlistCard({ product, onRemove }) {
             onRemove(product.id);
           }}
           aria-label="Remove from wishlist"
-          className="absolute top-2 right-2 bg-white/90 rounded-full p-2 shadow hover:scale-105 transition-transform"
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-2 shadow hover:scale-105 transition-transform cursor-pointer"
         >
           <FaHeart className="w-4 h-4 text-red-600" />
         </button>

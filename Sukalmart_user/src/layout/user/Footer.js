@@ -15,7 +15,6 @@ export default function Footer() {
   const handleCategoryClick = (categoryName) => {
     router.push(`/category/${normalizeSlug(categoryName)}`);
   };
-
   return (
     <footer className="bg-[#202020] text-white overflow-hidden">
       <div className="flex flex-col items-center px-4 py-8 sm:py-12 md:py-16">
@@ -23,7 +22,7 @@ export default function Footer() {
           {/* Logo */}
           <div 
             className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center cursor-pointer hover:opacity-80 transition-opacity"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => router.push('/')}
           >
             <img
               src="/logo1.svg"

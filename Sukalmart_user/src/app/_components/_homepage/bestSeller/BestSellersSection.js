@@ -29,8 +29,8 @@ export default function BestSellersSection() {
     }
   };
   return (
-    <div className="bg-white container mx-auto px-4 py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
-      <div className="px-4">
+    <div className="bg-white container mx-auto px-2 md:px-4 py-8 md:py-16 overflow-hidden mb-6 md:mb-6">
+      <div className="px-2 md:px-4">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2
@@ -38,7 +38,7 @@ export default function BestSellersSection() {
             style={{
               color: "#333",
               // fontFamily: "'Nunito Sans', sans-serif",
-              fontSize: "clamp(18px, 4vw, 24px)",
+              fontSize: "clamp(18px, 4vw, 28px)",
               fontWeight: 700,
               fontStyle: "normal",
               lineHeight: "normal",

@@ -10,7 +10,11 @@ export default function FeaturedProductCard({ product }) {
       const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
       const items = raw ? JSON.parse(raw) : [];
       const idx = items.findIndex((it) => String(it.id) === String(product.id));
-      
+
+      // Convert price strings to numbers (remove ₹ symbol and commas)
+      const priceNumber = parseInt(product.price.replace(/[₹,]/g, ''));
+      const originalPriceNumber = parseInt(product.originalPrice.replace(/[₹,]/g, ''));
+
       if (idx >= 0) {
         const existing = items[idx];
         items[idx] = { ...existing, quantity: (existing.quantity || 1) + 1 };
@@ -18,19 +22,19 @@ export default function FeaturedProductCard({ product }) {
         items.push({
           id: product.id,
           name: product.name,
-          price: product.price,
-          originalPrice: product.originalPrice,
+          price: priceNumber,
+          originalPrice: originalPriceNumber,
           image: product.image,
           color: product.category,
           plug: 'Default',
           quantity: 1,
         });
       }
-      
+
       if (typeof window !== 'undefined') {
         window.localStorage.setItem('cartItems', JSON.stringify(items));
         window.dispatchEvent(new Event('cart-updated'));
-        
+
         // Open the cart
         if (window.__openCart) {
           window.__openCart();
@@ -42,7 +46,6 @@ export default function FeaturedProductCard({ product }) {
       console.error('Failed to add to cart', err);
     }
   };
-
   return (
     <div className="flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-2 sm:py-3 md:py-4 lg:p-6 lg:pl-0 md:h-full">
       {/* Product Image - Mobile: 35%, Tablet: 40%, Desktop: 50% of card */}

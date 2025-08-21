@@ -1,12 +1,14 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export default function HaircareBanner({ selectedCategory }) {
   const router = useRouter();
 
-  const handleShopNowClick = () => {
-    // Navigate to products page with the selected category
-    localStorage.setItem('selectedCategory', selectedCategory);
+  // Function to handle shop now button click
+  const handleShopNow = () => {
+    // Set the selected category in localStorage
+    localStorage.setItem('selectedCategory', selectedCategory || 'Hair Care');
+    // Navigate to products page
     router.push('/products');
   };
 
@@ -95,7 +97,7 @@ export default function HaircareBanner({ selectedCategory }) {
   const content = getBannerContent(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto">
+    <div className="py-8 container mx-auto px-4 xl:px-10">
       {/* Mobile: full-width background banner with overlay and text */}
       <div className="lg:hidden">
         <div className="relative w-full h-[260px] overflow-hidden rounded-lg">
@@ -113,8 +115,8 @@ export default function HaircareBanner({ selectedCategory }) {
                 {content.description}
               </p>
               <button 
-                onClick={handleShopNowClick}
-                className="bg-[#035F0F] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer"
+                onClick={handleShopNow}
+                className="bg-[#035F0F] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer hover:bg-[#035F0F]/90 transition-colors"
               >
                 Shop now
               </button>
@@ -125,7 +127,7 @@ export default function HaircareBanner({ selectedCategory }) {
 
       {/* Desktop/Tablet: existing rich layout */}
       <div className="hidden lg:block">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto">
           <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 to-amber-200 p-8 md:p-12">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
@@ -142,8 +144,8 @@ export default function HaircareBanner({ selectedCategory }) {
                   {content.description}
                 </p>
                 <button 
-                  onClick={handleShopNowClick}
-                  className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg transition-colors duration-200 border-2 border-gray-800 cursor-pointer"
+                  onClick={handleShopNow}
+                  className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg hover:text-gray-600 transition-colors duration-200 border-2 border-gray-800 cursor-pointer"
                 >
                   Shop now
                 </button>
