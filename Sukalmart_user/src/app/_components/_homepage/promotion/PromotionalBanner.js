@@ -36,7 +36,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
   return (
     <>
       <div
-        className={`${fullWidth ? 'px-0 sm:px-10 md:px-4 lg:px-8' : 'px-4 sm:px-10 md:px-4 lg:px-8'} py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
+        className={`${fullWidth ? 'px-0 sm:px-0 md:px-0 lg:px-0' : 'px-6 sm:px-10 md:px-8 lg:px-8'} py-6 md:py-8 lg:py-10 mx-auto w-full max-w-screen-xl`}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">
@@ -44,14 +44,13 @@ export default function PromotionalBanner({ fullWidth = false }) {
             {banners.map((banner) => (
               <div key={banner.id} className="flex-shrink-0 w-full snap-start">
                 <div
-                  className="relative overflow-hidden rounded-lg"
+                  className="relative overflow-hidden rounded-lg md:p-4 h-[200px] md:h-[250px]"
                   style={{
-                    height: "200px",
                     background: banner.background,
                   }}
                 >
                   {/* Product Image - Right Side */}
-                  <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2">
+                  <div className="absolute right-3 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2">
                     <img
                       src={banner.image}
                       alt={banner.alt}
@@ -60,7 +59,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                   </div>
 
                   {/* Content - Left Side */}
-                  <div className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 max-w-[200px] sm:max-w-xs">
+                  <div className="absolute left-4 sm:left-6 md:left-8 top-1/2 transform -translate-y-1/2 max-w-[200px] sm:max-w-xs">
                     <h3
                       className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3"
                       style={{ color: "#333333" }}

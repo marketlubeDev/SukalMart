@@ -193,7 +193,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
   const secondRow = priceRanges.slice(3, 6);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 xl:px-10">
+    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 xl:px-10">
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
           Shop by Price
@@ -249,9 +249,9 @@ export default function ShopByPriceSection({ selectedCategory }) {
         {priceRanges.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center bg-white rounded-lg p-4 cursor-pointer"
+            className="flex flex-col items-center justify-center bg-white rounded-lg p-4 md:p-0 cursor-pointer"
           >
-            <div className="w-full aspect-square mb-3 overflow-hidden rounded-lg">
+            <div className="w-full aspect-square mb-3 overflow-hidden rounded-lg md:w-40 md:h-40">
               <img
                 src={item.image}
                 alt={`${item.range} products`}
@@ -259,7 +259,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
               />
             </div>
             <div className="text-center">
-              <p className="text-sm md:text-base font-semibold text-gray-800">
+              <p className="text-sm md:text-xs font-semibold text-gray-800">
                 {item.range}
               </p>
             </div>

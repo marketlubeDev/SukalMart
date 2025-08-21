@@ -236,16 +236,28 @@ export default function ProductGrid({
 	const modifiedProducts = getModifiedProducts();
 
 	return (
-		<div className="bg-white px-4 sm:px-10 md:px-4 lg:px-4">
+		<div className="bg-white px-4 sm:px-10 md:px-0 lg:px-4">
 			{/* Header */}
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+				{/* md-only Filter/Sort triggers aligned to the end */}
+				<div className="order-2 sm:order-2 self-end sm:self-auto hidden md:flex lg:hidden items-center gap-4">
+					<button onClick={() => window.dispatchEvent(new Event('open-filter'))} className="flex items-center gap-2 text-gray-900">
+						<img src="/filtericon.svg" alt="Filter" className="w-5 h-5" />
+						<span className="font-semibold text-sm">Filter</span>
+					</button>
+					<div className="h-5 w-px bg-gray-200" />
+					<button onClick={() => window.dispatchEvent(new Event('open-sort'))} className="flex items-center gap-2 text-gray-900">
+						<img src="/sorticon.svg" alt="Sort" className="w-5 h-5" />
+						<span className="font-semibold text-sm">Sort</span>
+					</button>
+				</div>
 				<div className="flex items-center gap-2">
 					<h1 className="text-lg sm:text-xl font-semibold text-gray-800">
 						Showing result for &quot;{selectedCategory || "All Products"}&quot;
 					</h1>
 				</div>
 
-				<div className="hidden sm:flex items-center gap-4">
+				<div className="hidden lg:flex items-center gap-4">
 					{/* Sort Dropdown visible from sm+; hidden on mobile */}
 					<div className="flex items-center gap-1 relative">
 						<span className="text-sm text-gray-600">Sort by :</span>
@@ -290,6 +302,7 @@ export default function ProductGrid({
 							style={{ height: "20px" }}
 						/>
 					</div>
+
 				</div>
 			</div>
 

@@ -20,7 +20,7 @@ export default function ProductImageSection({ productType }) {
   };
 
   return (
-    <div className="flex-1 flex justify-start items-center w-full mb-6 md:mb-0 md:sticky md:top-20 md:self-start">
+    <div className="flex justify-start items-center w-full">
       <img
         src={getImageSource(productType)}
         alt={`${productType} Advanced Features`}

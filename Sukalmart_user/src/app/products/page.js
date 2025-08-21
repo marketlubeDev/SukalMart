@@ -92,6 +92,18 @@ export default function ProductsPage() {
     };
   }, [isFilterOpen, isSortOpen]);
 
+  // Listen for md Filter/Sort open events
+  useEffect(() => {
+    const onOpenFilter = () => setIsFilterOpen(true);
+    const onOpenSort = () => setIsSortOpen(true);
+    window.addEventListener('open-filter', onOpenFilter);
+    window.addEventListener('open-sort', onOpenSort);
+    return () => {
+      window.removeEventListener('open-filter', onOpenFilter);
+      window.removeEventListener('open-sort', onOpenSort);
+    };
+  }, []);
+
   // Handlers for mobile filter sheet
   const openFilterSheet = () => {
     setSnapshot({
@@ -216,10 +228,10 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-0 sm:px-4 py-8 pb-0 lg:pb-8">
+      <div className="container mx-auto px-0 sm:px-4 md:px-8 py-8 pb-0 lg:pb-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <div className="lg:w-1/5">
+          <div className="hidden lg:block lg:w-1/5">
             <div className="sticky top-20">
             <ProductSidebar
               selectedCategory={selectedCategory}
@@ -245,7 +257,7 @@ export default function ProductsPage() {
       </div>
 
       {/* Mobile bottom bar */}
-      <div className={`lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 transition-transform duration-300 ${isBottomBarVisible ? 'translate-y-0' : 'translate-y-full'}`}>
+      <div className={`lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 transition-transform duration-300 ${(isFilterOpen || isSortOpen) ? 'hidden' : (isBottomBarVisible ? 'translate-y-0' : 'translate-y-full')}`}>
         <div className="max-w-screen-sm mx-auto px-6 py-4 flex items-center justify-evenly text-gray-900">
           <button
             onClick={openFilterSheet}
