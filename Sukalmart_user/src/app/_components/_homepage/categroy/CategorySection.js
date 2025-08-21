@@ -36,10 +36,6 @@ export default function CategorySection() {
   //   },
   // ];
 
-  // Set loading and error to false since we're using static data
-  // const loading = false;
-  // const error = null;
-
   // Get first 3 categories for first row and remaining 2 for second row
   const firstRowCategories = categories.slice(0, 3);
   const secondRowCategories = categories.slice(3, 5);

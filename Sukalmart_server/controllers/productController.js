@@ -25,6 +25,15 @@ const addProduct = catchAsync(async (req, res, next) => {
     about,
     specifications,
     featureImages,
+    // featuresSection fields (may arrive as strings in multipart)
+    featuresSection,
+    "featuresSection.layout": fsLayout,
+    "featuresSection.imagePosition": fsImagePosition,
+    "featuresSection.mediaType": fsMediaType,
+    "featuresSection.title": fsTitle,
+    "featuresSection.description": fsDescription,
+    "featuresSection.mediaUrl": fsMediaUrl,
+    // Multiple sections flat inputs may arrive as featuresSections[0].field
   } = req.body;
 
   if (variantsArray && variantsArray.length > 0) {
@@ -115,6 +124,45 @@ const addProduct = catchAsync(async (req, res, next) => {
     }
   }
 
+  // Handle featuresSection media upload (single media file)
+  let featuresSectionMediaUrl = undefined;
+  const featureSectionMediaFile = req.files.find(
+    (file) => file.fieldname === "featuresSection.media"
+  );
+  if (featureSectionMediaFile) {
+    try {
+      const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      const mediaUrls = await uploadMultipleToS3([featureSectionMediaFile], {
+        folder: "products",
+        filename: `${productSlug}/features/media`,
+      });
+      featuresSectionMediaUrl = mediaUrls?.[0] || undefined;
+    } catch (error) {
+      console.error("Error uploading featuresSection media:", error);
+      return next(new AppError("Failed to upload features media", 500));
+    }
+  }
+
+  // Handle multiple featuresSections media files: featuresSections[${i}].media
+  const featuresSectionsMediaMap = {};
+  for (const file of req.files) {
+    const match = file.fieldname.match(/^featuresSections\[(\d+)\]\.media$/);
+    if (match) {
+      const idx = parseInt(match[1]);
+      try {
+        const productSlug = name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+        const mediaUrls = await uploadMultipleToS3([file], {
+          folder: "products",
+          filename: `${productSlug}/features/section-${idx}`,
+        });
+        featuresSectionsMediaMap[idx] = mediaUrls?.[0];
+      } catch (error) {
+        console.error(`Error uploading featuresSections[${idx}] media:`, error);
+        return next(new AppError("Failed to upload features media", 500));
+      }
+    }
+  }
+
   // Prepare product data
   const productData = {
     name,
@@ -131,6 +179,99 @@ const addProduct = catchAsync(async (req, res, next) => {
       ? [specifications]
       : [],
     featureImages: uploadedFeatureImages,
+    featuresSection: (() => {
+      // Prefer nested object if sent as JSON; otherwise build from flat fields
+      let section = undefined;
+      if (featuresSection && typeof featuresSection === "string") {
+        try {
+          section = JSON.parse(featuresSection);
+        } catch (_) {}
+      } else if (featuresSection && typeof featuresSection === "object") {
+        section = featuresSection;
+      }
+      section = section || {};
+      // Overlay flat fields if provided
+      const layout = fsLayout || section.layout;
+      const imagePosition = fsImagePosition || section.imagePosition;
+      const mediaType = fsMediaType || section.mediaType;
+      const title = fsTitle || section.title;
+      const description = fsDescription || section.description;
+      const mediaUrl =
+        featuresSectionMediaUrl || fsMediaUrl || section.mediaUrl;
+      if (
+        layout ||
+        imagePosition ||
+        mediaType ||
+        title ||
+        description ||
+        mediaUrl
+      ) {
+        return {
+          layout: layout || "banner",
+          imagePosition: imagePosition || "right",
+          mediaType: mediaType || "image",
+          title: title || undefined,
+          description: description || undefined,
+          mediaUrl: mediaUrl || undefined,
+        };
+      }
+      return undefined;
+    })(),
+    featuresSections: (() => {
+      // Accept as JSON string or as flat fields
+      let sections = [];
+      if (
+        req.body.featuresSections &&
+        typeof req.body.featuresSections === "string"
+      ) {
+        try {
+          const parsed = JSON.parse(req.body.featuresSections);
+          if (Array.isArray(parsed)) sections = parsed;
+        } catch (_) {}
+      }
+      // Collect flat fields: featuresSections[0].layout, etc.
+      // Find unique indexes present in body
+      const indexes = new Set();
+      Object.keys(req.body || {}).forEach((k) => {
+        const m = k.match(/^featuresSections\[(\d+)\]\.([a-zA-Z]+)$/);
+        if (m) indexes.add(parseInt(m[1]));
+      });
+      const arr = [...indexes]
+        .sort((a, b) => a - b)
+        .map((i) => {
+          const layout = req.body[`featuresSections[${i}].layout`];
+          const imagePosition =
+            req.body[`featuresSections[${i}].imagePosition`];
+          const mediaType = req.body[`featuresSections[${i}].mediaType`];
+          const title = req.body[`featuresSections[${i}].title`];
+          const description = req.body[`featuresSections[${i}].description`];
+          const mediaUrl =
+            featuresSectionsMediaMap[i] ||
+            req.body[`featuresSections[${i}].mediaUrl`];
+          if (
+            layout ||
+            imagePosition ||
+            mediaType ||
+            title ||
+            description ||
+            mediaUrl
+          ) {
+            return {
+              layout: layout || "banner",
+              imagePosition: imagePosition || "right",
+              mediaType: mediaType || "image",
+              title: title || undefined,
+              description: description || undefined,
+              mediaUrl: mediaUrl || undefined,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
+      if (sections.length > 0) return sections;
+      if (arr.length > 0) return arr;
+      return [];
+    })(),
   };
 
   if (variantsArray && variantsArray.length > 0) {
@@ -701,9 +842,124 @@ const updateProduct = catchAsync(async (req, res, next) => {
     }
   }
 
+  // Handle featuresSection media upload on update
+  let uploadedFeatureSectionMediaUrl;
+  const featureSectionMediaFile = req.files?.find(
+    (file) => file.fieldname === "featuresSection.media"
+  );
+  if (featureSectionMediaFile) {
+    try {
+      const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      const mediaUrls = await uploadMultipleToS3([featureSectionMediaFile], {
+        folder: "products",
+        filename: `${productSlug}/features/media`,
+      });
+      uploadedFeatureSectionMediaUrl = mediaUrls?.[0];
+    } catch (error) {
+      console.error("Error uploading featuresSection media:", error);
+      return next(new AppError("Failed to upload features media", 500));
+    }
+  }
+
+  // Handle multiple featuresSections media on update
+  const updatedSectionsMediaMap = {};
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      const match = file.fieldname.match(/^featuresSections\[(\d+)\]\.media$/);
+      if (match) {
+        const idx = parseInt(match[1]);
+        try {
+          const productSlug = product.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "-");
+          const mediaUrls = await uploadMultipleToS3([file], {
+            folder: "products",
+            filename: `${productSlug}/features/section-${idx}`,
+          });
+          updatedSectionsMediaMap[idx] = mediaUrls?.[0];
+        } catch (error) {
+          console.error(
+            `Error uploading featuresSections[${idx}] media:`,
+            error
+          );
+          return next(new AppError("Failed to upload features media", 500));
+        }
+      }
+    }
+  }
+
   // Update feature data if new images were uploaded
   if (uploadedFeatureImages.length > 0) {
     updateData.featureImages = uploadedFeatureImages;
+  }
+
+  // Normalize featuresSection structure (string => object) if sent as JSON
+  if (
+    updateData.featuresSection &&
+    typeof updateData.featuresSection === "string"
+  ) {
+    try {
+      updateData.featuresSection = JSON.parse(updateData.featuresSection);
+    } catch (_) {}
+  }
+  // Prepare dot-notated updates to avoid overwriting missing keys on subdocument
+  const fsUpdates = {};
+  const layout = updateData["featuresSection.layout"];
+  const imagePosition = updateData["featuresSection.imagePosition"];
+  const mediaType = updateData["featuresSection.mediaType"];
+  const title = updateData["featuresSection.title"];
+  const description = updateData["featuresSection.description"];
+  if (layout !== undefined) fsUpdates["featuresSection.layout"] = layout;
+  if (imagePosition !== undefined)
+    fsUpdates["featuresSection.imagePosition"] = imagePosition;
+  if (mediaType !== undefined)
+    fsUpdates["featuresSection.mediaType"] = mediaType;
+  if (title !== undefined) fsUpdates["featuresSection.title"] = title;
+  if (description !== undefined)
+    fsUpdates["featuresSection.description"] = description;
+  if (uploadedFeatureSectionMediaUrl)
+    fsUpdates["featuresSection.mediaUrl"] = uploadedFeatureSectionMediaUrl;
+
+  // Build updates for featuresSections array
+  // Find indexes in body for featuresSections
+  const sectionIndexes = new Set();
+  Object.keys(updateData || {}).forEach((k) => {
+    const m = k.match(/^featuresSections\[(\d+)\]\.([a-zA-Z]+)$/);
+    if (m) sectionIndexes.add(parseInt(m[1]));
+  });
+  if (
+    sectionIndexes.size > 0 ||
+    Object.keys(updatedSectionsMediaMap).length > 0
+  ) {
+    // Initialize array from existing product
+    const base = Array.isArray(product.featuresSections)
+      ? [...product.featuresSections]
+      : [];
+    const allIdx = new Set([
+      ...sectionIndexes,
+      ...Object.keys(updatedSectionsMediaMap).map((n) => parseInt(n)),
+    ]);
+    for (const i of allIdx) {
+      const curr = base[i] || {};
+      const layout = updateData[`featuresSections[${i}].layout`];
+      const imagePosition = updateData[`featuresSections[${i}].imagePosition`];
+      const mediaType = updateData[`featuresSections[${i}].mediaType`];
+      const title = updateData[`featuresSections[${i}].title`];
+      const description = updateData[`featuresSections[${i}].description`];
+      const mediaUrl =
+        updatedSectionsMediaMap[i] ||
+        updateData[`featuresSections[${i}].mediaUrl`];
+      base[i] = {
+        ...curr,
+        ...(layout !== undefined ? { layout } : {}),
+        ...(imagePosition !== undefined ? { imagePosition } : {}),
+        ...(mediaType !== undefined ? { mediaType } : {}),
+        ...(title !== undefined ? { title } : {}),
+        ...(description !== undefined ? { description } : {}),
+        ...(mediaUrl ? { mediaUrl } : {}),
+      };
+    }
+    fsUpdates.featuresSections = base;
   }
 
   let variantIds = [];
@@ -745,6 +1001,7 @@ const updateProduct = catchAsync(async (req, res, next) => {
     productId,
     {
       ...updateData,
+      ...fsUpdates,
       variants: variantIds,
     },
     { new: true, runValidators: true }

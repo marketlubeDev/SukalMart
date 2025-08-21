@@ -26,59 +26,63 @@ export default function ProductDetailPage() {
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  
+
   const { toggleWishlistItem, isInWishlist } = useWishlist();
 
   // Function to get product data based on ID
   const getProductData = (id) => {
     // Sample product database - you can replace this with actual API call
     const productDatabase = [
-      		{
-			id: "1",
-			name: "Dove Nutritive Solutions",
-			type: "Hair Care",
-			price: 1099,
-			originalPrice: 1299,
+      {
+        id: "1",
+        name: "Dove Nutritive Solutions",
+        type: "Hair Care",
+        price: 1099,
+        originalPrice: 1299,
         discount: 18,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
-    features: [
+        description:
+          "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
+        features: [
           "Deep hydration formula",
           "Natural ingredients",
           "Suitable for all skin types",
           "Non-greasy texture",
           "Fast absorption",
-    ],
-    specifications: {
-          "Volume": "30ml",
+        ],
+        specifications: {
+          Volume: "30ml",
           "Skin Type": "All skin types",
-          "Texture": "Lightweight serum",
-          "Fragrance": "Fragrance-free",
+          Texture: "Lightweight serum",
+          Fragrance: "Fragrance-free",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
       },
-      		{
-			id: "2",
-			name: "Lux Body Wash",
-			type: "Body & Shower",
-			price: 1099,
-			originalPrice: 1299,
+      {
+        id: "2",
+        name: "Lux Body Wash",
+        type: "Body & Shower",
+        price: 1099,
+        originalPrice: 1299,
         discount: 22,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Complete beauty collection featuring premium skincare and makeup essentials. Everything you need for a flawless beauty routine.",
+        description:
+          "Complete beauty collection featuring premium skincare and makeup essentials. Everything you need for a flawless beauty routine.",
         features: [
           "Complete beauty set",
           "Premium quality products",
@@ -88,28 +92,30 @@ export default function ProductDetailPage() {
         ],
         specifications: {
           "Set Contents": "5 products",
-          "Packaging": "Luxury gift box",
+          Packaging: "Luxury gift box",
           "Skin Type": "All skin types",
-          "Fragrance": "Light floral",
+          Fragrance: "Light floral",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
       },
-      		{
-			id: "3",
-			name: "Rexona / Sure Deo",
-			type: "Soap & Deodorants",
-			price: 1899,
-			originalPrice: 2099,
+      {
+        id: "3",
+        name: "Rexona / Sure Deo",
+        type: "Soap & Deodorants",
+        price: 1899,
+        originalPrice: 2099,
         discount: 19,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
+        description:
+          "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
         features: [
           "Advanced anti-aging formula",
           "Night-time repair",
@@ -118,29 +124,31 @@ export default function ProductDetailPage() {
           "Rich moisturizing texture",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Skin Type": "Mature skin",
-          "Texture": "Rich cream",
-          "Fragrance": "Light herbal",
+          Texture: "Rich cream",
+          Fragrance: "Light herbal",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
       },
-      		{
-			id: "4",
-			name: "Vaseline Body Lotion",
-			type: "Skin Care",
-			price: 1099,
-			originalPrice: 1299,
+      {
+        id: "4",
+        name: "Vaseline Body Lotion",
+        type: "Skin Care",
+        price: 1099,
+        originalPrice: 1299,
         discount: 20,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Powerful Vitamin C serum for brightening and evening skin tone. Reduces dark spots and promotes collagen production.",
+        description:
+          "Powerful Vitamin C serum for brightening and evening skin tone. Reduces dark spots and promotes collagen production.",
         features: [
           "High concentration Vitamin C",
           "Brightening formula",
@@ -149,10 +157,10 @@ export default function ProductDetailPage() {
           "Collagen boosting",
         ],
         specifications: {
-          "Volume": "30ml",
+          Volume: "30ml",
           "Skin Type": "All skin types",
-          "Texture": "Lightweight serum",
-          "Fragrance": "Citrus fresh",
+          Texture: "Lightweight serum",
+          Fragrance: "Citrus fresh",
           "Shelf Life": "18 months",
           "Country of Origin": "India",
         },
@@ -164,14 +172,16 @@ export default function ProductDetailPage() {
         price: 699,
         originalPrice: 899,
         discount: 22,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Intensive hydration with Hyaluronic Acid. Provides long-lasting moisture and plumps the skin for a youthful appearance.",
+        description:
+          "Intensive hydration with Hyaluronic Acid. Provides long-lasting moisture and plumps the skin for a youthful appearance.",
         features: [
           "Hyaluronic Acid formula",
           "Intensive hydration",
@@ -180,10 +190,10 @@ export default function ProductDetailPage() {
           "Suitable for sensitive skin",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Skin Type": "All skin types",
-          "Texture": "Lightweight gel",
-          "Fragrance": "Fragrance-free",
+          Texture: "Lightweight gel",
+          Fragrance: "Fragrance-free",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -195,14 +205,16 @@ export default function ProductDetailPage() {
         price: 999,
         originalPrice: 1299,
         discount: 23,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Targeted eye cream with Retinol to reduce fine lines, dark circles, and puffiness around the delicate eye area.",
+        description:
+          "Targeted eye cream with Retinol to reduce fine lines, dark circles, and puffiness around the delicate eye area.",
         features: [
           "Retinol formula",
           "Targets fine lines",
@@ -211,10 +223,10 @@ export default function ProductDetailPage() {
           "Gentle on sensitive skin",
         ],
         specifications: {
-          "Volume": "15ml",
+          Volume: "15ml",
           "Skin Type": "All skin types",
-          "Texture": "Light cream",
-          "Fragrance": "Fragrance-free",
+          Texture: "Light cream",
+          Fragrance: "Fragrance-free",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -226,14 +238,16 @@ export default function ProductDetailPage() {
         price: 599,
         originalPrice: 799,
         discount: 25,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Gentle yet effective facial cleanser that removes impurities without stripping natural oils. Suitable for daily use.",
+        description:
+          "Gentle yet effective facial cleanser that removes impurities without stripping natural oils. Suitable for daily use.",
         features: [
           "Gentle formula",
           "Removes impurities",
@@ -242,10 +256,10 @@ export default function ProductDetailPage() {
           "Non-irritating",
         ],
         specifications: {
-          "Volume": "100ml",
+          Volume: "100ml",
           "Skin Type": "All skin types",
-          "Texture": "Gel cleanser",
-          "Fragrance": "Fresh clean",
+          Texture: "Gel cleanser",
+          Fragrance: "Fresh clean",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -257,14 +271,16 @@ export default function ProductDetailPage() {
         price: 899,
         originalPrice: 1199,
         discount: 25,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Broad-spectrum SPF 50 sunscreen that provides superior protection against UVA and UVB rays. Lightweight and non-greasy.",
+        description:
+          "Broad-spectrum SPF 50 sunscreen that provides superior protection against UVA and UVB rays. Lightweight and non-greasy.",
         features: [
           "SPF 50 protection",
           "Broad-spectrum coverage",
@@ -273,10 +289,10 @@ export default function ProductDetailPage() {
           "Water-resistant",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Skin Type": "All skin types",
-          "Texture": "Light lotion",
-          "Fragrance": "Fragrance-free",
+          Texture: "Light lotion",
+          Fragrance: "Fragrance-free",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -289,14 +305,16 @@ export default function ProductDetailPage() {
         price: 1099,
         originalPrice: 1299,
         discount: 18,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Dove Nutritive Solutions for healthy, nourished hair. Advanced formula that deeply conditions and strengthens hair from root to tip.",
+        description:
+          "Dove Nutritive Solutions for healthy, nourished hair. Advanced formula that deeply conditions and strengthens hair from root to tip.",
         features: [
           "Deep nourishment",
           "Strengthens hair",
@@ -305,10 +323,10 @@ export default function ProductDetailPage() {
           "Long-lasting results",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Fresh clean",
+          Texture: "Rich lather",
+          Fragrance: "Fresh clean",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -320,14 +338,16 @@ export default function ProductDetailPage() {
         price: 1099,
         originalPrice: 1299,
         discount: 22,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Lux Body Wash for luxurious bathing experience. Enriched with natural ingredients for soft, smooth skin.",
+        description:
+          "Lux Body Wash for luxurious bathing experience. Enriched with natural ingredients for soft, smooth skin.",
         features: [
           "Luxurious bathing",
           "Natural ingredients",
@@ -336,10 +356,10 @@ export default function ProductDetailPage() {
           "Long-lasting freshness",
         ],
         specifications: {
-          "Volume": "250ml",
+          Volume: "250ml",
           "Skin Type": "All skin types",
-          "Texture": "Rich gel",
-          "Fragrance": "Luxury floral",
+          Texture: "Rich gel",
+          Fragrance: "Luxury floral",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -351,14 +371,16 @@ export default function ProductDetailPage() {
         price: 1899,
         originalPrice: 2099,
         discount: 19,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Rexona / Sure Deo for long-lasting protection against odor and wetness. Advanced formula for all-day confidence.",
+        description:
+          "Rexona / Sure Deo for long-lasting protection against odor and wetness. Advanced formula for all-day confidence.",
         features: [
           "Long-lasting protection",
           "Odor control",
@@ -367,10 +389,10 @@ export default function ProductDetailPage() {
           "Advanced formula",
         ],
         specifications: {
-          "Volume": "150ml",
+          Volume: "150ml",
           "Skin Type": "All skin types",
-          "Texture": "Roll-on",
-          "Fragrance": "Fresh sport",
+          Texture: "Roll-on",
+          Fragrance: "Fresh sport",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -382,14 +404,16 @@ export default function ProductDetailPage() {
         price: 1099,
         originalPrice: 1299,
         discount: 20,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        image:
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         images: [
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Vaseline Body Lotion for deep hydration and skin nourishment. Clinically proven to moisturize for 24 hours.",
+        description:
+          "Vaseline Body Lotion for deep hydration and skin nourishment. Clinically proven to moisturize for 24 hours.",
         features: [
           "Deep hydration",
           "24-hour moisture",
@@ -398,10 +422,10 @@ export default function ProductDetailPage() {
           "Gentle formula",
         ],
         specifications: {
-          "Volume": "400ml",
+          Volume: "400ml",
           "Skin Type": "All skin types",
-          "Texture": "Rich lotion",
-          "Fragrance": "Light fresh",
+          Texture: "Rich lotion",
+          Fragrance: "Light fresh",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -414,8 +438,14 @@ export default function ProductDetailPage() {
         originalPrice: 399,
         discount: 25,
         image: "/sunsilk1.jpg",
-        images: ["/sunsilk1.jpg", "/sunsilk1.jpg", "/sunsilk1.jpg", "/sunsilk1.jpg"],
-        description: "Sunsilk Naturals Shampoo with THICK & LONG formula for naturally beautiful hair. Enriched with natural ingredients for healthy hair growth.",
+        images: [
+          "/sunsilk1.jpg",
+          "/sunsilk1.jpg",
+          "/sunsilk1.jpg",
+          "/sunsilk1.jpg",
+        ],
+        description:
+          "Sunsilk Naturals Shampoo with THICK & LONG formula for naturally beautiful hair. Enriched with natural ingredients for healthy hair growth.",
         features: [
           "THICK & LONG formula",
           "Natural ingredients",
@@ -424,10 +454,10 @@ export default function ProductDetailPage() {
           "Gentle cleansing",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Fresh natural",
+          Texture: "Rich lather",
+          Fragrance: "Fresh natural",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -440,8 +470,14 @@ export default function ProductDetailPage() {
         originalPrice: 449,
         discount: 22,
         image: "/sunsilk2.jpg",
-        images: ["/sunsilk2.jpg", "/sunsilk2.jpg", "/sunsilk2.jpg", "/sunsilk2.jpg"],
-        description: "Sunsilk Oil Blends with ONION & JOJOBA OIL for hairfall resistance. Perfect for straight hair with advanced hair care technology.",
+        images: [
+          "/sunsilk2.jpg",
+          "/sunsilk2.jpg",
+          "/sunsilk2.jpg",
+          "/sunsilk2.jpg",
+        ],
+        description:
+          "Sunsilk Oil Blends with ONION & JOJOBA OIL for hairfall resistance. Perfect for straight hair with advanced hair care technology.",
         features: [
           "ONION & JOJOBA OIL blend",
           "Hairfall resistance",
@@ -450,10 +486,10 @@ export default function ProductDetailPage() {
           "Long-lasting results",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Straight hair",
-          "Texture": "Smooth lather",
-          "Fragrance": "Fresh herbal",
+          Texture: "Smooth lather",
+          Fragrance: "Fresh herbal",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -466,8 +502,14 @@ export default function ProductDetailPage() {
         originalPrice: 379,
         discount: 26,
         image: "/sunsilk3.jpg",
-        images: ["/sunsilk3.jpg", "/sunsilk3.jpg", "/sunsilk3.jpg", "/sunsilk3.jpg"],
-        description: "Sunsilk Black Shine Shampoo for naturally black and shiny hair. Specially formulated to enhance hair color and add natural shine.",
+        images: [
+          "/sunsilk3.jpg",
+          "/sunsilk3.jpg",
+          "/sunsilk3.jpg",
+          "/sunsilk3.jpg",
+        ],
+        description:
+          "Sunsilk Black Shine Shampoo for naturally black and shiny hair. Specially formulated to enhance hair color and add natural shine.",
         features: [
           "Black shine formula",
           "Color enhancement",
@@ -476,10 +518,10 @@ export default function ProductDetailPage() {
           "Color protection",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Black hair",
-          "Texture": "Rich creamy",
-          "Fragrance": "Fresh floral",
+          Texture: "Rich creamy",
+          Fragrance: "Fresh floral",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -492,8 +534,14 @@ export default function ProductDetailPage() {
         originalPrice: 359,
         discount: 28,
         image: "/sunsilk4.jpg",
-        images: ["/sunsilk4.jpg", "/sunsilk4.jpg", "/sunsilk4.jpg", "/sunsilk4.jpg"],
-        description: "SUNSILK CO-CREATIONS damage repair shampoo for soft and smooth hair. Advanced damage repair technology for healthy, manageable hair.",
+        images: [
+          "/sunsilk4.jpg",
+          "/sunsilk4.jpg",
+          "/sunsilk4.jpg",
+          "/sunsilk4.jpg",
+        ],
+        description:
+          "SUNSILK CO-CREATIONS damage repair shampoo for soft and smooth hair. Advanced damage repair technology for healthy, manageable hair.",
         features: [
           "Damage repair technology",
           "Soft & smooth results",
@@ -502,10 +550,10 @@ export default function ProductDetailPage() {
           "Long-lasting softness",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Damaged hair",
-          "Texture": "Smooth gel",
-          "Fragrance": "Fresh citrus",
+          Texture: "Smooth gel",
+          Fragrance: "Fresh citrus",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -518,8 +566,14 @@ export default function ProductDetailPage() {
         originalPrice: 1599,
         discount: 19,
         image: "/newlaunch1.jpg",
-        images: ["/newlaunch1.jpg", "/newlaunch1.jpg", "/newlaunch1.jpg", "/newlaunch1.jpg"],
-        description: "THE ANSWER Super Lamellar Shampoo with Hydrolyzed Keratin & Ceramide Formula. Advanced hair care technology for professional results.",
+        images: [
+          "/newlaunch1.jpg",
+          "/newlaunch1.jpg",
+          "/newlaunch1.jpg",
+          "/newlaunch1.jpg",
+        ],
+        description:
+          "THE ANSWER Super Lamellar Shampoo with Hydrolyzed Keratin & Ceramide Formula. Advanced hair care technology for professional results.",
         features: [
           "Hydrolyzed Keratin formula",
           "Ceramide technology",
@@ -528,10 +582,10 @@ export default function ProductDetailPage() {
           "Long-lasting results",
         ],
         specifications: {
-          "Volume": "250ml",
+          Volume: "250ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Fresh clean",
+          Texture: "Rich lather",
+          Fragrance: "Fresh clean",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -544,8 +598,14 @@ export default function ProductDetailPage() {
         originalPrice: 1199,
         discount: 25,
         image: "/newlaunch2.jpg",
-        images: ["/newlaunch2.jpg", "/newlaunch2.jpg", "/newlaunch2.jpg", "/newlaunch2.jpg"],
-        description: "NEWEST Onion Protein Shampoo with Almond & Onion Ultra Nourishing formula. Promotes hair growth and strengthens hair naturally.",
+        images: [
+          "/newlaunch2.jpg",
+          "/newlaunch2.jpg",
+          "/newlaunch2.jpg",
+          "/newlaunch2.jpg",
+        ],
+        description:
+          "NEWEST Onion Protein Shampoo with Almond & Onion Ultra Nourishing formula. Promotes hair growth and strengthens hair naturally.",
         features: [
           "Onion protein formula",
           "Almond nourishment",
@@ -554,10 +614,10 @@ export default function ProductDetailPage() {
           "Ultra nourishing",
         ],
         specifications: {
-          "Volume": "200ml",
+          Volume: "200ml",
           "Hair Type": "All hair types",
-          "Texture": "Smooth gel",
-          "Fragrance": "Fresh herbal",
+          Texture: "Smooth gel",
+          Fragrance: "Fresh herbal",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -570,8 +630,14 @@ export default function ProductDetailPage() {
         originalPrice: 899,
         discount: 22,
         image: "/newlaunch3.jpg",
-        images: ["/newlaunch3.jpg", "/newlaunch3.jpg", "/newlaunch3.jpg", "/newlaunch3.jpg"],
-        description: "FLAKES Professional Anti-Dandruff Shampoo. Advanced formula to eliminate dandruff and soothe scalp irritation.",
+        images: [
+          "/newlaunch3.jpg",
+          "/newlaunch3.jpg",
+          "/newlaunch3.jpg",
+          "/newlaunch3.jpg",
+        ],
+        description:
+          "FLAKES Professional Anti-Dandruff Shampoo. Advanced formula to eliminate dandruff and soothe scalp irritation.",
         features: [
           "Anti-dandruff formula",
           "Professional grade",
@@ -580,10 +646,10 @@ export default function ProductDetailPage() {
           "Gentle cleansing",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "All hair types",
-          "Texture": "Medicated shampoo",
-          "Fragrance": "Medicated fresh",
+          Texture: "Medicated shampoo",
+          Fragrance: "Medicated fresh",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -596,8 +662,14 @@ export default function ProductDetailPage() {
         originalPrice: 1899,
         discount: 21,
         image: "/newlaunch4.jpeg",
-        images: ["/newlaunch4.jpeg", "/newlaunch4.jpeg", "/newlaunch4.jpeg", "/newlaunch4.jpeg"],
-        description: "REDKEN Professional Anti-Dandruff Shampoo. Advanced hair care technology for professional anti-dandruff treatment.",
+        images: [
+          "/newlaunch4.jpeg",
+          "/newlaunch4.jpeg",
+          "/newlaunch4.jpeg",
+          "/newlaunch4.jpeg",
+        ],
+        description:
+          "REDKEN Professional Anti-Dandruff Shampoo. Advanced hair care technology for professional anti-dandruff treatment.",
         features: [
           "Professional formula",
           "Anti-dandruff technology",
@@ -606,10 +678,10 @@ export default function ProductDetailPage() {
           "Professional results",
         ],
         specifications: {
-          "Volume": "250ml",
+          Volume: "250ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Professional fresh",
+          Texture: "Rich lather",
+          Fragrance: "Professional fresh",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -623,7 +695,8 @@ export default function ProductDetailPage() {
         discount: 25,
         image: "/soap1.jpeg",
         images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
-        description: "Handcrafted natural soap made with pure ingredients for gentle cleansing and moisturizing skin.",
+        description:
+          "Handcrafted natural soap made with pure ingredients for gentle cleansing and moisturizing skin.",
         features: [
           "Handcrafted natural soap",
           "Pure ingredients",
@@ -632,10 +705,10 @@ export default function ProductDetailPage() {
           "Eco-friendly",
         ],
         specifications: {
-          "Weight": "100g",
+          Weight: "100g",
           "Skin Type": "All skin types",
-          "Texture": "Solid bar",
-          "Fragrance": "Natural essential oils",
+          Texture: "Solid bar",
+          Fragrance: "Natural essential oils",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -649,7 +722,8 @@ export default function ProductDetailPage() {
         discount: 33,
         image: "/soap3.jpg",
         images: ["/soap3.jpg", "/soap3.jpg", "/soap3.jpg", "/soap3.jpg"],
-        description: "Long-lasting deodorant that provides 48-hour protection against odor and wetness.",
+        description:
+          "Long-lasting deodorant that provides 48-hour protection against odor and wetness.",
         features: [
           "48-hour protection",
           "Odor control",
@@ -658,10 +732,10 @@ export default function ProductDetailPage() {
           "Non-staining",
         ],
         specifications: {
-          "Volume": "150ml",
+          Volume: "150ml",
           "Skin Type": "All skin types",
-          "Texture": "Roll-on",
-          "Fragrance": "Fresh sport",
+          Texture: "Roll-on",
+          Fragrance: "Fresh sport",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -675,7 +749,8 @@ export default function ProductDetailPage() {
         discount: 25,
         image: "/skin3.jpg",
         images: ["/skin3.jpg", "/skin3.jpg", "/skin3.jpg", "/skin3.jpg"],
-        description: "Gentle facial cleanser that removes impurities without stripping natural oils from your skin.",
+        description:
+          "Gentle facial cleanser that removes impurities without stripping natural oils from your skin.",
         features: [
           "Gentle formula",
           "Removes impurities",
@@ -684,10 +759,10 @@ export default function ProductDetailPage() {
           "Suitable for sensitive skin",
         ],
         specifications: {
-          "Volume": "150ml",
+          Volume: "150ml",
           "Skin Type": "All skin types",
-          "Texture": "Gel cleanser",
-          "Fragrance": "Fresh clean",
+          Texture: "Gel cleanser",
+          Fragrance: "Fresh clean",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -701,7 +776,8 @@ export default function ProductDetailPage() {
         discount: 25,
         image: "/tooth3.jpg",
         images: ["/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg"],
-        description: "Refreshing mouthwash with fresh mint flavor that kills bacteria and provides long-lasting fresh breath.",
+        description:
+          "Refreshing mouthwash with fresh mint flavor that kills bacteria and provides long-lasting fresh breath.",
         features: [
           "Fresh mint flavor",
           "Kills bacteria",
@@ -710,10 +786,10 @@ export default function ProductDetailPage() {
           "Gentle formula",
         ],
         specifications: {
-          "Volume": "500ml",
-          "Usage": "Daily rinse",
-          "Texture": "Liquid",
-          "Fragrance": "Fresh mint",
+          Volume: "500ml",
+          Usage: "Daily rinse",
+          Texture: "Liquid",
+          Fragrance: "Fresh mint",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -726,8 +802,14 @@ export default function ProductDetailPage() {
         originalPrice: 1599,
         discount: 19,
         image: "/haircare2.jpg",
-        images: ["/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg"],
-        description: "Advanced hair growth serum with natural ingredients that promote hair growth and strengthen hair follicles.",
+        images: [
+          "/haircare2.jpg",
+          "/haircare2.jpg",
+          "/haircare2.jpg",
+          "/haircare2.jpg",
+        ],
+        description:
+          "Advanced hair growth serum with natural ingredients that promote hair growth and strengthen hair follicles.",
         features: [
           "Promotes hair growth",
           "Strengthens follicles",
@@ -736,10 +818,10 @@ export default function ProductDetailPage() {
           "Easy application",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Hair Type": "All hair types",
-          "Texture": "Light serum",
-          "Fragrance": "Natural herbal",
+          Texture: "Light serum",
+          Fragrance: "Natural herbal",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -753,7 +835,8 @@ export default function ProductDetailPage() {
         discount: 22,
         image: "/soap1.jpeg",
         images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
-        description: "Moisturizing bath soap enriched with natural oils for soft, hydrated skin after every wash.",
+        description:
+          "Moisturizing bath soap enriched with natural oils for soft, hydrated skin after every wash.",
         features: [
           "Moisturizing formula",
           "Natural oils",
@@ -762,10 +845,10 @@ export default function ProductDetailPage() {
           "Gentle cleansing",
         ],
         specifications: {
-          "Weight": "125g",
+          Weight: "125g",
           "Skin Type": "All skin types",
-          "Texture": "Solid bar",
-          "Fragrance": "Floral fresh",
+          Texture: "Solid bar",
+          Fragrance: "Floral fresh",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -779,7 +862,8 @@ export default function ProductDetailPage() {
         discount: 21,
         image: "/skin5.jpg",
         images: ["/skin5.jpg", "/skin5.jpg", "/skin5.jpg", "/skin5.jpg"],
-        description: "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
+        description:
+          "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
         features: [
           "Anti-aging formula",
           "Night-time repair",
@@ -788,10 +872,10 @@ export default function ProductDetailPage() {
           "Deep hydration",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Skin Type": "All skin types",
-          "Texture": "Rich cream",
-          "Fragrance": "Light floral",
+          Texture: "Rich cream",
+          Fragrance: "Light floral",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -805,7 +889,8 @@ export default function ProductDetailPage() {
         discount: 40,
         image: "/tooth4.jpg",
         images: ["/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg"],
-        description: "Complete dental floss set with waxed floss and floss picks for thorough interdental cleaning.",
+        description:
+          "Complete dental floss set with waxed floss and floss picks for thorough interdental cleaning.",
         features: [
           "Waxed floss",
           "Floss picks included",
@@ -814,10 +899,10 @@ export default function ProductDetailPage() {
           "Portable design",
         ],
         specifications: {
-          "Contents": "50 floss picks + 30m floss",
-          "Type": "Waxed",
-          "Texture": "Smooth",
-          "Fragrance": "Mint fresh",
+          Contents: "50 floss picks + 30m floss",
+          Type: "Waxed",
+          Texture: "Smooth",
+          Fragrance: "Mint fresh",
           "Shelf Life": "60 months",
           "Country of Origin": "India",
         },
@@ -835,9 +920,10 @@ export default function ProductDetailPage() {
           "/sunsilk1.jpg",
           "/sunsilk1.jpg",
           "/sunsilk1.jpg",
-          "/sunsilk1.jpg"
+          "/sunsilk1.jpg",
         ],
-        description: "Sunsilk Naturals Shampoo with THICK & LONG formula for naturally beautiful hair. Enriched with natural ingredients for healthy hair growth.",
+        description:
+          "Sunsilk Naturals Shampoo with THICK & LONG formula for naturally beautiful hair. Enriched with natural ingredients for healthy hair growth.",
         features: [
           "THICK & LONG formula",
           "Natural ingredients",
@@ -846,10 +932,10 @@ export default function ProductDetailPage() {
           "Gentle cleansing",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Fresh natural",
+          Texture: "Rich lather",
+          Fragrance: "Fresh natural",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -866,9 +952,10 @@ export default function ProductDetailPage() {
           "/sunsilk2.jpg",
           "/sunsilk2.jpg",
           "/sunsilk2.jpg",
-          "/sunsilk2.jpg"
+          "/sunsilk2.jpg",
         ],
-        description: "Sunsilk Oil Blends with ONION & JOJOBA OIL for hairfall resistance. Perfect for straight hair with advanced hair care technology.",
+        description:
+          "Sunsilk Oil Blends with ONION & JOJOBA OIL for hairfall resistance. Perfect for straight hair with advanced hair care technology.",
         features: [
           "ONION & JOJOBA OIL blend",
           "Hairfall resistance",
@@ -877,10 +964,10 @@ export default function ProductDetailPage() {
           "Long-lasting results",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Straight hair",
-          "Texture": "Smooth lather",
-          "Fragrance": "Fresh herbal",
+          Texture: "Smooth lather",
+          Fragrance: "Fresh herbal",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -897,9 +984,10 @@ export default function ProductDetailPage() {
           "/sunsilk3.jpg",
           "/sunsilk3.jpg",
           "/sunsilk3.jpg",
-          "/sunsilk3.jpg"
+          "/sunsilk3.jpg",
         ],
-        description: "Sunsilk Black Shine Shampoo for naturally black and shiny hair. Specially formulated to enhance hair color and add natural shine.",
+        description:
+          "Sunsilk Black Shine Shampoo for naturally black and shiny hair. Specially formulated to enhance hair color and add natural shine.",
         features: [
           "Black shine formula",
           "Color enhancement",
@@ -908,10 +996,10 @@ export default function ProductDetailPage() {
           "Color protection",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Black hair",
-          "Texture": "Rich creamy",
-          "Fragrance": "Fresh floral",
+          Texture: "Rich creamy",
+          Fragrance: "Fresh floral",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -928,9 +1016,10 @@ export default function ProductDetailPage() {
           "/sunsilk4.jpg",
           "/sunsilk4.jpg",
           "/sunsilk4.jpg",
-          "/sunsilk4.jpg"
+          "/sunsilk4.jpg",
         ],
-        description: "SUNSILK CO-CREATIONS damage repair shampoo for soft and smooth hair. Advanced damage repair technology for healthy, manageable hair.",
+        description:
+          "SUNSILK CO-CREATIONS damage repair shampoo for soft and smooth hair. Advanced damage repair technology for healthy, manageable hair.",
         features: [
           "Damage repair technology",
           "Soft & smooth results",
@@ -939,10 +1028,10 @@ export default function ProductDetailPage() {
           "Long-lasting softness",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "Damaged hair",
-          "Texture": "Smooth gel",
-          "Fragrance": "Fresh citrus",
+          Texture: "Smooth gel",
+          Fragrance: "Fresh citrus",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -960,9 +1049,10 @@ export default function ProductDetailPage() {
           "/newlaunch1.jpg",
           "/newlaunch1.jpg",
           "/newlaunch1.jpg",
-          "/newlaunch1.jpg"
+          "/newlaunch1.jpg",
         ],
-        description: "THE ANSWER Super Lamellar Shampoo with Hydrolyzed Keratin & Ceramide Formula. Advanced hair care technology for professional results.",
+        description:
+          "THE ANSWER Super Lamellar Shampoo with Hydrolyzed Keratin & Ceramide Formula. Advanced hair care technology for professional results.",
         features: [
           "Hydrolyzed Keratin formula",
           "Ceramide technology",
@@ -971,10 +1061,10 @@ export default function ProductDetailPage() {
           "Long-lasting results",
         ],
         specifications: {
-          "Volume": "250ml",
+          Volume: "250ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Fresh clean",
+          Texture: "Rich lather",
+          Fragrance: "Fresh clean",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -991,9 +1081,10 @@ export default function ProductDetailPage() {
           "/newlaunch2.jpg",
           "/newlaunch2.jpg",
           "/newlaunch2.jpg",
-          "/newlaunch2.jpg"
+          "/newlaunch2.jpg",
         ],
-        description: "NEWEST Onion Protein Shampoo with Almond & Onion Ultra Nourishing formula. Promotes hair growth and strengthens hair naturally.",
+        description:
+          "NEWEST Onion Protein Shampoo with Almond & Onion Ultra Nourishing formula. Promotes hair growth and strengthens hair naturally.",
         features: [
           "Onion protein formula",
           "Almond nourishment",
@@ -1002,10 +1093,10 @@ export default function ProductDetailPage() {
           "Ultra nourishing",
         ],
         specifications: {
-          "Volume": "200ml",
+          Volume: "200ml",
           "Hair Type": "All hair types",
-          "Texture": "Smooth gel",
-          "Fragrance": "Fresh herbal",
+          Texture: "Smooth gel",
+          Fragrance: "Fresh herbal",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -1022,9 +1113,10 @@ export default function ProductDetailPage() {
           "/newlaunch3.jpg",
           "/newlaunch3.jpg",
           "/newlaunch3.jpg",
-          "/newlaunch3.jpg"
+          "/newlaunch3.jpg",
         ],
-        description: "FLAKES Professional Anti-Dandruff Shampoo. Advanced formula to eliminate dandruff and soothe scalp irritation.",
+        description:
+          "FLAKES Professional Anti-Dandruff Shampoo. Advanced formula to eliminate dandruff and soothe scalp irritation.",
         features: [
           "Anti-dandruff formula",
           "Professional grade",
@@ -1033,10 +1125,10 @@ export default function ProductDetailPage() {
           "Gentle cleansing",
         ],
         specifications: {
-          "Volume": "180ml",
+          Volume: "180ml",
           "Hair Type": "All hair types",
-          "Texture": "Medicated shampoo",
-          "Fragrance": "Medicated fresh",
+          Texture: "Medicated shampoo",
+          Fragrance: "Medicated fresh",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -1053,9 +1145,10 @@ export default function ProductDetailPage() {
           "/newlaunch4.jpeg",
           "/newlaunch4.jpeg",
           "/newlaunch4.jpeg",
-          "/newlaunch4.jpeg"
+          "/newlaunch4.jpeg",
         ],
-        description: "REDKEN Professional Anti-Dandruff Shampoo. Advanced hair care technology for professional anti-dandruff treatment.",
+        description:
+          "REDKEN Professional Anti-Dandruff Shampoo. Advanced hair care technology for professional anti-dandruff treatment.",
         features: [
           "Professional formula",
           "Anti-dandruff technology",
@@ -1064,10 +1157,10 @@ export default function ProductDetailPage() {
           "Professional results",
         ],
         specifications: {
-          "Volume": "250ml",
+          Volume: "250ml",
           "Hair Type": "All hair types",
-          "Texture": "Rich lather",
-          "Fragrance": "Professional fresh",
+          Texture: "Rich lather",
+          Fragrance: "Professional fresh",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -1086,9 +1179,10 @@ export default function ProductDetailPage() {
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Advanced hydrating serum with hyaluronic acid and vitamin C for radiant, glowing skin. Suitable for all skin types.",
+        description:
+          "Advanced hydrating serum with hyaluronic acid and vitamin C for radiant, glowing skin. Suitable for all skin types.",
         features: [
           "Advanced hydration formula",
           "Hyaluronic acid technology",
@@ -1097,10 +1191,10 @@ export default function ProductDetailPage() {
           "Radiant results",
         ],
         specifications: {
-          "Volume": "30ml",
+          Volume: "30ml",
           "Skin Type": "All skin types",
-          "Texture": "Lightweight serum",
-          "Fragrance": "Fragrance-free",
+          Texture: "Lightweight serum",
+          Fragrance: "Fragrance-free",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -1118,9 +1212,10 @@ export default function ProductDetailPage() {
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
         ],
-        description: "Complete beauty routine set including cleanser, toner, moisturizer, and makeup essentials for flawless skin.",
+        description:
+          "Complete beauty routine set including cleanser, toner, moisturizer, and makeup essentials for flawless skin.",
         features: [
           "Complete beauty set",
           "Premium quality products",
@@ -1130,9 +1225,9 @@ export default function ProductDetailPage() {
         ],
         specifications: {
           "Set Contents": "5 products",
-          "Packaging": "Luxury gift box",
+          Packaging: "Luxury gift box",
           "Skin Type": "All skin types",
-          "Fragrance": "Light floral",
+          Fragrance: "Light floral",
           "Shelf Life": "36 months",
           "Country of Origin": "India",
         },
@@ -1150,9 +1245,10 @@ export default function ProductDetailPage() {
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
         ],
-        description: "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
+        description:
+          "Advanced anti-aging night cream that works while you sleep. Reduces fine lines, wrinkles, and promotes skin regeneration.",
         features: [
           "Advanced anti-aging formula",
           "Night-time repair",
@@ -1161,10 +1257,10 @@ export default function ProductDetailPage() {
           "Deep hydration",
         ],
         specifications: {
-          "Volume": "50ml",
+          Volume: "50ml",
           "Skin Type": "All skin types",
-          "Texture": "Rich cream",
-          "Fragrance": "Light floral",
+          Texture: "Rich cream",
+          Fragrance: "Light floral",
           "Shelf Life": "24 months",
           "Country of Origin": "India",
         },
@@ -1172,13 +1268,13 @@ export default function ProductDetailPage() {
     ];
 
     // Find product by ID
-    let foundProduct = productDatabase.find(p => p.id === id);
-    
+    let foundProduct = productDatabase.find((p) => p.id === id);
+
     // If not found in main database, check category-specific products
     if (!foundProduct) {
       const categoryProducts = {
         // Hair Care products
-        "hc1": {
+        hc1: {
           id: "hc1",
           name: "Professional Hair Shampoo",
           type: "Hair Care",
@@ -1186,8 +1282,14 @@ export default function ProductDetailPage() {
           originalPrice: 1099,
           discount: 18,
           image: "/haircare3.jpg",
-          images: ["/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg"],
-          description: "Professional-grade hair shampoo for all hair types. Deeply cleanses and nourishes hair for healthy, manageable locks.",
+          images: [
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+          ],
+          description:
+            "Professional-grade hair shampoo for all hair types. Deeply cleanses and nourishes hair for healthy, manageable locks.",
           features: [
             "Professional formula",
             "Suitable for all hair types",
@@ -1196,15 +1298,15 @@ export default function ProductDetailPage() {
             "Long-lasting freshness",
           ],
           specifications: {
-            "Volume": "250ml",
+            Volume: "250ml",
             "Hair Type": "All hair types",
-            "Texture": "Rich lather",
-            "Fragrance": "Fresh herbal",
+            Texture: "Rich lather",
+            Fragrance: "Fresh herbal",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "hc2": {
+        hc2: {
           id: "hc2",
           name: "Nourishing Hair Conditioner",
           type: "Hair Care",
@@ -1212,8 +1314,14 @@ export default function ProductDetailPage() {
           originalPrice: 999,
           discount: 20,
           image: "/haircare2.jpg",
-          images: ["/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg"],
-          description: "Intensive nourishing conditioner that detangles and moisturizes hair, leaving it soft, smooth, and manageable.",
+          images: [
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+          ],
+          description:
+            "Intensive nourishing conditioner that detangles and moisturizes hair, leaving it soft, smooth, and manageable.",
           features: [
             "Intensive nourishment",
             "Detangles hair",
@@ -1222,15 +1330,15 @@ export default function ProductDetailPage() {
             "Easy to rinse",
           ],
           specifications: {
-            "Volume": "200ml",
+            Volume: "200ml",
             "Hair Type": "All hair types",
-            "Texture": "Creamy conditioner",
-            "Fragrance": "Floral fresh",
+            Texture: "Creamy conditioner",
+            Fragrance: "Floral fresh",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "hc3": {
+        hc3: {
           id: "hc3",
           name: "Anti-Dandruff Treatment",
           type: "Hair Care",
@@ -1238,8 +1346,14 @@ export default function ProductDetailPage() {
           originalPrice: 899,
           discount: 22,
           image: "/haircare3.jpg",
-          images: ["/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg", "/haircare3.jpg"],
-          description: "Effective anti-dandruff treatment that eliminates flakes and soothes scalp irritation for healthy hair.",
+          images: [
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+            "/haircare3.jpg",
+          ],
+          description:
+            "Effective anti-dandruff treatment that eliminates flakes and soothes scalp irritation for healthy hair.",
           features: [
             "Anti-dandruff formula",
             "Soothes scalp",
@@ -1248,15 +1362,15 @@ export default function ProductDetailPage() {
             "Long-lasting relief",
           ],
           specifications: {
-            "Volume": "150ml",
+            Volume: "150ml",
             "Hair Type": "All hair types",
-            "Texture": "Medicated shampoo",
-            "Fragrance": "Medicated fresh",
+            Texture: "Medicated shampoo",
+            Fragrance: "Medicated fresh",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
-        "hc4": {
+        hc4: {
           id: "hc4",
           name: "Hair Growth Serum",
           type: "Hair Care",
@@ -1264,8 +1378,14 @@ export default function ProductDetailPage() {
           originalPrice: 1599,
           discount: 19,
           image: "/haircare2.jpg",
-          images: ["/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg", "/haircare2.jpg"],
-          description: "Advanced hair growth serum with natural ingredients that promote hair growth and strengthen hair follicles.",
+          images: [
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+            "/haircare2.jpg",
+          ],
+          description:
+            "Advanced hair growth serum with natural ingredients that promote hair growth and strengthen hair follicles.",
           features: [
             "Promotes hair growth",
             "Strengthens follicles",
@@ -1274,16 +1394,16 @@ export default function ProductDetailPage() {
             "Easy application",
           ],
           specifications: {
-            "Volume": "50ml",
+            Volume: "50ml",
             "Hair Type": "All hair types",
-            "Texture": "Light serum",
-            "Fragrance": "Natural herbal",
+            Texture: "Light serum",
+            Fragrance: "Natural herbal",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
         // Soap & Deodorants products
-        "sd1": {
+        sd1: {
           id: "sd1",
           name: "Natural Handmade Soap",
           type: "Soap & Deodorants",
@@ -1292,7 +1412,8 @@ export default function ProductDetailPage() {
           discount: 25,
           image: "/soap1.jpeg",
           images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
-          description: "Handcrafted natural soap made with pure ingredients for gentle cleansing and moisturizing skin.",
+          description:
+            "Handcrafted natural soap made with pure ingredients for gentle cleansing and moisturizing skin.",
           features: [
             "Handcrafted natural soap",
             "Pure ingredients",
@@ -1301,15 +1422,15 @@ export default function ProductDetailPage() {
             "Eco-friendly",
           ],
           specifications: {
-            "Weight": "100g",
+            Weight: "100g",
             "Skin Type": "All skin types",
-            "Texture": "Solid bar",
-            "Fragrance": "Natural essential oils",
+            Texture: "Solid bar",
+            Fragrance: "Natural essential oils",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
-        "sd2": {
+        sd2: {
           id: "sd2",
           name: "Antibacterial Body Wash",
           type: "Soap & Deodorants",
@@ -1318,7 +1439,8 @@ export default function ProductDetailPage() {
           discount: 25,
           image: "/soap2.jpg",
           images: ["/soap2.jpg", "/soap2.jpg", "/soap2.jpg", "/soap2.jpg"],
-          description: "Antibacterial body wash that provides thorough cleansing while protecting against germs and bacteria.",
+          description:
+            "Antibacterial body wash that provides thorough cleansing while protecting against germs and bacteria.",
           features: [
             "Antibacterial protection",
             "Thorough cleansing",
@@ -1327,15 +1449,15 @@ export default function ProductDetailPage() {
             "Long-lasting freshness",
           ],
           specifications: {
-            "Volume": "300ml",
+            Volume: "300ml",
             "Skin Type": "All skin types",
-            "Texture": "Gel wash",
-            "Fragrance": "Fresh clean",
+            Texture: "Gel wash",
+            Fragrance: "Fresh clean",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "sd3": {
+        sd3: {
           id: "sd3",
           name: "Long-lasting Deodorant",
           type: "Soap & Deodorants",
@@ -1344,7 +1466,8 @@ export default function ProductDetailPage() {
           discount: 33,
           image: "/soap3.jpg",
           images: ["/soap3.jpg", "/soap3.jpg", "/soap3.jpg", "/soap3.jpg"],
-          description: "Long-lasting deodorant that provides 48-hour protection against odor and wetness.",
+          description:
+            "Long-lasting deodorant that provides 48-hour protection against odor and wetness.",
           features: [
             "48-hour protection",
             "Odor control",
@@ -1353,15 +1476,15 @@ export default function ProductDetailPage() {
             "Non-staining",
           ],
           specifications: {
-            "Volume": "150ml",
+            Volume: "150ml",
             "Skin Type": "All skin types",
-            "Texture": "Roll-on",
-            "Fragrance": "Fresh sport",
+            Texture: "Roll-on",
+            Fragrance: "Fresh sport",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "sd4": {
+        sd4: {
           id: "sd4",
           name: "Moisturizing Bath Soap",
           type: "Soap & Deodorants",
@@ -1370,7 +1493,8 @@ export default function ProductDetailPage() {
           discount: 22,
           image: "/soap1.jpeg",
           images: ["/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg", "/soap1.jpeg"],
-          description: "Moisturizing bath soap enriched with natural oils for soft, hydrated skin after every wash.",
+          description:
+            "Moisturizing bath soap enriched with natural oils for soft, hydrated skin after every wash.",
           features: [
             "Moisturizing formula",
             "Natural oils",
@@ -1379,16 +1503,16 @@ export default function ProductDetailPage() {
             "Gentle cleansing",
           ],
           specifications: {
-            "Weight": "125g",
+            Weight: "125g",
             "Skin Type": "All skin types",
-            "Texture": "Solid bar",
-            "Fragrance": "Floral fresh",
+            Texture: "Solid bar",
+            Fragrance: "Floral fresh",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
         // Skin Care products
-        "sc1": {
+        sc1: {
           id: "sc1",
           name: "Hydrating Face Moisturizer",
           type: "Skin Care",
@@ -1397,7 +1521,8 @@ export default function ProductDetailPage() {
           discount: 18,
           image: "/skin1.jpg",
           images: ["/skin1.jpg", "/skin1.jpg", "/skin1.jpg", "/skin1.jpg"],
-          description: "Intensive hydrating face moisturizer that provides long-lasting moisture for soft, supple skin.",
+          description:
+            "Intensive hydrating face moisturizer that provides long-lasting moisture for soft, supple skin.",
           features: [
             "Intensive hydration",
             "Long-lasting moisture",
@@ -1406,15 +1531,15 @@ export default function ProductDetailPage() {
             "Suitable for daily use",
           ],
           specifications: {
-            "Volume": "50ml",
+            Volume: "50ml",
             "Skin Type": "All skin types",
-            "Texture": "Light cream",
-            "Fragrance": "Fragrance-free",
+            Texture: "Light cream",
+            Fragrance: "Fragrance-free",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
-        "sc2": {
+        sc2: {
           id: "sc2",
           name: "Vitamin C Brightening Serum",
           type: "Skin Care",
@@ -1423,7 +1548,8 @@ export default function ProductDetailPage() {
           discount: 19,
           image: "/skin2.jpg",
           images: ["/skin2.jpg", "/skin2.jpg", "/skin2.jpg", "/skin2.jpg"],
-          description: "Powerful Vitamin C serum that brightens skin tone and reduces dark spots for radiant complexion.",
+          description:
+            "Powerful Vitamin C serum that brightens skin tone and reduces dark spots for radiant complexion.",
           features: [
             "Vitamin C formula",
             "Brightens skin",
@@ -1432,15 +1558,15 @@ export default function ProductDetailPage() {
             "Antioxidant protection",
           ],
           specifications: {
-            "Volume": "30ml",
+            Volume: "30ml",
             "Skin Type": "All skin types",
-            "Texture": "Light serum",
-            "Fragrance": "Citrus fresh",
+            Texture: "Light serum",
+            Fragrance: "Citrus fresh",
             "Shelf Life": "18 months",
             "Country of Origin": "India",
           },
         },
-        "sc3": {
+        sc3: {
           id: "sc3",
           name: "Gentle Facial Cleanser",
           type: "Skin Care",
@@ -1449,7 +1575,8 @@ export default function ProductDetailPage() {
           discount: 25,
           image: "/skin3.jpg",
           images: ["/skin3.jpg", "/skin3.jpg", "/skin3.jpg", "/skin3.jpg"],
-          description: "Gentle facial cleanser that removes impurities without stripping natural oils from your skin.",
+          description:
+            "Gentle facial cleanser that removes impurities without stripping natural oils from your skin.",
           features: [
             "Gentle formula",
             "Removes impurities",
@@ -1458,15 +1585,15 @@ export default function ProductDetailPage() {
             "Suitable for sensitive skin",
           ],
           specifications: {
-            "Volume": "150ml",
+            Volume: "150ml",
             "Skin Type": "All skin types",
-            "Texture": "Gel cleanser",
-            "Fragrance": "Fresh clean",
+            Texture: "Gel cleanser",
+            Fragrance: "Fresh clean",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "sc4": {
+        sc4: {
           id: "sc4",
           name: "Anti-Aging Night Cream",
           type: "Skin Care",
@@ -1475,7 +1602,8 @@ export default function ProductDetailPage() {
           discount: 21,
           image: "/skin5.jpg",
           images: ["/skin5.jpg", "/skin5.jpg", "/skin5.jpg", "/skin5.jpg"],
-          description: "Advanced anti-aging night cream that works while you sleep to reduce fine lines and wrinkles.",
+          description:
+            "Advanced anti-aging night cream that works while you sleep to reduce fine lines and wrinkles.",
           features: [
             "Anti-aging formula",
             "Night-time repair",
@@ -1484,16 +1612,16 @@ export default function ProductDetailPage() {
             "Skin regeneration",
           ],
           specifications: {
-            "Volume": "50ml",
+            Volume: "50ml",
             "Skin Type": "Mature skin",
-            "Texture": "Rich cream",
-            "Fragrance": "Light herbal",
+            Texture: "Rich cream",
+            Fragrance: "Light herbal",
             "Shelf Life": "24 months",
             "Country of Origin": "India",
           },
         },
         // Oral Care products
-        "oc1": {
+        oc1: {
           id: "oc1",
           name: "Whitening Toothpaste",
           type: "Oral Care",
@@ -1502,7 +1630,8 @@ export default function ProductDetailPage() {
           discount: 33,
           image: "/tooth1.jpg",
           images: ["/tooth1.jpg", "/tooth1.jpg", "/tooth1.jpg", "/tooth1.jpg"],
-          description: "Advanced whitening toothpaste that removes stains and brightens your smile for confident oral hygiene.",
+          description:
+            "Advanced whitening toothpaste that removes stains and brightens your smile for confident oral hygiene.",
           features: [
             "Whitening formula",
             "Stain removal",
@@ -1511,15 +1640,15 @@ export default function ProductDetailPage() {
             "Gentle on enamel",
           ],
           specifications: {
-            "Volume": "100g",
-            "Usage": "Daily brushing",
-            "Texture": "Paste",
-            "Fragrance": "Fresh mint",
+            Volume: "100g",
+            Usage: "Daily brushing",
+            Texture: "Paste",
+            Fragrance: "Fresh mint",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "oc2": {
+        oc2: {
           id: "oc2",
           name: "Electric Toothbrush",
           type: "Oral Care",
@@ -1528,7 +1657,8 @@ export default function ProductDetailPage() {
           discount: 25,
           image: "/tooth2.jpg",
           images: ["/tooth2.jpg", "/tooth2.jpg", "/tooth2.jpg", "/tooth2.jpg"],
-          description: "Advanced electric toothbrush with multiple cleaning modes for thorough oral hygiene and gum care.",
+          description:
+            "Advanced electric toothbrush with multiple cleaning modes for thorough oral hygiene and gum care.",
           features: [
             "Multiple cleaning modes",
             "Thorough cleaning",
@@ -1537,15 +1667,15 @@ export default function ProductDetailPage() {
             "Smart timer",
           ],
           specifications: {
-            "Battery": "Rechargeable",
-            "Modes": "3 cleaning modes",
-            "Timer": "2-minute smart timer",
-            "Charging": "USB charging",
+            Battery: "Rechargeable",
+            Modes: "3 cleaning modes",
+            Timer: "2-minute smart timer",
+            Charging: "USB charging",
             "Shelf Life": "60 months",
             "Country of Origin": "India",
           },
         },
-        "oc3": {
+        oc3: {
           id: "oc3",
           name: "Mouthwash Fresh Mint",
           type: "Oral Care",
@@ -1554,7 +1684,8 @@ export default function ProductDetailPage() {
           discount: 25,
           image: "/tooth3.jpg",
           images: ["/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg", "/tooth3.jpg"],
-          description: "Refreshing mouthwash with fresh mint flavor that kills bacteria and provides long-lasting fresh breath.",
+          description:
+            "Refreshing mouthwash with fresh mint flavor that kills bacteria and provides long-lasting fresh breath.",
           features: [
             "Fresh mint flavor",
             "Kills bacteria",
@@ -1563,15 +1694,15 @@ export default function ProductDetailPage() {
             "Gentle formula",
           ],
           specifications: {
-            "Volume": "500ml",
-            "Usage": "Daily rinse",
-            "Texture": "Liquid",
-            "Fragrance": "Fresh mint",
+            Volume: "500ml",
+            Usage: "Daily rinse",
+            Texture: "Liquid",
+            Fragrance: "Fresh mint",
             "Shelf Life": "36 months",
             "Country of Origin": "India",
           },
         },
-        "oc4": {
+        oc4: {
           id: "oc4",
           name: "Dental Floss Set",
           type: "Oral Care",
@@ -1580,7 +1711,8 @@ export default function ProductDetailPage() {
           discount: 40,
           image: "/tooth4.jpg",
           images: ["/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg", "/tooth4.jpg"],
-          description: "Complete dental floss set with waxed floss and floss picks for thorough interdental cleaning.",
+          description:
+            "Complete dental floss set with waxed floss and floss picks for thorough interdental cleaning.",
           features: [
             "Waxed floss",
             "Floss picks included",
@@ -1589,33 +1721,35 @@ export default function ProductDetailPage() {
             "Portable design",
           ],
           specifications: {
-            "Contents": "50 floss picks + 30m floss",
-            "Type": "Waxed",
-            "Texture": "Smooth",
-            "Fragrance": "Mint fresh",
+            Contents: "50 floss picks + 30m floss",
+            Type: "Waxed",
+            Texture: "Smooth",
+            Fragrance: "Mint fresh",
             "Shelf Life": "60 months",
             "Country of Origin": "India",
           },
         },
       };
-      
+
       foundProduct = categoryProducts[id];
     }
-    
+
     // Return found product or default product
-    return foundProduct || {
-      id: productId,
-      name: "Product Not Found",
-      type: "Unknown",
-      price: 0,
-      originalPrice: 0,
-      discount: 0,
-      image: "/banner1.png",
-      images: ["/banner1.png", "/banner2.png", "/banner3.jpg"],
-      description: "This product could not be found.",
-      features: [],
-      specifications: {},
-    };
+    return (
+      foundProduct || {
+        id: productId,
+        name: "Product Not Found",
+        type: "Unknown",
+        price: 0,
+        originalPrice: 0,
+        discount: 0,
+        image: "/banner1.png",
+        images: ["/banner1.png", "/banner2.png", "/banner3.jpg"],
+        description: "This product could not be found.",
+        features: [],
+        specifications: {},
+      }
+    );
   };
 
   const product = getProductData(productId);
@@ -1628,14 +1762,20 @@ export default function ProductDetailPage() {
 
   // Dynamic coupons for this product (replace with API data when available)
   const coupons = [
-    { code: "FLAT20", description: "Get 20% discount on products above ₹1,999" },
+    {
+      code: "FLAT20",
+      description: "Get 20% discount on products above ₹1,999",
+    },
     { code: "SAVE100", description: "Flat ₹100 OFF on orders above ₹999" },
     { code: "GET250", description: "₹250 OFF when you spend ₹2,499 or more" },
   ];
   const visibleCoupons = coupons.slice(0, 2);
-  const remainingCouponsCount = Math.max(coupons.length - visibleCoupons.length, 0);
+  const remainingCouponsCount = Math.max(
+    coupons.length - visibleCoupons.length,
+    0
+  );
   const remainingCoupons = coupons.slice(2);
-  
+
   // Debug logging
   console.log("Product ID:", productId);
   console.log("Product Data:", product);
@@ -1643,38 +1783,55 @@ export default function ProductDetailPage() {
 
   const addToCart = () => {
     try {
-      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const raw =
+        typeof window !== "undefined"
+          ? window.localStorage.getItem("cartItems")
+          : null;
       const items = raw ? JSON.parse(raw) : [];
       const idx = items.findIndex((it) => String(it.id) === String(product.id));
       if (idx >= 0) {
         const existing = items[idx];
-        items[idx] = { ...existing, quantity: (existing.quantity || 1) + quantity };
+        items[idx] = {
+          ...existing,
+          quantity: (existing.quantity || 1) + quantity,
+        };
       } else {
         items.push({
           id: product.id,
           name: product.name,
           price: product.price,
           originalPrice: product.originalPrice,
-          image: product.image || (product.images && product.images[0]) || '/banner1.png',
+          image:
+            product.image ||
+            (product.images && product.images[0]) ||
+            "/banner1.png",
           color: product.type,
-          plug: 'Default',
+          plug: "Default",
           quantity,
         });
       }
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('cartItems', JSON.stringify(items));
-        window.dispatchEvent(new Event('cart-updated'));
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("cartItems", JSON.stringify(items));
+        window.dispatchEvent(new Event("cart-updated"));
         // Try multiple ways to open the cart sidebar
-        try { if (window.__openCart) window.__openCart(); } catch {}
-        try { window.dispatchEvent(new Event('open-cart')); } catch {}
+        try {
+          if (window.__openCart) window.__openCart();
+        } catch {}
+        try {
+          window.dispatchEvent(new Event("open-cart"));
+        } catch {}
         // Fallback: small delay to ensure listeners mount
         setTimeout(() => {
-          try { if (window.__openCart) window.__openCart(); } catch {}
-          try { window.dispatchEvent(new Event('open-cart')); } catch {}
+          try {
+            if (window.__openCart) window.__openCart();
+          } catch {}
+          try {
+            window.dispatchEvent(new Event("open-cart"));
+          } catch {}
         }, 50);
       }
     } catch (err) {
-      console.error('Failed to add to cart', err);
+      console.error("Failed to add to cart", err);
     }
   };
 
@@ -1685,16 +1842,19 @@ export default function ProductDetailPage() {
           id: product.id,
           name: product.name,
           color: product.type,
-          plug: selectedVolume || 'Default',
+          plug: selectedVolume || "Default",
           price: product.price,
           originalPrice: product.originalPrice,
-          image: product.image || (product.images && product.images[0]) || '/banner1.png',
+          image:
+            product.image ||
+            (product.images && product.images[0]) ||
+            "/banner1.png",
           quantity,
         },
       ];
-      localStorage.setItem('checkout_items', JSON.stringify(checkoutItems));
+      localStorage.setItem("checkout_items", JSON.stringify(checkoutItems));
     } catch {}
-    router.push('/checkout');
+    router.push("/checkout");
   };
 
   const showReviewModal = () => {
@@ -1734,27 +1894,27 @@ export default function ProductDetailPage() {
             position: static;
           }
         }
-        
+
         /* Custom star rating styles */
         .custom-rate .ant-rate-star {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-first,
         .custom-rate .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-half .ant-rate-star-first,
         .custom-rate .ant-rate-star-half .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-full .ant-rate-star-first,
         .custom-rate .ant-rate-star-full .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         /* Remove blue border on textarea focus/hover */
         .ant-input:focus,
         .ant-input:hover,
@@ -1765,7 +1925,7 @@ export default function ProductDetailPage() {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         .ant-input-textarea:focus,
         .ant-input-textarea:hover,
         .ant-input-textarea-focused,
@@ -1775,14 +1935,14 @@ export default function ProductDetailPage() {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         /* Override Ant Design's default focus styles */
         .ant-input:focus,
         .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         .ant-input-textarea .ant-input:focus,
         .ant-input-textarea .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
@@ -1790,9 +1950,9 @@ export default function ProductDetailPage() {
         }
       `}</style>
       <div className="container mx-auto px-4 py-8">
-                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Product Images */}
-                     <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
+          <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
             {/* Thumbnail Images - Left Side */}
             <div className="hidden md:flex flex-col gap-2">
               {product.images.map((image, index) => (
@@ -1823,7 +1983,7 @@ export default function ProductDetailPage() {
                   className="w-full h-full object-contain"
                 />
                 {/* Like Button */}
-                <button 
+                <button
                   onClick={() => toggleWishlistItem(product)}
                   className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
                 >
@@ -1842,7 +2002,9 @@ export default function ProductDetailPage() {
                       key={index}
                       onClick={() => setSelectedImage(index)}
                       className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
-                        selectedImage === index ? "border-[#035F0F]" : "border-gray-200"
+                        selectedImage === index
+                          ? "border-[#035F0F]"
+                          : "border-gray-200"
                       }`}
                     >
                       <img
@@ -1937,25 +2099,34 @@ export default function ProductDetailPage() {
 
               {/* Coupon Section */}
               {coupons.length > 0 && (
-              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3 min-w-0">
                     {visibleCoupons.map((c, idx) => (
-                <div
+                      <div
                         key={idx}
-                  className="px-2 py-3 rounded flex items-center gap-2"
-                  style={{
-                    borderRadius: "4px",
-                    border: "1px dashed rgba(3, 95, 15, 0.64)",
-                    background: "rgba(3, 95, 15, 0.02)",
-                    minWidth: "0",
-                  }}
-                >
-                  <div className="flex items-center justify-center">
-                    <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
-                  </div>
+                        className="px-2 py-3 rounded flex items-center gap-2"
+                        style={{
+                          borderRadius: "4px",
+                          border: "1px dashed rgba(3, 95, 15, 0.64)",
+                          background: "rgba(3, 95, 15, 0.02)",
+                          minWidth: "0",
+                        }}
+                      >
+                        <div className="flex items-center justify-center">
+                          <img
+                            src="/coupon.svg"
+                            alt="coupon"
+                            className="w-5 h-5"
+                          />
+                        </div>
                         <div className="truncate">
-                          <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
-                          <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                          <h4 className="font-semibold text-333333 text-sm truncate">
+                            {c.code}
+                          </h4>
+                          <p
+                            className="text-xs truncate"
+                            style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                          >
                             {c.description}
                           </p>
                         </div>
@@ -1963,7 +2134,7 @@ export default function ProductDetailPage() {
                     ))}
                   </div>
                   {remainingCouponsCount > 0 && !showMoreCoupons && (
-                                         <button
+                    <button
                       className="text-sm font-medium hover:underline ml-4 whitespace-nowrap cursor-pointer"
                       style={{ color: "#035F0F" }}
                       onClick={() => setShowMoreCoupons(true)}
@@ -1971,62 +2142,79 @@ export default function ProductDetailPage() {
                       +{remainingCouponsCount} more
                     </button>
                   )}
-                                </div>
+                </div>
               )}
               {showMoreCoupons && remainingCoupons.length > 0 && (
-                  <>
-                    <div className="flex items-center gap-3 mt-3">
-                      {remainingCoupons.map((c, idx) => (
-                        <div
-                          key={`rest-${idx}`}
-                          className="px-2 py-3 rounded flex items-center gap-2"
-                          style={{
-                            borderRadius: "4px",
-                            border: "1px dashed rgba(3, 95, 15, 0.64)",
-                            background: "rgba(3, 95, 15, 0.02)",
-                            minWidth: "0",
-                          }}
-                        >
-                          <div className="flex items-center justify-center">
-                            <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
-                          </div>
-                          <div className="truncate">
-                            <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
-                            <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
-                              {c.description}
-                    </p>
+                <>
+                  <div className="flex items-center gap-3 mt-3">
+                    {remainingCoupons.map((c, idx) => (
+                      <div
+                        key={`rest-${idx}`}
+                        className="px-2 py-3 rounded flex items-center gap-2"
+                        style={{
+                          borderRadius: "4px",
+                          border: "1px dashed rgba(3, 95, 15, 0.64)",
+                          background: "rgba(3, 95, 15, 0.02)",
+                          minWidth: "0",
+                        }}
+                      >
+                        <div className="flex items-center justify-center">
+                          <img
+                            src="/coupon.svg"
+                            alt="coupon"
+                            className="w-5 h-5"
+                          />
+                        </div>
+                        <div className="truncate">
+                          <h4 className="font-semibold text-333333 text-sm truncate">
+                            {c.code}
+                          </h4>
+                          <p
+                            className="text-xs truncate"
+                            style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                          >
+                            {c.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                      ))}
-                    </div>
-                    <div className="mt-2">
-                <button
-                        className="text-sm font-medium hover:underline cursor-pointer"
-                  style={{ color: "#035F0F" }}
-                        onClick={() => setShowMoreCoupons(false)}
-                >
-                        Show less
-                </button>
-              </div>
-                  </>
-                )}
+                  <div className="mt-2">
+                    <button
+                      className="text-sm font-medium hover:underline cursor-pointer"
+                      style={{ color: "#035F0F" }}
+                      onClick={() => setShowMoreCoupons(false)}
+                    >
+                      Show less
+                    </button>
+                  </div>
+                </>
+              )}
 
               {/* Volume Selection */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-gray-700 font-medium">Volume:</span>
-                  <span className="text-gray-900 font-semibold">{selectedVolume}</span>
+                  <span className="text-gray-900 font-semibold">
+                    {selectedVolume}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
-                                     {volumes.map((vol) => (
-                  <button
+                  {volumes.map((vol) => (
+                    <button
                       key={vol}
                       onClick={() => setSelectedVolume(vol)}
-                      className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
-                      style={{ borderColor: selectedVolume === vol ? "#02490C" : "#D1D5DB", color: "#333" }}
-                  >
+                      className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${
+                        selectedVolume === vol ? "border-2" : "border"
+                      }`}
+                      style={{
+                        borderColor:
+                          selectedVolume === vol ? "#02490C" : "#D1D5DB",
+                        color: "#333",
+                      }}
+                    >
                       {vol}
-                  </button>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -2063,7 +2251,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-4 w-full md:w-[460px]">
                 <button
                   onClick={buyNow}
-                   className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+                  className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
                   style={{
                     padding: "16px 24px",
                     justifyContent: "center",
@@ -2139,50 +2327,106 @@ export default function ProductDetailPage() {
               <p className="text-gray-700 leading-relaxed mb-2">
                 {product.type === "Hair Care" && (
                   <>
-                    Our premium hair care products are formulated with advanced ingredients to address specific hair concerns. Whether you're dealing with dryness, dandruff, or hair loss, our scientifically-backed formulas work to restore hair health and vitality. Each product is carefully crafted to provide deep nourishment, strengthen hair follicles, and promote natural growth while maintaining the perfect balance for your hair type.
+                    Our premium hair care products are formulated with advanced
+                    ingredients to address specific hair concerns. Whether
+                    you're dealing with dryness, dandruff, or hair loss, our
+                    scientifically-backed formulas work to restore hair health
+                    and vitality. Each product is carefully crafted to provide
+                    deep nourishment, strengthen hair follicles, and promote
+                    natural growth while maintaining the perfect balance for
+                    your hair type.
                   </>
                 )}
                 {product.type === "Soap & Deodorants" && (
                   <>
-                    Experience the perfect blend of natural ingredients and modern science in our soap and deodorant collection. Our products are designed to provide thorough cleansing while being gentle on your skin. From antibacterial protection to long-lasting freshness, each item is crafted to meet your daily hygiene needs. We use carefully selected natural oils and essential ingredients to ensure your skin stays healthy, clean, and refreshed throughout the day.
+                    Experience the perfect blend of natural ingredients and
+                    modern science in our soap and deodorant collection. Our
+                    products are designed to provide thorough cleansing while
+                    being gentle on your skin. From antibacterial protection to
+                    long-lasting freshness, each item is crafted to meet your
+                    daily hygiene needs. We use carefully selected natural oils
+                    and essential ingredients to ensure your skin stays healthy,
+                    clean, and refreshed throughout the day.
                   </>
                 )}
                 {product.type === "Skin Care" && (
                   <>
-                    Transform your skincare routine with our advanced formulations designed to address various skin concerns. Our products combine cutting-edge dermatological science with natural ingredients to deliver visible results. From hydration and brightening to anti-aging and acne treatment, each product is formulated to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+                    Transform your skincare routine with our advanced
+                    formulations designed to address various skin concerns. Our
+                    products combine cutting-edge dermatological science with
+                    natural ingredients to deliver visible results. From
+                    hydration and brightening to anti-aging and acne treatment,
+                    each product is formulated to work harmoniously with your
+                    skin's natural processes, promoting healthy, radiant, and
+                    youthful-looking skin.
                   </>
                 )}
                 {product.type === "Oral Care" && (
                   <>
-                    Maintain optimal oral health with our comprehensive range of dental care products. Our oral care solutions are designed to provide thorough cleaning, fresh breath, and long-term dental health benefits. From advanced whitening formulas to gentle yet effective cleaning systems, each product is engineered to work together for complete oral hygiene. We prioritize both effectiveness and comfort to ensure your daily dental routine is both beneficial and enjoyable.
+                    Maintain optimal oral health with our comprehensive range of
+                    dental care products. Our oral care solutions are designed
+                    to provide thorough cleaning, fresh breath, and long-term
+                    dental health benefits. From advanced whitening formulas to
+                    gentle yet effective cleaning systems, each product is
+                    engineered to work together for complete oral hygiene. We
+                    prioritize both effectiveness and comfort to ensure your
+                    daily dental routine is both beneficial and enjoyable.
                   </>
                 )}
-                {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+                {![
+                  "Hair Care",
+                  "Soap & Deodorants",
+                  "Skin Care",
+                  "Oral Care",
+                ].includes(product.type) && (
                   <>
-                    Discover our carefully curated collection of premium products designed to enhance your daily routine. Each item is crafted with attention to detail, using quality ingredients and innovative formulations to deliver exceptional results. Whether you're looking for personal care essentials or specialized treatments, our products are designed to meet your needs while providing the quality and reliability you deserve.
+                    Discover our carefully curated collection of premium
+                    products designed to enhance your daily routine. Each item
+                    is crafted with attention to detail, using quality
+                    ingredients and innovative formulations to deliver
+                    exceptional results. Whether you're looking for personal
+                    care essentials or specialized treatments, our products are
+                    designed to meet your needs while providing the quality and
+                    reliability you deserve.
                   </>
                 )}
               </p>
               <button
                 onClick={() => setShowMoreDetails((v) => !v)}
                 className="text-green-700 text-sm font-medium underline hover:underline cursor-pointer"
-                style={{ display: "inline-block", marginTop: "4px", background: 'none', border: 'none', padding: 0 }}
+                style={{
+                  display: "inline-block",
+                  marginTop: "4px",
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                }}
               >
-                {showMoreDetails ? 'Show less' : 'See more product details'}
+                {showMoreDetails ? "Show less" : "See more product details"}
               </button>
               {showMoreDetails && (
                 <div className="mt-3 text-gray-700 leading-relaxed space-y-2">
                   <p>
-                    This is a premium formulation crafted with care to deliver visible results. It blends advanced active ingredients with gentle, skin-friendly bases for daily use.
+                    This is a premium formulation crafted with care to deliver
+                    visible results. It blends advanced active ingredients with
+                    gentle, skin-friendly bases for daily use.
                   </p>
                   <p>
-                    Key highlights: dermatologist-inspired formula, lightweight texture, non-greasy finish, and suitable for most skin and hair types. Ideal for regular routines or as a targeted treatment.
+                    Key highlights: dermatologist-inspired formula, lightweight
+                    texture, non-greasy finish, and suitable for most skin and
+                    hair types. Ideal for regular routines or as a targeted
+                    treatment.
                   </p>
                   <p>
-                    Directions for best results: apply an appropriate amount, massage gently, and allow to absorb. Use consistently and pair with complementary products from the same category for maximum benefits.
+                    Directions for best results: apply an appropriate amount,
+                    massage gently, and allow to absorb. Use consistently and
+                    pair with complementary products from the same category for
+                    maximum benefits.
                   </p>
                   <p>
-                    Note: this is a sample description for demonstration purposes only. Replace with real content fetched from your backend in production.
+                    Note: this is a sample description for demonstration
+                    purposes only. Replace with real content fetched from your
+                    backend in production.
                   </p>
                 </div>
               )}
@@ -2234,7 +2478,12 @@ export default function ProductDetailPage() {
                     <li>Designed for long-term oral health benefits</li>
                   </>
                 )}
-                {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+                {![
+                  "Hair Care",
+                  "Soap & Deodorants",
+                  "Skin Care",
+                  "Oral Care",
+                ].includes(product.type) && (
                   <>
                     <li>Premium quality ingredients and formulations</li>
                     <li>Designed for optimal performance and results</li>
@@ -2266,48 +2515,255 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
-        {/* Product Features Banner */}
-        <div className="my-8">
-          <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
-          <div
-            className="mb-4"
-            style={{
-              color: "#333",
-
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "normal",
-              letterSpacing: "-0.24px",
-              leadingTrim: "both",
-              textEdge: "cap",
-            }}
-          >
-            Product features
-          </div>
-          <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
-            <img
-              src={
-                product.type === "Hair Care" ? "/haircarebanner.png" :
-                product.type === "Skin Care" ? "/skinacrebanner.png" :
-                product.type === "Soap & Deodorants" ? "/soap.png" :
-                product.type === "Body & Wash" ? "/bodywash.png" :
-                product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&misc.png" :
-                "/skinacrebanner.png"
-              }
-              alt={`${product.type} Product Features`}
-              className="object-cover"
+        {/* Product Features Sections (multiple if provided) */}
+        {Array.isArray(product?.featuresSections) &&
+        product.featuresSections.length > 0 ? (
+          product.featuresSections.map((section, i) => (
+            <div key={`fs-${i}`} className="my-8">
+              <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
+              <div
+                className="mb-4"
+                style={{
+                  color: "#333",
+                  fontSize: "20px",
+                  fontStyle: "normal",
+                  fontWeight: 700,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.24px",
+                  leadingTrim: "both",
+                  textEdge: "cap",
+                }}
+              >
+                {section.title || "Product features"}
+              </div>
+              {section.layout === "split" ? (
+                <div
+                  className={`w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8 border border-gray-200 ${
+                    section.imagePosition === "left"
+                      ? "md:flex-row"
+                      : "md:flex-row-reverse"
+                  }`}
+                >
+                  <div className="flex-1 flex justify-center items-center w-full">
+                    {section.mediaType === "video" ? (
+                      <video
+                        src={section.mediaUrl}
+                        className="w-full h-auto max-w-[600px] rounded-md"
+                        controls
+                      />
+                    ) : (
+                      <img
+                        src={section.mediaUrl}
+                        alt="Product features"
+                        className="object-contain w-full max-w-[600px]"
+                      />
+                    )}
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0 p-4">
+                    {section.title && (
+                      <div
+                        className="mb-2"
+                        style={{
+                          color: "#333",
+                          fontSize: "20px",
+                          fontStyle: "normal",
+                          fontWeight: 700,
+                          lineHeight: "normal",
+                          letterSpacing: "-0.24px",
+                          leadingTrim: "both",
+                          textEdge: "cap",
+                        }}
+                      >
+                        {section.title}
+                      </div>
+                    )}
+                    {section.description && (
+                      <p className="text-gray-700 text-base">
+                        {section.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
+                  {section.mediaType === "video" ? (
+                    <video
+                      src={section.mediaUrl}
+                      className="object-cover"
+                      style={{
+                        width: "100%",
+                        maxWidth: "1500px",
+                        height: "500px",
+                        objectPosition: "center",
+                      }}
+                      controls
+                    />
+                  ) : (
+                    <img
+                      src={section.mediaUrl}
+                      alt="Product Features"
+                      className="object-cover"
+                      style={{
+                        width: "100%",
+                        maxWidth: "1500px",
+                        height: "500px",
+                        objectPosition: "center",
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ))
+        ) : product?.featuresSection ? (
+          <div className="my-8">
+            <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
+            <div
+              className="mb-4"
               style={{
-                width: "100%",
-                maxWidth: "1500px",
-                height: "500px",
-                objectPosition: "center",
+                color: "#333",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: 700,
+                lineHeight: "normal",
+                letterSpacing: "-0.24px",
+                leadingTrim: "both",
+                textEdge: "cap",
               }}
-            />
+            >
+              {product.featuresSection.title || "Product features"}
+            </div>
+            {product.featuresSection.layout === "split" ? (
+              <div
+                className={`w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8 border border-gray-200 ${
+                  product.featuresSection.imagePosition === "left"
+                    ? "md:flex-row"
+                    : "md:flex-row-reverse"
+                }`}
+              >
+                {/* Media */}
+                <div className="flex-1 flex justify-center items-center w-full">
+                  {product.featuresSection.mediaType === "video" ? (
+                    <video
+                      src={product.featuresSection.mediaUrl}
+                      className="w-full h-auto max-w-[600px] rounded-md"
+                      controls
+                    />
+                  ) : (
+                    <img
+                      src={product.featuresSection.mediaUrl}
+                      alt="Product features"
+                      className="object-contain w-full max-w-[600px]"
+                    />
+                  )}
+                </div>
+                {/* Text */}
+                <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0 p-4">
+                  {product.featuresSection.title && (
+                    <div
+                      className="mb-2"
+                      style={{
+                        color: "#333",
+                        fontSize: "20px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        lineHeight: "normal",
+                        letterSpacing: "-0.24px",
+                        leadingTrim: "both",
+                        textEdge: "cap",
+                      }}
+                    >
+                      {product.featuresSection.title}
+                    </div>
+                  )}
+                  {product.featuresSection.description && (
+                    <p className="text-gray-700 text-base">
+                      {product.featuresSection.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
+                {product.featuresSection.mediaType === "video" ? (
+                  <video
+                    src={product.featuresSection.mediaUrl}
+                    className="object-cover"
+                    style={{
+                      width: "100%",
+                      maxWidth: "1500px",
+                      height: "500px",
+                      objectPosition: "center",
+                    }}
+                    controls
+                  />
+                ) : (
+                  <img
+                    src={product.featuresSection.mediaUrl}
+                    alt="Product Features"
+                    className="object-cover"
+                    style={{
+                      width: "100%",
+                      maxWidth: "1500px",
+                      height: "500px",
+                      objectPosition: "center",
+                    }}
+                  />
+                )}
+              </div>
+            )}
           </div>
-        </div>
+        ) : (
+          <div className="my-8">
+            <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
+            <div
+              className="mb-4"
+              style={{
+                color: "#333",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: 700,
+                lineHeight: "normal",
+                letterSpacing: "-0.24px",
+                leadingTrim: "both",
+                textEdge: "cap",
+              }}
+            >
+              Product features
+            </div>
+            <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
+              <img
+                src={
+                  product.type === "Hair Care"
+                    ? "/haircarebanner.png"
+                    : product.type === "Skin Care"
+                    ? "/skinacrebanner.png"
+                    : product.type === "Soap & Deodorants"
+                    ? "/soap.png"
+                    : product.type === "Body & Wash"
+                    ? "/bodywash.png"
+                    : product.type === "Oral Care" ||
+                      product.type === "Oral & Misc"
+                    ? "/oral&misc.png"
+                    : "/skinacrebanner.png"
+                }
+                alt={`${product.type} Product Features`}
+                className="object-cover"
+                style={{
+                  width: "100%",
+                  maxWidth: "1500px",
+                  height: "500px",
+                  objectPosition: "center",
+                }}
+              />
+            </div>
+          </div>
+        )}
 
-        <div className="my-8">
+        <div
+          className="my-8"
+          style={{ display: product?.featuresSection ? "none" : undefined }}
+        >
           <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8">
             {/* Left: Text and Features */}
             <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0">
@@ -2327,7 +2783,7 @@ export default function ProductDetailPage() {
                 {product.type === "Hair Care" && (
                   <>
                     Advanced Hair Care Technology
-                <br />
+                    <br />
                     for Professional Results
                   </>
                 )}
@@ -2352,14 +2808,22 @@ export default function ProductDetailPage() {
                     for Complete Wellness
                   </>
                 )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" && (
-                  <>
-                    Advanced Oral Care Technology
-                    <br />
-                    for Complete Dental Health
-                  </>
-                )}
-                {!["Hair Care", "Skin Care", "Soap & Deodorants", "Body & Wash", "Oral Care", "Oral & Misc"].includes(product.type) && (
+                {product.type === "Oral Care" ||
+                  (product.type === "Oral & Misc" && (
+                    <>
+                      Advanced Oral Care Technology
+                      <br />
+                      for Complete Dental Health
+                    </>
+                  ))}
+                {![
+                  "Hair Care",
+                  "Skin Care",
+                  "Soap & Deodorants",
+                  "Body & Wash",
+                  "Oral Care",
+                  "Oral & Misc",
+                ].includes(product.type) && (
                   <>
                     Premium Product Technology
                     <br />
@@ -2370,61 +2834,91 @@ export default function ProductDetailPage() {
               <ul className="list-disc pl-5 text-gray-700 space-y-2 text-base">
                 {product.type === "Hair Care" && (
                   <>
-                <li>
-                      Our advanced hair care technology uses scientifically proven ingredients to address specific hair concerns and promote healthy growth.
-                </li>
-                <li>
-                      Each product is formulated with natural extracts and advanced compounds that work together to restore hair vitality and strength.
-                </li>
+                    <li>
+                      Our advanced hair care technology uses scientifically
+                      proven ingredients to address specific hair concerns and
+                      promote healthy growth.
+                    </li>
+                    <li>
+                      Each product is formulated with natural extracts and
+                      advanced compounds that work together to restore hair
+                      vitality and strength.
+                    </li>
                   </>
                 )}
                 {product.type === "Skin Care" && (
                   <>
                     <li>
-                      Our dermatologically tested formulations combine cutting-edge science with natural ingredients for visible skin improvements.
+                      Our dermatologically tested formulations combine
+                      cutting-edge science with natural ingredients for visible
+                      skin improvements.
                     </li>
                     <li>
-                      Each product targets specific skin concerns while maintaining the skin's natural balance and promoting long-term health.
+                      Each product targets specific skin concerns while
+                      maintaining the skin's natural balance and promoting
+                      long-term health.
                     </li>
                   </>
                 )}
                 {product.type === "Soap & Deodorants" && (
                   <>
                     <li>
-                      Our natural cleansing solutions provide thorough hygiene while being gentle on your skin and environmentally friendly.
+                      Our natural cleansing solutions provide thorough hygiene
+                      while being gentle on your skin and environmentally
+                      friendly.
                     </li>
                     <li>
-                      Each product is crafted with carefully selected natural ingredients for effective cleansing and long-lasting freshness.
+                      Each product is crafted with carefully selected natural
+                      ingredients for effective cleansing and long-lasting
+                      freshness.
                     </li>
                   </>
                 )}
                 {product.type === "Body & Wash" && (
                   <>
                     <li>
-                      Our premium body care products are designed to nourish and protect your skin while providing a luxurious bathing experience.
+                      Our premium body care products are designed to nourish and
+                      protect your skin while providing a luxurious bathing
+                      experience.
                     </li>
                     <li>
-                      Each formulation combines therapeutic ingredients with indulgent textures for complete body wellness and care.
-                    </li>
-                  </>
-                )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" && (
-                  <>
-                    <li>
-                      Our advanced oral care technology provides comprehensive dental hygiene with innovative cleaning systems and protective formulas.
-                    </li>
-                    <li>
-                      Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
+                      Each formulation combines therapeutic ingredients with
+                      indulgent textures for complete body wellness and care.
                     </li>
                   </>
                 )}
-                {!["Hair Care", "Skin Care", "Soap & Deodorants", "Body & Wash", "Oral Care", "Oral & Misc"].includes(product.type) && (
+                {product.type === "Oral Care" ||
+                  (product.type === "Oral & Misc" && (
+                    <>
+                      <li>
+                        Our advanced oral care technology provides comprehensive
+                        dental hygiene with innovative cleaning systems and
+                        protective formulas.
+                      </li>
+                      <li>
+                        Each product is designed to work together for complete
+                        oral health, from daily maintenance to specialized
+                        treatments.
+                      </li>
+                    </>
+                  ))}
+                {![
+                  "Hair Care",
+                  "Skin Care",
+                  "Soap & Deodorants",
+                  "Body & Wash",
+                  "Oral Care",
+                  "Oral & Misc",
+                ].includes(product.type) && (
                   <>
                     <li>
-                      Our premium products are crafted with the highest quality ingredients and advanced technology to deliver exceptional results.
+                      Our premium products are crafted with the highest quality
+                      ingredients and advanced technology to deliver exceptional
+                      results.
                     </li>
                     <li>
-                      Each formulation is designed to meet your specific needs while providing the quality and reliability you deserve.
+                      Each formulation is designed to meet your specific needs
+                      while providing the quality and reliability you deserve.
                     </li>
                   </>
                 )}
@@ -2434,12 +2928,18 @@ export default function ProductDetailPage() {
             <div className="flex-1 flex justify-end items-center w-full">
               <img
                 src={
-                  product.type === "Hair Care" ? "/haircarebanner2.png" :
-                  product.type === "Skin Care" ? "/skincarebanner2.png" :
-                  product.type === "Soap & Deodorants" ? "/soapbanner2.png" :
-                  product.type === "Body & Wash" ? "/body&washbanner2.png" :
-                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner2.png" :
-                  "/skincarebanner2.png"
+                  product.type === "Hair Care"
+                    ? "/haircarebanner2.png"
+                    : product.type === "Skin Care"
+                    ? "/skincarebanner2.png"
+                    : product.type === "Soap & Deodorants"
+                    ? "/soapbanner2.png"
+                    : product.type === "Body & Wash"
+                    ? "/body&washbanner2.png"
+                    : product.type === "Oral Care" ||
+                      product.type === "Oral & Misc"
+                    ? "/oral&miscbanner2.png"
+                    : "/skincarebanner2.png"
                 }
                 alt={`${product.type} Features`}
                 className="object-contain"
@@ -2456,7 +2956,7 @@ export default function ProductDetailPage() {
             <div className="md:sticky md:top-20 md:self-start mb-6 md:mb-0">
               <ProductImageSection productType={product.type} />
             </div>
-            
+
             {/* Right: Text and Features Section - Scrollable */}
             <div>
               <ProductFeaturesText productType={product.type} />
@@ -2464,7 +2964,6 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-       
         <div className="my-8">
           <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white relative">
             <video
@@ -2522,7 +3021,8 @@ export default function ProductDetailPage() {
                     Technology
                   </>
                 )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                {product.type === "Oral Care" ||
+                product.type === "Oral & Misc" ? (
                   <>
                     Advanced Dental Care <br />
                     Technology
@@ -2538,58 +3038,79 @@ export default function ProductDetailPage() {
                 {product.type === "Hair Care" && (
                   <>
                     <li>
-                      Our professional hair care solutions are designed to address specific hair concerns with scientifically proven formulations that deliver visible results.
+                      Our professional hair care solutions are designed to
+                      address specific hair concerns with scientifically proven
+                      formulations that deliver visible results.
                     </li>
                     <li>
-                      Each product is crafted with premium ingredients and advanced technology to provide salon-quality results in the comfort of your home.
+                      Each product is crafted with premium ingredients and
+                      advanced technology to provide salon-quality results in
+                      the comfort of your home.
                     </li>
                   </>
                 )}
                 {product.type === "Skin Care" && (
                   <>
                     <li>
-                      Our advanced skincare technology combines cutting-edge dermatological science with natural ingredients to target specific skin concerns effectively.
+                      Our advanced skincare technology combines cutting-edge
+                      dermatological science with natural ingredients to target
+                      specific skin concerns effectively.
                     </li>
                     <li>
-                      Each formulation is designed to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+                      Each formulation is designed to work harmoniously with
+                      your skin's natural processes, promoting healthy, radiant,
+                      and youthful-looking skin.
                     </li>
                   </>
                 )}
                 {product.type === "Soap & Deodorants" && (
                   <>
                     <li>
-                      Our natural hygiene solutions provide thorough cleansing while being gentle on your skin and environmentally friendly for daily use.
+                      Our natural hygiene solutions provide thorough cleansing
+                      while being gentle on your skin and environmentally
+                      friendly for daily use.
                     </li>
                     <li>
-                      Each product is crafted with carefully selected natural ingredients to ensure effective hygiene without compromising skin health.
+                      Each product is crafted with carefully selected natural
+                      ingredients to ensure effective hygiene without
+                      compromising skin health.
                     </li>
                   </>
                 )}
                 {product.type === "Body & Wash" && (
                   <>
                     <li>
-                      Our premium body care technology delivers comprehensive skin nourishment and protection through innovative formulations and luxurious textures.
+                      Our premium body care technology delivers comprehensive
+                      skin nourishment and protection through innovative
+                      formulations and luxurious textures.
                     </li>
                     <li>
-                      Each product combines therapeutic ingredients with indulgent formulations to provide complete body wellness and rejuvenation.
+                      Each product combines therapeutic ingredients with
+                      indulgent formulations to provide complete body wellness
+                      and rejuvenation.
                     </li>
                   </>
                 )}
-                {product.type === "Oral Care" || product.type === "Oral & Misc" ? (
+                {product.type === "Oral Care" ||
+                product.type === "Oral & Misc" ? (
                   <>
                     <li>
-                      Our advanced dental care technology provides superior oral hygiene through innovative cleaning systems and protective formulas.
+                      Our advanced dental care technology provides superior oral
+                      hygiene through innovative cleaning systems and protective
+                      formulas.
                     </li>
                     <li>
-                      Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments.
+                      Each product is designed to work together for complete
+                      oral health, from daily maintenance to specialized
+                      treatments.
                     </li>
                   </>
                 ) : (
                   <>
                     <li>
-                      Choose your cable termination: 3.5mm or Type-C (with mic). You
-                      can now choose the termination and choose design during your
-                      purchase.
+                      Choose your cable termination: 3.5mm or Type-C (with mic).
+                      You can now choose the termination and choose design
+                      during your purchase.
                     </li>
                     <li>
                       The advantage of a detachable termination is you can pair
@@ -2604,12 +3125,18 @@ export default function ProductDetailPage() {
             <div className="flex-1 flex justify-end items-center w-full">
               <img
                 src={
-                  product.type === "Hair Care" ? "/haircarebanner2.png" :
-                  product.type === "Skin Care" ? "/skincarebanner2.png" :
-                  product.type === "Soap & Deodorants" ? "/soapbanner2.png" :
-                  product.type === "Body & Wash" ? "/body&washbanner2.png" :
-                  product.type === "Oral Care" || product.type === "Oral & Misc" ? "/oral&miscbanner2.png" :
-                  "/productfeaturesimage5.png"
+                  product.type === "Hair Care"
+                    ? "/haircarebanner2.png"
+                    : product.type === "Skin Care"
+                    ? "/skincarebanner2.png"
+                    : product.type === "Soap & Deodorants"
+                    ? "/soapbanner2.png"
+                    : product.type === "Body & Wash"
+                    ? "/body&washbanner2.png"
+                    : product.type === "Oral Care" ||
+                      product.type === "Oral & Misc"
+                    ? "/oral&miscbanner2.png"
+                    : "/productfeaturesimage5.png"
                 }
                 alt={`${product.type} Advanced Features`}
                 className="object-contain"
@@ -2650,9 +3177,11 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               </div>
-                              <span className="text-gray-600 mb-4 text-sm">Based on 181 reviews</span>
+              <span className="text-gray-600 mb-4 text-sm">
+                Based on 181 reviews
+              </span>
               {/* Ratings Bar */}
-                              <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
+              <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
                 {[5, 4, 3, 2, 1].map((star, idx) => (
                   <div key={star} className="flex items-center gap-2">
                     <span className="text-sm text-gray-700 w-4">{star}</span>
@@ -2671,10 +3200,10 @@ export default function ProductDetailPage() {
                   </div>
                 ))}
               </div>
-                              <button 
-                                onClick={showReviewModal}
-                                className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
-                              >
+              <button
+                onClick={showReviewModal}
+                className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
+              >
                 Rate Product
               </button>
             </div>
@@ -2704,7 +3233,11 @@ export default function ProductDetailPage() {
                     {Array.from({ length: 6 }).map((_, idx) => (
                       <img
                         key={idx}
-                        src={product.images && product.images.length > 0 ? product.images[selectedImage] : product.image}
+                        src={
+                          product.images && product.images.length > 0
+                            ? product.images[selectedImage]
+                            : product.image
+                        }
                         alt="Selected product"
                         className="w-16 h-16 rounded object-cover border border-gray-200"
                       />
@@ -2757,12 +3290,20 @@ export default function ProductDetailPage() {
                   <div className="flex flex-col gap-1">
                     <div className="flex gap-2">
                       <img
-                        src={product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image}
+                        src={
+                          product.images && product.images[selectedImage]
+                            ? product.images[selectedImage]
+                            : product.image
+                        }
                         alt="Selected product review 1"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
                       <img
-                        src={product.images && product.images[0] ? product.images[0] : product.image}
+                        src={
+                          product.images && product.images[0]
+                            ? product.images[0]
+                            : product.image
+                        }
                         alt="Selected product review 2"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
@@ -2830,7 +3371,11 @@ export default function ProductDetailPage() {
                   <div className="flex flex-col gap-1">
                     <div className="flex gap-2">
                       <img
-                        src={product?.images?.[selectedImage] || product?.image || "/shop2.png"}
+                        src={
+                          product?.images?.[selectedImage] ||
+                          product?.image ||
+                          "/shop2.png"
+                        }
                         alt="Selected product image"
                         className="w-12 h-12 rounded object-cover border border-gray-200"
                       />
@@ -2943,13 +3488,11 @@ export default function ProductDetailPage() {
                     key={star}
                     onClick={() => setRating(star)}
                     className={`text-2xl transition-colors duration-200 ${
-                      star <= rating 
-                        ? 'text-[#EF9C16]' 
-                        : 'text-transparent'
+                      star <= rating ? "text-[#EF9C16]" : "text-transparent"
                     }`}
                     style={{
-                      WebkitTextStroke: star <= rating ? 'none' : '1px #EF9C16',
-                      cursor: 'pointer'
+                      WebkitTextStroke: star <= rating ? "none" : "1px #EF9C16",
+                      cursor: "pointer",
                     }}
                   >
                     ★
@@ -2975,9 +3518,9 @@ export default function ProductDetailPage() {
               onChange={(e) => setReviewText(e.target.value)}
               placeholder="Tell us what you think.."
               rows={4}
-              style={{ 
-                resize: 'none',
-                backgroundColor: 'rgba(0, 0, 0, 0.01)'
+              style={{
+                resize: "none",
+                backgroundColor: "rgba(0, 0, 0, 0.01)",
               }}
             />
           </div>
@@ -2992,12 +3535,12 @@ export default function ProductDetailPage() {
               onClick={handleReviewSubmit}
               disabled={!rating || !reviewText.trim()}
               style={{
-                backgroundColor: '#035F0F',
-                borderColor: '#035F0F',
-                height: '40px',
-                width: '100%',
-                color: '#ffffff',
-                fontWeight: '600',
+                backgroundColor: "#035F0F",
+                borderColor: "#035F0F",
+                height: "40px",
+                width: "100%",
+                color: "#ffffff",
+                fontWeight: "600",
               }}
             >
               Rate Product

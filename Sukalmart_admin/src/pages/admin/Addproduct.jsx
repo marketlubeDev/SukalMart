@@ -33,6 +33,28 @@ function Addproduct() {
     returnPolicyDays: 7,
     returnPolicyText: "",
     featureImages: [null],
+    // Legacy single section (kept for backward compatibility)
+    featuresSection: {
+      layout: "banner",
+      imagePosition: "right",
+      mediaType: "image",
+      title: "",
+      description: "",
+      mediaUrl: "",
+      mediaFile: null,
+    },
+    // New multiple sections
+    featuresSections: [
+      {
+        layout: "banner",
+        imagePosition: "right",
+        mediaType: "image",
+        title: "",
+        description: "",
+        mediaUrl: "",
+        mediaFile: null,
+      },
+    ],
   });
   const [variants, setVariants] = useState([
     {
@@ -121,6 +143,38 @@ function Addproduct() {
             returnPolicyDays: prod.returnPolicyDays ?? 7,
             returnPolicyText: prod.returnPolicyText || "",
             featureImages: prod.featureImages || [null],
+            featuresSection: {
+              layout: prod.featuresSection?.layout || "banner",
+              imagePosition: prod.featuresSection?.imagePosition || "right",
+              mediaType: prod.featuresSection?.mediaType || "image",
+              title: prod.featuresSection?.title || "",
+              description: prod.featuresSection?.description || "",
+              mediaUrl: prod.featuresSection?.mediaUrl || "",
+              mediaFile: null,
+            },
+            featuresSections:
+              Array.isArray(prod.featuresSections) &&
+              prod.featuresSections.length > 0
+                ? prod.featuresSections.map((s) => ({
+                    layout: s?.layout || "banner",
+                    imagePosition: s?.imagePosition || "right",
+                    mediaType: s?.mediaType || "image",
+                    title: s?.title || "",
+                    description: s?.description || "",
+                    mediaUrl: s?.mediaUrl || "",
+                    mediaFile: null,
+                  }))
+                : [
+                    {
+                      layout: "banner",
+                      imagePosition: "right",
+                      mediaType: "image",
+                      title: "",
+                      description: "",
+                      mediaUrl: "",
+                      mediaFile: null,
+                    },
+                  ],
           });
           setVariants(
             (prod.variants || []).map((v) => ({
@@ -328,6 +382,117 @@ function Addproduct() {
     });
   };
 
+  const handleFeaturesSectionChange = (field, value) => {
+    setProductData((prev) => ({
+      ...prev,
+      featuresSection: {
+        ...(prev.featuresSection || {}),
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleFeaturesSectionMedia = (file) => {
+    if (!file) return;
+    const isImage = file.type.startsWith("image/");
+    const isVideo = file.type.startsWith("video/");
+    if (!isImage && !isVideo) {
+      toast.error("Only image or video files are allowed for features media");
+      return;
+    }
+    // Limit image to 2MB, video to 20MB
+    const maxSize = isVideo ? 20 * 1024 * 1024 : 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error(isVideo ? "Video must be ≤ 20MB" : "Image must be ≤ 2MB");
+      return;
+    }
+    setProductData((prev) => ({
+      ...prev,
+      featuresSection: {
+        ...(prev.featuresSection || {}),
+        mediaType: isVideo ? "video" : "image",
+        mediaFile: file,
+        // Clear direct URL when new file selected
+        mediaUrl:
+          prev.featuresSection?.mediaUrl &&
+          typeof prev.featuresSection.mediaUrl === "string"
+            ? prev.featuresSection.mediaUrl
+            : "",
+      },
+    }));
+  };
+
+  // Multi sections handlers
+  const updateMultiFeature = (index, field, value) => {
+    setProductData((prev) => {
+      const list = [...(prev.featuresSections || [])];
+      const currentSection = { ...(list[index] || {}) };
+
+      // Update the field
+      currentSection[field] = value;
+
+      // If layout is changed to "split", set media type to "image"
+      if (field === "layout" && value === "split") {
+        currentSection.mediaType = "image";
+      }
+
+      list[index] = currentSection;
+      return { ...prev, featuresSections: list };
+    });
+  };
+
+  const updateMultiFeatureMedia = (index, file) => {
+    if (!file) return;
+    const isImage = file.type.startsWith("image/");
+    const isVideo = file.type.startsWith("video/");
+    if (!isImage && !isVideo) {
+      toast.error("Only image or video files are allowed for features media");
+      return;
+    }
+    const maxSize = isVideo ? 20 * 1024 * 1024 : 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error(isVideo ? "Video must be ≤ 20MB" : "Image must be ≤ 2MB");
+      return;
+    }
+    setProductData((prev) => {
+      const list = [...(prev.featuresSections || [])];
+      const curr = { ...(list[index] || {}) };
+      curr.mediaType = isVideo ? "video" : "image";
+      curr.mediaFile = file;
+      list[index] = curr;
+      return { ...prev, featuresSections: list };
+    });
+  };
+
+  const addFeatureSection = () => {
+    setProductData((prev) => ({
+      ...prev,
+      featuresSections: [
+        ...(prev.featuresSections || []),
+        {
+          layout: "banner",
+          imagePosition: "right",
+          mediaType: "image",
+          title: "",
+          description: "",
+          descriptionType: "short",
+          bulletPoints: [""],
+          mediaUrl: "",
+          mediaFile: null,
+        },
+      ],
+    }));
+  };
+
+  const removeFeatureSection = (idx) => {
+    setProductData((prev) => ({
+      ...prev,
+      featuresSections: (prev.featuresSections || []).filter(
+        (_, i) => i !== idx
+      ),
+    }));
+  };
+
   const handleRemoveFeatureImage = (idx) => {
     setProductData((prev) => {
       const next = { ...prev };
@@ -464,6 +629,51 @@ function Addproduct() {
             if (img && typeof img !== "string") {
               formData.append(`featureImages[${idx}]`, img);
             }
+          });
+        } else if (key === "featuresSection" && typeof value === "object") {
+          const fs = value || {};
+          if (fs.layout) formData.append("featuresSection.layout", fs.layout);
+          if (fs.imagePosition)
+            formData.append("featuresSection.imagePosition", fs.imagePosition);
+          if (fs.mediaType)
+            formData.append("featuresSection.mediaType", fs.mediaType);
+          if (fs.title) formData.append("featuresSection.title", fs.title);
+          if (fs.description)
+            formData.append("featuresSection.description", fs.description);
+          if (fs.mediaFile)
+            formData.append("featuresSection.media", fs.mediaFile);
+          // Do not append mediaUrl if a file is being uploaded; server will set
+          if (!fs.mediaFile && fs.mediaUrl)
+            formData.append("featuresSection.mediaUrl", fs.mediaUrl);
+        } else if (key === "featuresSections" && Array.isArray(value)) {
+          value.forEach((sec, idx) => {
+            if (!sec) return;
+            if (sec.layout)
+              formData.append(`featuresSections[${idx}].layout`, sec.layout);
+            if (sec.imagePosition)
+              formData.append(
+                `featuresSections[${idx}].imagePosition`,
+                sec.imagePosition
+              );
+            if (sec.mediaType)
+              formData.append(
+                `featuresSections[${idx}].mediaType`,
+                sec.mediaType
+              );
+            if (sec.title)
+              formData.append(`featuresSections[${idx}].title`, sec.title);
+            if (sec.description)
+              formData.append(
+                `featuresSections[${idx}].description`,
+                sec.description
+              );
+            if (sec.mediaFile)
+              formData.append(`featuresSections[${idx}].media`, sec.mediaFile);
+            if (!sec.mediaFile && sec.mediaUrl)
+              formData.append(
+                `featuresSections[${idx}].mediaUrl`,
+                sec.mediaUrl
+              );
           });
         } else {
           formData.append(key, value);
@@ -1227,82 +1437,297 @@ function Addproduct() {
           </div>
         </div>
 
-        {/* Product Features Section */}
+        {/* Product Features Sections (Multiple) */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-4 text-gray-800">
-            Product Features Banner
+            Product Features Sections
           </h3>
-          <div className="bg-white border rounded-lg p-6">
-            {/* Feature Images */}
-            <div className="mb-6">
-              <label className="block mb-2 font-medium text-gray-700">
-                Feature Image
-              </label>
-              <p className="text-xs text-gray-500 mb-3">
-                Upload a feature image to showcase product highlights | Maximum
-                size: 1MB | Formats: JPEG, JPG, PNG, WebP
-              </p>
-              <div className="flex justify-center">
-                <div className="relative w-full max-w-md">
-                  <label
-                    className={`relative group w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition ${
-                      isLoadingProduct ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+          <div className="bg-white border rounded-lg p-4 space-y-4">
+            {(productData.featuresSections || []).map((sec, idx) => (
+              <div
+                key={idx}
+                className="border rounded-lg p-3 space-y-3 bg-gray-50"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">Section {idx + 1}</span>
+                  <button
+                    type="button"
+                    className="px-3 py-1.5 rounded-md border border-red-400 text-red-500 bg-white hover:bg-red-50"
+                    onClick={() => removeFeatureSection(idx)}
+                    disabled={(productData.featuresSections || []).length <= 1}
                   >
-                    {productData.featureImages?.[0] ? (
-                      typeof productData.featureImages[0] === "string" ? (
-                        <img
-                          src={productData.featureImages[0]}
-                          alt="Feature"
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                      ) : (
-                        <img
-                          src={URL.createObjectURL(
-                            productData.featureImages[0]
-                          )}
-                          alt="Feature"
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                      )
-                    ) : (
-                      <>
-                        <span className="text-4xl text-gray-300 mb-2">📷</span>
-                        <span className="text-sm text-gray-400 text-center">
-                          Feature Image
-                        </span>
-                        <span className="text-xs text-gray-400 mt-1">
-                          Click to upload
-                        </span>
-                      </>
-                    )}
-                    {productData.featureImages?.[0] && (
-                      <button
-                        type="button"
-                        className="absolute top-2 right-2 z-10 bg-black/60 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          handleRemoveFeatureImage(0);
-                        }}
-                        title="Remove image"
+                    Remove
+                  </button>
+                </div>
+                <div
+                  className={`grid gap-3 ${
+                    sec.layout === "banner"
+                      ? "grid-cols-1 md:grid-cols-2"
+                      : "grid-cols-1 md:grid-cols-3"
+                  }`}
+                >
+                  <div>
+                    <label className="block mb-1 font-medium">Layout</label>
+                    <select
+                      className="w-full border rounded-lg px-3 py-2"
+                      value={sec.layout || "banner"}
+                      onChange={(e) =>
+                        updateMultiFeature(idx, "layout", e.target.value)
+                      }
+                    >
+                      <option value="banner">Banner (full width media)</option>
+                      <option value="split">Split (text + media)</option>
+                    </select>
+                  </div>
+                  {sec.layout !== "banner" && (
+                    <div>
+                      <label className="block mb-1 font-medium">
+                        Image Position
+                      </label>
+                      <select
+                        className="w-full border rounded-lg px-3 py-2"
+                        value={sec.imagePosition || "right"}
+                        onChange={(e) =>
+                          updateMultiFeature(
+                            idx,
+                            "imagePosition",
+                            e.target.value
+                          )
+                        }
                       >
-                        Remove
-                      </button>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                      </select>
+                    </div>
+                  )}
+                  <div>
+                    <label className="block mb-1 font-medium">Media Type</label>
+                    <select
+                      className="w-full border rounded-lg px-3 py-2"
+                      value={sec.mediaType || "image"}
+                      onChange={(e) =>
+                        updateMultiFeature(idx, "mediaType", e.target.value)
+                      }
+                      disabled={sec.layout === "split"}
+                    >
+                      <option value="image">Image</option>
+                      <option value="video">Video</option>
+                    </select>
+                    {sec.layout === "split" && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Split layout only supports images
+                      </p>
                     )}
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/jpeg,image/jpg,image/png,image/webp"
-                      onChange={(e) => {
-                        handleFeatureImageChange(0, e.target.files[0]);
-                        e.target.value = "";
-                      }}
-                      disabled={isLoadingProduct}
-                    />
-                  </label>
+                  </div>
+                </div>
+                {sec.layout !== "banner" && (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block mb-1 font-medium">Title</label>
+                        <input
+                          type="text"
+                          className="w-full border rounded-lg px-3 py-2"
+                          value={sec.title || ""}
+                          onChange={(e) =>
+                            updateMultiFeature(idx, "title", e.target.value)
+                          }
+                          placeholder="Section title"
+                        />
+                      </div>
+                      <div>
+                        <label className="block mb-1 font-medium">
+                          Description Type
+                        </label>
+                        <select
+                          className="w-full border rounded-lg px-3 py-2"
+                          value={sec.descriptionType || "short"}
+                          onChange={(e) =>
+                            updateMultiFeature(
+                              idx,
+                              "descriptionType",
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="short">Short Description</option>
+                          <option value="bullets">Bullet Points</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block mb-1 font-medium">
+                        {sec.descriptionType === "bullets"
+                          ? "Bullet Points"
+                          : "Description"}
+                      </label>
+                      {sec.descriptionType === "bullets" ? (
+                        <div className="space-y-2">
+                          {(sec.bulletPoints || [""]).map((point, pointIdx) => (
+                            <div
+                              key={pointIdx}
+                              className="flex items-center gap-2"
+                            >
+                              <span className="text-gray-500">•</span>
+                              <input
+                                type="text"
+                                className="flex-1 border rounded-lg px-3 py-2"
+                                value={point}
+                                onChange={(e) => {
+                                  const newBulletPoints = [
+                                    ...(sec.bulletPoints || [""]),
+                                  ];
+                                  newBulletPoints[pointIdx] = e.target.value;
+                                  updateMultiFeature(
+                                    idx,
+                                    "bulletPoints",
+                                    newBulletPoints
+                                  );
+                                }}
+                                placeholder={`Bullet point ${pointIdx + 1}`}
+                              />
+                              {(sec.bulletPoints || [""]).length > 1 && (
+                                <button
+                                  type="button"
+                                  className="px-2 py-1 text-red-500 hover:bg-red-50 rounded"
+                                  onClick={() => {
+                                    const newBulletPoints = (
+                                      sec.bulletPoints || [""]
+                                    ).filter((_, i) => i !== pointIdx);
+                                    updateMultiFeature(
+                                      idx,
+                                      "bulletPoints",
+                                      newBulletPoints.length > 0
+                                        ? newBulletPoints
+                                        : [""]
+                                    );
+                                  }}
+                                >
+                                  Remove
+                                </button>
+                              )}
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            className="text-teal-600 hover:text-teal-700 text-sm font-medium"
+                            onClick={() => {
+                              const newBulletPoints = [
+                                ...(sec.bulletPoints || [""]),
+                                "",
+                              ];
+                              updateMultiFeature(
+                                idx,
+                                "bulletPoints",
+                                newBulletPoints
+                              );
+                            }}
+                          >
+                            + Add Bullet Point
+                          </button>
+                        </div>
+                      ) : (
+                        <input
+                          type="text"
+                          className="w-full border rounded-lg px-3 py-2"
+                          value={sec.description || ""}
+                          onChange={(e) =>
+                            updateMultiFeature(
+                              idx,
+                              "description",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Short description"
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
+                <div>
+                  <label className="block mb-1 font-medium">Media</label>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <label className="relative group w-40 h-28 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-teal-400 transition">
+                      {sec.mediaFile ? (
+                        sec.mediaType === "video" ? (
+                          <video
+                            src={URL.createObjectURL(sec.mediaFile)}
+                            className="w-full h-full object-cover rounded-lg"
+                            controls
+                          />
+                        ) : (
+                          <img
+                            src={URL.createObjectURL(sec.mediaFile)}
+                            alt="features media"
+                            className="w-full h-full object-cover rounded-lg"
+                          />
+                        )
+                      ) : sec.mediaUrl ? (
+                        sec.mediaType === "video" ? (
+                          <video
+                            src={sec.mediaUrl}
+                            className="w-full h-full object-cover rounded-lg"
+                            controls
+                          />
+                        ) : (
+                          <img
+                            src={sec.mediaUrl}
+                            alt="features media"
+                            className="w-full h-full object-cover rounded-lg"
+                          />
+                        )
+                      ) : (
+                        <>
+                          <span className="text-3xl text-gray-300">📎</span>
+                          <span className="text-xs text-gray-400 mt-2">
+                            Click to upload
+                          </span>
+                        </>
+                      )}
+                      {(sec.mediaFile || sec.mediaUrl) && (
+                        <button
+                          type="button"
+                          className="absolute top-1 right-1 z-10 bg-black/60 text-white text-xs rounded px-1.5 py-0.5 opacity-0 group-hover:opacity-100 transition"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            updateMultiFeature(idx, "mediaFile", null);
+                            updateMultiFeature(idx, "mediaUrl", "");
+                          }}
+                          title="Remove media"
+                        >
+                          Remove
+                        </button>
+                      )}
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*,video/*"
+                        onChange={(e) => {
+                          updateMultiFeatureMedia(idx, e.target.files[0]);
+                          e.target.value = "";
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Image ≤ 2MB (JPG, PNG, WebP). Video ≤ 20MB (MP4, WebM).
+                  </p>
                 </div>
               </div>
+            ))}
+            <div className="flex justify-between items-center">
+              <div className="rounded-md bg-gray-50 p-3 text-xs text-gray-600">
+                Tips: Use Banner for a single full-width image or video. Use
+                Split to show text on one side and an image/video on the other.
+              </div>
+              <button
+                type="button"
+                className="px-3 py-1.5 rounded-md border-2 border-dashed border-teal-400 text-teal-600 bg-white hover:bg-teal-50 font-semibold"
+                onClick={addFeatureSection}
+              >
+                + Add Section
+              </button>
             </div>
           </div>
         </div>
