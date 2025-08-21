@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 
 // Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
 import { useEffect, useState as useReactState } from "react";
-import { featuredProducts as fp, bestSellers as bs, catalogProducts } from "../../lib/data";
+import {
+  featuredProducts as fp,
+  bestSellers as bs,
+  catalogProducts,
+} from "../../lib/data";
 
 function useBigTablet() {
   const [isBigTablet, setIsBigTablet] = useReactState(false);
@@ -25,7 +29,7 @@ function useBigTablet() {
   return isBigTablet;
 }
 
-export default function Nav() {
+function NavContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -41,33 +45,33 @@ export default function Nav() {
 
   // Build a simple in-memory product list for search suggestions
   const allProducts = useMemo(() => {
-    const fpProducts = (fp || []).map(p => ({ 
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price, 
-      originalPrice: p.originalPrice, 
-      category: p.category 
+    const fpProducts = (fp || []).map((p) => ({
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price,
+      originalPrice: p.originalPrice,
+      category: p.category,
     }));
-    
-    const bsProducts = (bs || []).map(p => ({ 
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price, 
-      originalPrice: p.originalPrice, 
-      category: p.category 
+
+    const bsProducts = (bs || []).map((p) => ({
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price,
+      originalPrice: p.originalPrice,
+      category: p.category,
     }));
-    
-    const catalogProductsList = (catalogProducts || []).map(p => ({ 
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price ? `₹${p.price}` : undefined, 
-      originalPrice: p.originalPrice, 
-      category: p.category || p.type 
+
+    const catalogProductsList = (catalogProducts || []).map((p) => ({
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price ? `₹${p.price}` : undefined,
+      originalPrice: p.originalPrice,
+      category: p.category || p.type,
     }));
-    
+
     return [...fpProducts, ...bsProducts, ...catalogProductsList];
   }, [fp, bs, catalogProducts]);
 
@@ -77,10 +81,12 @@ export default function Nav() {
       setSearchResults([]);
       return;
     }
-    
-    const nameMatches = allProducts.filter(p => p.name.toLowerCase().includes(q));
+
+    const nameMatches = allProducts.filter((p) =>
+      p.name.toLowerCase().includes(q)
+    );
     const results = nameMatches.slice(0, 8);
-    
+
     setSearchResults(results);
   }, [searchQuery, allProducts]);
 
@@ -94,12 +100,12 @@ export default function Nav() {
       }
     }
     if (showSearchBar) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [showSearchBar]);
 
@@ -120,10 +126,10 @@ export default function Nav() {
   };
 
   const navigateToTab = (tab) => {
-    if (pathname === '/my-account') {
+    if (pathname === "/my-account") {
       // If we're already on my-account page, just update the tab parameter
       const params = new URLSearchParams(searchParams);
-      params.set('tab', tab);
+      params.set("tab", tab);
       router.push(`/my-account?${params.toString()}`);
     } else {
       // If we're on a different page, navigate to my-account with the tab
@@ -134,26 +140,26 @@ export default function Nav() {
 
   const handleSignOut = () => {
     // Clear any stored authentication data
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('selectedCategory');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("selectedCategory");
     sessionStorage.clear();
     setIsMobileMenuOpen(false);
-    router.push('/login');
+    router.push("/login");
   };
 
   // Allow global triggers to open the cart
   useEffect(() => {
     const openCart = () => setIsCartOpen(true);
     const handler = () => openCart();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('open-cart', handler);
+    if (typeof window !== "undefined") {
+      window.addEventListener("open-cart", handler);
       // Expose helper for direct calls as well
       window.__openCart = openCart;
     }
     return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('open-cart', handler);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("open-cart", handler);
         delete window.__openCart;
       }
     };
@@ -237,7 +243,11 @@ export default function Nav() {
               {showSearchBar ? (
                 <div className="relative">
                   <div className="flex items-center h-10 border border-gray-300 rounded-lg px-4 w-[520px] xl:w-[640px] bg-white">
-                    <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
+                    <img
+                      src="/searchicon.svg"
+                      alt="search"
+                      className="w-4 h-4 mr-2 opacity-60"
+                    />
                     <input
                       type="text"
                       value={searchQuery}
@@ -247,11 +257,14 @@ export default function Nav() {
                     />
                   </div>
                   {searchQuery.trim().length > 0 && (
-                    <div ref={resultsRef} className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto">
+                    <div
+                      ref={resultsRef}
+                      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto"
+                    >
                       {searchResults.length > 0 ? (
                         searchResults.map((p) => (
-                          <div 
-                            key={`${p.id}-${p.name}`} 
+                          <div
+                            key={`${p.id}-${p.name}`}
                             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
                             onClick={() => {
                               router.push(`/products/${p.id}`);
@@ -261,15 +274,21 @@ export default function Nav() {
                             }}
                           >
                             {p.image && (
-                              <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
+                              <img
+                                src={p.image}
+                                alt={p.name}
+                                className="w-10 h-10 object-cover rounded"
+                              />
                             )}
                             <div className="flex flex-col min-w-0">
-                              <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                              <span className="text-gray-900 text-sm font-medium truncate">
+                                {p.name}
+                              </span>
                               {(p.category || p.price) && (
                                 <span className="text-xs text-gray-500 truncate">
-                                  {p.category ? `${p.category}` : ''}
-                                  {p.category && p.price ? ' · ' : ''}
-                                  {p.price ? `${p.price}` : ''}
+                                  {p.category ? `${p.category}` : ""}
+                                  {p.category && p.price ? " · " : ""}
+                                  {p.price ? `${p.price}` : ""}
                                 </span>
                               )}
                             </div>
@@ -277,7 +296,11 @@ export default function Nav() {
                         ))
                       ) : (
                         <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
+                          <img
+                            src="/searchicon.svg"
+                            alt="no results"
+                            className="w-4 h-4 opacity-60"
+                          />
                           <span className="text-sm">No products found</span>
                         </div>
                       )}
@@ -297,9 +320,9 @@ export default function Nav() {
                             if (item.label === "Products") {
                               e.preventDefault();
                               // Clear any stored category selection
-                              localStorage.removeItem('selectedCategory');
+                              localStorage.removeItem("selectedCategory");
                               // Force page reload to reset state
-                              window.location.href = '/products';
+                              window.location.href = "/products";
                             }
                           }}
                         >
@@ -318,7 +341,9 @@ export default function Nav() {
                               src="/dropdownicon.svg"
                               alt="dropdown"
                               className={`w-[7px] h-[4px] transition-transform duration-200 ${
-                                activeDropdown === item.label ? "rotate-180" : ""
+                                activeDropdown === item.label
+                                  ? "rotate-180"
+                                  : ""
                               }`}
                             />
                           )}
@@ -356,8 +381,18 @@ export default function Nav() {
                   onClick={() => setShowSearchBar(false)}
                   aria-label="Close search"
                 >
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-7 h-7"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               ) : (
@@ -397,13 +432,13 @@ export default function Nav() {
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   <div className="py-2">
                     <button
-                      onClick={() => navigateToTab('account')}
+                      onClick={() => navigateToTab("account")}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       My Account
                     </button>
                     <button
-                      onClick={() => navigateToTab('my-orders')}
+                      onClick={() => navigateToTab("my-orders")}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       My Orders
@@ -415,14 +450,14 @@ export default function Nav() {
                       Wishlist
                     </Link>
                     <button
-                      onClick={() => navigateToTab('help')}
+                      onClick={() => navigateToTab("help")}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Help & Support
                     </button>
 
                     <button
-                      onClick={() => navigateToTab('privacy-policy')}
+                      onClick={() => navigateToTab("privacy-policy")}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                     >
                       Privacy & Policy
@@ -553,9 +588,9 @@ export default function Nav() {
                       // Reset category when Products is clicked
                       if (item.label === "Products") {
                         e.preventDefault();
-                        localStorage.removeItem('selectedCategory');
+                        localStorage.removeItem("selectedCategory");
                         // Force page reload to reset state
-                        window.location.href = '/products';
+                        window.location.href = "/products";
                       }
                       setIsMobileMenuOpen(false);
                     }}
@@ -565,7 +600,9 @@ export default function Nav() {
                 ) : (
                   <button
                     className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 cursor-pointer"
-                    onClick={() => item.hasDropdown && toggleDropdown(item.label)}
+                    onClick={() =>
+                      item.hasDropdown && toggleDropdown(item.label)
+                    }
                   >
                     <span>{item.label}</span>
                     {item.hasDropdown && (
@@ -601,7 +638,7 @@ export default function Nav() {
             <div className="pt-4 mt-4 border-t border-gray-200">
               <div className="space-y-2">
                 <button
-                  onClick={() => navigateToTab('account')}
+                  onClick={() => navigateToTab("account")}
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <img src="/usericon.svg" alt="user" className="w-5 h-5" />
@@ -630,7 +667,7 @@ export default function Nav() {
                 </Link>
 
                 <button
-                  onClick={() => navigateToTab('my-orders')}
+                  onClick={() => navigateToTab("my-orders")}
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
@@ -650,7 +687,7 @@ export default function Nav() {
                 </button>
 
                 <button
-                  onClick={() => navigateToTab('help')}
+                  onClick={() => navigateToTab("help")}
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
@@ -670,7 +707,7 @@ export default function Nav() {
                 </button>
 
                 <button
-                  onClick={() => navigateToTab('privacy-policy')}
+                  onClick={() => navigateToTab("privacy-policy")}
                   className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
                 >
                   <svg
@@ -717,5 +754,30 @@ export default function Nav() {
       {/* Cart Sidebar */}
       <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
     </>
+  );
+}
+
+export default function Nav() {
+  return (
+    <Suspense
+      fallback={
+        <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
+            <div className="flex items-center h-20 justify-between">
+              <div className="flex-shrink-0 pr-4 hidden lg:block">
+                <div className="text-3xl font-bold text-[#035F0F]">
+                  Souqalmart
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#035F0F]"></div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      }
+    >
+      <NavContent />
+    </Suspense>
   );
 }
