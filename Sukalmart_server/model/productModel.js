@@ -19,27 +19,6 @@ const productSchema = new Schema(
     about: { type: String },
     specifications: [{ type: String }],
     featureImages: [{ type: String }],
-    // Configurable product features section
-    featuresSection: {
-      layout: {
-        type: String,
-        enum: ["banner", "split"], // banner: full-width media, split: content + media
-        default: "banner",
-      },
-      imagePosition: {
-        type: String,
-        enum: ["left", "right"],
-        default: "right", // only for split layout
-      },
-      mediaType: {
-        type: String,
-        enum: ["image", "video"],
-        default: "image",
-      },
-      mediaUrl: { type: String },
-      title: { type: String },
-      description: { type: String },
-    },
     // Multiple features sections (preferred)
     featuresSections: [
       new Schema(
