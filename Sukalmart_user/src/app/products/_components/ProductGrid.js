@@ -236,7 +236,7 @@ export default function ProductGrid({
 	const modifiedProducts = getModifiedProducts();
 
 	return (
-		<div className="bg-white px-4 sm:px-10 md:px-0 lg:px-4">
+		<div className="bg-white container mx-auto px-4 sm:px-10 md:px-0 lg:px-4 2xl:px-10">
 			{/* Header */}
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
 				{/* md-only Filter/Sort triggers aligned to the end */}

@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import AddressForm from "./AddressForm";
 
 export default function CheckoutRight() {
+  const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [showAddressForm, setShowAddressForm] = useState(false);
 
@@ -20,6 +22,16 @@ export default function CheckoutRight() {
     phone: "+91 9999 444 555"
   });
 
+  const handleLogout = () => {
+    // Clear any stored authentication data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('selectedCategory');
+    localStorage.removeItem('cartItems');
+    sessionStorage.clear();
+    router.push('/login');
+  };
+
   return (
     <div className="space-y-6">
       {!showAddressForm ? (
@@ -28,7 +40,10 @@ export default function CheckoutRight() {
           <div className="bg-white rounded-lg">
             <div className="flex items-center justify-between px-4 pt-4 pb-2">
               <h3 className="text-xl font-semibold text-gray-800">Account info</h3>
-              <button className="text-sm text-[#035F0F] hover:text-[#035F0F]/80 underline cursor-pointer">
+              <button 
+                onClick={handleLogout}
+                className="text-sm text-[#035F0F] hover:text-[#035F0F]/80 underline cursor-pointer"
+              >
                 Logout
               </button>
             </div>
