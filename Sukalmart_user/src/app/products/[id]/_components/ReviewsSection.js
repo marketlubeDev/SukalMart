@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { Modal, Rate, Input, Button } from "antd";
+import { MdAttachFile } from "react-icons/md";
 
 export default function ReviewsSection({ product, selectedImage }) {
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const showReviewModal = () => {
     setIsReviewModalVisible(true);
@@ -17,21 +19,43 @@ export default function ReviewsSection({ product, selectedImage }) {
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    setSelectedImages([]);
     document.body.style.overflow = 'unset'; // Restore background scrolling
   };
 
   const handleReviewSubmit = () => {
     // Here you would typically send the review to your backend
-    console.log("Review submitted:", { rating, reviewText, productId: product.id });
+    console.log("Review submitted:", { rating, reviewText, selectedImages, productId: product.id });
     // You can add API call here to save the review
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    setSelectedImages([]);
     document.body.style.overflow = 'unset'; // Restore background scrolling
   };
 
   const clearRating = () => {
     setRating(0);
+  };
+
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length > 0) {
+      const newImages = imageFiles.map(file => ({
+        file,
+        preview: URL.createObjectURL(file)
+      }));
+      setSelectedImages(prev => [...prev, ...newImages]);
+    }
+  };
+
+  const removeImage = (index) => {
+    setSelectedImages(prev => {
+      const newImages = prev.filter((_, i) => i !== index);
+      return newImages;
+    });
   };
 
   return (
@@ -379,16 +403,59 @@ export default function ReviewsSection({ product, selectedImage }) {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Write your review <span className="text-red-500">*</span>
             </h3>
-            <Input.TextArea
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Tell us what you think.."
-              rows={4}
-              style={{ 
-                resize: 'none',
-                backgroundColor: 'rgba(0, 0, 0, 0.01)'
-              }}
-            />
+            <div className="relative">
+              <Input.TextArea
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                placeholder="Tell us what you think.."
+                rows={4}
+                style={{ 
+                  resize: 'none',
+                  backgroundColor: 'rgba(0, 0, 0, 0.01)',
+                  paddingRight: '40px' // Add padding to make room for the icon
+                }}
+              />
+              {/* Attach File Icon */}
+              <div className="absolute bottom-2 right-2">
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <MdAttachFile 
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    style={{ fontSize: '20px' }}
+                  />
+                </label>
+                <input
+                  id="image-upload"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+            </div>
+            
+            {/* Selected Images Preview */}
+            {selectedImages.length > 0 && (
+              <div className="mt-3">
+                <div className="flex flex-wrap gap-2">
+                  {selectedImages.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image.preview}
+                        alt={`Upload ${index + 1}`}
+                        className="w-16 h-16 object-cover rounded border border-gray-200"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Border Separator */}

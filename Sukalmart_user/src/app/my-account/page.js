@@ -68,7 +68,7 @@ function MyAccountContent() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">My account</h1>
           <p className="text-sm sm:text-base text-gray-600">
             Access and manage your personal information, orders, saved addresses, and support preferences.
@@ -78,7 +78,7 @@ function MyAccountContent() {
 
       {/* Navigation Tabs */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex space-x-4 sm:space-x-8 overflow-x-auto scrollbar-hide">
             {tabs.map((tab) => (
               <button
@@ -98,7 +98,7 @@ function MyAccountContent() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="bg-[#F5F5F5] rounded-lg p-4 sm:p-8">
           {renderTabContent()}
         </div>

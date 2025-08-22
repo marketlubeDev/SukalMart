@@ -23,12 +23,12 @@ export default function ProductInfoSection({
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-gray-600 mb-1">{product.type}</p>
+        <p className="text-gray-600 mb-1" style={{ fontSize: "clamp(12px, 2vw, 16px)" }}>{product.type}</p>
         <h1
           className="mb-2"
           style={{
             color: "#333333",
-            fontSize: "40px",
+            fontSize: "clamp(23px, 5vw, 40px)",
             fontStyle: "normal",
             fontWeight: 600,
             lineHeight: "normal",

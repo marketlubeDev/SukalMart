@@ -54,7 +54,7 @@ export default function CategorySection() {
   // Show loading state
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10 xl:px-10 2xl:px-10">
         <div className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
           Shop by category
         </div>
@@ -68,7 +68,7 @@ export default function CategorySection() {
   // Show error state
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10 xl:px-10 2xl:px-10">
         <div className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
           Shop by category
         </div>
@@ -87,7 +87,7 @@ export default function CategorySection() {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10"
+        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -204,7 +204,7 @@ export default function CategorySection() {
               className="flex flex-col items-center justify-start cursor-pointer"
               onClick={() => handleCategoryClick(category.name)}
             >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] xl:w-[220px] xl:h-[220px]">
+              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[160px] h-[160px] xl:w-[180px] xl:h-[180px]">
                 <img
                   src={category.image}
                   alt={category.name}

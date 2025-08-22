@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
 
@@ -10,6 +11,12 @@ export default function ProductImagesSection({
   toggleWishlistItem, 
   isInWishlist 
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
       {/* Thumbnail Images - Left Side */}
@@ -41,17 +48,19 @@ export default function ProductImagesSection({
             alt={product.name}
             className="w-full h-full object-contain"
           />
-          {/* Like Button */}
-          <button 
-            onClick={() => toggleWishlistItem(product)}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
-          >
-            {isInWishlist(product.id) ? (
-              <FaHeart className="w-5 h-5 text-red-600" />
-            ) : (
-              <CiHeart className="w-5 h-5 text-gray-800" />
-            )}
-          </button>
+          {/* Like Button - Only render when mounted */}
+          {mounted && (
+            <button 
+              onClick={() => toggleWishlistItem(product)}
+              className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
+            >
+              {isInWishlist(product.id) ? (
+                <FaHeart className="w-5 h-5 text-red-600" />
+              ) : (
+                <CiHeart className="w-5 h-5 text-gray-800" />
+              )}
+            </button>
+          )}
         </div>
         {/* Mobile Thumbnails Row */}
         <div className="md:hidden mt-3">

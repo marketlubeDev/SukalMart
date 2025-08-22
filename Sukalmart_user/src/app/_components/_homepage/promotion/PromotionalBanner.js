@@ -1,8 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function PromotionalBanner({ fullWidth = false }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const [currentBanner, setCurrentBanner] = useState(0);
+  const isProductsPage = pathname === "/products";
 
   const banners = [
     {
@@ -33,10 +37,30 @@ export default function PromotionalBanner({ fullWidth = false }) {
   const handleShopNowClick = (productId) => {
     router.push(`/products/${productId}`);
   };
+
+  const nextBanner = () => {
+    setCurrentBanner((prev) => (prev + 1) % banners.length);
+  };
+
+  const prevBanner = () => {
+    setCurrentBanner((prev) => (prev - 1 + banners.length) % banners.length);
+  };
+
+  // Auto-rotate banners every 5 seconds on products page
+  useEffect(() => {
+    if (!isProductsPage) return;
+    
+    const interval = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % banners.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isProductsPage]);
+
   return (
     <>
       <div
-        className={`${fullWidth ? 'px-0 sm:px-0 md:px-0 lg:px-0 2xl:px-0' : 'px-6 sm:px-10 md:px-8 lg:px-8 2xl:px-10'} container mx-auto py-6 md:py-8 lg:py-10 `}
+        className={`${fullWidth ? 'px-0 sm:px-0 md:px-0 lg:px-0 2xl:px-0' : 'px-6 sm:px-10 md:px-8 lg:px-10 2xl:px-10'} container mx-auto py-6 md:py-8 lg:py-10 `}
       >
         {/* Mobile: Carousel with one banner at a time */}
         <div className="lg:hidden">
@@ -98,33 +122,23 @@ export default function PromotionalBanner({ fullWidth = false }) {
           </div>
         </div>
 
-        {/* Desktop: Side by side layout */}
-        <div className="hidden lg:flex flex-row gap-0">
-          {banners.map((banner, index) => {
-            const isFirst = index === 0;
-            const isLast = index === banners.length - 1;
-            return (
+        {/* Desktop: Conditional layout based on route */}
+        <div className="hidden lg:block">
+          {isProductsPage ? (
+            // Products page: Single banner with swiper
+            <div className="relative">
               <div
-                key={banner.id}
-                className={`flex-1 relative overflow-hidden ${
-                  isFirst ? "rounded-l-lg" : ""
-                } ${isLast ? "rounded-r-lg" : ""}`}
+                className="relative overflow-hidden rounded-lg"
                 style={{
                   height: "240px",
-                  flex: "1 0 0",
-                  borderRadius: isFirst
-                    ? "4px 0 0 4px"
-                    : isLast
-                    ? "0 4px 4px 0"
-                    : undefined,
-                  background: banner.background,
+                  background: banners[currentBanner].background,
                 }}
               >
                 {/* Product Image - Right Side */}
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                   <img
-                    src={banner.image}
-                    alt={banner.alt}
+                    src={banners[currentBanner].image}
+                    alt={banners[currentBanner].alt}
                     className="w-48 h-48 xl:w-48 xl:h-48 object-contain"
                   />
                 </div>
@@ -135,28 +149,101 @@ export default function PromotionalBanner({ fullWidth = false }) {
                     className="text-2xl xl:text-2xl font-bold mb-3"
                     style={{ color: "#333333" }}
                   >
-                    {banner.title}
+                    {banners[currentBanner].title}
                   </h3>
                   <p
                     className="text-base xl:text-base mb-4 text-gray-600"
                     style={{ color: "#333333" }}
                   >
-                    {banner.description}
+                    {banners[currentBanner].description}
                   </p>
                   <button
-                    onClick={() => handleShopNowClick(banner.productId)}
+                    onClick={() => handleShopNowClick(banners[currentBanner].productId)}
                     className="text-gray-800 font-medium px-4 py-2 xl:px-4 xl:py-2 rounded text-base xl:text-base transition-colors duration-200 cursor-pointer"
                     style={{
                       color: "#333333",
                       border: "1px solid #333",
                     }}
                   >
-                    {banner.buttonText}
+                    {banners[currentBanner].buttonText}
                   </button>
                 </div>
               </div>
-            );
-          })}
+              
+              {/* Line Indicator */}
+              <div className="flex justify-center mt-6">
+                <div className="w-20 h-1 bg-gray-200 rounded-full">
+                  <div 
+                    className="h-1 bg-[#035F0F] rounded-full transition-all duration-300"
+                    style={{
+                      width: `${(currentBanner + 1) * (100 / banners.length)}%`
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // Other pages: Side by side layout
+            <div className="flex flex-row gap-0">
+              {banners.map((banner, index) => {
+                const isFirst = index === 0;
+                const isLast = index === banners.length - 1;
+                return (
+                  <div
+                    key={banner.id}
+                    className={`flex-1 relative overflow-hidden ${
+                      isFirst ? "rounded-l-lg" : ""
+                    } ${isLast ? "rounded-r-lg" : ""}`}
+                    style={{
+                      height: "240px",
+                      flex: "1 0 0",
+                      borderRadius: isFirst
+                        ? "4px 0 0 4px"
+                        : isLast
+                        ? "0 4px 4px 0"
+                        : undefined,
+                      background: banner.background,
+                    }}
+                  >
+                    {/* Product Image - Right Side */}
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                      <img
+                        src={banner.image}
+                        alt={banner.alt}
+                        className="w-48 h-48 xl:w-48 xl:h-48 object-contain"
+                      />
+                    </div>
+
+                    {/* Content - Left Side */}
+                    <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
+                      <h3
+                        className="text-2xl xl:text-2xl font-bold mb-3"
+                        style={{ color: "#333333" }}
+                      >
+                        {banner.title}
+                      </h3>
+                      <p
+                        className="text-base xl:text-base mb-4 text-gray-600"
+                        style={{ color: "#333333" }}
+                      >
+                        {banner.description}
+                      </p>
+                      <button
+                        onClick={() => handleShopNowClick(banner.productId)}
+                        className="text-gray-800 font-medium px-4 py-2 xl:px-4 xl:py-2 rounded text-base xl:text-base transition-colors duration-200 cursor-pointer"
+                        style={{
+                          color: "#333333",
+                          border: "1px solid #333",
+                        }}
+                      >
+                        {banner.buttonText}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         <div className="border-b border-black/10 w-full mt-6"></div>
       </div>

@@ -309,28 +309,30 @@ function NavContent() {
                 </div>
               ) : (
                 <>
-                  {navigationItems.map((item, index) => (
-                    <div key={index} className="relative group">
-                      {item.href ? (
-                        <Link
-                          href={item.href}
-                          className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
-                          onClick={(e) => {
-                            // Reset category when Products is clicked
-                            if (item.label === "Products") {
-                              e.preventDefault();
-                              // Clear any stored category selection
-                              localStorage.removeItem("selectedCategory");
-                              // Force page reload to reset state
-                              window.location.href = "/products";
-                            }
-                          }}
-                        >
-                          <span>{item.label}</span>
-                        </Link>
-                      ) : (
+                  {/* Show only Products link on large screens */}
+                  <div className="relative group">
+                    <Link
+                      href="/products"
+                      className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
+                      onClick={(e) => {
+                        // Reset category when Products is clicked
+                        e.preventDefault();
+                        // Clear any stored category selection
+                        localStorage.removeItem("selectedCategory");
+                        // Force page reload to reset state
+                        window.location.href = "/products";
+                      }}
+                    >
+                      <span>Products</span>
+                    </Link>
+                  </div>
+                  
+                  {/* Scrollable navigation container for remaining links */}
+                  <div className="flex items-center space-x-8 overflow-x-auto scrollbar-hide max-w-[400px] xl:max-w-[500px] 2xl:max-w-[600px]">
+                    {navigationItems.slice(1).map((item, index) => (
+                      <div key={index} className="relative group flex-shrink-0">
                         <button
-                          className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer"
+                          className="flex items-center space-x-1 text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap"
                           onClick={() =>
                             item.hasDropdown && toggleDropdown(item.label)
                           }
@@ -348,32 +350,32 @@ function NavContent() {
                             />
                           )}
                         </button>
-                      )}
 
-                      {/* Desktop Dropdown Menu */}
-                      {item.hasDropdown && (
-                        <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                          <div className="py-2">
-                            {item.submenu.map((subItem, subIndex) => (
-                              <a
-                                key={subIndex}
-                                href="#"
-                                className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                              >
-                                {subItem}
-                              </a>
-                            ))}
+                        {/* Desktop Dropdown Menu */}
+                        {item.hasDropdown && (
+                          <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div className="py-2">
+                              {item.submenu.map((subItem, subIndex) => (
+                                <a
+                                  key={subIndex}
+                                  href="#"
+                                  className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                                >
+                                  {subItem}
+                                </a>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </>
               )}
             </div>
 
             {/* Desktop Action Buttons - Rightmost with same padding */}
-            <div className="hidden lg:flex lg:items-center lg:space-x-4">
+            <div className="hidden lg:flex lg:items-center lg:space-x-4 flex-shrink-0">
               {/* Search / Close icon area */}
               {showSearchBar ? (
                 <button
@@ -826,6 +828,16 @@ function NavContent() {
 
       {/* Cart Sidebar */}
       <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
+
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;  /* Internet Explorer 10+ */
+          scrollbar-width: none;  /* Firefox */
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;  /* Safari and Chrome */
+        }
+      `}</style>
     </>
   );
 }
