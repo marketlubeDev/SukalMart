@@ -15,10 +15,10 @@ export default function CheckoutLeft({
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-screen overflow-y-auto">
       {/* Items Section */}
       <div className="rounded-lg">
-        <div className="flex justify-between items-center p-4">
+        <div className="flex justify-between items-center p-4 sm:p-5 md:p-6">
           <h3 className="text-xl font-semibold text-gray-800">Items</h3>
           <span className="text-sm text-gray-600">{cartItems.length} products</span>
         </div>
@@ -27,7 +27,7 @@ export default function CheckoutLeft({
           {cartItems.map((item, idx) => (
             <div
               key={item.id}
-              className="relative flex p-4"
+              className="relative flex p-4 sm:p-5 md:p-6"
             >
               {/* Remove Button */}
               <button
@@ -50,7 +50,7 @@ export default function CheckoutLeft({
               </button>
 
               {/* Product Image */}
-              <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center flex-shrink-0 mr-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-lg flex items-center justify-center flex-shrink-0 mr-4 sm:mr-5 md:mr-6">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -60,7 +60,7 @@ export default function CheckoutLeft({
 
               {/* Product Details */}
               <div className="flex-1 min-w-0">
-                <h4 className="text-base font-semibold text-gray-800 mb-1">
+                <h4 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 mb-1">
                   {item.name}
                 </h4>
                 <div className="text-sm text-gray-600 mb-2">
@@ -114,7 +114,7 @@ export default function CheckoutLeft({
 
       {/* Order Summary */}
       <div className="rounded-lg">
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between p-4 sm:p-5 md:p-6">
           <h3 className="text-xl font-semibold text-gray-800">Order Summary</h3>
           <button
             onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
@@ -139,7 +139,7 @@ export default function CheckoutLeft({
         </div>
 
         {orderSummaryOpen && (
-          <div className="p-6 space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 lg:p-8 space-y-4">
             <div className="flex justify-between">
               <span className="text-base font-medium text-gray-800">Subtotal</span>
               <span className="text-lg font-bold text-gray-800">

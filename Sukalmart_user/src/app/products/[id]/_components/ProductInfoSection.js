@@ -1,0 +1,430 @@
+"use client";
+
+import ProductServiceBenefits from "./ProductServiceBenefits";
+
+export default function ProductInfoSection({
+  product,
+  coupons,
+  visibleCoupons,
+  remainingCouponsCount,
+  showMoreCoupons,
+  setShowMoreCoupons,
+  remainingCoupons,
+  volumes,
+  selectedVolume,
+  setSelectedVolume,
+  quantity,
+  setQuantity,
+  addToCart,
+  buyNow,
+  showMoreDetails,
+  setShowMoreDetails
+}) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <p className="text-gray-600 mb-1">{product.type}</p>
+        <h1
+          className="mb-2"
+          style={{
+            color: "#333333",
+            fontSize: "40px",
+            fontStyle: "normal",
+            fontWeight: 600,
+            lineHeight: "normal",
+            letterSpacing: "-0.8px",
+            textTransform: "capitalize",
+          }}
+        >
+          {product.name}
+        </h1>
+
+        {/* Rating Section */}
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <img
+                key={star}
+                src={star <= 4 ? "/filledstar.svg" : "/star.svg"}
+                alt="star"
+                className="w-4 h-4"
+              />
+            ))}
+          </div>
+          <span className="text-sm">
+            <span className="text-black">4.5</span>
+            <span className="text-gray-600"> (220 reviews)</span>
+          </span>
+        </div>
+
+        {/* Price */}
+        <div className="mb-4 border-b border-gray-200 pb-4">
+          <div className="flex items-center gap-3">
+            <span
+              className="text-3xl font-bold text-green-600"
+              style={{
+                overflow: "hidden",
+                color: "#333333",
+                textOverflow: "ellipsis",
+                fontSize: "24px",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "100%",
+                letterSpacing: "-0.48px",
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+              }}
+            >
+              ₹{product.price.toLocaleString()}
+            </span>
+            <span className="text-lg text-gray-500 line-through">
+              ₹{product.originalPrice.toLocaleString()}
+            </span>
+            <span
+              className="px-2 py-1 rounded text-sm font-medium"
+              style={{ color: "#035F0F" }}
+            >
+              -{product.discount}% OFF
+            </span>
+          </div>
+          <span
+            className="text-xs text-gray-400 block mt-1 text-left"
+            style={{ lineHeight: "1.2" }}
+          >
+            (inclusive of all tax)
+          </span>
+        </div>
+
+        {/* Coupon Section */}
+        {coupons.length > 0 && (
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3 min-w-0">
+              {visibleCoupons.map((c, idx) => (
+                <div
+                  key={idx}
+                  className="px-2 py-3 rounded flex items-center gap-2"
+                  style={{
+                    borderRadius: "4px",
+                    border: "1px dashed rgba(3, 95, 15, 0.64)",
+                    background: "rgba(3, 95, 15, 0.02)",
+                    minWidth: "0",
+                  }}
+                >
+                  <div className="flex items-center justify-center">
+                    <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                  </div>
+                  <div className="truncate">
+                    <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                    <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                      {c.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {remainingCouponsCount > 0 && !showMoreCoupons && (
+              <button
+                className="text-sm font-medium hover:underline ml-4 whitespace-nowrap cursor-pointer"
+                style={{ color: "#035F0F" }}
+                onClick={() => setShowMoreCoupons(true)}
+              >
+                +{remainingCouponsCount} more
+              </button>
+            )}
+          </div>
+        )}
+        {showMoreCoupons && remainingCoupons.length > 0 && (
+          <>
+            <div className="flex items-center gap-3 mt-3">
+              {remainingCoupons.map((c, idx) => (
+                <div
+                  key={`rest-${idx}`}
+                  className="px-2 py-3 rounded flex items-center gap-2"
+                  style={{
+                    borderRadius: "4px",
+                    border: "1px dashed rgba(3, 95, 15, 0.64)",
+                    background: "rgba(3, 95, 15, 0.02)",
+                    minWidth: "0",
+                  }}
+                >
+                  <div className="flex items-center justify-center">
+                    <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                  </div>
+                  <div className="truncate">
+                    <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                    <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                      {c.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2">
+              <button
+                className="text-sm font-medium hover:underline cursor-pointer"
+                style={{ color: "#035F0F" }}
+                onClick={() => setShowMoreCoupons(false)}
+              >
+                Show less
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Volume Selection */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-gray-700 font-medium">Volume:</span>
+            <span className="text-gray-900 font-semibold">{selectedVolume}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {volumes.map((vol) => (
+              <button
+                key={vol}
+                onClick={() => setSelectedVolume(vol)}
+                className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
+                style={{ borderColor: selectedVolume === vol ? "#02490C" : "#D1D5DB", color: "#333" }}
+              >
+                {vol}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Quantity and Add to Cart */}
+      <div className="space-y-4 w-full md:max-w-[260px]">
+        <div className="flex items-center gap-3">
+          <label className="text-sm font-medium text-gray-700">
+            Qty :
+          </label>
+          <div className="flex items-center bg-[#F4F8F5] border border-[#B6D7C9] rounded-md px-1">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
+            >
+              -
+            </button>
+            <span
+              className="px-2 py-1 text-black font-semibold text-base"
+              style={{ minWidth: "2ch", textAlign: "center" }}
+            >
+              {quantity.toString().padStart(2, "0")}
+            </span>
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+              className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        <div className="flex gap-4 w-full md:w-[460px]">
+          <button
+            onClick={buyNow}
+            className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+            style={{
+              padding: "16px 24px",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              borderRadius: "4px",
+              background: "#035F0F",
+              color: "#fff",
+              fontWeight: 500,
+              fontSize: "15px",
+              border: "none",
+              transition: "background 0.2s",
+            }}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.background = "#02420A")
+            }
+            onMouseOut={(e) =>
+              (e.currentTarget.style.background = "#035F0F")
+            }
+          >
+            Buy now
+          </button>
+          <button
+            onClick={addToCart}
+            className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+            style={{
+              padding: "16px 24px",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              borderRadius: "4px",
+              border: "1px solid #035F0F",
+              fontSize: "15px",
+              background: "#fff",
+              color: "#035F0F",
+              fontWeight: 500,
+              transition: "background 0.2s",
+            }}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.background = "#F4F8F5")
+            }
+            onMouseOut={(e) =>
+              (e.currentTarget.style.background = "#fff")
+            }
+          >
+            Add to cart
+          </button>
+        </div>
+        <div className="mt-2">
+          <span
+            className="text-[#FF5722] font-medium"
+            style={{ fontSize: "16px" }}
+          >
+            Only <span className="font-semibold">5 stocks left</span>,
+          </span>
+          <span
+            className="text-black font-medium"
+            style={{ fontSize: "16px" }}
+          >
+            {" "}
+            Hurry up!
+          </span>
+        </div>
+      </div>
+
+      <ProductServiceBenefits />
+
+      {/* About product */}
+      <div className="rounded-lg py-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          About product
+        </h3>
+        <p className="text-gray-700 leading-relaxed mb-2">
+          {product.type === "Hair Care" && (
+            <>
+              Our premium hair care products are formulated with advanced ingredients to address specific hair concerns. Whether you're dealing with dryness, dandruff, or hair loss, our scientifically-backed formulas work to restore hair health and vitality. Each product is carefully crafted to provide deep nourishment, strengthen hair follicles, and promote natural growth while maintaining the perfect balance for your hair type.
+            </>
+          )}
+          {product.type === "Soap & Deodorants" && (
+            <>
+              Experience the perfect blend of natural ingredients and modern science in our soap and deodorant collection. Our products are designed to provide thorough cleansing while being gentle on your skin. From antibacterial protection to long-lasting freshness, each item is crafted to meet your daily hygiene needs. We use carefully selected natural oils and essential ingredients to ensure your skin stays healthy, clean, and refreshed throughout the day.
+            </>
+          )}
+          {product.type === "Skin Care" && (
+            <>
+              Transform your skincare routine with our advanced formulations designed to address various skin concerns. Our products combine cutting-edge dermatological science with natural ingredients to deliver visible results. From hydration and brightening to anti-aging and acne treatment, each product is formulated to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+            </>
+          )}
+          {product.type === "Oral Care" && (
+            <>
+              Maintain optimal oral health with our comprehensive range of dental care products. Our oral care solutions are designed to provide thorough cleaning, fresh breath, and long-term dental health benefits. From advanced whitening formulas to gentle yet effective cleaning systems, each product is engineered to work together for complete oral hygiene. We prioritize both effectiveness and comfort to ensure your daily dental routine is both beneficial and enjoyable.
+            </>
+          )}
+          {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+            <>
+              Discover our carefully curated collection of premium products designed to enhance your daily routine. Each item is crafted with attention to detail, using quality ingredients and innovative formulations to deliver exceptional results. Whether you're looking for personal care essentials or specialized treatments, our products are designed to meet your needs while providing the quality and reliability you deserve.
+            </>
+          )}
+        </p>
+        <button
+          onClick={() => setShowMoreDetails((v) => !v)}
+          className="text-green-700 text-sm font-medium underline hover:underline cursor-pointer"
+          style={{ display: "inline-block", marginTop: "4px", background: 'none', border: 'none', padding: 0 }}
+        >
+          {showMoreDetails ? 'Show less' : 'See more product details'}
+        </button>
+        {showMoreDetails && (
+          <div className="mt-3 text-gray-700 leading-relaxed space-y-2">
+            <p>
+              This is a premium formulation crafted with care to deliver visible results. It blends advanced active ingredients with gentle, skin-friendly bases for daily use.
+            </p>
+            <p>
+              Key highlights: dermatologist-inspired formula, lightweight texture, non-greasy finish, and suitable for most skin and hair types. Ideal for regular routines or as a targeted treatment.
+            </p>
+            <p>
+              Directions for best results: apply an appropriate amount, massage gently, and allow to absorb. Use consistently and pair with complementary products from the same category for maximum benefits.
+            </p>
+            <p>
+              Note: this is a sample description for demonstration purposes only. Replace with real content fetched from your backend in production.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Specification */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          Specification
+        </h3>
+        <ul className="list-disc pl-5 text-gray-700 space-y-1">
+          {product.type === "Hair Care" && (
+            <>
+              <li>Formulated with advanced hair care technology</li>
+              <li>Suitable for all hair types and textures</li>
+              <li>Contains natural and nourishing ingredients</li>
+              <li>Free from harmful chemicals and sulfates</li>
+              <li>Clinically tested for safety and effectiveness</li>
+              <li>Designed for daily use and long-term results</li>
+            </>
+          )}
+          {product.type === "Soap & Deodorants" && (
+            <>
+              <li>Made with natural and gentle ingredients</li>
+              <li>Provides long-lasting freshness and protection</li>
+              <li>Suitable for sensitive skin types</li>
+              <li>Antibacterial and antimicrobial properties</li>
+              <li>Eco-friendly and biodegradable formulas</li>
+              <li>Dermatologically tested for safety</li>
+            </>
+          )}
+          {product.type === "Skin Care" && (
+            <>
+              <li>Advanced dermatological formulations</li>
+              <li>Contains active ingredients for targeted results</li>
+              <li>Suitable for various skin concerns and types</li>
+              <li>Non-comedogenic and hypoallergenic</li>
+              <li>Clinically proven effectiveness</li>
+              <li>Designed for daily skincare routines</li>
+            </>
+          )}
+          {product.type === "Oral Care" && (
+            <>
+              <li>Advanced dental care technology</li>
+              <li>Provides comprehensive oral hygiene</li>
+              <li>Suitable for daily use and maintenance</li>
+              <li>Contains fluoride and protective ingredients</li>
+              <li>Dentist-recommended formulations</li>
+              <li>Designed for long-term oral health benefits</li>
+            </>
+          )}
+          {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+            <>
+              <li>Premium quality ingredients and formulations</li>
+              <li>Designed for optimal performance and results</li>
+              <li>Suitable for regular daily use</li>
+              <li>Safety tested and approved</li>
+              <li>Long-lasting effectiveness and reliability</li>
+              <li>User-friendly and convenient application</li>
+            </>
+          )}
+        </ul>
+      </div>
+
+      {/* Return & Refund Policy */}
+      <div className="mt-8">
+        <div className="border-t border-gray-200 mb-4"></div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          Return &amp; Refund Policy
+        </h3>
+        <p className="text-gray-700 mb-2">
+          Returns are accepted within{" "}
+          <span className="font-semibold">7 days</span> for unused items
+          in original packaging. Damaged or incorrect products are
+          eligible for a full refund or replacement.
+        </p>
+        <p className="text-gray-700" style={{ textIndent: "2em" }}>
+          Refunds are processed after inspection. To start a return,
+          contact our support team with your order ID.
+        </p>
+      </div>
+    </div>
+  );
+} 
