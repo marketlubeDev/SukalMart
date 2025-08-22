@@ -29,7 +29,7 @@ export default function BestSellersSection() {
     }
   };
   return (
-    <div className="bg-white container mx-auto px-2 md:px-8 lg:px-8 py-8 md:py-4 overflow-hidden mb-6 md:mb-6">
+    <div className="bg-white container mx-auto px-2 md:px-8 lg:px-8 2xl:px-10 py-8 md:py-4 overflow-hidden mb-6 md:mb-6">
       <div className="px-2 md:px-0">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">

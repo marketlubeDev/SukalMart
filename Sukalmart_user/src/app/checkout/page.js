@@ -87,9 +87,9 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen">
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row ">
+      <div className="flex flex-col lg:flex-row">
         {/* Left Column - Gray Background */}
-        		<div className="w-full lg:w-1/2 bg-[#F5F5F5] px-4 py-6 lg:pl-25 lg:pr-8 lg:py-8">
+        <div className="w-full lg:w-1/2 bg-[#F5F5F5] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6 sm:py-8 md:py-10 lg:py-12">
           <CheckoutLeft 
             cartItems={cartItems}
             quantities={quantities}
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Right Column - White Background */}
-        		<div className="w-full lg:w-1/2 bg-white px-4 py-6 lg:pr-25 lg:pl-8 lg:py-8">
+        <div className="w-full lg:w-1/2 bg-white px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6 sm:py-8 md:py-10 lg:py-12">
           <CheckoutRight />
         </div>
       </div>
