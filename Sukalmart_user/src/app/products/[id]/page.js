@@ -21,6 +21,7 @@ import ProductFeaturesBanner from "./_components/ProductFeaturesBanner";
 import ProductImagesSection from "./_components/ProductImagesSection";
 import ProductInfoSection from "./_components/ProductInfoSection";
 import ProductFeaturesSection2 from "./_components/ProductFeaturesSection2";
+import ProductFeaturesSection3 from "./_components/ProductFeaturesSection3";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -222,9 +223,10 @@ export default function ProductDetailPage() {
 
         <ProductFeaturesSection productType={product.type} />
         <ProductFeaturesSection2 productType={product.type} />
+    
 
         <ProductVideoSection />
-
+        <ProductFeaturesSection3 productType={product.type} />
       
 
         <FeaturedProductsSection isProductPage={true} />

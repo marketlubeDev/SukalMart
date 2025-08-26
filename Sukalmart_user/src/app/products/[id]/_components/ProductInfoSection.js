@@ -98,61 +98,134 @@ export default function ProductInfoSection({
 
         {/* Coupon Section */}
         {coupons.length > 0 && (
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3 min-w-0">
-              {visibleCoupons.map((c, idx) => (
-                <div
-                  key={idx}
-                  className="px-2 py-3 rounded flex items-center gap-2"
-                  style={{
-                    borderRadius: "4px",
-                    border: "1px dashed rgba(3, 95, 15, 0.64)",
-                    background: "rgba(3, 95, 15, 0.02)",
-                    minWidth: "0",
-                  }}
+          <div className="mb-6 pt-2">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-3 min-w-0">
+                {/* Show first 2 coupons on small screens with smaller size */}
+                {visibleCoupons.slice(0, 2).map((c, idx) => (
+                  <div
+                    key={idx}
+                    className="px-2 py-2 md:px-3 md:py-3 xl:px-4 xl:py-3 rounded flex items-center gap-1 md:gap-2 flex-shrink-0 border-1 xl:min-w-[200px] xl:max-w-[280px]"
+                    style={{
+                      borderRadius: "4px",
+                      borderStyle: "dashed",
+                      borderColor: "rgba(3, 95, 15, 0.64)",
+                      background: "rgba(3, 95, 15, 0.02)",
+                      minWidth: "100px",
+                      maxWidth: "140px",
+                      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <div className="flex items-center justify-center flex-shrink-0">
+                      <img src="/coupon.svg" alt="coupon" className="w-4 h-4 md:w-5 md:h-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
+                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                        {c.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {/* Show remaining coupons on md+ screens (but not xl) */}
+                {remainingCoupons.map((c, idx) => (
+                  <div
+                    key={`md-${idx}`}
+                    className="hidden md:flex xl:hidden px-3 py-3 rounded items-center gap-2 flex-shrink-0 border-1"
+                    style={{
+                      borderRadius: "4px",
+                      borderStyle: "dashed",
+                      borderColor: "rgba(3, 95, 15, 0.64)",
+                      background: "rgba(3, 95, 15, 0.02)",
+                      minWidth: "140px",
+                      maxWidth: "200px",
+                      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <div className="flex items-center justify-center flex-shrink-0">
+                      <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                        {c.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {/* Show remaining coupons on xl screens only when expanded */}
+                {showMoreCoupons && remainingCoupons.map((c, idx) => (
+                  <div
+                    key={`xl-${idx}`}
+                    className="hidden xl:flex px-4 py-3 rounded items-center gap-2 flex-shrink-0 border-1"
+                    style={{
+                      borderRadius: "4px",
+                      borderStyle: "dashed",
+                      borderColor: "rgba(3, 95, 15, 0.64)",
+                      background: "rgba(3, 95, 15, 0.02)",
+                      minWidth: "200px",
+                      maxWidth: "280px",
+                      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <div className="flex items-center justify-center flex-shrink-0">
+                      <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                        {c.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {/* Show "Show less" button inline with coupons on xl screens */}
+                {showMoreCoupons && (
+                  <button
+                    className="text-sm font-medium hover:underline cursor-pointer hidden xl:block self-center ml-3"
+                    style={{ color: "#035F0F" }}
+                    onClick={() => setShowMoreCoupons(false)}
+                  >
+                    Show less
+                  </button>
+                )}
+              </div>
+              {/* Show "+1 more" on small screens and xl screens */}
+              {coupons.length > 2 && !showMoreCoupons && (
+                <button
+                  className="text-sm font-medium hover:underline whitespace-nowrap cursor-pointer self-start md:hidden xl:block"
+                  style={{ color: "#035F0F" }}
+                  onClick={() => setShowMoreCoupons(true)}
                 >
-                  <div className="flex items-center justify-center">
-                    <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
-                  </div>
-                  <div className="truncate">
-                    <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
-                    <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
-                      {c.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                  +1 more
+                </button>
+              )}
             </div>
-            {remainingCouponsCount > 0 && !showMoreCoupons && (
-              <button
-                className="text-sm font-medium hover:underline ml-4 whitespace-nowrap cursor-pointer"
-                style={{ color: "#035F0F" }}
-                onClick={() => setShowMoreCoupons(true)}
-              >
-                +{remainingCouponsCount} more
-              </button>
-            )}
           </div>
         )}
-        {showMoreCoupons && remainingCoupons.length > 0 && (
+        {/* Show remaining coupons for small and md screens when expanded */}
+        {showMoreCoupons && coupons.length > 2 && (
           <>
-            <div className="flex items-center gap-3 mt-3">
-              {remainingCoupons.map((c, idx) => (
+            <div className="flex flex-wrap items-center gap-3 mt-3 xl:hidden">
+              {coupons.slice(2).map((c, idx) => (
                 <div
                   key={`rest-${idx}`}
-                  className="px-2 py-3 rounded flex items-center gap-2"
+                  className="px-2 py-2 md:px-3 md:py-3 rounded flex items-center gap-1 md:gap-2 flex-shrink-0 border-1"
                   style={{
                     borderRadius: "4px",
-                    border: "1px dashed rgba(3, 95, 15, 0.64)",
+                    borderStyle: "dashed",
+                    borderColor: "rgba(3, 95, 15, 0.64)",
                     background: "rgba(3, 95, 15, 0.02)",
-                    minWidth: "0",
+                    minWidth: "100px",
+                    maxWidth: "140px",
+                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  <div className="flex items-center justify-center">
-                    <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <img src="/coupon.svg" alt="coupon" className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
-                  <div className="truncate">
-                    <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
                     <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
                       {c.description}
                     </p>
@@ -160,7 +233,7 @@ export default function ProductInfoSection({
                 </div>
               ))}
             </div>
-            <div className="mt-2">
+            <div className="mt-2 xl:hidden">
               <button
                 className="text-sm font-medium hover:underline cursor-pointer"
                 style={{ color: "#035F0F" }}
@@ -194,7 +267,7 @@ export default function ProductInfoSection({
       </div>
 
       {/* Quantity and Add to Cart */}
-      <div className="space-y-4 w-full md:max-w-[260px]">
+      <div className="space-y-4 w-full">
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-gray-700">
             Qty :
@@ -221,10 +294,10 @@ export default function ProductInfoSection({
           </div>
         </div>
 
-        <div className="flex gap-4 w-full md:w-[460px]">
+        <div className="flex gap-4 w-full">
           <button
             onClick={buyNow}
-            className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+            className="flex items-center justify-center gap-2 flex-1 cursor-pointer"
             style={{
               padding: "16px 24px",
               justifyContent: "center",
@@ -249,7 +322,7 @@ export default function ProductInfoSection({
           </button>
           <button
             onClick={addToCart}
-            className="flex items-center justify-center gap-2 flex-1 md:w-[220px] cursor-pointer"
+            className="flex items-center justify-center gap-2 flex-1 cursor-pointer"
             style={{
               padding: "16px 24px",
               justifyContent: "center",

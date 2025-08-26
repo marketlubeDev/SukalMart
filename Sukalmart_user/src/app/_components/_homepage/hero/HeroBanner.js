@@ -143,7 +143,7 @@ export default function HeroBanner() {
         {/* Readability overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
 
-        <div className="w-full flex justify-between items-center top-50 absolute z-20">
+        <div className="w-full flex justify-between items-center top-[45%] absolute z-20">
           <div className=" flex justify-between container mx-auto px-10">
             {/* Previous Icon - Positioned above content with left spacing */}
             <div>
@@ -335,21 +335,21 @@ export default function HeroBanner() {
             <div className="flex justify-between items-center mb-2">
               <button
                 onClick={prevSlide}
-                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
                 style={{ cursor: "pointer" }}
               >
                 <img
                   src="/previousicon.svg"
                   alt="Previous"
-                  className="w-4 h-4"
+                  className="w-3 h-3"
                 />
               </button>
               <button
                 onClick={nextSlide}
-                className="w-10 h-10 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center transition-colors bg-white/90 hover:bg-white rounded-full shadow ring-1 ring-black/5 cursor-pointer"
                 style={{ cursor: "pointer" }}
               >
-                <img src="/nexticon.svg" alt="Next" className="w-4 h-4" />
+                <img src="/nexticon.svg" alt="Next" className="w-3 h-3" />
               </button>
             </div>
 

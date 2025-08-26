@@ -232,7 +232,7 @@ export default function ProductsPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <div className="hidden lg:block lg:w-1/5">
-            <div className="sticky top-20">
+            <div className="sticky top-30">
             <ProductSidebar
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}

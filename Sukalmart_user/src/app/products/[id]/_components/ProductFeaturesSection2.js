@@ -139,13 +139,13 @@ export default function ProductFeaturesSection2({ productType }) {
           >
             {getTitle()}
           </div>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-base">
+          <div className="text-gray-700 space-y-3 text-base">
             {getFeatures().map((feature, index) => (
-              <li key={index}>
+              <p key={index} className="leading-relaxed">
                 {feature}
-              </li>
+              </p>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
