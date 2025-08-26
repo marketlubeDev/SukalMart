@@ -156,7 +156,7 @@ export default function ProductFeaturesSection3({ productType }) {
             src={getImageSrc()}
             alt={`${productType} Benefits`}
             className="object-contain"
-            style={{ width: "100%", maxWidth: "500px", height: "auto" }}
+            style={{ maxWidth: "500px", maxHeight: "350px", height: "auto" }}
           />
         </div>
       </div>

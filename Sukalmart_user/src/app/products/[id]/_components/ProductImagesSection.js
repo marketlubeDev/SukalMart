@@ -18,7 +18,7 @@ export default function ProductImagesSection({
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row lg:sticky lg:top-0 lg:self-start gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       {/* Thumbnail Images - Left Side */}
       <div className="hidden md:flex flex-col gap-2">
         {product.images.map((image, index) => (

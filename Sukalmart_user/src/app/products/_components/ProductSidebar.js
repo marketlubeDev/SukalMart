@@ -33,7 +33,7 @@ export default function ProductSidebar({
   ];
 
   return (
-    <div className="bg-white p-4 rounded-lg">
+    <div className="bg-white p-4 rounded-lg overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(100vh - 120px)' }}>
       {/* Categories */}
       <div className="mb-4">
         <h3
@@ -313,6 +313,16 @@ export default function ProductSidebar({
           background: transparent;
           cursor: pointer;
           border: none;
+        }
+
+        /* Hide scrollbar for the sidebar */
+        .overflow-y-auto::-webkit-scrollbar {
+          display: none;
+        }
+
+        .overflow-y-auto {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </div>

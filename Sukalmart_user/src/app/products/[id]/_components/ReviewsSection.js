@@ -63,7 +63,7 @@ export default function ReviewsSection({ product, selectedImage }) {
       <div className="my-12 w-full mx-auto md:px-0">
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Left: Ratings Summary */}
-          <div className="md:w-1/3 w-full flex flex-col items-start md:items-start sticky-left">
+          <div className="md:w-1/3 w-full flex flex-col items-start md:items-start reviews-sticky-left lg:sticky lg:top-32">
             <h3
               className="text-xl font-semibold mb-2"
               style={{ color: "#333" }}

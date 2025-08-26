@@ -66,3 +66,31 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Sticky positioning for product images */
+.product-images-sticky {
+  position: sticky;
+  top: 8rem;
+  align-self: flex-start;
+  height: fit-content;
+}
+
+@media (max-width: 1023px) {
+  .product-images-sticky {
+    position: static;
+  }
+}
+
+/* Sticky left column in reviews */
+.reviews-sticky-left {
+  position: sticky;
+  top: 8rem;
+  align-self: flex-start;
+  height: fit-content;
+}
+
+@media (max-width: 1023px) {
+  .reviews-sticky-left {
+    position: static;
+  }
+}
