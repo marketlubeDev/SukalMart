@@ -47,11 +47,11 @@ export default function ProductInfoSection({
                 key={star}
                 src={star <= 4 ? "/filledstar.svg" : "/star.svg"}
                 alt="star"
-                className="w-4 h-4"
+                className="w-3 h-3 sm:w-4 sm:h-4"
               />
             ))}
           </div>
-          <span className="text-sm">
+          <span className="text-xs sm:text-sm">
             <span className="text-black">4.5</span>
             <span className="text-gray-600"> (220 reviews)</span>
           </span>
@@ -61,12 +61,11 @@ export default function ProductInfoSection({
         <div className="mb-4 border-b border-gray-200 pb-4">
           <div className="flex items-center gap-3">
             <span
-              className="text-3xl font-bold text-green-600"
+              className="font-bold text-green-600 text-xl sm:text-2xl md:text-3xl"
               style={{
                 overflow: "hidden",
                 color: "#333333",
                 textOverflow: "ellipsis",
-                fontSize: "24px",
                 fontStyle: "normal",
                 fontWeight: 600,
                 lineHeight: "100%",
@@ -78,12 +77,12 @@ export default function ProductInfoSection({
             >
               ₹{product.price.toLocaleString()}
             </span>
-            <span className="text-lg text-gray-500 line-through">
+            <span className="text-sm sm:text-lg text-gray-500 line-through">
               ₹{product.originalPrice.toLocaleString()}
             </span>
             <span
-              className="px-2 py-1 rounded text-sm font-medium"
-              style={{ color: "#035F0F" }}
+              className="px-2 py-1 rounded text-xs sm:text-sm font-medium"
+              style={{ color: "var(--color-primary)" }}
             >
               -{product.discount}% OFF
             </span>
@@ -183,7 +182,7 @@ export default function ProductInfoSection({
                 {showMoreCoupons && (
                   <button
                     className="text-sm font-medium hover:underline cursor-pointer hidden xl:block self-center ml-3"
-                    style={{ color: "#035F0F" }}
+                    style={{ color: "var(--color-primary)" }}
                     onClick={() => setShowMoreCoupons(false)}
                   >
                     Show less
@@ -194,7 +193,7 @@ export default function ProductInfoSection({
               {coupons.length > 2 && !showMoreCoupons && (
                 <button
                   className="text-sm font-medium hover:underline whitespace-nowrap cursor-pointer self-start md:hidden xl:block"
-                  style={{ color: "#035F0F" }}
+                  style={{ color: "var(--color-primary)" }}
                   onClick={() => setShowMoreCoupons(true)}
                 >
                   +1 more
@@ -236,7 +235,7 @@ export default function ProductInfoSection({
             <div className="mt-2 xl:hidden">
               <button
                 className="text-sm font-medium hover:underline cursor-pointer"
-                style={{ color: "#035F0F" }}
+                style={{ color: "var(--color-primary)" }}
                 onClick={() => setShowMoreCoupons(false)}
               >
                 Show less
@@ -248,15 +247,15 @@ export default function ProductInfoSection({
         {/* Volume Selection */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-gray-700 font-medium">Volume:</span>
-            <span className="text-gray-900 font-semibold">{selectedVolume}</span>
+            <span className="text-gray-700 font-medium text-sm sm:text-base">Volume:</span>
+            <span className="text-gray-900 font-semibold text-xs sm:text-sm">{selectedVolume}</span>
           </div>
           <div className="flex items-center gap-3">
             {volumes.map((vol) => (
               <button
                 key={vol}
                 onClick={() => setSelectedVolume(vol)}
-                className={`px-4 py-2 rounded-md text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
+                className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
                 style={{ borderColor: selectedVolume === vol ? "#02490C" : "#D1D5DB", color: "#333" }}
               >
                 {vol}
@@ -269,25 +268,25 @@ export default function ProductInfoSection({
       {/* Quantity and Add to Cart */}
       <div className="space-y-4 w-full">
         <div className="flex items-center gap-3">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-xs sm:text-sm font-medium text-gray-700">
             Qty :
           </label>
           <div className="flex items-center bg-[#F4F8F5] border border-[#B6D7C9] rounded-md px-1">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
+              className="px-1.5 py-1 text-xs sm:text-sm text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
             >
               -
             </button>
             <span
-              className="px-2 py-1 text-black font-semibold text-base"
+              className="px-2 py-1 text-black font-semibold text-sm sm:text-base"
               style={{ minWidth: "2ch", textAlign: "center" }}
             >
               {quantity.toString().padStart(2, "0")}
             </span>
             <button
               onClick={() => setQuantity(quantity + 1)}
-              className="px-1.5 py-1 text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
+              className="px-1.5 py-1 text-xs sm:text-sm text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
             >
               +
             </button>
@@ -297,17 +296,17 @@ export default function ProductInfoSection({
         <div className="flex gap-4 w-full">
           <button
             onClick={buyNow}
-            className="flex items-center justify-center gap-2 flex-1 cursor-pointer"
+            className="flex items-center justify-center gap-2 flex-1 cursor-pointer text-sm sm:text-base"
             style={{
-              padding: "16px 24px",
+              padding: "12px 16px",
               justifyContent: "center",
               alignItems: "center",
               gap: "8px",
               borderRadius: "4px",
-              background: "#035F0F",
+              background: "var(--color-primary)",
               color: "#fff",
               fontWeight: 500,
-              fontSize: "15px",
+              fontSize: "13px",
               border: "none",
               transition: "background 0.2s",
             }}
@@ -315,24 +314,24 @@ export default function ProductInfoSection({
               (e.currentTarget.style.background = "#02420A")
             }
             onMouseOut={(e) =>
-              (e.currentTarget.style.background = "#035F0F")
+              (e.currentTarget.style.background = "var(--color-primary)")
             }
           >
             Buy now
           </button>
           <button
             onClick={addToCart}
-            className="flex items-center justify-center gap-2 flex-1 cursor-pointer"
+            className="flex items-center justify-center gap-2 flex-1 cursor-pointer text-sm sm:text-base"
             style={{
-              padding: "16px 24px",
+              padding: "12px 16px",
               justifyContent: "center",
               alignItems: "center",
               gap: "8px",
               borderRadius: "4px",
-              border: "1px solid #035F0F",
-              fontSize: "15px",
+              border: "1px solid var(--color-primary)",
+              fontSize: "13px",
               background: "#fff",
-              color: "#035F0F",
+              color: "var(--color-primary)",
               fontWeight: 500,
               transition: "background 0.2s",
             }}
@@ -348,14 +347,14 @@ export default function ProductInfoSection({
         </div>
         <div className="mt-2">
           <span
-            className="text-[#FF5722] font-medium"
-            style={{ fontSize: "16px" }}
+            className="text-[#FF5722] font-medium text-xs sm:text-base"
+            style={{ fontSize: "13px" }}
           >
             Only <span className="font-semibold">5 stocks left</span>,
           </span>
           <span
-            className="text-black font-medium"
-            style={{ fontSize: "16px" }}
+            className="text-black font-medium text-xs sm:text-base"
+            style={{ fontSize: "13px" }}
           >
             {" "}
             Hurry up!
@@ -370,7 +369,7 @@ export default function ProductInfoSection({
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           About product
         </h3>
-        <p className="text-gray-700 leading-relaxed mb-2">
+        <p className="text-gray-700 leading-relaxed mb-2 text-sm sm:text-base">
           {product.type === "Hair Care" && (
             <>
               Our premium hair care products are formulated with advanced ingredients to address specific hair concerns. Whether you're dealing with dryness, dandruff, or hair loss, our scientifically-backed formulas work to restore hair health and vitality. Each product is carefully crafted to provide deep nourishment, strengthen hair follicles, and promote natural growth while maintaining the perfect balance for your hair type.
@@ -405,20 +404,20 @@ export default function ProductInfoSection({
           {showMoreDetails ? 'Show less' : 'See more product details'}
         </button>
         {showMoreDetails && (
-          <div className="mt-3 text-gray-700 leading-relaxed space-y-2">
-            <p>
-              This is a premium formulation crafted with care to deliver visible results. It blends advanced active ingredients with gentle, skin-friendly bases for daily use.
-            </p>
-            <p>
-              Key highlights: dermatologist-inspired formula, lightweight texture, non-greasy finish, and suitable for most skin and hair types. Ideal for regular routines or as a targeted treatment.
-            </p>
-            <p>
-              Directions for best results: apply an appropriate amount, massage gently, and allow to absorb. Use consistently and pair with complementary products from the same category for maximum benefits.
-            </p>
-            <p>
-              Note: this is a sample description for demonstration purposes only. Replace with real content fetched from your backend in production.
-            </p>
-          </div>
+              <div className="mt-3 text-gray-700 leading-relaxed space-y-2 text-sm sm:text-base md:text-base">
+                <p>
+                  This is a premium formulation crafted with care to deliver visible results. It blends advanced active ingredients with gentle, skin-friendly bases for daily use.
+                </p>
+                <p>
+                  Key highlights: dermatologist-inspired formula, lightweight texture, non-greasy finish, and suitable for most skin and hair types. Ideal for regular routines or as a targeted treatment.
+                </p>
+                <p>
+                  Directions for best results: apply an appropriate amount, massage gently, and allow to absorb. Use consistently and pair with complementary products from the same category for maximum benefits.
+                </p>
+                <p>
+                  Note: this is a sample description for demonstration purposes only. Replace with real content fetched from your backend in production.
+                </p>
+              </div>
         )}
       </div>
 
@@ -427,7 +426,7 @@ export default function ProductInfoSection({
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Specification
         </h3>
-        <ul className="list-disc pl-5 text-gray-700 space-y-1">
+        <ul className="list-disc pl-5 text-gray-700 space-y-1 text-sm sm:text-base">
           {product.type === "Hair Care" && (
             <>
               <li>Formulated with advanced hair care technology</li>
@@ -487,13 +486,13 @@ export default function ProductInfoSection({
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Return &amp; Refund Policy
         </h3>
-        <p className="text-gray-700 mb-2">
+        <p className="text-gray-700 mb-2 text-sm sm:text-base">
           Returns are accepted within{" "}
           <span className="font-semibold">7 days</span> for unused items
           in original packaging. Damaged or incorrect products are
           eligible for a full refund or replacement.
         </p>
-        <p className="text-gray-700" style={{ textIndent: "2em" }}>
+        <p className="text-gray-700 text-sm sm:text-base" style={{ textIndent: "2em" }}>
           Refunds are processed after inspection. To start a return,
           contact our support team with your order ID.
         </p>

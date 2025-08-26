@@ -111,26 +111,24 @@ export default function ProductFeaturesSection2({ productType }) {
 
   return (
     <div className="my-8">
-      <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8">
+      <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col-reverse md:flex-row items-center justify-center gap-8">
         {/* Left: Product Image */}
-        <div className="flex-1 flex justify-start items-center w-full">
+        <div className="flex-1 flex justify-center items-center w-full">
           <img
             src={getImageSrc()}
             alt={`${productType} Features`}
-            className="object-contain"
-            style={{ maxWidth: "500px", maxHeight: "350px", height: "auto" }}
+            className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[350px]"
           />
         </div>
         
         {/* Right: Text and Features */}
         <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0">
           <div
-            className="mb-4"
+            className="mb-4 font-semibold text-gray-900"
             style={{
               color: "#333",
-              fontSize: "20px",
+              fontSize: "clamp(18px, 4.5vw, 24px)",
               fontStyle: "normal",
-              fontWeight: 700,
               lineHeight: "normal",
               letterSpacing: "-0.24px",
               leadingTrim: "both",
@@ -139,7 +137,7 @@ export default function ProductFeaturesSection2({ productType }) {
           >
             {getTitle()}
           </div>
-          <div className="text-gray-700 space-y-3 text-base">
+          <div className="text-gray-700 space-y-3 text-sm sm:text-base">
             {getFeatures().map((feature, index) => (
               <p key={index} className="leading-relaxed">
                 {feature}

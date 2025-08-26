@@ -133,7 +133,7 @@ export default function FeaturedProductCard({ product }) {
             <span
               className="text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] font-bold"
               style={{
-                color: "#035F0F",
+                color: "var(--color-primary)",
                 // fontFamily: "'Nunito Sans', sans-serif",
                 letterSpacing: "-0.4px",
               }}
@@ -153,7 +153,7 @@ export default function FeaturedProductCard({ product }) {
           </div>
           <button
             onClick={addToCart}
-            className="bg-white text-[#035F0F] font-medium transition-colors self-start md:h-8 md:px-4 md:py-2 lg:h-10 lg:px-6 lg:py-3 cursor-pointer"
+            className="bg-white text-[var(--color-primary)] font-medium transition-colors self-start md:h-8 md:px-4 md:py-2 lg:h-10 lg:px-6 lg:py-3 cursor-pointer"
             style={{
               display: "flex",
               height: "32px",
@@ -162,7 +162,7 @@ export default function FeaturedProductCard({ product }) {
               alignItems: "center",
               gap: "8px",
               borderRadius: "4px",
-              border: "1px solid #035F0F",
+              border: "1px solid var(--color-primary)",
             }}
           >
             Add to cart

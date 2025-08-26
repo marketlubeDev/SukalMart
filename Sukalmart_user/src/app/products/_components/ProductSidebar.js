@@ -68,7 +68,7 @@ export default function ProductSidebar({
               style={{
                 color:
                   selectedCategory === category
-                    ? "#035F0F"
+                    ? "var(--color-primary)"
                     : "rgba(51, 51, 51, 0.70)",
                 leadingTrim: "both",
                 textEdge: "cap",
@@ -116,7 +116,7 @@ export default function ProductSidebar({
               style={{
                 color:
                   selectedDiscount === discount
-                    ? "#035F0F"
+                    ? "var(--color-primary)"
                     : "rgba(51, 51, 51, 0.70)",
                 leadingTrim: "both",
                 textEdge: "cap",
@@ -159,7 +159,7 @@ export default function ProductSidebar({
             <div className="w-full h-1 bg-gray-300 rounded-lg relative">
               {/* Green selected portion */}
               <div
-                className="h-1 bg-[#035F0F] rounded-lg absolute top-0 left-0"
+                className="h-1 bg-[var(--color-primary)] rounded-lg absolute top-0 left-0"
                 style={{
                   width: `${
                     ((priceRange.max - priceRange.min) / (20000 - 0)) * 100

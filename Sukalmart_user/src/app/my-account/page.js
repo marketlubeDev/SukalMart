@@ -86,7 +86,7 @@ function MyAccountContent() {
                 onClick={() => setActiveTab(tab)}
                 className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer ${
                   activeTab === tab
-                    ? "border-[#035F0F] text-[#035F0F]"
+                    ? "border-[var(--color-primary)] text-[var(--color-primary)]"
                     : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
@@ -112,7 +112,7 @@ export default function MyAccountPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#035F0F] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
       </div>

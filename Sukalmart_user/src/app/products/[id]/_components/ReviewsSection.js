@@ -73,7 +73,7 @@ export default function ReviewsSection({ product, selectedImage }) {
             <div className="flex items-center mb-2">
               <span
                 className="text-3xl font-bold mr-2"
-                style={{ color: "#035F0F" }}
+                style={{ color: "var(--color-primary)" }}
               >
                 4.0
               </span>
@@ -97,7 +97,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                   <img src="/filledstar.svg" alt="star" className="w-3 h-3" />
                   <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                     <div
-                      className="h-1.5 bg-[#035F0F] rounded-full"
+                      className="h-1.5 bg-[var(--color-primary)] rounded-full"
                       style={{
                         width: ["60%", "20%", "10%", "5%", "5%"][idx],
                       }}
@@ -111,7 +111,7 @@ export default function ReviewsSection({ product, selectedImage }) {
             </div>
             <button 
               onClick={showReviewModal}
-              className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
+              className="mt-2 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded font-medium hover:bg-[var(--color-primary)] hover:text-white transition text-sm cursor-pointer"
             >
               Rate Product
             </button>
@@ -468,8 +468,8 @@ export default function ReviewsSection({ product, selectedImage }) {
               onClick={handleReviewSubmit}
               disabled={!rating || !reviewText.trim()}
               style={{
-                backgroundColor: '#035F0F',
-                borderColor: '#035F0F',
+                backgroundColor: 'var(--color-primary)',
+                borderColor: 'var(--color-primary)',
                 height: '40px',
                 width: '100%',
                 color: '#ffffff',

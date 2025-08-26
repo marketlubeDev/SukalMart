@@ -362,7 +362,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       alignItems: "center",
                       gap: "8px",
                       borderRadius: "4px",
-                      background: "#035F0F",
+                      background: "var(--color-primary)",
                       color: "#fff",
                       fontWeight: 500,
                       fontSize: "16px",
@@ -375,7 +375,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       (e.currentTarget.style.background = "#024a0c")
                     }
                     onMouseOut={(e) =>
-                      (e.currentTarget.style.background = "#035F0F")
+                      (e.currentTarget.style.background = "var(--color-primary)")
                     }
                   >
                     Shop Now
@@ -527,7 +527,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               justifyContent: "center",
                               background: "transparent",
                               border: "none",
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               fontSize: "18px",
                               fontWeight: "bold",
                               cursor: "pointer",
@@ -549,7 +549,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               padding: "0 2px",
                               fontSize: "15px",
                               fontWeight: 600,
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               minWidth: "20px",
                               textAlign: "center",
                               userSelect: "none",
@@ -573,7 +573,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               justifyContent: "center",
                               background: "transparent",
                               border: "none",
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               fontSize: "18px",
                               fontWeight: "bold",
                               cursor: "pointer",
@@ -597,7 +597,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         <span
                           style={{
                             overflow: "hidden",
-                            color: "#035F0F",
+                            color: "var(--color-primary)",
                             textOverflow: "ellipsis",
                             fontSize: "16px",
                             fontStyle: "normal",
@@ -817,7 +817,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -843,7 +843,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -869,7 +869,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -951,7 +951,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   gap: "8px",
                   flexShrink: 0,
                   borderRadius: "4px",
-                  background: "#035F0F",
+                  background: "var(--color-primary)",
                   color: "#fff",
                   fontWeight: 500,
                   fontSize: "14px",
@@ -965,7 +965,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   (e.currentTarget.style.background = "#024a0c")
                 }
                 onMouseOut={(e) =>
-                  (e.currentTarget.style.background = "#035F0F")
+                  (e.currentTarget.style.background = "var(--color-primary)")
                 }
               >
                 Proceed to checkout

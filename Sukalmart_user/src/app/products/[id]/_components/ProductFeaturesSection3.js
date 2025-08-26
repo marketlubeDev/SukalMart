@@ -127,12 +127,11 @@ export default function ProductFeaturesSection3({ productType }) {
         {/* Left: Text and Bullet Points */}
         <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0">
           <div
-            className="mb-4"
+            className="mb-4 font-semibold text-gray-900"
             style={{
               color: "#333",
-              fontSize: "20px",
+              fontSize: "clamp(18px, 4.5vw, 24px)",
               fontStyle: "normal",
-              fontWeight: 700,
               lineHeight: "normal",
               letterSpacing: "-0.24px",
               leadingTrim: "both",
@@ -141,7 +140,7 @@ export default function ProductFeaturesSection3({ productType }) {
           >
             {getTitle()}
           </div>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-base">
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm sm:text-base">
             {getFeatures().map((feature, index) => (
               <li key={index} className="leading-relaxed">
                 {feature}
@@ -151,12 +150,11 @@ export default function ProductFeaturesSection3({ productType }) {
         </div>
         
         {/* Right: Product Image */}
-        <div className="flex-1 flex justify-end items-center w-full">
+        <div className="flex-1 flex justify-center items-center w-full">
           <img
             src={getImageSrc()}
             alt={`${productType} Benefits`}
-            className="object-contain"
-            style={{ maxWidth: "500px", maxHeight: "350px", height: "auto" }}
+            className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[350px]"
           />
         </div>
       </div>

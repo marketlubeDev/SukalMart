@@ -310,7 +310,7 @@ export default function ProductsPage() {
                       <div key={cat} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.10)" }}>
                         <button
                           onClick={() => { setSelectedCategory(cat); localStorage.setItem('selectedCategory', cat); }}
-                          className={`w-full text-left px-3 py-3 ${selectedCategory === cat ? 'bg-green-100 text-[#035F0F] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
+                          className={`w-full text-left px-3 py-3 ${selectedCategory === cat ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
                         >
                           {cat}
                         </button>
@@ -325,7 +325,7 @@ export default function ProductsPage() {
                       <div key={opt} style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}>
                         <button
                           onClick={() => setSelectedDiscount(opt)}
-                          className={`w-full text-left px-3 py-3 ${selectedDiscount === opt ? 'bg-green-100 text-[#035F0F] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
+                          className={`w-full text-left px-3 py-3 ${selectedDiscount === opt ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
                         >
                           {opt}
                         </button>
@@ -343,7 +343,7 @@ export default function ProductsPage() {
                         <div className="w-full h-1 bg-gray-300 rounded-lg relative">
                           {/* Green selected portion */}
                           <div
-                            className="h-1 bg-[#035F0F] rounded-lg absolute top-0 left-0"
+                            className="h-1 bg-[var(--color-primary)] rounded-lg absolute top-0 left-0"
                             style={{
                               width: `${((priceRange.max - priceRange.min) / (20000 - 0)) * 100}%`,
                               left: `${(priceRange.min / 20000) * 100}%`,
@@ -419,7 +419,7 @@ export default function ProductsPage() {
             <div className="flex items-center" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}>
               <button onClick={discardFilters} className="flex-1 text-center py-3 text-red-600 font-medium">Discard</button>
               <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-              <button onClick={() => setIsFilterOpen(false)} className="flex-1 text-center py-3 text-[#035F0F] font-semibold">Apply</button>
+              <button onClick={() => setIsFilterOpen(false)} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
             </div>
         </div>
       )}
@@ -436,7 +436,7 @@ export default function ProductsPage() {
               <div key={option} style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)", marginLeft: 16, marginRight: 16 }}>
                 <button
                   onClick={() => setPendingSort(option)}
-                  className={`w-full text-left px-4 py-3 ${pendingSort === option ? 'text-[#035F0F] font-semibold' : 'text-gray-800 hover:bg-gray-50'}`}
+                  className={`w-full text-left px-4 py-3 ${pendingSort === option ? 'text-[var(--color-primary)] font-semibold' : 'text-gray-800 hover:bg-gray-50'}`}
                 >
                   {option}
                 </button>
@@ -446,7 +446,7 @@ export default function ProductsPage() {
           <div className="flex items-center" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}>
             <button onClick={() => { setSortBy(sortSnapshot); setIsSortOpen(false); }} className="flex-1 text-center py-3 text-red-600 font-medium">Discard</button>
             <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <button onClick={() => { setSortBy(pendingSort); setIsSortOpen(false); }} className="flex-1 text-center py-3 text-[#035F0F] font-semibold">Apply</button>
+            <button onClick={() => { setSortBy(pendingSort); setIsSortOpen(false); }} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
           </div>
         </div>
       )}

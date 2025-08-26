@@ -77,19 +77,19 @@ export default function CheckoutLeft({
                   {/* Quantity Selector */}
                   <div className="flex items-center space-x-2">
                     <span className="text-xs text-gray-600">Qty :</span>
-                    <div className="flex items-center border border-[#035F0F] bg-[#035F0F]/10 rounded">
+                    <div className="flex items-center border border-[var(--color-primary)] bg-[var(--color-primary)]/10 rounded">
                       <button
                         onClick={() => updateQuantity(item.id, quantities[item.id] - 1)}
-                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors cursor-pointer"
+                        className="w-7 h-7 flex items-center justify-center text-[var(--color-primary)] hover:bg-[var(--color-primary)]/20 transition-colors cursor-pointer"
                       >
                         -
                       </button>
-                      <span className="px-2 text-sm font-semibold text-[#035F0F] min-w-[20px] text-center">
+                      <span className="px-2 text-sm font-semibold text-[var(--color-primary)] min-w-[20px] text-center">
                         {String(quantities[item.id]).padStart(2, "0")}
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, quantities[item.id] + 1)}
-                        className="w-7 h-7 flex items-center justify-center text-[#035F0F] hover:bg-[#035F0F]/20 transition-colors cursor-pointer"
+                        className="w-7 h-7 flex items-center justify-center text-[var(--color-primary)] hover:bg-[var(--color-primary)]/20 transition-colors cursor-pointer"
                       >
                         +
                       </button>
@@ -98,7 +98,7 @@ export default function CheckoutLeft({
 
                   {/* Price Section */}
                   <div className="flex items-center space-x-2">
-                    <span className="text-base font-semibold text-[#035F0F]">
+                    <span className="text-base font-semibold text-[var(--color-primary)]">
                       ₹{item.price.toLocaleString()}
                     </span>
                     <span className="text-sm text-gray-400 line-through">
@@ -156,24 +156,24 @@ export default function CheckoutLeft({
               </div>
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">Discount</span>
-                <span className="text-base font-medium text-[#035F0F]">
+                <span className="text-base font-medium text-[var(--color-primary)]">
                   -₹{discount.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">Delivery</span>
-                <span className="text-base font-medium text-[#035F0F]">Free</span>
+                <span className="text-base font-medium text-[var(--color-primary)]">Free</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">Coupon discount</span>
-                <span className="text-base font-medium text-[#035F0F]">
+                <span className="text-base font-medium text-[var(--color-primary)]">
                   -₹{couponDiscount.toLocaleString()}
                 </span>
               </div>
             </div>
 
             {/* Proceed to Pay Button */}
-            <button className="w-full bg-[#035F0F] text-white py-3 px-4 rounded font-medium hover:bg-[#035F0F]/90 transition-colors cursor-pointer">
+              <button className="w-full bg-[var(--color-primary)] text-white py-3 px-4 rounded font-medium hover:bg-[var(--color-primary)]/90 transition-colors cursor-pointer">
               Proceed to Pay
             </button>
           </div>

@@ -69,7 +69,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             </h2>
             <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
-              style={{ color: "#035F0F", cursor: 'pointer' }}
+              style={{ color: "var(--color-primary)", cursor: 'pointer' }}
               onClick={() => window.location.href = "/products"}
             >
               <span className="text-sm sm:text-base">View all</span>
@@ -131,7 +131,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentSlide ? 'bg-[#035F0F]' : 'bg-gray-300'
+                      index === currentSlide ? 'bg-[var(--color-primary)]' : 'bg-gray-300'
                     }`}
                   />
                 ))}
@@ -150,7 +150,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
           <div className="sm:hidden w-full">
             <div className="flex justify-center">
               <div className="w-20 h-1 bg-gray-200 rounded-full">
-                <div className="w-5 h-1 bg-[#035F0F] rounded-full"></div>
+                <div className="w-5 h-1 bg-[var(--color-primary)] rounded-full"></div>
               </div>
             </div>
           </div>

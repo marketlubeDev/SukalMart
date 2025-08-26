@@ -49,7 +49,7 @@ export default function BestSellersSection() {
           </h2>
           <button
             className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
-            style={{ color: "#035F0F", cursor: 'pointer' }}
+            style={{ color: "var(--color-primary)", cursor: 'pointer' }}
             onClick={() => window.location.href = "/products"}
           >
             <span className="text-sm md:text-base">View all</span>
@@ -95,7 +95,7 @@ export default function BestSellersSection() {
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span
                   className="text-sm md:text-lg font-bold"
-                  style={{ color: "#035F0F" }}
+                  style={{ color: "var(--color-primary)" }}
                 >
                   ₹1,099
                 </span>
@@ -114,7 +114,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F",
+                    border: "1px solid var(--color-primary)",
                   }}
                 >
                   Add to cart
@@ -157,7 +157,7 @@ export default function BestSellersSection() {
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span
                   className="text-sm md:text-lg font-bold"
-                  style={{ color: "#035F0F" }}
+                  style={{ color: "var(--color-primary)" }}
                 >
                   ₹1,099
                 </span>
@@ -176,7 +176,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F",
+                    border: "1px solid var(--color-primary)",
                   }}
                 >
                   Add to cart
@@ -219,7 +219,7 @@ export default function BestSellersSection() {
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span
                   className="text-sm md:text-lg font-bold"
-                  style={{ color: "#035F0F" }}
+                  style={{ color: "var(--color-primary)" }}
                 >
                   ₹1,899
                 </span>
@@ -238,7 +238,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F",
+                    border: "1px solid var(--color-primary)",
                   }}
                 >
                   Add to cart
@@ -264,7 +264,7 @@ export default function BestSellersSection() {
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
                 <span
                   className="text-sm md:text-lg font-bold"
-                  style={{ color: "#035F0F" }}
+                  style={{ color: "var(--color-primary)" }}
                 >
                   ₹1,099
                 </span>
@@ -283,7 +283,7 @@ export default function BestSellersSection() {
                     alignItems: "center",
                     gap: "4px",
                     borderRadius: "4px",
-                    border: "1px solid #035F0F",
+                    border: "1px solid var(--color-primary)",
                   }}
                 >
                   Add to cart

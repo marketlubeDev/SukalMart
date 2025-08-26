@@ -167,7 +167,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                       onChange={(e) => setSelectedCoupon(e.target.value)}
                       className="mt-1 w-4 h-4 border-transparent focus:outline-none"
                       style={{ 
-                        accentColor: "#035F0F"
+                        accentColor: "var(--color-primary)"
                       }}
                     />
                     <div className="flex-1">
@@ -201,14 +201,14 @@ export default function CouponSidebar({ isOpen, onClose }) {
                 <span className="text-base sm:text-lg font-semibold text-gray-900">₹{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm" style={{ color: "#035F0F" }}>- ₹{selectedCouponData ? selectedCouponData.discount : 0}</span>
+                <span className="text-xs sm:text-sm" style={{ color: "var(--color-primary)" }}>- ₹{selectedCouponData ? selectedCouponData.discount : 0}</span>
               </div>
             </div>
             <div className="ml-3 sm:ml-4">
               <button
                 onClick={onClose}
                 className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base cursor-pointer"
-                style={{ backgroundColor: "#035F0F" }}
+                style={{ backgroundColor: "var(--color-primary)" }}
               >
                 Apply
               </button>

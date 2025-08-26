@@ -266,7 +266,7 @@ function NavContent() {
         {/* Main Header */}
         <div className="bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
-          <div className="flex items-center h-3 lg:h-20 justify-between">
+          <div className="flex items-center h-3 lg:h-16 justify-between">
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-6 hidden lg:block">
               <Link href="/" className="flex items-center">
@@ -389,14 +389,14 @@ function NavContent() {
                         className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                       >
                         <img src="/english.svg" alt="English" className="w-5 h-5 rounded-full mr-3" />
-                        <span className={`${language === "EN" ? "text-[#035F0F] font-medium" : "text-gray-400"}`}>EN</span>
+                        <span className={`${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                       </button>
                       <button 
                         onClick={() => setLanguage("AR")}
                         className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                       >
                         <img src="/arabicicon.svg" alt="Arabic" className="w-5 h-5 rounded-full mr-3" />
-                        <span className={`${language === "AR" ? "text-[#035F0F] font-medium" : "text-gray-400"}`}>AR</span>
+                        <span className={`${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
                       </button>
                     </div>
                   </div>
@@ -605,15 +605,15 @@ function NavContent() {
         </div>
 
         {/* Navigation Bar */}
-        <div className="bg-[#035F0F]">
+        <div className="bg-[var(--color-primary)]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
-            <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-6 xl:space-x-8 py-0.5">
+            <div className="hidden lg:flex lg:items-center lg:justify-evenly py-0.5">
               {navigationItems.map((item, index) => (
                 <div key={index} className="relative group flex-shrink-0">
                   {item.href ? (
                     <Link
                       href={item.href}
-                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap"
+                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
                       onClick={() => {
                         // Reset category when Products is clicked
                         if (item.label === "Products") {
@@ -625,7 +625,7 @@ function NavContent() {
                     </Link>
                   ) : (
                     <button
-                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap"
+                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
                       onClick={() =>
                         item.hasDropdown && toggleDropdown(item.label)
                       }
@@ -653,7 +653,7 @@ function NavContent() {
                           <a
                             key={subIndex}
                             href="#"
-                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer text-sm tracking-[0.02em]"
                           >
                             {subItem}
                           </a>
@@ -819,14 +819,14 @@ function NavContent() {
                     className="flex items-center w-full px-3 py-1.5 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   >
                     <img src="/english.svg" alt="English" className="w-4 h-4 rounded-full mr-2" />
-                    <span className={`text-xs ${language === "EN" ? "text-[#035F0F] font-medium" : "text-gray-400"}`}>EN</span>
+                    <span className={`text-xs ${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                   </button>
                   <button 
                     onClick={() => setLanguage("AR")}
                     className="flex items-center w-full px-3 py-1.5 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
                   >
                     <img src="/arabicicon.svg" alt="Arabic" className="w-4 h-4 rounded-full mr-2" />
-                    <span className={`text-xs ${language === "AR" ? "text-[#035F0F] font-medium" : "text-gray-400"}`}>AR</span>
+                    <span className={`text-xs ${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
                   </button>
                 </div>
               </div>
@@ -1141,12 +1141,12 @@ export default function Nav() {
           <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
             <div className="flex items-center h-20 justify-between">
               <div className="flex-shrink-0 pr-4 hidden lg:block">
-                <div className="text-3xl font-bold text-[#035F0F]">
+                <div className="text-3xl font-bold text-[var(--color-primary)]">
                   Souqalmart
                 </div>
               </div>
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#035F0F]"></div>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[var(--color-primary)]"></div>
               </div>
             </div>
           </div>

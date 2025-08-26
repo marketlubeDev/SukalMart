@@ -116,7 +116,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
           <div className="w-full mt-4">
             <div className="flex justify-center">
               <div className="w-20 h-1 bg-gray-200 rounded-full">
-                <div className="w-10 h-1 bg-[#035F0F] rounded-full"></div>
+                <div className="w-10 h-1 bg-[var(--color-primary)] rounded-full"></div>
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
               <div className="flex justify-center mt-6">
                 <div className="w-20 h-1 bg-gray-200 rounded-full">
                   <div 
-                    className="h-1 bg-[#035F0F] rounded-full transition-all duration-300"
+                    className="h-1 bg-[var(--color-primary)] rounded-full transition-all duration-300"
                     style={{
                       width: `${(currentBanner + 1) * (100 / banners.length)}%`
                     }}

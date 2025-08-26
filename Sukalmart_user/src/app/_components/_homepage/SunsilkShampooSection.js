@@ -153,7 +153,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           </h2>
           <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
-              style={{ color: "#035F0F" }}
+              style={{ color: "var(--color-primary)" }}
               onClick={handleViewAllClick}
             >
               <span>View all</span>

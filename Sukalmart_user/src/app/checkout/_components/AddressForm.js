@@ -39,7 +39,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <button className="text-sm text-[#035F0F] hover:text-[#035F0F]/80 underline">
+          <button className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 underline">
             Login
           </button>
         </div>
@@ -51,7 +51,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
             />
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
               name="country"
               value={formData.country}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F] appearance-none bg-white"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] appearance-none bg-white"
             >
               <option value="">Select Country/Region</option>
               <option value="IN">India</option>
@@ -87,7 +87,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 placeholder="First name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
             </div>
             <div className="space-y-2">
@@ -97,7 +97,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Last name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.address}
                 onChange={handleInputChange}
                 placeholder="Address (Please check your address to ensure before it's complete before you proceed)"
-                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
               <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -128,7 +128,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.city}
                 onChange={handleInputChange}
                 placeholder="City"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
             </div>
             <div className="space-y-2">
@@ -138,7 +138,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.state}
                 onChange={handleInputChange}
                 placeholder="State"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
             </div>
             <div className="space-y-2">
@@ -148,7 +148,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.pincode}
                 onChange={handleInputChange}
                 placeholder="Pincode"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Phone number"
-                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#035F0F] focus:border-[#035F0F]"
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
               <img src="/iicon.svg" alt="Info" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
             </div>
@@ -171,7 +171,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
           {/* Save Button */}
           <button
             onClick={handleSave}
-            className="mt-4 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded hover:bg-[#035F0F]/10 transition-colors"
+            className="mt-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors"
           >
             Save
           </button>

@@ -59,7 +59,7 @@ export default function ProductCard({
           <div className="absolute top-2 left-0 flex items-center shadow-lg">
             <div
               className="text-white px-2 text-xs font-bold flex items-center"
-              style={{ backgroundColor: "#035F0F", height: "23px" }}
+              style={{ backgroundColor:"var(--color-primary)", height: "23px" }}
             >
               {badgeText}
             </div>
@@ -72,7 +72,7 @@ export default function ProductCard({
             >
               <path
                 d="M0 0.593506H14.7537C16.4453 0.593506 17.373 2.56306 16.2956 3.86727L0.708384 22.736C0.46957 23.0251 0 22.8562 0 22.4812V0.593506Z"
-                fill="#035F0F"
+                fill="var(--color-primary)"
               />
             </svg>
           </div>
@@ -84,7 +84,7 @@ export default function ProductCard({
         </h3>
         <p className="text-xs text-gray-600 mb-2 sm:mb-3">{product.type || product.category}</p>
         <div className="flex items-center gap-2">
-          <span className="text-base sm:text-lg font-bold" style={{ color: "#035F0F" }}>
+          <span className="text-base sm:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
             ₹{product.price?.toLocaleString() || product.price}
           </span>
           <span className="text-xs sm:text-sm text-gray-500 line-through">

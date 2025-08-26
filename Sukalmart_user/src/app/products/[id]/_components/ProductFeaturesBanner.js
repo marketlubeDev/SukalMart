@@ -23,12 +23,11 @@ export default function ProductFeaturesBanner({ productType }) {
     <div className="my-8">
       <hr className="mb-6" style={{ borderColor: "#D1D5DB" }} />
       <div
-        className="mb-4"
+        className="mb-4 font-semibold text-gray-900"
         style={{
           color: "#333",
-          fontSize: "20px",
+          fontSize: "clamp(20px, 4.5vw, 24px)",
           fontStyle: "normal",
-          fontWeight: 700,
           lineHeight: "normal",
           letterSpacing: "-0.24px",
           leadingTrim: "both",
@@ -41,13 +40,7 @@ export default function ProductFeaturesBanner({ productType }) {
         <img
           src={getImageSrc()}
           alt={`${productType} Product Features`}
-          className="object-cover"
-          style={{
-            width: "100%",
-            maxWidth: "1500px",
-            height: "500px",
-            objectPosition: "center",
-          }}
+          className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[500px]"
         />
       </div>
     </div>

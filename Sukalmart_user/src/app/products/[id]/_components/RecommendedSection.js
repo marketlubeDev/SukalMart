@@ -23,7 +23,7 @@ export default function RecommendedSection() {
           >
             Recommended for you
           </h2>
-          <button onClick={() => router.push('/products')} className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer" style={{ color: "#035F0F" }}>
+          <button onClick={() => router.push('/products')} className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer" style={{ color: "var(--color-primary)" }}>
             <span className="text-sm md:text-base">View all</span>
             <img
               src="/nextarrow.svg"
@@ -65,7 +65,7 @@ export default function RecommendedSection() {
               </h3>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">Hair Care</p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
                   ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
@@ -107,7 +107,7 @@ export default function RecommendedSection() {
                 Body & Shower
               </p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
                   ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
@@ -149,7 +149,7 @@ export default function RecommendedSection() {
                 Soap & Deodorants
               </p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
                   ₹1,899
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">
@@ -174,7 +174,7 @@ export default function RecommendedSection() {
               </h3>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">Skin Care</p>
               <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "#035F0F" }}>
+                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
                   ₹1,099
                 </span>
                 <span className="text-xs md:text-sm text-gray-500 line-through">

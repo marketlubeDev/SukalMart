@@ -27,7 +27,7 @@ export default function ProductImagesSection({
             onClick={() => setSelectedImage(index)}
             className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
               selectedImage === index
-                ? "border-[#035F0F]"
+                ? "border-[var(--color-primary)]"
                 : "border-gray-200"
             }`}
           >
@@ -70,7 +70,7 @@ export default function ProductImagesSection({
                 key={index}
                 onClick={() => setSelectedImage(index)}
                 className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
-                  selectedImage === index ? "border-[#035F0F]" : "border-gray-200"
+                  selectedImage === index ? "border-[var(--color-primary)]" : "border-gray-200"
                 }`}
               >
                 <img
