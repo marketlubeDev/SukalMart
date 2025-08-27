@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
-          <button className="w-full sm:w-auto px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary)]/90 transition-colors text-sm cursor-pointer">
+          <button className="w-full sm:w-auto px-4 py-2 bg-[var(--color-primary)] text-white rounded-md transition-colors text-sm cursor-pointer" style={{ backgroundColor: "var(--color-primary)", transition: "background-color 0.2s" }} onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")} onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}>
             Download PDF
           </button>
           <button className="w-full sm:w-auto px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded-md hover:bg-[var(--color-primary)]/10 transition-colors text-sm cursor-pointer">

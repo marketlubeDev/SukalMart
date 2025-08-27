@@ -24,7 +24,7 @@ export default function SavedAddress() {
 		<div className="bg-white rounded-lg p-4 sm:p-6">
 			<div className="flex items-center justify-between mb-4 sm:mb-6">
 				<h2 className="text-lg sm:text-xl font-semibold text-gray-900">Saved Addresses</h2>
-				<button className="px-3 py-2 sm:px-4 sm:py-2 text-sm bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary)]/90 transition-colors cursor-pointer">
+				<button className="px-3 py-2 sm:px-4 sm:py-2 text-sm bg-[var(--color-primary)] text-white rounded-md transition-colors cursor-pointer" style={{ backgroundColor: "var(--color-primary)", transition: "background-color 0.2s" }} onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")} onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}>
 					Add New Address
 				</button>
 			</div>
@@ -37,7 +37,7 @@ export default function SavedAddress() {
 								<div className="flex items-center space-x-2 mb-2">
 									<h3 className="font-medium text-gray-900 text-sm sm:text-base">{address.name}</h3>
 									{address.isDefault && (
-										<span className="px-2 py-1 bg-green-100 text-green-800 text-[10px] sm:text-xs rounded-full">
+										<span className="px-2 py-1 bg-[#F7F3F4] text-[#6D0D26] text-[10px] sm:text-xs rounded-full">
 											Default
 										</span>
 									)}

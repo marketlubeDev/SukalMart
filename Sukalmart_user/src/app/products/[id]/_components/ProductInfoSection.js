@@ -61,7 +61,7 @@ export default function ProductInfoSection({
         <div className="mb-4 border-b border-gray-200 pb-4">
           <div className="flex items-center gap-3">
             <span
-              className="font-bold text-green-600 text-xl sm:text-2xl md:text-3xl"
+              className="font-bold text-xl sm:text-2xl md:text-3xl"
               style={{
                 overflow: "hidden",
                 color: "#333333",
@@ -108,8 +108,8 @@ export default function ProductInfoSection({
                     style={{
                       borderRadius: "4px",
                       borderStyle: "dashed",
-                      borderColor: "rgba(3, 95, 15, 0.64)",
-                      background: "rgba(3, 95, 15, 0.02)",
+                      borderColor: "#6D0D26",
+                      background: "#F7F3F4",
                       minWidth: "100px",
                       maxWidth: "140px",
                       boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
@@ -134,8 +134,8 @@ export default function ProductInfoSection({
                     style={{
                       borderRadius: "4px",
                       borderStyle: "dashed",
-                      borderColor: "rgba(3, 95, 15, 0.64)",
-                      background: "rgba(3, 95, 15, 0.02)",
+                      borderColor: "#6D0D26",
+                      background: "#F7F3F4",
                       minWidth: "140px",
                       maxWidth: "200px",
                       boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
@@ -160,8 +160,8 @@ export default function ProductInfoSection({
                     style={{
                       borderRadius: "4px",
                       borderStyle: "dashed",
-                      borderColor: "rgba(3, 95, 15, 0.64)",
-                      background: "rgba(3, 95, 15, 0.02)",
+                      borderColor: "#6D0D26",
+                      background: "#F7F3F4",
                       minWidth: "200px",
                       maxWidth: "280px",
                       boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
@@ -213,8 +213,8 @@ export default function ProductInfoSection({
                   style={{
                     borderRadius: "4px",
                     borderStyle: "dashed",
-                    borderColor: "rgba(3, 95, 15, 0.64)",
-                    background: "rgba(3, 95, 15, 0.02)",
+                    borderColor: "#6D0D26",
+                    background: "#F7F3F4",
                     minWidth: "100px",
                     maxWidth: "140px",
                     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
@@ -256,7 +256,7 @@ export default function ProductInfoSection({
                 key={vol}
                 onClick={() => setSelectedVolume(vol)}
                 className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
-                style={{ borderColor: selectedVolume === vol ? "#02490C" : "#D1D5DB", color: "#333" }}
+                style={{ borderColor: selectedVolume === vol ? "#6D0D26" : "#D1D5DB", color: "#333" }}
               >
                 {vol}
               </button>
@@ -271,7 +271,7 @@ export default function ProductInfoSection({
           <label className="text-xs sm:text-sm font-medium text-gray-700">
             Qty :
           </label>
-          <div className="flex items-center bg-[#F4F8F5] border border-[#B6D7C9] rounded-md px-1">
+          <div className="flex items-center bg-[#F7F3F4] border border-[#6D0D26] rounded-md px-1">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
               className="px-1.5 py-1 text-xs sm:text-sm text-gray-600 hover:bg-gray-100 rounded cursor-pointer"
@@ -311,7 +311,7 @@ export default function ProductInfoSection({
               transition: "background 0.2s",
             }}
             onMouseOver={(e) =>
-              (e.currentTarget.style.background = "#02420A")
+              (e.currentTarget.style.background = "#520a1e")
             }
             onMouseOut={(e) =>
               (e.currentTarget.style.background = "var(--color-primary)")
@@ -336,7 +336,7 @@ export default function ProductInfoSection({
               transition: "background 0.2s",
             }}
             onMouseOver={(e) =>
-              (e.currentTarget.style.background = "#F4F8F5")
+              (e.currentTarget.style.background = "#F7F3F4")
             }
             onMouseOut={(e) =>
               (e.currentTarget.style.background = "#fff")
@@ -398,7 +398,7 @@ export default function ProductInfoSection({
         </p>
         <button
           onClick={() => setShowMoreDetails((v) => !v)}
-          className="text-green-700 text-sm font-medium underline hover:underline cursor-pointer"
+          className="text-[#6D0D26] text-sm font-medium underline hover:underline cursor-pointer"
           style={{ display: "inline-block", marginTop: "4px", background: 'none', border: 'none', padding: 0 }}
         >
           {showMoreDetails ? 'Show less' : 'See more product details'}

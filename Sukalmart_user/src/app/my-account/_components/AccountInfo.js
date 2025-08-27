@@ -21,7 +21,13 @@ export default function AccountInfo() {
         <h2 className="text-xl font-semibold text-gray-900">Personal Info</h2>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary)]/90 transition-colors cursor-pointer"
+          className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md transition-colors cursor-pointer"
+          style={{
+            backgroundColor: "var(--color-primary)",
+            transition: "background-color 0.2s"
+          }}
+          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")}
+          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}
         >
           Edit Info
         </button>

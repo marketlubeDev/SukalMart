@@ -17,21 +17,18 @@ export default function Footer() {
   };
   return (
     <footer className="bg-[#202020] text-white overflow-hidden">
-      <div className="flex flex-col items-center px-4 py-8 sm:py-12 md:py-16">
-        <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 items-center justify-start w-full max-w-6xl">
+      <div className="flex flex-col items-center px-4 pt-4 pb-8 sm:pt-6 sm:pb-12 md:pt-8 md:pb-16">
+        <div className="flex flex-col gap-4 items-center justify-start w-full max-w-6xl">
           {/* Logo */}
           <div 
-            className="h-6 w-32 sm:h-7 sm:w-36 md:h-8 md:w-44 flex items-center cursor-pointer hover:opacity-80 transition-opacity"
+            className="h-16 w-56 sm:h-20 sm:w-72 md:h-24 md:w-80 flex items-center cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => router.push('/')}
           >
             <img
-              src="/logo1.svg"
+              src="/souqalmart-logo-white.svg"
               alt="Souqalmart Logo"
-              className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 mr-2"
+              className="h-16 w-auto sm:h-20 md:h-24"
             />
-            <span className="text-white text-xl sm:text-2xl md:text-3xl font-bold">
-              Souqalmart
-            </span>
           </div>
 
           {/* Navigation and Social Links */}
@@ -40,7 +37,7 @@ export default function Footer() {
             <div
               className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full text-[14px] sm:text-[16px] md:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.18px]"
               style={{
-                color: "#FFF",
+                color: "#f8f1ec",
 
                 fontStyle: "normal",
                 leadingTrim: "both",
@@ -92,7 +89,7 @@ export default function Footer() {
             </div>
 
             {/* Social Media Icons */}
-            <div className="flex gap-6 sm:gap-8 items-center justify-center">
+            <div className="flex gap-6 sm:gap-8 items-center justify-center" style={{ color: "#f8f1ec" }}>
               <a
                 href="#"
                 className="w-5 h-5 sm:w-6 sm:h-6 hover:opacity-80 transition-opacity"
@@ -161,7 +158,7 @@ export default function Footer() {
               <span
                 className="opacity-40 text-center whitespace-nowrap text-[10px] sm:text-[12px] md:text-[16px] font-normal transition-opacity"
                 style={{
-                  color: "#FFF",
+                  color: "#f8f1ec",
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",
@@ -172,7 +169,7 @@ export default function Footer() {
                 Powered by{" "}
                 <span
                   className="hover:opacity-50 transition-opacity"
-                  style={{ textDecoration: "underline", cursor: "pointer", color: "#FFF" }}
+                  style={{ textDecoration: "underline", cursor: "pointer", color: "#f8f1ec" }}
                   onClick={() => window.open("https://www.marketlube.in/", "_blank", "noopener,noreferrer")}
                 >
                   Marketlube
