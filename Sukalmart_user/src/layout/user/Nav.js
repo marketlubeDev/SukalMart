@@ -42,8 +42,12 @@ function NavContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
+  
   const isBigTablet = useBigTablet();
+
+  // Add state and ref for mobile language dropdown
+  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
+  const mobileLangRef = useRef(null);
 
   // Check authentication status on component mount
   useEffect(() => {
@@ -127,6 +131,24 @@ function NavContent() {
       document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [showSearchBar]);
+
+  // Close mobile language dropdown on outside click
+  useEffect(() => {
+    function handleOutside(e) {
+      if (!mobileLangRef.current) return;
+      if (!mobileLangRef.current.contains(e.target)) {
+        setIsMobileLanguageOpen(false);
+      }
+    }
+    if (isMobileLanguageOpen) {
+      document.addEventListener("mousedown", handleOutside);
+      document.addEventListener("touchstart", handleOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+    };
+  }, [isMobileLanguageOpen]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -270,14 +292,7 @@ function NavContent() {
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-6 hidden lg:block">
               <Link href="/" className="flex items-center">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-700 rounded flex items-center justify-center mr-2">
-                    <div className="w-4 h-4 bg-white rounded-sm"></div>
-                  </div>
-                  <div className="text-xl font-bold text-gray-800">
-                    Souqalmart
-                  </div>
-                </div>
+                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-8 w-auto" />
               </Link>
             </div>
 
@@ -371,7 +386,7 @@ function NavContent() {
               <div className="flex items-center space-x-2">
                 {/* Language Selector */}
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
                     <img src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} className="w-5 h-5 rounded-full" />
                     <span className="text-sm font-medium text-gray-700">{language}</span>
                     <img
@@ -386,14 +401,32 @@ function NavContent() {
                     <div className="py-2">
                       <button 
                         onClick={() => setLanguage("EN")}
-                        className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/english.svg" alt="English" className="w-5 h-5 rounded-full mr-3" />
                         <span className={`${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                       </button>
                       <button 
                         onClick={() => setLanguage("AR")}
-                        className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/arabicicon.svg" alt="Arabic" className="w-5 h-5 rounded-full mr-3" />
                         <span className={`${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
@@ -405,7 +438,7 @@ function NavContent() {
                 {/* Cart */}
                 <button
                   onClick={toggleCart}
-                  className="relative p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                  className="relative p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 >
                   <img
                     src="/Carticon.svg"
@@ -417,7 +450,7 @@ function NavContent() {
                 {/* User Profile / Login */}
                 {isAuthenticated ? (
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
                     <img src="/usericon.svg" alt="user" className="w-6 h-6" />
                     <img
                       src="/dropdownicon.svg"
@@ -432,7 +465,16 @@ function NavContent() {
                       {/* Personal Info */}
                     <button
                       onClick={() => navigateToTab("account")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                     >
                         <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -443,7 +485,16 @@ function NavContent() {
                       {/* My Orders */}
                     <button
                       onClick={() => router.push("/my-account?tab=my-orders")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                     >
                         <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -454,7 +505,16 @@ function NavContent() {
                       {/* Addresses */}
                       <button
                         onClick={() => router.push("/my-account?tab=saved-address")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -479,7 +539,16 @@ function NavContent() {
                       {/* Help & Support */}
                     <button
                       onClick={() => router.push("/my-account?tab=help")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                     >
                         <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
@@ -490,7 +559,16 @@ function NavContent() {
                       {/* Privacy Policy */}
                     <button
                       onClick={() => router.push("/my-account?tab=privacy-policy")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                     >
                         <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -515,7 +593,7 @@ function NavContent() {
               </div>
               ) : (
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
                     <img src="/usericon.svg" alt="login" className="w-6 h-6" />
                     <img
                       src="/dropdownicon.svg"
@@ -530,7 +608,16 @@ function NavContent() {
                       {/* Personal Info */}
                       <button
                         onClick={() => router.push("/my-account")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/icon7.svg" alt="personal info" className="w-5 h-5 mr-3" />
                         Personal info
@@ -539,7 +626,16 @@ function NavContent() {
                       {/* My Orders */}
                       <button
                         onClick={() => router.push("/my-account?tab=my-orders")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/icon6.svg" alt="my orders" className="w-5 h-5 mr-3" />
                         My orders
@@ -548,7 +644,16 @@ function NavContent() {
                       {/* Addresses */}
                       <button
                         onClick={() => router.push("/my-account?tab=saved-address")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/icon4.svg" alt="addresses" className="w-5 h-5 mr-3" />
                         Addresses
@@ -570,7 +675,16 @@ function NavContent() {
                       {/* Help & Support */}
                       <button
                         onClick={() => router.push("/my-account?tab=help")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.color = "#374151";
+                        }}
                       >
                         <img src="/icon3.svg" alt="help support" className="w-5 h-5 mr-3" />
                         Help & Support
@@ -579,7 +693,16 @@ function NavContent() {
                       {/* Privacy Policy */}
                           <button
                             onClick={() => router.push("/my-account?tab=privacy-policy")}
-                            className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                            className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
+                            style={{ cursor: "pointer" }}
+                            onMouseOver={(e) => {
+                              e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                              e.currentTarget.style.color = "#6D0D26";
+                            }}
+                            onMouseOut={(e) => {
+                              e.currentTarget.style.backgroundColor = "transparent";
+                              e.currentTarget.style.color = "#374151";
+                            }}
                           >
                             <img src="/icon8.svg" alt="privacy policy" className="w-5 h-5 mr-3" />
                             Privacy Policy
@@ -613,7 +736,10 @@ function NavContent() {
                   {item.href ? (
                     <Link
                       href={item.href}
-                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
+                      className="flex items-center space-x-1 text-white font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "white")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "white")}
                       onClick={() => {
                         // Reset category when Products is clicked
                         if (item.label === "Products") {
@@ -625,7 +751,10 @@ function NavContent() {
                     </Link>
                   ) : (
                     <button
-                      className="flex items-center space-x-1 text-white hover:text-green-200 font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
+                      className="flex items-center space-x-1 text-white font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "white")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "white")}
                       onClick={() =>
                         item.hasDropdown && toggleDropdown(item.label)
                       }
@@ -653,7 +782,16 @@ function NavContent() {
                           <a
                             key={subIndex}
                             href="#"
-                            className="block px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer text-sm tracking-[0.02em]"
+                            className="block px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer text-sm tracking-[0.02em]"
+                            style={{ cursor: "pointer" }}
+                            onMouseOver={(e) => {
+                              e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                              e.currentTarget.style.color = "#6D0D26";
+                            }}
+                            onMouseOut={(e) => {
+                              e.currentTarget.style.backgroundColor = "transparent";
+                              e.currentTarget.style.color = "#374151";
+                            }}
                           >
                             {subItem}
                           </a>
@@ -673,7 +811,7 @@ function NavContent() {
           <div className="flex items-center">
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-1.5 rounded-lg text-gray-600 hover:text-green-700 hover:bg-gray-100 transition-colors duration-200"
+              className="inline-flex items-center justify-center p-1.5 rounded-lg text-gray-600 hover:text-[#6D0D26] hover:bg-gray-100 transition-colors duration-200"
             >
               <span className="sr-only">Open main menu</span>
               {!isMobileMenuOpen ? (
@@ -710,14 +848,7 @@ function NavContent() {
             {/* Mobile Logo - Hidden on small screens when search is open */}
             {!showSearchBar && (
               <Link href="/" className="flex items-center ml-2">
-                <div className="flex items-center">
-                  <div className="w-6 h-6 bg-gray-700 rounded flex items-center justify-center mr-1.5">
-                    <div className="w-3 h-3 bg-white rounded-sm"></div>
-                  </div>
-                  <div className="text-lg font-bold text-gray-800">
-                    Souqalmart
-                  </div>
-                </div>
+                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-6 w-auto" />
               </Link>
             )}
           </div>
@@ -784,7 +915,7 @@ function NavContent() {
             {showSearchBar ? (
               <button 
                 onClick={() => setShowSearchBar(false)}
-                className="p-1.5 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -793,15 +924,18 @@ function NavContent() {
             ) : (
               <button 
                 onClick={() => setShowSearchBar(true)}
-                className="p-1.5 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
                 <img src="/searchicon.svg" alt="search" className="w-4 h-4" />
               </button>
             )}
 
             {/* Mobile Language Selector */}
-            <div className="relative group">
-              <button className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer">
+            <div className="relative" ref={mobileLangRef}>
+              <button 
+                onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
+                className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+              >
                 <img src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} className="w-4 h-4 rounded-full" />
                 <span className="text-xs font-medium text-gray-700">{language}</span>
                 <img
@@ -810,20 +944,37 @@ function NavContent() {
                   className="w-[6px] h-[4px]"
                 />
               </button>
-
               {/* Mobile Language Dropdown */}
-              <div className="absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isMobileLanguageOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
                 <div className="py-1">
                   <button 
-                    onClick={() => setLanguage("EN")}
-                    className="flex items-center w-full px-3 py-1.5 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    onClick={() => { setLanguage("EN"); try { localStorage.setItem("language", "EN"); } catch {} setIsMobileLanguageOpen(false); }}
+                    className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer"
+                    style={{ cursor: "pointer" }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                      e.currentTarget.style.color = "#6D0D26";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                      e.currentTarget.style.color = "#374151";
+                    }}
                   >
                     <img src="/english.svg" alt="English" className="w-4 h-4 rounded-full mr-2" />
                     <span className={`text-xs ${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                   </button>
                   <button 
-                    onClick={() => setLanguage("AR")}
-                    className="flex items-center w-full px-3 py-1.5 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                    onClick={() => { setLanguage("AR"); try { localStorage.setItem("language", "AR"); } catch {} setIsMobileLanguageOpen(false); }}
+                    className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer"
+                    style={{ cursor: "pointer" }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                      e.currentTarget.style.color = "#6D0D26";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                      e.currentTarget.style.color = "#374151";
+                    }}
                   >
                     <img src="/arabicicon.svg" alt="Arabic" className="w-4 h-4 rounded-full mr-2" />
                     <span className={`text-xs ${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
@@ -835,7 +986,7 @@ function NavContent() {
             {/* Mobile Cart */}
             <button
               onClick={toggleCart}
-              className="relative p-1.5 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+              className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
             >
               <img
                 src="/Carticon.svg"
@@ -867,7 +1018,10 @@ function NavContent() {
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 cursor-pointer"
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer"
+                    style={{ cursor: "pointer" }}
+                    onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                    onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     onClick={(e) => {
                       // Reset category when Products is clicked
                       if (item.label === "Products") {
@@ -883,7 +1037,10 @@ function NavContent() {
                   </Link>
                 ) : (
                   <button
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 hover:text-green-700 font-normal transition-colors duration-200 cursor-pointer"
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer"
+                    style={{ cursor: "pointer" }}
+                    onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                    onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     onClick={() =>
                       item.hasDropdown && toggleDropdown(item.label)
                     }
@@ -908,7 +1065,14 @@ function NavContent() {
                       <a
                         key={subIndex}
                         href="#"
-                        className="block py-2 text-gray-600 hover:text-green-700 transition-colors duration-200 cursor-pointer"
+                        className="block py-2 text-gray-600 transition-colors duration-200 cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.color = "#6D0D26";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.color = "#6B7280";
+                        }}
                       >
                         {subItem}
                       </a>
@@ -925,7 +1089,10 @@ function NavContent() {
                   <>
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <img src="/icon7.svg" alt="personal info" className="w-5 h-5" />
                   <span>Personal info</span>
@@ -933,7 +1100,10 @@ function NavContent() {
 
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=my-orders"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <img src="/icon6.svg" alt="my orders" className="w-5 h-5" />
                   <span>My orders</span>
@@ -941,7 +1111,10 @@ function NavContent() {
 
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=saved-address"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <img src="/icon4.svg" alt="addresses" className="w-5 h-5" />
                   <span>Addresses</span>
@@ -949,7 +1122,10 @@ function NavContent() {
 
                 <button
                   onClick={() => navigateToTab("help")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <svg
                     className="w-5 h-5"
@@ -969,7 +1145,10 @@ function NavContent() {
 
                 <button
                   onClick={() => navigateToTab("privacy-policy")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <svg
                     className="w-5 h-5"
@@ -989,7 +1168,10 @@ function NavContent() {
 
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <svg
                     className="w-5 h-5"
@@ -1011,7 +1193,10 @@ function NavContent() {
                   <>
                     <button
                       onClick={() => navigateToTab("account")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/icon7.svg" alt="personal info" className="w-5 h-5" />
                       <span>Personal info</span>
@@ -1019,7 +1204,10 @@ function NavContent() {
 
                     <button
                       onClick={() => navigateToTab("my-orders")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/icon6.svg" alt="my orders" className="w-5 h-5" />
                       <span>My orders</span>
@@ -1027,7 +1215,10 @@ function NavContent() {
 
                     <button
                       onClick={() => navigateToTab("addresses")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/icon4.svg" alt="addresses" className="w-5 h-5" />
                       <span>Addresses</span>
@@ -1037,7 +1228,10 @@ function NavContent() {
 
                     <button
                       onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/icon3.svg" alt="help support" className="w-5 h-5" />
                   <span>Help & Support</span>
@@ -1045,7 +1239,10 @@ function NavContent() {
 
                 <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=privacy-policy"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/icon8.svg" alt="privacy policy" className="w-5 h-5" />
                       <span>Privacy Policy</span>
@@ -1055,14 +1252,20 @@ function NavContent() {
 
                     <button
                       onClick={handleLogin}
-                      className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                      style={{ cursor: "pointer" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
                       <img src="/usericon.svg" alt="login" className="w-5 h-5" />
                       <span>Login</span>
                     </button>
                     <button
                       onClick={() => router.push("/register")}
-                      className="flex items-center space-x-3 py-2 mb-4 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 mb-4 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <svg
                     className="w-5 h-5"
@@ -1081,7 +1284,10 @@ function NavContent() {
                 </button>
                 <button
                       onClick={() => router.push("/forgot-password")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 hover:text-green-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
                   <svg
                     className="w-5 h-5"
@@ -1141,9 +1347,7 @@ export default function Nav() {
           <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
             <div className="flex items-center h-20 justify-between">
               <div className="flex-shrink-0 pr-4 hidden lg:block">
-                <div className="text-3xl font-bold text-[var(--color-primary)]">
-                  Souqalmart
-                </div>
+                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-8 w-auto" />
               </div>
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[var(--color-primary)]"></div>

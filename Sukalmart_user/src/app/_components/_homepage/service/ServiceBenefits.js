@@ -4,7 +4,7 @@ import { serviceBenefits } from "../../../../lib/data";
 export default function ServiceBenefits() {
 	return (
 		<>
-			<div className="py-8 md:py-12 overflow-hidden" style={{ background: "rgba(3, 95, 15, 0.05)" }}>
+			<div className="py-8 md:py-12 overflow-hidden" style={{ background: "rgba(109, 13, 38, 0.05)" }}>
 				<div className="px-4 sm:px-8 md:px-16 lg:px-[300px]">
 					<div className="flex flex-row items-start justify-center gap-2 sm:gap-4 md:gap-4 lg:gap-8">
 						{serviceBenefits.map((benefit, index) => (

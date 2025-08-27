@@ -173,7 +173,12 @@ export default function CheckoutLeft({
             </div>
 
             {/* Proceed to Pay Button */}
-              <button className="w-full bg-[var(--color-primary)] text-white py-3 px-4 rounded font-medium hover:bg-[var(--color-primary)]/90 transition-colors cursor-pointer">
+              <button 
+                className="w-full bg-[var(--color-primary)] text-white py-3 px-4 rounded font-medium transition-colors cursor-pointer"
+                style={{ cursor: "pointer" }}
+                onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
+                onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
+              >
               Proceed to Pay
             </button>
           </div>

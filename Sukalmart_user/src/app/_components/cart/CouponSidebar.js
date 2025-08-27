@@ -143,7 +143,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                   placeholder="Enter your coupon code.."
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
-                  className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                  className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
                 />
               </div>
 
@@ -154,7 +154,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                     key={coupon.id} 
                     className="py-3 sm:py-4 px-3 sm:px-4"
                     style={{
-                      backgroundColor: selectedCoupon === coupon.id ? "rgba(3, 95, 15, 0.08)" : "transparent",
+                      backgroundColor: selectedCoupon === coupon.id ? "#F7F3F4" : "transparent",
                       borderBottom: idx !== coupons.length - 1 ? "1px dashed rgba(229, 231, 235, 1)" : "none"
                     }}
                   >
@@ -209,6 +209,8 @@ export default function CouponSidebar({ isOpen, onClose }) {
                 onClick={onClose}
                 className="text-white py-2 sm:py-3 px-8 sm:px-10 rounded-md font-medium transition-colors whitespace-nowrap text-sm sm:text-base cursor-pointer"
                 style={{ backgroundColor: "var(--color-primary)" }}
+                onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
+                onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
               >
                 Apply
               </button>

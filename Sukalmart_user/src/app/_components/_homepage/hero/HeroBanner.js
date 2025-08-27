@@ -196,8 +196,10 @@ export default function HeroBanner() {
 
               {/* Row 5: Shop Now Button */}
               <button
-                className="bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-white font-medium px-4 py-3 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="bg-[var(--color-primary)] text-white font-medium px-4 py-3 rounded transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
                 style={{ cursor: "pointer" }}
+                onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
+                onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
                 onClick={() =>
                   router.push(`/category/${normalizeSlug(currentBanner.title)}`)
                 }
@@ -217,7 +219,7 @@ export default function HeroBanner() {
                 onClick={() => goToSlide(index)}
                 className={`w-20 h-1 rounded-full transition-all duration-300 cursor-pointer ${
                   index === currentSlide
-                    ? "bg-green-700 opacity-70"
+                    ? "bg-[#6D0D26] opacity-70"
                     : "bg-gray-300"
                 }`}
               />
@@ -303,7 +305,7 @@ export default function HeroBanner() {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-16 h-1 rounded-full transition-all duration-300 cursor-pointer ${index === currentSlide
-                    ? "bg-green-700 opacity-70"
+                    ? "bg-[#6D0D26] opacity-70"
                     : "bg-gray-300"
                   }`}
               />
@@ -404,7 +406,7 @@ export default function HeroBanner() {
                 onClick={() => goToSlide(index)}
                 className={`flex-1 h-0.5 rounded-2xl transition-all duration-300 cursor-pointer ${
                   index === currentSlide
-                    ? "bg-[rgba(3,95,15,0.7)]"
+                    ? "bg-[rgba(109,13,38,0.7)]"
                     : "bg-[rgba(51,51,51,0.2)]"
                 }`}
               />

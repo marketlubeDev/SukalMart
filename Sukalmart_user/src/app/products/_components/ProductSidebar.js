@@ -34,9 +34,11 @@ export default function ProductSidebar({
 
   return (
     <div 
-      className="bg-white p-4 rounded-lg" 
+      className="bg-white p-4 rounded-lg w-full" 
       style={{ 
-        overscrollBehavior: 'contain'
+        overscrollBehavior: 'contain',
+        minWidth: '320px',
+        maxWidth: '100%'
       }}
       onWheel={(e) => {
         // Prevent scroll propagation to parent elements
@@ -162,8 +164,8 @@ export default function ProductSidebar({
         </h3>
 
         {/* Price Range Slider */}
-        <div className="mb-4">
-          <div className="relative">
+        <div className="mb-4 px-4">
+          <div className="relative max-w-[200px]">
             {/* Background track */}
             <div className="w-full h-1 bg-gray-300 rounded-lg relative">
               {/* Green selected portion */}
@@ -237,7 +239,7 @@ export default function ProductSidebar({
             />
           </div>
 
-          <div className="flex justify-center items-center gap-2 mt-2">
+          <div className="flex justify-start items-center gap-2 mt-2">
             <div
               style={{
                 display: "flex",
@@ -291,25 +293,27 @@ export default function ProductSidebar({
         </div>
 
         {/* Predefined Price Ranges */}
-        <div className="space-y-0">
-          {priceRanges.map((range) => (
-            <button
-              key={range}
-              className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
-              style={{
-                color: "rgba(51, 51, 51, 0.70)",
-                leadingTrim: "both",
-                textEdge: "cap",
-                fontSize: "16px",
-                fontStyle: "normal",
-                fontWeight: "600",
-                lineHeight: "normal",
-                letterSpacing: "-0.16px",
-              }}
-            >
-              {range}
-            </button>
-          ))}
+        <div className="space-y-0 px-4">
+          <div className="max-w-[200px]">
+            {priceRanges.map((range) => (
+              <button
+                key={range}
+                className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
+                style={{
+                  color: "rgba(51, 51, 51, 0.70)",
+                  leadingTrim: "both",
+                  textEdge: "cap",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  lineHeight: "normal",
+                  letterSpacing: "-0.16px",
+                }}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

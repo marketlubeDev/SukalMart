@@ -101,6 +101,7 @@ export default function CheckoutRight() {
               checked={paymentMethod === "cod"}
               onChange={(e) => setPaymentMethod(e.target.value)}
               className="mt-1"
+              style={{ accentColor: "#6D0D26" }}
             />
             <div className="flex-1">
               <label htmlFor="cod" className="block font-medium text-gray-800 cursor-pointer">
@@ -122,6 +123,7 @@ export default function CheckoutRight() {
               checked={paymentMethod === "online"}
               onChange={(e) => setPaymentMethod(e.target.value)}
               className="mt-1"
+              style={{ accentColor: "#6D0D26" }}
             />
             <div className="flex-1">
               <label htmlFor="online" className="block font-medium text-gray-800 cursor-pointer">
