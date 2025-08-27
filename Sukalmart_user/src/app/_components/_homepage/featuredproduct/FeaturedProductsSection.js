@@ -2,8 +2,10 @@
 import FeaturedProductCard from "./FeaturedProductCard";
 import { featuredProducts } from "../../../../lib/data";
 import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function FeaturedProductsSection({ isProductPage = false }) {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -70,7 +72,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
               style={{ color: "var(--color-primary)", cursor: 'pointer' }}
-              onClick={() => window.location.href = "/products"}
+              onClick={() => router.push("/products")}
             >
               <span className="text-sm sm:text-base">View all</span>
               <img src="/nextarrow.svg" alt="Next arrow" className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />

@@ -2,8 +2,11 @@
 import ProductCard from "../ProductCard";
 import { bestSellers } from "../../../../lib/data";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function BestSellersSection() {
+  const router = useRouter();
+  
   const addToCart = (product) => {
     try {
       const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
@@ -50,7 +53,7 @@ export default function BestSellersSection() {
           <button
             className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
             style={{ color: "var(--color-primary)", cursor: 'pointer' }}
-            onClick={() => window.location.href = "/products"}
+            onClick={() => router.push("/products")}
           >
             <span className="text-sm md:text-base">View all</span>
             <img
@@ -64,7 +67,7 @@ export default function BestSellersSection() {
         {/* Best Sellers Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 md:gap-6">
           {/* Product 1 - A1 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/1")} style={{ cursor: "pointer" }}>
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => router.push("/products/1")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
@@ -124,7 +127,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 2 - #2 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/2")} style={{ cursor: "pointer" }}>
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => router.push("/products/2")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -186,7 +189,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 3 - #3 Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/3")} style={{ cursor: "pointer" }}>
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => router.push("/products/3")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
@@ -248,7 +251,7 @@ export default function BestSellersSection() {
           </div>
 
           {/* Product 4 - No Badge */}
-          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => (window.location.href = "/products/4")} style={{ cursor: "pointer" }}>
+          <div className="bg-white rounded-lg overflow-hidden transition-all duration-300" onClick={() => router.push("/products/4")} style={{ cursor: "pointer" }}>
             <div className="relative">
               <img
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"

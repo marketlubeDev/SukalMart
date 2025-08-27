@@ -873,8 +873,8 @@ function NavContent() {
                       if (item.label === "Products") {
                         e.preventDefault();
                         localStorage.removeItem("selectedCategory");
-                        // Force page reload to reset state
-                        window.location.href = "/products";
+                        // Use router navigation instead of window.location.href
+                        router.push("/products");
                       }
                       setIsMobileMenuOpen(false);
                     }}

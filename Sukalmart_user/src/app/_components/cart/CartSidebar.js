@@ -135,7 +135,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
   const handleProceedToCheckout = () => {
     onClose();
-    window.location.href = '/checkout';
+    router.push('/checkout');
   };
 
   const subtotal = cartItems.reduce(
@@ -353,7 +353,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   <button
                     onClick={() => {
                       onClose();
-                      window.location.href = '/products';
+                      router.push('/products');
                     }}
                     style={{
                       display: "flex",
