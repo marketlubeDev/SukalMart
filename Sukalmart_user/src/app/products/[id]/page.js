@@ -40,39 +40,80 @@ export default function ProductDetailPage() {
     setMounted(true);
   }, []);
 
-  // Static product data - single product details
+  // Static product data - multiple product details
   const getProductData = () => {
-    return {
-      id: "1",
-      name: "Dove Nutritive Solutions",
-      type: "Hair Care",
-      price: 1099,
-      originalPrice: 1299,
-      discount: 18,
-      image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-      images: [
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-        "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-      ],
-      description: "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
-      features: [
-        "Deep hydration formula",
-        "Natural ingredients",
-        "Suitable for all skin types",
-        "Non-greasy texture",
-        "Fast absorption",
-      ],
-      specifications: {
-        "Volume": "30ml",
-        "Skin Type": "All skin types",
-        "Texture": "Lightweight serum",
-        "Fragrance": "Fragrance-free",
-        "Shelf Life": "24 months",
-        "Country of Origin": "India",
+    // Static products database
+    const staticProducts = {
+      "static-premium-hair-oil": {
+        id: "static-premium-hair-oil",
+        name: "Premium Hair Growth Oil",
+        type: "Hair Care",
+        price: 899,
+        originalPrice: 1299,
+        discount: 31,
+        image: "/haircare1.jpg",
+        images: [
+          "/haircare1.jpg",
+          "/haircare2.jpg", 
+          "/haircare3.jpg",
+          "/haircare1.jpg"
+        ],
+        description: "Advanced hair growth formula with natural ingredients. This premium hair oil is specially formulated to promote hair growth, reduce hair fall, and improve overall hair health. Made with 100% natural ingredients including coconut oil, almond oil, and essential vitamins.",
+        features: [
+          "Promotes hair growth",
+          "Reduces hair fall",
+          "Natural ingredients",
+          "Suitable for all hair types",
+          "Deep nourishment",
+          "Improves hair texture"
+        ],
+        specifications: {
+          "Volume": "100ml",
+          "Hair Type": "All hair types",
+          "Texture": "Lightweight oil",
+          "Fragrance": "Natural herbal",
+          "Shelf Life": "24 months",
+          "Country of Origin": "India",
+        },
+        rating: 4.8,
+        reviews: 1247,
+        inStock: true
       },
+      "1": {
+        id: "1",
+        name: "Dove Nutritive Solutions",
+        type: "Hair Care",
+        price: 1099,
+        originalPrice: 1299,
+        discount: 18,
+        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+        images: [
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+        ],
+        description: "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
+        features: [
+          "Deep hydration formula",
+          "Natural ingredients",
+          "Suitable for all skin types",
+          "Non-greasy texture",
+          "Fast absorption",
+        ],
+        specifications: {
+          "Volume": "30ml",
+          "Skin Type": "All skin types",
+          "Texture": "Lightweight serum",
+          "Fragrance": "Fragrance-free",
+          "Shelf Life": "24 months",
+          "Country of Origin": "India",
+        },
+      }
     };
+
+    // Return the product based on ID, or default to the first product
+    return staticProducts[productId] || staticProducts["1"];
   };
 
   const product = getProductData();

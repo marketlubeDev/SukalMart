@@ -67,7 +67,32 @@ export default function ProductsPage() {
       : {}),
   });
 
-  console.log(products, "productsewrewrewr");
+  // Static product data
+  const staticProduct = {
+    id: "static-premium-hair-oil",
+    name: "Premium Hair Growth Oil",
+    type: "Hair Care",
+    category: "Hair Care",
+    price: 899,
+    originalPrice: 1299,
+    image: "/haircare1.jpg",
+    description: "Advanced hair growth formula with natural ingredients",
+    features: [
+      "Promotes hair growth",
+      "Reduces hair fall",
+      "Natural ingredients",
+      "Suitable for all hair types"
+    ],
+    rating: 4.8,
+    reviews: 1247,
+    inStock: true,
+    discount: 31
+  };
+
+  // Combine static product with API products
+  const allProducts = [staticProduct, ...(Array.isArray(products) ? products : [])];
+
+  console.log(allProducts, "productsewrewrewr");
   // Reset category when page loads (when coming from Products navbar link)
   useEffect(() => {
     const storedCategory = localStorage.getItem("selectedCategory");
@@ -195,7 +220,7 @@ export default function ProductsPage() {
             }}
           >
             <ProductGrid
-              products={products}
+              products={allProducts}
               selectedCategory={selectedCategory}
               sortBy={sortBy}
               setSortBy={setSortBy}
