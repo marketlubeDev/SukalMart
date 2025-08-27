@@ -230,19 +230,20 @@ export default function CartSidebar({ isOpen, onClose }) {
 
         {/* Cart Content */}
         <div className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
-          {/* Items Section - Flexible height to fit 100vh */}
+          {/* Items Section - Scrollable content */}
           <div
-            className="flex-1 overflow-hidden"
+            className="flex-1 overflow-y-auto"
             style={{ 
               paddingTop: "16px",
               paddingBottom: "16px",
               height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px) = 160px
               maxHeight: "calc(100vh - 80px - 80px)",
-              overflow: "hidden"
+              overflowY: "auto",
+              overflowX: "hidden"
             }}
           >
             {/* Items Header */}
-            <div className="flex justify-between items-center mb-4 px-4" style={{ overflow: "hidden" }}>
+            <div className="flex justify-between items-center mb-4 px-4">
               <h3
                 style={{
                   color: "#333333",
@@ -276,8 +277,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 borderRadius: "0px",
                 boxShadow: "none",
                 padding: 0,
-                margin: 0,
-                overflow: "hidden"
+                margin: 0
               }}
             >
               {cartItems.length === 0 ? (
@@ -372,7 +372,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       cursor: "pointer",
                     }}
                     onMouseOver={(e) =>
-                      (e.currentTarget.style.background = "#024a0c")
+                      (e.currentTarget.style.background = "#520A1E")
                     }
                     onMouseOut={(e) =>
                       (e.currentTarget.style.background = "var(--color-primary)")
@@ -508,8 +508,8 @@ export default function CartSidebar({ isOpen, onClose }) {
                             alignItems: "center",
                             gap: "6px",
                             borderRadius: "4px",
-                            border: "1px solid rgba(3, 95, 15, 0.40)",
-                            background: "rgba(3, 95, 15, 0.06)",
+                            border: "1px solid rgba(109, 13, 38, 0.40)",
+                            background: "rgba(109, 13, 38, 0.06)",
                             minWidth: "72px",
                             maxWidth: "80px",
                             position: "relative",
@@ -536,7 +536,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               lineHeight: 1,
                             }}
                             onMouseOver={(e) =>
-                              (e.currentTarget.style.background = "#E6F9ED")
+                              (e.currentTarget.style.background = "rgba(109, 13, 38, 0.1)")
                             }
                             onMouseOut={(e) =>
                               (e.currentTarget.style.background = "transparent")
@@ -582,7 +582,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               lineHeight: 1,
                             }}
                             onMouseOver={(e) =>
-                              (e.currentTarget.style.background = "#E6F9ED")
+                              (e.currentTarget.style.background = "rgba(109, 13, 38, 0.1)")
                             }
                             onMouseOut={(e) =>
                               (e.currentTarget.style.background = "transparent")
@@ -626,7 +626,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
             {/* Coupon Section - Only show when cart has items */}
             {cartItems.length > 0 && (
-            <div className="mt-6 bg-[#F5F5F5]" style={{ overflow: "hidden" }}>
+            <div className="mt-6 bg-[#F5F5F5]">
               <h3
                 style={{
                   color: "#333333",
@@ -642,7 +642,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               </h3>
               <button
                 onClick={() => setShowCouponSidebar(true)}
-                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full transition-colors cursor-pointer"
                 style={{ cursor: "pointer" }}
               >
                 <div className="flex items-center space-x-3">
@@ -677,7 +677,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
             {/* Order Summary - Only show when cart has items */}
             {cartItems.length > 0 && (
-            <div className="mt-6" style={{ overflow: "hidden" }}>
+            <div className="mt-6">
               <div className="flex items-center justify-between mb-3 px-4">
                 <h3
                   style={{
@@ -962,7 +962,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 }}
                 className="font-medium sm:w-[260px] sm:px-6 sm:py-4 sm:text-base"
                 onMouseOver={(e) =>
-                  (e.currentTarget.style.background = "#024a0c")
+                  (e.currentTarget.style.background = "#520A1E")
                 }
                 onMouseOut={(e) =>
                   (e.currentTarget.style.background = "var(--color-primary)")

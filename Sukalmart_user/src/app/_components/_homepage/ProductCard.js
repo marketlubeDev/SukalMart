@@ -27,7 +27,19 @@ export default function ProductCard({
 
   return (
     <div 
-      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer"
+      style={{
+        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+        cursor: "pointer"
+      }}
+      onMouseOver={(e) => {
+        e.currentTarget.style.boxShadow = "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
+        e.currentTarget.style.transform = "translateY(-2px)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.boxShadow = "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)";
+        e.currentTarget.style.transform = "translateY(0)";
+      }}
       onClick={handleProductClick}
     >
       <div className="relative">
@@ -78,12 +90,12 @@ export default function ProductCard({
           </div>
         )}
       </div>
-      <div className="p-3 sm:p-4">
-        <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+      <div className="p-3 sm:p-4 flex flex-col h-32">
+        <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-1 line-clamp-2 flex-shrink-0">
           {product.name}
         </h3>
-        <p className="text-xs text-gray-600 mb-2 sm:mb-3">{product.type || product.category}</p>
-        <div className="flex items-center gap-2">
+        <p className="text-xs text-gray-600 mb-2 sm:mb-3 flex-shrink-0">{product.type || product.category}</p>
+        <div className="flex items-center gap-2 mt-auto">
           <span className="text-base sm:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
             ₹{product.price?.toLocaleString() || product.price}
           </span>

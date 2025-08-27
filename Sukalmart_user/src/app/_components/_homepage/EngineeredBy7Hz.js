@@ -52,7 +52,7 @@ export default function EngineeredBy7Hz() {
                 cursor: 'pointer'
               }}
               onMouseOver={(e) =>
-                (e.currentTarget.style.background = "#035F0FE6")
+                (e.currentTarget.style.background = "#520A1E")
               }
               onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
             >

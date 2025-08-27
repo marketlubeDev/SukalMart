@@ -9,7 +9,7 @@ import useProducts from "@/lib/hooks/useProducts";
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDiscount, setSelectedDiscount] = useState("");
-  const [priceRange, setPriceRange] = useState({ min: 1000, max: 12999 });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 12999 });
   const [sortBy, setSortBy] = useState("Featured");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -21,10 +21,11 @@ export default function ProductsPage() {
   const [snapshot, setSnapshot] = useState({
     selectedCategory: "",
     selectedDiscount: "",
-    priceRange: { min: 1000, max: 12999 },
+    priceRange: { min: 0, max: 12999 },
   });
   const [pendingSort, setPendingSort] = useState("Featured");
   const [sortSnapshot, setSortSnapshot] = useState("Featured");
+  const [draggingHandle, setDraggingHandle] = useState(null); // 'min' or 'max' or null
 
   const sortOptions = [
     "Featured",
@@ -184,9 +185,9 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row max-w-[1920px] mx-auto">
         {/* Sidebar - Full left edge */}
-        <div className="hidden lg:block lg:w-1/5 lg:min-w-80">
+        <div className="hidden lg:block lg:w-1/4 xl:w-1/5 2xl:w-1/8 lg:min-w-80 xl:min-w-96">
           <div 
             className="sticky top-[6rem] h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll"
             style={{ 
@@ -196,7 +197,9 @@ export default function ProductsPage() {
               position: 'sticky',
               top: '6rem',
               height: 'calc(100vh - 6rem)',
-              zIndex: 10
+              zIndex: 10,
+              minWidth: '320px',
+              maxWidth: '400px'
             }}
           >
             <ProductSidebar
@@ -211,12 +214,12 @@ export default function ProductsPage() {
         </div>
 
         {/* Main Content */}
-        <div className="lg:w-4/5 lg:min-w-0">
+        <div className="lg:w-3/4 xl:w-4/5 2xl:w-7/8 lg:min-w-0">
           <div 
-            className="px-4 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
+            className="px-0 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8 main-content-2xl main-content-pr"
             style={{ 
               overscrollBehavior: 'contain',
-              paddingRight: 'max(1rem, calc((100vw - 1200px) / 2))'
+              
             }}
           >
             <ProductGrid
@@ -330,91 +333,198 @@ export default function ProductsPage() {
                 {activeFilterTab === 'Price Range' && (
                   <div>
                     <div className="mb-3 text-sm font-semibold text-gray-900">Select Price range</div>
-                    <div className="mb-4">
+                    
+                    {/* Price Range Display - Like the image */}
+                    <div className="flex justify-center gap-4 mb-6">
+                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        ₹{priceRange.min.toLocaleString()}
+                      </div>
+                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        ₹{priceRange.max.toLocaleString()}
+                      </div>
+                    </div>
+
+                    <div className="mb-6">
                       <div className="relative">
                         {/* Background track */}
-                        <div className="w-full h-1 bg-gray-300 rounded-lg relative">
-                          {/* Green selected portion */}
+                        <div className="w-full h-2 bg-purple-300 rounded-lg relative">
+                          {/* Red selected portion */}
                           <div
-                            className="h-1 bg-[var(--color-primary)] rounded-lg absolute top-0 left-0"
+                            className="h-2 bg-red-500 rounded-lg absolute top-0 left-0"
                             style={{
                               width: `${((priceRange.max - priceRange.min) / (20000 - 0)) * 100}%`,
                               left: `${(priceRange.min / 20000) * 100}%`,
                             }}
                           />
-
-                        {/* Start circle */}
-                        <div
-                          className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2"
-                          style={{ left: `${(priceRange.min / 20000) * 100}%` }}
-                        >
-                          <img
-                            src="/pricecircle.svg"
-                            alt="start"
-                            className="w-3 h-3"
-                          />
                         </div>
 
-                        {/* End circle */}
+                        {/* Interactive track for dragging */}
+                        <div 
+                          className="absolute top-0 w-full h-8 cursor-pointer"
+                          style={{ 
+                            marginTop: '-12px',
+                            zIndex: 50
+                          }}
+                          onMouseDown={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            const percentage = (clickX / rect.width) * 100;
+                            const value = Math.round((percentage / 100) * 20000);
+                            
+                            // Determine which handle to move based on which is closer
+                            const minDistance = Math.abs(value - priceRange.min);
+                            const maxDistance = Math.abs(value - priceRange.max);
+                            
+                            if (minDistance <= maxDistance) {
+                              setDraggingHandle('min');
+                              setPriceRange(prev => ({
+                                ...prev,
+                                min: Math.min(value, prev.max)
+                              }));
+                            } else {
+                              setDraggingHandle('max');
+                              setPriceRange(prev => ({
+                                ...prev,
+                                max: Math.max(value, prev.min)
+                              }));
+                            }
+                          }}
+                          onMouseMove={(e) => {
+                            if (!draggingHandle) return;
+                            
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const moveX = e.clientX - rect.left;
+                            const percentage = (moveX / rect.width) * 100;
+                            const value = Math.round((percentage / 100) * 20000);
+                            
+                            if (draggingHandle === 'min') {
+                              setPriceRange(prev => ({
+                                ...prev,
+                                min: Math.min(Math.max(0, value), prev.max)
+                              }));
+                            } else {
+                              setPriceRange(prev => ({
+                                ...prev,
+                                max: Math.max(Math.min(20000, value), prev.min)
+                              }));
+                            }
+                          }}
+                          onMouseUp={() => setDraggingHandle(null)}
+                          onMouseLeave={() => setDraggingHandle(null)}
+                          onTouchStart={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const touch = e.touches[0];
+                            const clickX = touch.clientX - rect.left;
+                            const percentage = (clickX / rect.width) * 100;
+                            const value = Math.round((percentage / 100) * 20000);
+                            
+                            const minDistance = Math.abs(value - priceRange.min);
+                            const maxDistance = Math.abs(value - priceRange.max);
+                            
+                            if (minDistance <= maxDistance) {
+                              setDraggingHandle('min');
+                              setPriceRange(prev => ({
+                                ...prev,
+                                min: Math.min(value, prev.max)
+                              }));
+                            } else {
+                              setDraggingHandle('max');
+                              setPriceRange(prev => ({
+                                ...prev,
+                                max: Math.max(value, prev.min)
+                              }));
+                            }
+                          }}
+                          onTouchMove={(e) => {
+                            if (!draggingHandle) return;
+                            e.preventDefault();
+                            
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const touch = e.touches[0];
+                            const moveX = touch.clientX - rect.left;
+                            const percentage = (moveX / rect.width) * 100;
+                            const value = Math.round((percentage / 100) * 20000);
+                            
+                            if (draggingHandle === 'min') {
+                              setPriceRange(prev => ({
+                                ...prev,
+                                min: Math.min(Math.max(0, value), prev.max)
+                              }));
+                            } else {
+                              setPriceRange(prev => ({
+                                ...prev,
+                                max: Math.max(Math.min(20000, value), prev.min)
+                              }));
+                            }
+                          }}
+                          onTouchEnd={() => setDraggingHandle(null)}
+                        />
+
+                        {/* Visual circles positioned based on values */}
                         <div
-                          className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2"
-                          style={{ left: `${(priceRange.max / 20000) * 100}%` }}
+                          className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 pointer-events-none"
+                          style={{ 
+                            left: `${(priceRange.min / 20000) * 100}%`,
+                            zIndex: 40
+                          }}
                         >
-                          <img
-                            src="/pricecircle.svg"
-                            alt="end"
-                            className="w-3 h-3"
-                          />
+                          <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
+                          </div>
+
+                        <div
+                          className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 pointer-events-none"
+                          style={{ 
+                            left: `${(priceRange.max / 20000) * 100}%`,
+                            zIndex: 40
+                          }}
+                        >
+                          <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
                         </div>
-                      </div>
+                          </div>
+                        </div>
 
-                      {/* Hidden range inputs for interaction */}
-                      <input
-                        type="range"
-                        min="0"
-                        max="20000"
-                        value={priceRange.min}
-                        onChange={(e) =>
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            min: parseInt(e.target.value),
-                          }))
-                        }
-                        className="absolute top-0 w-full h-1 opacity-0 cursor-pointer"
-                      />
-                      <input
-                        type="range"
-                        min="0"
-                        max="20000"
-                        value={priceRange.max}
-                        onChange={(e) =>
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            max: parseInt(e.target.value),
-                          }))
-                        }
-                        className="absolute top-0 w-full h-1 opacity-0 cursor-pointer"
-                      />
-                    </div>
-
-                    <div className="flex items-center gap-2 mt-3">
-                      <div className="flex justify-center items-center gap-2 min-w-[80px] rounded bg-black/5 text-gray-700 px-2 py-1 text-sm font-semibold">
-                        ₹ {priceRange.min.toLocaleString()}
+                    {/* Input fields - Like the image */}
+                    <div className="flex items-center gap-4 justify-center">
+                      <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">₹</div>
+                        <input
+                          type="number"
+                          value={priceRange.min}
+                          onChange={(e) => {
+                            const newMin = parseInt(e.target.value) || 0;
+                            setPriceRange(prev => ({
+                              ...prev,
+                              min: Math.min(newMin, prev.max)
+                            }));
+                          }}
+                          className="w-20 px-3 py-2 text-center focus:outline-none"
+                          min="0"
+                          max="20000"
+                        />
                       </div>
-                      <img
-                        src="/doublearrow.svg"
-                        alt="range"
-                        className="w-5 h-2 mx-2 flex-shrink-0"
-                      />
-                      <div className="flex justify-center items-center gap-2 min-w-[80px] rounded bg-black/5 text-gray-700 px-2 py-1 text-sm font-semibold">
-                        ₹ {priceRange.max.toLocaleString()}
+                      <div className="text-gray-400">to</div>
+                      <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">₹</div>
+                        <input
+                          type="number"
+                          value={priceRange.max}
+                          onChange={(e) => {
+                            const newMax = parseInt(e.target.value) || 20000;
+                            setPriceRange(prev => ({
+                              ...prev,
+                              max: Math.max(newMax, prev.min)
+                            }));
+                          }}
+                          className="w-20 px-3 py-2 text-center focus:outline-none"
+                          min="0"
+                          max="20000"
+                        />
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
 
             {/* Footer actions */}
             <div className="flex items-center" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}>
@@ -487,6 +597,39 @@ export default function ProductsPage() {
         .sidebar-scroll {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+
+        /* Ensure sidebar is visible on all screen sizes */
+        @media (min-width: 1024px) {
+          .sidebar-scroll {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+          }
+          .main-content-pr {
+            padding-right: max(1rem, calc((100vw - 1200px) / 2)) !important;
+          }
+        }
+
+        /* Remove right padding on sm screens only */
+        @media (min-width: 640px) and (max-width: 767.98px) {
+          .main-content-pr {
+            padding-right: 0 !important;
+          }
+        }
+
+        /* Specific styling for 2xl screens */
+        @media (min-width: 1536px) {
+          .sidebar-scroll {
+            min-width: 260px;
+            max-width: 300px;
+            padding-left: 50px !important;
+          }
+          
+          /* Remove right padding from main content on 2xl screens */
+          .main-content-2xl {
+            padding-right: 50px !important;
+          }
         }
       `}</style>
     </div>
