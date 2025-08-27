@@ -228,11 +228,21 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-0 sm:px-4 md:px-8 py-8 pb-0 lg:pb-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="hidden lg:block lg:w-1/5">
-            <div className="sticky top-30">
+      <div className="flex flex-col lg:flex-row">
+        {/* Sidebar - Full left edge */}
+        <div className="hidden lg:block lg:w-1/5 lg:min-w-80">
+          <div 
+            className="sticky top-[6rem] h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll"
+            style={{ 
+              overscrollBehavior: 'contain',
+              paddingLeft: 'max(1rem, calc((100vw - 1200px) / 2))',
+              paddingRight: '1rem',
+              position: 'sticky',
+              top: '6rem',
+              height: 'calc(100vh - 6rem)',
+              zIndex: 10
+            }}
+          >
             <ProductSidebar
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -241,11 +251,18 @@ export default function ProductsPage() {
               priceRange={priceRange}
               setPriceRange={setPriceRange}
             />
-            </div>
           </div>
+        </div>
 
-          {/* Main Content */}
-          <div className="lg:w-4/5">
+        {/* Main Content */}
+        <div className="lg:w-4/5 lg:min-w-0">
+          <div 
+            className="px-4 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
+            style={{ 
+              overscrollBehavior: 'contain',
+              paddingRight: 'max(1rem, calc((100vw - 1200px) / 2))'
+            }}
+          >
             <ProductGrid
               products={products}
               selectedCategory={selectedCategory}
@@ -450,6 +467,18 @@ export default function ProductsPage() {
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        /* Hide scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .sidebar-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

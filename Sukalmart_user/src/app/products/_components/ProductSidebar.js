@@ -33,7 +33,16 @@ export default function ProductSidebar({
   ];
 
   return (
-    <div className="bg-white p-4 rounded-lg overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+    <div 
+      className="bg-white p-4 rounded-lg" 
+      style={{ 
+        overscrollBehavior: 'contain'
+      }}
+      onWheel={(e) => {
+        // Prevent scroll propagation to parent elements
+        e.stopPropagation();
+      }}
+    >
       {/* Categories */}
       <div className="mb-4">
         <h3
@@ -159,18 +168,20 @@ export default function ProductSidebar({
             <div className="w-full h-1 bg-gray-300 rounded-lg relative">
               {/* Green selected portion */}
               <div
-                className="h-1 bg-[var(--color-primary)] rounded-lg absolute top-0 left-0"
+                className="h-1 bg-[var(--color-primary)] absolute top-0 left-0"
                 style={{
                   width: `${
                     ((priceRange.max - priceRange.min) / (20000 - 0)) * 100
                   }%`,
                   left: `${(priceRange.min / 20000) * 100}%`,
+                  borderRadius: priceRange.min === 0 ? '4px 0 0 4px' : 
+                               priceRange.max === 20000 ? '0 4px 4px 0' : '0'
                 }}
               />
 
               {/* Start circle */}
               <div
-                className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2"
+                className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.min / 20000) * 100}%` }}
               >
                 <img src="/pricecircle.svg" alt="start" className="w-3 h-3" />
@@ -178,39 +189,51 @@ export default function ProductSidebar({
 
               {/* End circle */}
               <div
-                className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2"
+                className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.max / 20000) * 100}%` }}
               >
                 <img src="/pricecircle.svg" alt="end" className="w-3 h-3" />
               </div>
             </div>
 
-            {/* Hidden range inputs for interaction */}
+            {/* Full width range inputs for complete control */}
             <input
               type="range"
               min="0"
               max="20000"
               value={priceRange.min}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  min: parseInt(e.target.value),
-                }))
-              }
-              className="absolute top-0 w-full h-1 opacity-0 cursor-pointer"
+              onChange={(e) => {
+                const newMin = parseInt(e.target.value);
+                if (newMin <= priceRange.max) {
+                  setPriceRange((prev) => ({
+                    ...prev,
+                    min: newMin,
+                  }));
+                }
+              }}
+              className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-20"
+              style={{ 
+                pointerEvents: 'auto'
+              }}
             />
             <input
               type="range"
               min="0"
               max="20000"
               value={priceRange.max}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  max: parseInt(e.target.value),
-                }))
-              }
-              className="absolute top-0 w-full h-1 opacity-0 cursor-pointer"
+              onChange={(e) => {
+                const newMax = parseInt(e.target.value);
+                if (newMax >= priceRange.min) {
+                  setPriceRange((prev) => ({
+                    ...prev,
+                    max: newMax,
+                  }));
+                }
+              }}
+              className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-30"
+              style={{ 
+                pointerEvents: 'auto'
+              }}
             />
           </div>
 
@@ -323,6 +346,12 @@ export default function ProductSidebar({
         .overflow-y-auto {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+
+        /* Enhanced scroll isolation */
+        div[style*="overscroll-behavior"] {
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
         }
       `}</style>
     </div>
