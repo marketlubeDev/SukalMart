@@ -6,8 +6,7 @@ export default function ProductVideoSection() {
       <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white relative">
         <video
           src="/video2.mp4"
-          className="w-full h-[600px] object-cover"
-          style={{ objectPosition: "center" }}
+          className="w-full object-cover object-center h-48 sm:h-64 md:h-80 lg:h-[600px]"
           controls
           poster="/soapbanner3.png"
         >

@@ -76,7 +76,7 @@ export default function LoginPage() {
             }}
             className="sm:text-[40px]"
           >
-            Welcome <span style={{ color: "#035F0F" }}>Shoppers</span>
+            Welcome <span style={{ color: "var(--color-primary)" }}>Shoppers</span>
           </h2>
           <p
             style={{
@@ -135,7 +135,7 @@ export default function LoginPage() {
                   boxShadow: "none",
                   transition: "border-color 0.2s, box-shadow 0.2s"
                 }}
-                onFocus={e => e.target.style.borderColor = "#035F0F"}
+                onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
                 onBlur={e => e.target.style.borderColor = "#d1d5db"}
                 placeholder="Email or phone number"
               />
@@ -172,7 +172,7 @@ export default function LoginPage() {
                 gap: "8px",
                 alignSelf: "stretch",
                 borderRadius: "4px",
-                background: "#035F0F",
+                background: "var(--color-primary)",
                 border: "none",
                 transition: "background-color 0.2s",
                 color: "#FFF",
@@ -186,7 +186,7 @@ export default function LoginPage() {
                 textEdge: "cap"
               }}
               onMouseOver={e => e.currentTarget.style.background = "#02490C"}
-              onMouseOut={e => e.currentTarget.style.background = "#035F0F"}
+              onMouseOut={e => e.currentTarget.style.background = "var(--color-primary)"}
               onFocus={e => e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33"}
               onBlur={e => e.currentTarget.style.boxShadow = "none"}
             >
@@ -240,8 +240,8 @@ export default function LoginPage() {
               <Link
                 href="/terms"
                 className="underline font-medium"
-                style={{ color: "#035F0F" }}
-                onMouseOver={e => e.currentTarget.style.color = "#035F0F"}
+                style={{ color: "var(--color-primary)" }}
+                onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Terms
@@ -250,8 +250,8 @@ export default function LoginPage() {
               <Link
                 href="/privacy"
                 className="underline font-medium"
-                style={{ color: "#035F0F" }}
-                onMouseOver={e => e.currentTarget.style.color = "#035F0F"}
+                style={{ color: "var(--color-primary)" }}
+                onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Privacy Policy

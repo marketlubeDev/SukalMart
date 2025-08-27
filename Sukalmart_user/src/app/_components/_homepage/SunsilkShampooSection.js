@@ -144,7 +144,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
   const products = getProducts(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 xl:px-10 2xl:px-10">
+    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10 2xl:px-10">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4 sm:mb-6">
@@ -153,7 +153,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           </h2>
           <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
-              style={{ color: "#035F0F" }}
+              style={{ color: "var(--color-primary)" }}
               onClick={handleViewAllClick}
             >
               <span>View all</span>

@@ -51,7 +51,7 @@ function WishlistCard({ product, onRemove }) {
         <h3 className="text-sm font-semibold text-gray-900 mb-1">{product.name}</h3>
         <p className="text-xs text-gray-600 mb-3">{product.type}</p>
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold" style={{ color: "#035F0F" }}>
+          <span className="text-lg font-bold" style={{ color: "var(--color-primary)" }}>
             ₹{(product.price ?? 0).toLocaleString()}
           </span>
           {product.originalPrice ? (

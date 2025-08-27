@@ -61,25 +61,25 @@ export default function PrivacyPolicy() {
           </p>
           <div className="space-y-2 text-xs sm:text-sm">
             <div className="flex items-center space-x-2">
-              <span className="text-[#035F0F]">📧</span>
+              <span className="text-[var(--color-primary)]">📧</span>
               <span className="text-gray-700">privacy@souqalmart.com</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-[#035F0F]">📞</span>
+              <span className="text-[var(--color-primary)]">📞</span>
               <span className="text-gray-700">+91 1800-123-4567</span>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-[#035F0F]">📍</span>
+              <span className="text-[var(--color-primary)]">📍</span>
               <span className="text-gray-700">Souqalmart, Kerala, India</span>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
-          <button className="w-full sm:w-auto px-4 py-2 bg-[#035F0F] text-white rounded-md hover:bg-[#035F0F]/90 transition-colors text-sm cursor-pointer">
+          <button className="w-full sm:w-auto px-4 py-2 bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-primary)]/90 transition-colors text-sm cursor-pointer">
             Download PDF
           </button>
-          <button className="w-full sm:w-auto px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded-md hover:bg-[#035F0F]/10 transition-colors text-sm cursor-pointer">
+          <button className="w-full sm:w-auto px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded-md hover:bg-[var(--color-primary)]/10 transition-colors text-sm cursor-pointer">
             Print Policy
           </button>
         </div>

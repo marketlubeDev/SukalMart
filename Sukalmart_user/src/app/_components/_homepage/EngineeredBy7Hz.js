@@ -14,7 +14,7 @@ export default function EngineeredBy7Hz() {
   };
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 md:px-8 xl:px-8 2xl:px-10 engineered-7hz-container">
+      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 md:px-8 lg:px-10 xl:px-8 2xl:px-10 engineered-7hz-container">
      
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
@@ -46,7 +46,7 @@ export default function EngineeredBy7Hz() {
               className="flex justify-center items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-4 lg:py-2 text-xs sm:text-sm md:text-base lg:text-base font-medium cursor-pointer"
               style={{
                 borderRadius: "4px",
-                background: "#035F0F",
+                background: "var(--color-primary)",
                 color: "#fff",
                 transition: "background 0.2s",
                 cursor: 'pointer'
@@ -54,7 +54,7 @@ export default function EngineeredBy7Hz() {
               onMouseOver={(e) =>
                 (e.currentTarget.style.background = "#035F0FE6")
               }
-              onMouseOut={(e) => (e.currentTarget.style.background = "#035F0F")}
+              onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
             >
               Shop all
             </button>
@@ -99,7 +99,7 @@ export default function EngineeredBy7Hz() {
                   <div className="flex items-center gap-2 mt-auto">
                     <span
                       className="text-base sm:text-lg font-bold"
-                      style={{ color: "#035F0F" }}
+                      style={{ color: "var(--color-primary)" }}
                     >
                       ₹899
                     </span>
@@ -145,7 +145,7 @@ export default function EngineeredBy7Hz() {
                   <div className="flex items-center gap-2 mt-auto">
                     <span
                       className="text-base sm:text-lg font-bold"
-                      style={{ color: "#035F0F" }}
+                      style={{ color: "var(--color-primary)" }}
                     >
                       ₹2,499
                     </span>
@@ -191,7 +191,7 @@ export default function EngineeredBy7Hz() {
                   <div className="flex items-center gap-2 mt-auto">
                     <span
                       className="text-base sm:text-lg font-bold"
-                      style={{ color: "#035F0F" }}
+                      style={{ color: "var(--color-primary)" }}
                     >
                       ₹1,299
                     </span>
@@ -206,7 +206,7 @@ export default function EngineeredBy7Hz() {
             <div className="lg:hidden w-full mt-4">
               <div className="flex justify-center">
                 <div className="w-20 h-1 bg-gray-200 rounded-full">
-                  <div className="w-7 h-1 bg-[#035F0F] rounded-full"></div>
+                  <div className="w-7 h-1 bg-[var(--color-primary)] rounded-full"></div>
                 </div>
               </div>
             </div>

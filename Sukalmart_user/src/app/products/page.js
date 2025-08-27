@@ -159,24 +159,41 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-0 sm:px-4 md:px-8 py-8 pb-0 lg:pb-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="hidden lg:block lg:w-1/5">
-            <div className="sticky top-20">
-              <ProductSidebar
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-                selectedDiscount={selectedDiscount}
-                setSelectedDiscount={setSelectedDiscount}
-                priceRange={priceRange}
-                setPriceRange={setPriceRange}
-              />
-            </div>
+      <div className="flex flex-col lg:flex-row">
+        {/* Sidebar - Full left edge */}
+        <div className="hidden lg:block lg:w-1/5 lg:min-w-80">
+          <div 
+            className="sticky top-[6rem] h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll"
+            style={{ 
+              overscrollBehavior: 'contain',
+              paddingLeft: 'max(1rem, calc((100vw - 1200px) / 2))',
+              paddingRight: '1rem',
+              position: 'sticky',
+              top: '6rem',
+              height: 'calc(100vh - 6rem)',
+              zIndex: 10
+            }}
+          >
+            <ProductSidebar
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedDiscount={selectedDiscount}
+              setSelectedDiscount={setSelectedDiscount}
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
+            />
           </div>
+        </div>
 
-          {/* Main Content */}
-          <div className="lg:w-4/5">
+        {/* Main Content */}
+        <div className="lg:w-4/5 lg:min-w-0">
+          <div 
+            className="px-4 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
+            style={{ 
+              overscrollBehavior: 'contain',
+              paddingRight: 'max(1rem, calc((100vw - 1200px) / 2))'
+            }}
+          >
             <ProductGrid
               products={products}
               selectedCategory={selectedCategory}
@@ -253,81 +270,53 @@ export default function ProductsPage() {
               ))}
             </div>
 
-            {/* Right Content */}
-            <div
-              className="w-7/12 p-4 overflow-y-auto"
-              style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}
-            >
-              {activeFilterTab === "Categories" && (
-                <div className="space-y-0">
-                  {categories.map((cat) => (
-                    <div
-                      key={cat}
-                      style={{
-                        borderBottom: "0.5px solid rgba(0, 0, 0, 0.10)",
-                      }}
-                    >
-                      <button
-                        onClick={() => {
-                          setSelectedCategory(cat);
-                          localStorage.setItem("selectedCategory", cat);
-                        }}
-                        className={`w-full text-left px-3 py-3 ${
-                          selectedCategory === cat
-                            ? "bg-green-100 text-[#035F0F] font-semibold"
-                            : "hover:bg-gray-50 text-gray-800"
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {activeFilterTab === "Discount" && (
-                <div className="space-y-0">
-                  {discountOptions.map((opt) => (
-                    <div
-                      key={opt}
-                      style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}
-                    >
-                      <button
-                        onClick={() => setSelectedDiscount(opt)}
-                        className={`w-full text-left px-3 py-3 ${
-                          selectedDiscount === opt
-                            ? "bg-green-100 text-[#035F0F] font-semibold"
-                            : "hover:bg-gray-50 text-gray-800"
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {activeFilterTab === "Price Range" && (
-                <div>
-                  <div className="mb-3 text-sm font-semibold text-gray-900">
-                    Select Price range
+              {/* Right Content */}
+              <div className="w-7/12 p-4 overflow-y-auto" style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}>
+                {activeFilterTab === 'Categories' && (
+                  <div className="space-y-0">
+                    {categories.map((cat) => (
+                      <div key={cat} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.10)" }}>
+                        <button
+                          onClick={() => { setSelectedCategory(cat); localStorage.setItem('selectedCategory', cat); }}
+                          className={`w-full text-left px-3 py-3 ${selectedCategory === cat ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
+                        >
+                          {cat}
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                  <div className="mb-4">
-                    <div className="relative">
-                      {/* Background track */}
-                      <div className="w-full h-1 bg-gray-300 rounded-lg relative">
-                        {/* Green selected portion */}
-                        <div
-                          className="h-1 bg-[#035F0F] rounded-lg absolute top-0 left-0"
-                          style={{
-                            width: `${
-                              ((priceRange.max - priceRange.min) /
-                                (20000 - 0)) *
-                              100
-                            }%`,
-                            left: `${(priceRange.min / 20000) * 100}%`,
-                          }}
-                        />
+                )}
+
+                {activeFilterTab === 'Discount' && (
+                  <div className="space-y-0">
+                    {discountOptions.map((opt) => (
+                      <div key={opt} style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}>
+                        <button
+                          onClick={() => setSelectedDiscount(opt)}
+                          className={`w-full text-left px-3 py-3 ${selectedDiscount === opt ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
+                        >
+                          {opt}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {activeFilterTab === 'Price Range' && (
+                  <div>
+                    <div className="mb-3 text-sm font-semibold text-gray-900">Select Price range</div>
+                    <div className="mb-4">
+                      <div className="relative">
+                        {/* Background track */}
+                        <div className="w-full h-1 bg-gray-300 rounded-lg relative">
+                          {/* Green selected portion */}
+                          <div
+                            className="h-1 bg-[var(--color-primary)] rounded-lg absolute top-0 left-0"
+                            style={{
+                              width: `${((priceRange.max - priceRange.min) / (20000 - 0)) * 100}%`,
+                              left: `${(priceRange.min / 20000) * 100}%`,
+                            }}
+                          />
 
                         {/* Start circle */}
                         <div
@@ -402,25 +391,12 @@ export default function ProductsPage() {
             </div>
           </div>
 
-          {/* Footer actions */}
-          <div
-            className="flex items-center"
-            style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}
-          >
-            <button
-              onClick={discardFilters}
-              className="flex-1 text-center py-3 text-red-600 font-medium"
-            >
-              Discard
-            </button>
-            <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <button
-              onClick={() => setIsFilterOpen(false)}
-              className="flex-1 text-center py-3 text-[#035F0F] font-semibold"
-            >
-              Apply
-            </button>
-          </div>
+            {/* Footer actions */}
+            <div className="flex items-center" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}>
+              <button onClick={discardFilters} className="flex-1 text-center py-3 text-red-600 font-medium">Discard</button>
+              <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
+              <button onClick={() => setIsFilterOpen(false)} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
+            </div>
         </div>
       )}
 
@@ -451,11 +427,7 @@ export default function ProductsPage() {
               >
                 <button
                   onClick={() => setPendingSort(option)}
-                  className={`w-full text-left px-4 py-3 ${
-                    pendingSort === option
-                      ? "text-[#035F0F] font-semibold"
-                      : "text-gray-800 hover:bg-gray-50"
-                  }`}
+                  className={`w-full text-left px-4 py-3 ${pendingSort === option ? 'text-[var(--color-primary)] font-semibold' : 'text-gray-800 hover:bg-gray-50'}`}
                 >
                   {option}
                 </button>
@@ -476,18 +448,22 @@ export default function ProductsPage() {
               Discard
             </button>
             <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <button
-              onClick={() => {
-                setSortBy(pendingSort);
-                setIsSortOpen(false);
-              }}
-              className="flex-1 text-center py-3 text-[#035F0F] font-semibold"
-            >
-              Apply
-            </button>
+            <button onClick={() => { setSortBy(pendingSort); setIsSortOpen(false); }} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        /* Hide scrollbar for sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .sidebar-scroll {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

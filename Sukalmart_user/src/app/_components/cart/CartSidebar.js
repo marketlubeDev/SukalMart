@@ -1,20 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Drawer } from "antd";
+import { useState, useEffect, useRef } from "react";
+import { Drawer, Button, Input, Modal } from "antd";
+import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CouponSidebar from "./CouponSidebar";
 
 export default function CartSidebar({ isOpen, onClose }) {
-  const [quantities, setQuantities] = useState({
-    1: 1,
-    2: 1,
-  });
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const [drawerWidth, setDrawerWidth] = useState(550);
+  const [quantities, setQuantities] = useState({});
+  const [cartItems, setCartItems] = useState([]);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
   const [showCouponSidebar, setShowCouponSidebar] = useState(false);
-  const [drawerWidth, setDrawerWidth] = useState(550);
-  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const loadCart = () => {
+    if (!mounted) return; // Don't load cart during SSR
     try {
       const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
       const parsed = raw ? JSON.parse(raw) : [];
@@ -31,6 +38,7 @@ export default function CartSidebar({ isOpen, onClose }) {
   };
 
   const persistCart = (items) => {
+    if (!mounted) return; // Don't persist cart during SSR
     try {
       if (typeof window !== 'undefined') {
         window.localStorage.setItem('cartItems', JSON.stringify(items));
@@ -44,6 +52,7 @@ export default function CartSidebar({ isOpen, onClose }) {
 
   // Prevent background scrolling when cart is open
   useEffect(() => {
+    if (!mounted) return; // Don't modify body style during SSR
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -59,10 +68,11 @@ export default function CartSidebar({ isOpen, onClose }) {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, mounted]);
 
   // Update drawer width responsively on client only
   useEffect(() => {
+    if (!mounted) return; // Don't update width during SSR
     const updateWidth = () => {
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
       setDrawerWidth(isMobile ? '100%' : 550);
@@ -77,14 +87,15 @@ export default function CartSidebar({ isOpen, onClose }) {
         window.removeEventListener('resize', updateWidth);
       }
     };
-  }, []);
+  }, [mounted]);
 
   // Load cart when opened and when external updates happen
   useEffect(() => {
-    if (isOpen) loadCart();
-  }, [isOpen]);
+    if (isOpen && mounted) loadCart();
+  }, [isOpen, mounted]);
 
   useEffect(() => {
+    if (!mounted) return; // Don't add event listeners during SSR
     const onCartUpdated = () => loadCart();
     if (typeof window !== 'undefined') {
       window.addEventListener('cart-updated', onCartUpdated);
@@ -94,9 +105,10 @@ export default function CartSidebar({ isOpen, onClose }) {
         window.removeEventListener('cart-updated', onCartUpdated);
       }
     };
-  }, []);
+  }, [mounted]);
 
   const updateQuantity = (itemId, newQuantity) => {
+    if (!mounted) return; // Don't update quantities during SSR
     if (newQuantity >= 1) {
       setQuantities((prev) => ({
         ...prev,
@@ -350,7 +362,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       alignItems: "center",
                       gap: "8px",
                       borderRadius: "4px",
-                      background: "#035F0F",
+                      background: "var(--color-primary)",
                       color: "#fff",
                       fontWeight: 500,
                       fontSize: "16px",
@@ -363,7 +375,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       (e.currentTarget.style.background = "#024a0c")
                     }
                     onMouseOut={(e) =>
-                      (e.currentTarget.style.background = "#035F0F")
+                      (e.currentTarget.style.background = "var(--color-primary)")
                     }
                   >
                     Shop Now
@@ -515,7 +527,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               justifyContent: "center",
                               background: "transparent",
                               border: "none",
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               fontSize: "18px",
                               fontWeight: "bold",
                               cursor: "pointer",
@@ -537,7 +549,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               padding: "0 2px",
                               fontSize: "15px",
                               fontWeight: 600,
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               minWidth: "20px",
                               textAlign: "center",
                               userSelect: "none",
@@ -561,7 +573,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                               justifyContent: "center",
                               background: "transparent",
                               border: "none",
-                              color: "#035F0F",
+                              color: "var(--color-primary)",
                               fontSize: "18px",
                               fontWeight: "bold",
                               cursor: "pointer",
@@ -585,7 +597,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         <span
                           style={{
                             overflow: "hidden",
-                            color: "#035F0F",
+                            color: "var(--color-primary)",
                             textOverflow: "ellipsis",
                             fontSize: "16px",
                             fontStyle: "normal",
@@ -805,7 +817,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -831,7 +843,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -857,7 +869,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       </span>
                       <span
                         style={{
-                          color: "#035F0F",
+                          color: "var(--color-primary)",
                           fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
@@ -939,7 +951,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   gap: "8px",
                   flexShrink: 0,
                   borderRadius: "4px",
-                  background: "#035F0F",
+                  background: "var(--color-primary)",
                   color: "#fff",
                   fontWeight: 500,
                   fontSize: "14px",
@@ -953,7 +965,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   (e.currentTarget.style.background = "#024a0c")
                 }
                 onMouseOut={(e) =>
-                  (e.currentTarget.style.background = "#035F0F")
+                  (e.currentTarget.style.background = "var(--color-primary)")
                 }
               >
                 Proceed to checkout

@@ -47,7 +47,7 @@ export default function InstagramSection() {
         <span
           className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.2px] sm:tracking-[-0.24px] md:tracking-[-0.26px] lg:tracking-[-0.28px]"
           style={{
-            color: "#035F0F",
+            color: "var(--color-primary)",
 
             fontStyle: "normal",
             textEdge: "cap",

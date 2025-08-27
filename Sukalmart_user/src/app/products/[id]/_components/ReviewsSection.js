@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { Modal, Rate, Input, Button } from "antd";
+import { MdAttachFile } from "react-icons/md";
 
 export default function ReviewsSection({ product, selectedImage }) {
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const showReviewModal = () => {
     setIsReviewModalVisible(true);
@@ -17,16 +19,18 @@ export default function ReviewsSection({ product, selectedImage }) {
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    setSelectedImages([]);
     document.body.style.overflow = 'unset'; // Restore background scrolling
   };
 
   const handleReviewSubmit = () => {
     // Here you would typically send the review to your backend
-    console.log("Review submitted:", { rating, reviewText, productId: product.id });
+    console.log("Review submitted:", { rating, reviewText, selectedImages, productId: product.id });
     // You can add API call here to save the review
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
+    setSelectedImages([]);
     document.body.style.overflow = 'unset'; // Restore background scrolling
   };
 
@@ -34,12 +38,32 @@ export default function ReviewsSection({ product, selectedImage }) {
     setRating(0);
   };
 
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length > 0) {
+      const newImages = imageFiles.map(file => ({
+        file,
+        preview: URL.createObjectURL(file)
+      }));
+      setSelectedImages(prev => [...prev, ...newImages]);
+    }
+  };
+
+  const removeImage = (index) => {
+    setSelectedImages(prev => {
+      const newImages = prev.filter((_, i) => i !== index);
+      return newImages;
+    });
+  };
+
   return (
     <>
       <div className="my-12 w-full mx-auto md:px-0">
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Left: Ratings Summary */}
-          <div className="md:w-1/3 w-full flex flex-col items-start md:items-start sticky-left">
+          <div className="md:w-1/3 w-full flex flex-col items-start md:items-start reviews-sticky-left lg:sticky lg:top-32">
             <h3
               className="text-xl font-semibold mb-2"
               style={{ color: "#333" }}
@@ -49,7 +73,7 @@ export default function ReviewsSection({ product, selectedImage }) {
             <div className="flex items-center mb-2">
               <span
                 className="text-3xl font-bold mr-2"
-                style={{ color: "#035F0F" }}
+                style={{ color: "var(--color-primary)" }}
               >
                 4.0
               </span>
@@ -73,7 +97,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                   <img src="/filledstar.svg" alt="star" className="w-3 h-3" />
                   <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                     <div
-                      className="h-1.5 bg-[#035F0F] rounded-full"
+                      className="h-1.5 bg-[var(--color-primary)] rounded-full"
                       style={{
                         width: ["60%", "20%", "10%", "5%", "5%"][idx],
                       }}
@@ -87,7 +111,7 @@ export default function ReviewsSection({ product, selectedImage }) {
             </div>
             <button 
               onClick={showReviewModal}
-              className="mt-2 px-4 py-2 border border-[#035F0F] text-[#035F0F] rounded font-medium hover:bg-[#035F0F] hover:text-white transition text-sm cursor-pointer"
+              className="mt-2 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded font-medium hover:bg-[var(--color-primary)] hover:text-white transition text-sm cursor-pointer"
             >
               Rate Product
             </button>
@@ -379,16 +403,59 @@ export default function ReviewsSection({ product, selectedImage }) {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Write your review <span className="text-red-500">*</span>
             </h3>
-            <Input.TextArea
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Tell us what you think.."
-              rows={4}
-              style={{ 
-                resize: 'none',
-                backgroundColor: 'rgba(0, 0, 0, 0.01)'
-              }}
-            />
+            <div className="relative">
+              <Input.TextArea
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                placeholder="Tell us what you think.."
+                rows={4}
+                style={{ 
+                  resize: 'none',
+                  backgroundColor: 'rgba(0, 0, 0, 0.01)',
+                  paddingRight: '40px' // Add padding to make room for the icon
+                }}
+              />
+              {/* Attach File Icon */}
+              <div className="absolute bottom-2 right-2">
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <MdAttachFile 
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    style={{ fontSize: '20px' }}
+                  />
+                </label>
+                <input
+                  id="image-upload"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+            </div>
+            
+            {/* Selected Images Preview */}
+            {selectedImages.length > 0 && (
+              <div className="mt-3">
+                <div className="flex flex-wrap gap-2">
+                  {selectedImages.map((image, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={image.preview}
+                        alt={`Upload ${index + 1}`}
+                        className="w-16 h-16 object-cover rounded border border-gray-200"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Border Separator */}
@@ -401,8 +468,8 @@ export default function ReviewsSection({ product, selectedImage }) {
               onClick={handleReviewSubmit}
               disabled={!rating || !reviewText.trim()}
               style={{
-                backgroundColor: '#035F0F',
-                borderColor: '#035F0F',
+                backgroundColor: 'var(--color-primary)',
+                borderColor: 'var(--color-primary)',
                 height: '40px',
                 width: '100%',
                 color: '#ffffff',

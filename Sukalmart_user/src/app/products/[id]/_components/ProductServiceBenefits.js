@@ -2,38 +2,44 @@
 import { serviceBenefits } from "../../../../lib/data";
 
 export default function ProductServiceBenefits() {
+  // Filter to show only the three specific benefits
+  const filteredBenefits = serviceBenefits.filter(benefit => 
+    benefit.title === "Secured payment" || 
+    benefit.title === "Delivery in 3-4 working days" || 
+    benefit.title === "24x7 support"
+  );
+
   return (
-    <div className="py-6 mb-6">
-      <div className="flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8">
-        {serviceBenefits.map((benefit, index) => (
-          <div key={index} className="flex items-center">
+    <div className="mb-6 px-2 sm:px-0">
+      <div className="flex flex-row items-center justify-center gap-6 sm:gap-4 md:gap-12 lg:gap-8 xl:gap-6 w-full mx-auto max-w-[520px]">
+        {filteredBenefits.map((benefit, index) => (
+          <div key={index} className="flex items-center flex-shrink-0">
             {/* Service Benefit Item */}
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src={benefit.icon}
-                alt={benefit.alt}
-                className="w-10 h-10 md:w-12 md:h-12"
-              />
+            <div className="flex flex-col items-center gap-4 sm:gap-2 lg:gap-3">
+              <div className="flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-26 lg:h-26 xl:w-28 xl:h-28">
+                <img
+                  src={benefit.icon}
+                  alt={benefit.alt}
+                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-13 lg:h-13 xl:w-14 xl:h-14"
+                />
+              </div>
               <span 
-                className="text-center text-xs md:text-sm"
+                className="text-center text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base font-medium"
                 style={{
                   color: "#333",
-                  fontWeight: 600,
-                  lineHeight: "normal",
+                  lineHeight: "1.2",
                   letterSpacing: "-0.24px",
-                  width: "clamp(60px, 15vw, 140px)"
+                  width: "clamp(90px, 14vw, 200px)",
+                  maxWidth: "200px",
+                  minHeight: "2.4em",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "center"
                 }}
               >
                 {benefit.title}
               </span>
             </div>
-
-            {/* Divider - Show between items */}
-            {index < serviceBenefits.length - 1 && (
-              <div className="flex items-center justify-center mx-2 sm:mx-3 md:mx-4">
-                <div className="w-px bg-gray-300" style={{ height: "60px" }}></div>
-              </div>
-            )}
           </div>
         ))}
       </div>

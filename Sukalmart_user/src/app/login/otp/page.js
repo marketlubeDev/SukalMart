@@ -134,7 +134,7 @@ export default function OTPPage() {
             <span
               style={{
                 background:
-                  "linear-gradient(91deg, #035F0F 49.43%, #028914 95.9%)",
+                  "linear-gradient(91deg, var(--color-primary) 49.43%, #028914 95.9%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -168,7 +168,7 @@ export default function OTPPage() {
             >
               We&apos;ve sent a 6-digit code to{" "}
               <span
-                className="text-[#035F0F] font-medium"
+                className="text-[var(--color-primary)] font-medium"
                 style={{
                   fontWeight: 500,
                   letterSpacing: "-0.64px",
@@ -256,7 +256,7 @@ export default function OTPPage() {
                         onChange={(e) => handleOtpChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
                         placeholder="0"
-                        className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#035f0f] focus:border-[#035f0f] transition-colors duration-200"
+                        className="w-16 h-12 sm:w-16 sm:h-12 text-center text-lg font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] transition-colors duration-200"
                         style={{
                           color: "rgba(51, 51, 51, 0.60)",
                           fontSize: "14px",
@@ -268,7 +268,7 @@ export default function OTPPage() {
                           transition: "border-color 0.2s, box-shadow 0.2s",
                         }}
                         onFocus={(e) =>
-                          (e.target.style.borderColor = "#035F0F")
+                          (e.target.style.borderColor = "var(--color-primary)")
                         }
                         onBlur={(e) => (e.target.style.borderColor = "#d1d5db")}
                       />
@@ -295,7 +295,7 @@ export default function OTPPage() {
                 gap: "8px",
                 alignSelf: "stretch",
                 borderRadius: "4px",
-                background: "#035F0F",
+                background: "var(--color-primary)",
                 border: "none",
                 transition: "background-color 0.2s",
                 color: "#FFF",
@@ -311,7 +311,7 @@ export default function OTPPage() {
               onMouseOver={(e) =>
                 (e.currentTarget.style.background = "#02490C")
               }
-              onMouseOut={(e) => (e.currentTarget.style.background = "#035F0F")}
+              onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
               onFocus={(e) =>
                 (e.currentTarget.style.boxShadow = "0 0 0 2px #035F0F33")
               }

@@ -97,7 +97,7 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
           <div className="flex justify-center">
             <div className="w-20 h-1 bg-gray-200 rounded-full">
               <div 
-                className="h-1 bg-[#035F0F] rounded-full transition-all duration-300"
+                className="h-1 bg-[var(--color-primary)] rounded-full transition-all duration-300"
                 style={{
                   width: `${((currentSlide + 1) / showcaseItems.length) * 100}%`
                 }}

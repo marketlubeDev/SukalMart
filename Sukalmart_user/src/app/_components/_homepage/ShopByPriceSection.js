@@ -193,7 +193,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
   const secondRow = priceRanges.slice(3, 6);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 xl:px-10 2xl:px-10">
+    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 lg:px-12 xl:px-10 2xl:px-10">
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
           Shop by Price

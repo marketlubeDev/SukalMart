@@ -51,8 +51,8 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
       <div
         className={
           isProductPage
-            ? "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-0 sm:px-0 md:px-0 lg:px-4 xl:px-0 2xl:px-0"
-            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 sm:px-0 md:px-8 lg:px-4 xl:px-10 2xl:px-10"
+            ? "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-0 sm:px-0 md:px-0 lg:px-0 xl:px-0 2xl:px-0"
+            : "py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10 2xl:px-10"
         }
       >
         <div className="flex flex-col gap-6">
@@ -69,7 +69,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             </h2>
             <button
               className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
-              style={{ color: "#035F0F", cursor: 'pointer' }}
+              style={{ color: "var(--color-primary)", cursor: 'pointer' }}
               onClick={() => window.location.href = "/products"}
             >
               <span className="text-sm sm:text-base">View all</span>
@@ -131,7 +131,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentSlide ? 'bg-[#035F0F]' : 'bg-gray-300'
+                      index === currentSlide ? 'bg-[var(--color-primary)]' : 'bg-gray-300'
                     }`}
                   />
                 ))}
@@ -150,7 +150,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
           <div className="sm:hidden w-full">
             <div className="flex justify-center">
               <div className="w-20 h-1 bg-gray-200 rounded-full">
-                <div className="w-5 h-1 bg-[#035F0F] rounded-full"></div>
+                <div className="w-5 h-1 bg-[var(--color-primary)] rounded-full"></div>
               </div>
             </div>
           </div>

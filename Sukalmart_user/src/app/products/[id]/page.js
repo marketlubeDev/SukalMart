@@ -20,11 +20,14 @@ import ProductFeaturesSection from "./_components/ProductFeaturesSection";
 import ProductFeaturesBanner from "./_components/ProductFeaturesBanner";
 import ProductImagesSection from "./_components/ProductImagesSection";
 import ProductInfoSection from "./_components/ProductInfoSection";
+import ProductFeaturesSection2 from "./_components/ProductFeaturesSection2";
+import ProductFeaturesSection3 from "./_components/ProductFeaturesSection3";
 
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
   const productId = params.id;
+  const [mounted, setMounted] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -32,6 +35,10 @@ export default function ProductDetailPage() {
   const [showMoreDetails, setShowMoreDetails] = useState(false);
   
   const { toggleWishlistItem, isInWishlist } = useWishlist();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Static product data - single product details
   const getProductData = () => {
@@ -98,6 +105,7 @@ export default function ProductDetailPage() {
   console.log("Coupons:", coupons);
 
   const addToCart = () => {
+    if (!mounted) return; // Don't allow cart operations during SSR
     try {
       const raw =
         typeof window !== "undefined"
@@ -152,6 +160,7 @@ export default function ProductDetailPage() {
   };
 
   const buyNow = () => {
+    if (!mounted) return; // Don't allow buy now operations during SSR
     try {
       const checkoutItems = [
         {
@@ -168,23 +177,27 @@ export default function ProductDetailPage() {
           quantity,
         },
       ];
-      localStorage.setItem("checkout_items", JSON.stringify(checkoutItems));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("checkout_items", JSON.stringify(checkoutItems));
+      }
     } catch {}
     router.push("/checkout");
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 md:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Product Images */}
-          <ProductImagesSection 
-            product={product}
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-            toggleWishlistItem={toggleWishlistItem}
-            isInWishlist={isInWishlist}
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Product Images - Sticky */}
+          <div className="product-images-sticky">
+            <ProductImagesSection 
+              product={product}
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+              toggleWishlistItem={toggleWishlistItem}
+              isInWishlist={isInWishlist}
+            />
+          </div>
 
           {/* Product Info */}
           <ProductInfoSection
@@ -211,8 +224,12 @@ export default function ProductDetailPage() {
         <ProductFeaturesBanner productType={product.type} />
 
         <ProductFeaturesSection productType={product.type} />
+        <ProductFeaturesSection2 productType={product.type} />
+    
 
         <ProductVideoSection />
+        <ProductFeaturesSection3 productType={product.type} />
+      
 
         <FeaturedProductsSection isProductPage={true} />
 

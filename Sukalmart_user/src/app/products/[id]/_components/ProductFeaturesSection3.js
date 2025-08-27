@@ -1,55 +1,55 @@
 "use client";
 
-export default function ProductFeaturesSection({ productType }) {
+export default function ProductFeaturesSection3({ productType }) {
   const getTitle = () => {
     switch (productType) {
       case "Hair Care":
         return (
           <>
-            Advanced Hair Care Technology
+            Expert Hair Care
             <br />
-            for Professional Results
+            Solutions & Benefits
           </>
         );
       case "Skin Care":
         return (
           <>
-            Advanced Skincare Formulations
+            Professional Skincare
             <br />
-            for Radiant Skin
+            Benefits & Results
           </>
         );
       case "Soap & Deodorants":
         return (
           <>
-            Natural Cleansing Solutions
+            Natural Hygiene
             <br />
-            for Daily Hygiene
+            Benefits & Protection
           </>
         );
       case "Body & Wash":
         return (
           <>
-            Premium Body Care Products
+            Complete Body Care
             <br />
-            for Complete Wellness
+            Benefits & Wellness
           </>
         );
       case "Oral Care":
       case "Oral & Misc":
         return (
           <>
-            Advanced Oral Care Technology
+            Advanced Oral Care
             <br />
-            for Complete Dental Health
+            Benefits & Health
           </>
         );
       default:
         return (
           <>
-            Premium Product Technology
+            Premium Solutions
             <br />
-            for Optimal Results
+            Benefits & Quality
           </>
         );
     }
@@ -59,34 +59,46 @@ export default function ProductFeaturesSection({ productType }) {
     switch (productType) {
       case "Hair Care":
         return [
-          "Our advanced hair care technology uses scientifically proven ingredients to address specific hair concerns and promote healthy growth.",
-          "Each product is formulated with natural extracts and advanced compounds that work together to restore hair vitality and strength."
+          "Advanced hair care technology for all hair types and concerns",
+          "Clinically proven ingredients that promote healthy hair growth",
+          "Professional-grade formulations for salon-quality results",
+          "Long-lasting effects with regular use and proper care"
         ];
       case "Skin Care":
         return [
-          "Our dermatologically tested formulations combine cutting-edge science with natural ingredients for visible skin improvements.",
-          "Each product targets specific skin concerns while maintaining the skin's natural balance and promoting long-term health."
+          "Dermatologist-approved formulas for various skin concerns",
+          "Advanced active ingredients for visible skin improvements",
+          "Gentle yet effective solutions for sensitive skin types",
+          "Proven results with consistent daily application"
         ];
       case "Soap & Deodorants":
         return [
-          "Our natural cleansing solutions provide thorough hygiene while being gentle on your skin and environmentally friendly.",
-          "Each product is crafted with carefully selected natural ingredients for effective cleansing and long-lasting freshness."
+          "Natural ingredients for gentle yet effective cleansing",
+          "Long-lasting protection and freshness throughout the day",
+          "Antibacterial properties for comprehensive hygiene",
+          "Eco-friendly formulations that are kind to your skin"
         ];
       case "Body & Wash":
         return [
-          "Our premium body care products are designed to nourish and protect your skin while providing a luxurious bathing experience.",
-          "Each formulation combines therapeutic ingredients with indulgent textures for complete body wellness and care."
+          "Complete body care solutions for total wellness",
+          "Luxurious textures that nourish and protect skin",
+          "Therapeutic benefits for relaxation and rejuvenation",
+          "Comprehensive care for all body areas and concerns"
         ];
       case "Oral Care":
       case "Oral & Misc":
         return [
-          "Our advanced oral care technology provides comprehensive dental hygiene with innovative cleaning systems and protective formulas.",
-          "Each product is designed to work together for complete oral health, from daily maintenance to specialized treatments."
+          "Advanced dental care technology for optimal oral health",
+          "Comprehensive protection against cavities and gum disease",
+          "Fresh breath and long-lasting cleanliness",
+          "Professional-grade results for daily dental care"
         ];
       default:
         return [
-          "Our premium products are crafted with the highest quality ingredients and advanced technology to deliver exceptional results.",
-          "Each formulation is designed to meet your specific needs while providing the quality and reliability you deserve."
+          "Premium quality ingredients for exceptional results",
+          "Scientifically formulated for maximum effectiveness",
+          "Safe and reliable solutions for daily use",
+          "Proven performance backed by quality assurance"
         ];
     }
   };
@@ -94,25 +106,25 @@ export default function ProductFeaturesSection({ productType }) {
   const getImageSrc = () => {
     switch (productType) {
       case "Hair Care":
-        return "/haircarebanner2.png";
+        return "/haircarebanner3.png";
       case "Skin Care":
-        return "/skincarebanner2.png";
+        return "/skincarebanner3.png";
       case "Soap & Deodorants":
-        return "/soapbanner2.png";
+        return "/soapbanner3.png";
       case "Body & Wash":
-        return "/body&washbanner2.png";
+        return "/body&washbanner3.png";
       case "Oral Care":
       case "Oral & Misc":
-        return "/oral&miscbanner2.png";
+        return "/oral&miscbanner3.png";
       default:
-        return "/skincarebanner2.png";
+        return "/skincarebanner3.png";
     }
   };
 
   return (
     <div className="my-8">
       <div className="w-full rounded-lg overflow-hidden bg-white flex flex-col md:flex-row items-center justify-center gap-8">
-        {/* Left: Text and Features */}
+        {/* Left: Text and Bullet Points */}
         <div className="flex-1 flex flex-col justify-center items-start max-w-md w-full mb-6 md:mb-0">
           <div
             className="mb-4 font-semibold text-gray-900"
@@ -130,17 +142,18 @@ export default function ProductFeaturesSection({ productType }) {
           </div>
           <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm sm:text-base">
             {getFeatures().map((feature, index) => (
-              <li key={index}>
+              <li key={index} className="leading-relaxed">
                 {feature}
               </li>
             ))}
           </ul>
         </div>
+        
         {/* Right: Product Image */}
         <div className="flex-1 flex justify-center items-center w-full">
           <img
             src={getImageSrc()}
-            alt={`${productType} Features`}
+            alt={`${productType} Benefits`}
             className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[350px]"
           />
         </div>
