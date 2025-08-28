@@ -22,7 +22,7 @@ export default function InstagramSection() {
   };
   return (
     <div
-      className="flex flex-col items-center justify-center w-full px-0 py-6 md:py-8 lg:py-10 custom-padding"
+      className="flex flex-col items-center justify-center w-full px-0 py-6 md:py-8 lg:py-10 custom-padding overflow-hidden"
       style={{
         display: "flex",
         flexDirection: "column",

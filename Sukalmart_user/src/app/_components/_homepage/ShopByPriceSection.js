@@ -1,7 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 export default function ShopByPriceSection({ selectedCategory }) {
   console.log("ShopByPriceSection - selectedCategory:", selectedCategory);
-  
+  const router = useRouter(); 
   // Function to get price ranges based on selected category
   const getPriceRanges = (category) => {
     console.log("getPriceRanges called with category:", category);
@@ -212,6 +214,9 @@ export default function ShopByPriceSection({ selectedCategory }) {
               key={index}
               className="flex flex-col items-center justify-start cursor-pointer"
               style={{ flex: "0 0 32%", maxWidth: "120px" }}
+              onClick={() => {
+                router.push(`/products?price=${encodeURIComponent(item.range)}`);
+              }}
             >
               <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
                 <img src={item.image} alt={item.range} className="w-full h-full object-cover" />
@@ -232,6 +237,9 @@ export default function ShopByPriceSection({ selectedCategory }) {
               key={index}
               className="flex flex-col items-center justify-start cursor-pointer"
               style={{ flex: "0 0 32%", maxWidth: "120px" }}
+              onClick={() => {
+                router.push(`/products?price=${encodeURIComponent(item.range)}`);
+              }}
             >
               <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
                 <img src={item.image} alt={item.range} className="w-full h-full object-cover" />
@@ -250,6 +258,9 @@ export default function ShopByPriceSection({ selectedCategory }) {
           <div
             key={index}
             className="flex flex-col items-center justify-center bg-white rounded-lg p-4 md:p-0 cursor-pointer"
+            onClick={() => {
+              router.push(`/products?price=${encodeURIComponent(item.range)}`);
+            }}
           >
             <div className="w-full aspect-square mb-3 overflow-hidden rounded-lg md:w-40 md:h-40">
               <img

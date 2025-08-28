@@ -141,7 +141,7 @@ export default function HeroBanner() {
           }}
         ></div>
         {/* Readability overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 30%, transparent 50%)' }}></div>
 
         <div className="w-full flex justify-between items-center top-[45%] absolute z-20">
           <div className=" flex justify-between container mx-auto px-10">
@@ -242,11 +242,11 @@ export default function HeroBanner() {
           }}
         ></div>
         {/* Readability overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 30%, transparent 50%)' }}></div>
 
         {/* Navigation Arrows - Positioned at center */}
         <div className="absolute inset-0 flex items-center justify-between z-20">
-          <div className="flex justify-between items-center w-full px-8 -mt-8">
+          <div className="container mx-auto flex justify-between items-center px-8 -mt-8">
             <button
               onClick={prevSlide}
               className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-md ring-1 ring-black/5 transition cursor-pointer"
@@ -328,7 +328,7 @@ export default function HeroBanner() {
           }}
         ></div>
         {/* Readability overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent"></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 30%, transparent 50%)' }}></div>
 
         {/* Content positioned at bottom */}
         <div className="absolute bottom-8 left-4 right-4">

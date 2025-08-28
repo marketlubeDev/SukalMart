@@ -55,6 +55,24 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
           category: "Body Wash",
         },
+        {
+          id: 5,
+          name: "Exfoliating Body Scrub",
+          type: "Body Care",
+          price: 329,
+          originalPrice: 429,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
+          category: "Body Wash",
+        },
+        {
+          id: 6,
+          name: "Hydrating Body Lotion",
+          type: "Body Care",
+          price: 289,
+          originalPrice: 389,
+          image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
+          category: "Body Wash",
+        },
       ];
     }
     
@@ -95,6 +113,24 @@ export default function SunsilkShampooSection({ selectedCategory }) {
           price: 259,
           originalPrice: 359,
           image: "/sunsilk4.jpg",
+          category: "Shampoo",
+        },
+        {
+          id: 13,
+          name: "Sunsilk Anti-Dandruff Shampoo",
+          type: "Hair Care",
+          price: 319,
+          originalPrice: 419,
+          image: "/sunsilk1.jpg",
+          category: "Shampoo",
+        },
+        {
+          id: 14,
+          name: "Sunsilk Volume Boost Shampoo",
+          type: "Hair Care",
+          price: 339,
+          originalPrice: 439,
+          image: "/sunsilk2.jpg",
           category: "Shampoo",
         },
       ];
@@ -138,6 +174,24 @@ export default function SunsilkShampooSection({ selectedCategory }) {
         image: "/sunsilk4.jpg",
         category: "Beauty",
       },
+      {
+        id: 5,
+        name: "Advanced Beauty Product",
+        type: "Beauty",
+        price: 329,
+        originalPrice: 429,
+        image: "/sunsilk1.jpg",
+        category: "Beauty",
+      },
+      {
+        id: 6,
+        name: "Professional Beauty Product",
+        type: "Beauty",
+        price: 369,
+        originalPrice: 469,
+        image: "/sunsilk2.jpg",
+        category: "Beauty",
+      },
     ];
   };
 
@@ -161,12 +215,28 @@ export default function SunsilkShampooSection({ selectedCategory }) {
             </button>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+        {/* Products Grid - Mobile: horizontal scroll with 6 cards in a row */}
+        <div className="md:hidden -mx-4 px-4">
+          <div className="flex gap-2 overflow-x-auto scrollbar-primary">
+            {products.map((product) => (
+              <div key={product.id} className="flex-none w-1/3">
+                <div 
+                  className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                  onClick={() => handleProductClick(product.id)}
+                >
+                  <ProductCard product={product} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Products Grid - Desktop/Tablet */}
+        <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
           {products.map((product) => (
             <div 
               key={product.id} 
-              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 max-w-[200px] mx-auto"
               onClick={() => handleProductClick(product.id)}
             >
               <ProductCard product={product} />

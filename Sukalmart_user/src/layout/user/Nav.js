@@ -287,8 +287,8 @@ function NavContent() {
 
         {/* Main Header */}
         <div className="bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
-          <div className="flex items-center h-3 lg:h-16 justify-between">
+                    <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
+            <div className="flex items-center h-3 lg:h-16 justify-between">
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-6 hidden lg:block">
               <Link href="/" className="flex items-center">
@@ -729,7 +729,7 @@ function NavContent() {
 
         {/* Navigation Bar */}
         <div className="bg-[var(--color-primary)]">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
+          <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div className="hidden lg:flex lg:items-center lg:justify-evenly py-0.5">
               {navigationItems.map((item, index) => (
                 <div key={index} className="relative group flex-shrink-0">
@@ -806,7 +806,7 @@ function NavContent() {
         </div>
 
         {/* Mobile Layout - Three Groups: Left (Hamburger + Logo), Center (Search), Right (Cart) */}
-        <div className="lg:hidden flex items-center justify-between w-full h-14 px-3">
+        <div className="lg:hidden flex items-center justify-between w-full h-14 px-3 md:px-6">
           {/* Left Group - Hamburger and Logo */}
           <div className="flex items-center">
             <button

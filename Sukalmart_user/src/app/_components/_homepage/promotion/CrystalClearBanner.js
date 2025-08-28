@@ -9,7 +9,7 @@ export default function CrystalClearBanner() {
   };
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10 2xl:px-10">
+      <div className="container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10 2xl:px-10 overflow-hidden">
         
         <div className="relative h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] w-full overflow-hidden rounded-none sm:rounded-lg">
           {/* Background with crystal image */}

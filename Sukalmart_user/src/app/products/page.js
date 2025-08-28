@@ -5,6 +5,7 @@ import ProductCard from "../_components/_homepage/ProductCard";
 import ProductSidebar from "./_components/ProductSidebar";
 import ProductGrid from "./_components/ProductGrid";
 import useProducts from "@/lib/hooks/useProducts";
+import { useSearchParams } from "next/navigation";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -15,6 +16,7 @@ export default function ProductsPage() {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isBottomBarVisible, setIsBottomBarVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const searchParams = useSearchParams();
 
   // Mobile filter UI state
   const [activeFilterTab, setActiveFilterTab] = useState("Categories");
@@ -104,6 +106,51 @@ export default function ProductsPage() {
     }
   }, []);
 
+  // If navigated with a price range label (?price=...), parse and set priceRange
+  useEffect(() => {
+    const priceLabel = searchParams?.get("price");
+    if (!priceLabel) return;
+
+    const parsePriceRangeLabel = (label) => {
+      const sanitized = label
+        .replaceAll(",", "")
+        .replaceAll("₹", "")
+        .trim();
+
+      // Under X
+      const underMatch = sanitized.match(/^Under\s+(\d+)$/i);
+      if (underMatch) {
+        const max = parseInt(underMatch[1], 10);
+        return { min: 0, max };
+      }
+
+      // Over X
+      const overMatch = sanitized.match(/^Over\s+(\d+)$/i);
+      if (overMatch) {
+        const min = parseInt(overMatch[1], 10);
+        return { min, max: 20000 };
+      }
+
+      // X - Y
+      const rangeMatch = sanitized.match(/^(\d+)\s*-\s*(\d+)$/);
+      if (rangeMatch) {
+        const min = parseInt(rangeMatch[1], 10);
+        const max = parseInt(rangeMatch[2], 10);
+        if (!Number.isNaN(min) && !Number.isNaN(max) && min <= max) {
+          return { min, max };
+        }
+      }
+
+      // Fallback: do not change current range
+      return null;
+    };
+
+    const parsed = parsePriceRangeLabel(priceLabel);
+    if (parsed) {
+      setPriceRange(parsed);
+    }
+  }, [searchParams]);
+
   // Hide bottom bar on scroll down, show on scroll up
   useEffect(() => {
     const onScroll = () => {
@@ -185,21 +232,19 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="flex flex-col lg:flex-row max-w-[1920px] mx-auto">
-        {/* Sidebar - Full left edge */}
-        <div className="hidden lg:block lg:w-1/4 xl:w-1/5 2xl:w-1/8 lg:min-w-80 xl:min-w-96">
+      <div className="flex flex-col lg:flex-row max-w-7xl 2xl:max-w-[1920px] mx-auto">
+        {/* Sidebar - 30% width */}
+        <div className="hidden lg:block lg:w-[20%] 2xl:w-[15%] 2xl:ml-auto">
           <div 
             className="sticky top-[6rem] h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll"
             style={{ 
               overscrollBehavior: 'contain',
-              paddingLeft: 'max(1rem, calc((100vw - 1200px) / 2))',
-              paddingRight: '1rem',
+              paddingLeft: '0.5rem',
+              paddingRight: '0.5rem',
               position: 'sticky',
               top: '6rem',
               height: 'calc(100vh - 6rem)',
-              zIndex: 10,
-              minWidth: '320px',
-              maxWidth: '400px'
+              zIndex: 10
             }}
           >
             <ProductSidebar
@@ -213,13 +258,12 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="lg:w-3/4 xl:w-4/5 2xl:w-7/8 lg:min-w-0">
+        {/* Main Content - 70% width */}
+        <div className="lg:w-[80%] 2xl:w-[80%] 2xl:mr-auto">
           <div 
-            className="px-0 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8 main-content-2xl main-content-pr"
+            className="px-0 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
             style={{ 
-              overscrollBehavior: 'contain',
-              
+              overscrollBehavior: 'contain'
             }}
           >
             <ProductGrid
@@ -597,39 +641,6 @@ export default function ProductsPage() {
         .sidebar-scroll {
           -ms-overflow-style: none;
           scrollbar-width: none;
-        }
-
-        /* Ensure sidebar is visible on all screen sizes */
-        @media (min-width: 1024px) {
-          .sidebar-scroll {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-          }
-          .main-content-pr {
-            padding-right: max(1rem, calc((100vw - 1200px) / 2)) !important;
-          }
-        }
-
-        /* Remove right padding on sm screens only */
-        @media (min-width: 640px) and (max-width: 767.98px) {
-          .main-content-pr {
-            padding-right: 0 !important;
-          }
-        }
-
-        /* Specific styling for 2xl screens */
-        @media (min-width: 1536px) {
-          .sidebar-scroll {
-            min-width: 260px;
-            max-width: 300px;
-            padding-left: 50px !important;
-          }
-          
-          /* Remove right padding from main content on 2xl screens */
-          .main-content-2xl {
-            padding-right: 50px !important;
-          }
         }
       `}</style>
     </div>

@@ -30,6 +30,18 @@ export default function NewLaunchesSection() {
       description: "Professional Hair Care Formula",
       image: "/newlaunch4.jpeg",
     },
+    {
+      id: "17",
+      name: "KERASTASE Repair Shampoo",
+      description: "Fiber-strengthening care for damaged hair",
+      image: "/newlaunch1.jpg",
+    },
+    {
+      id: "18",
+      name: "MOROCCANOIL Hydrating Shampoo",
+      description: "Argan oil infused moisture balance",
+      image: "/newlaunch2.jpg",
+    },
   ];
 
   const handleProductClick = (productId) => {
@@ -46,33 +58,65 @@ export default function NewLaunchesSection() {
           </h2>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+        {/* Products Grid - Mobile: horizontal scroll with 6 cards in a row */}
+        <div className="md:hidden -mx-4 px-4">
+          <div className="flex gap-2 overflow-x-auto scrollbar-primary">
+            {newLaunchesProducts.map((product) => (
+              <div key={product.id} className="flex-none w-1/3">
+                <div 
+                  className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 flex flex-col h-[260px] border border-gray-200"
+                  onClick={() => handleProductClick(product.id)}
+                >
+                  {/* Product Image with overlay and text */}
+                  <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                      <h3 className="text-xs font-semibold mb-1 line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-[10px] text-white/90 line-clamp-2">
+                        {product.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Spacer to keep consistent overall height */}
+                  <div className="flex-1 bg-white" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Products Grid - Desktop/Tablet */}
+        <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
           {newLaunchesProducts.map((product) => (
             <div 
               key={product.id} 
-              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 w-full h-[260px] flex flex-col border border-gray-200"
               onClick={() => handleProductClick(product.id)}
             >
-              {/* Product Image */}
-              <div className="relative">
-                <div className="aspect-square">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
+              {/* Product Image with overlay and text */}
+              <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+                  <h3 className="text-xs font-semibold mb-1 line-clamp-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-[10px] text-white/90 line-clamp-2">
+                    {product.description}
+                  </p>
                 </div>
-              </div>
-              
-              {/* Product Info */}
-              <div className="p-3 sm:p-4 bg-gray-900 text-white">
-                <h3 className="text-xs sm:text-sm font-semibold mb-1">
-                  {product.name}
-                </h3>
-                <p className="text-[10px] sm:text-xs text-gray-300">
-                  {product.description}
-                </p>
               </div>
             </div>
           ))}

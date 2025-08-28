@@ -11,6 +11,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
   const containerRef = useRef(null);
+  const mobileRef = useRef(null);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % featuredProducts.length);
@@ -48,6 +49,43 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
     setIsDragging(false);
   };
 
+  // Auto-advance swiper on tablet (sm-only)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(min-width: 640px) and (max-width: 767px)');
+    if (!mql.matches || isDragging) return;
+
+    const id = setInterval(() => {
+      nextSlide();
+    }, 4000);
+
+    return () => clearInterval(id);
+  }, [isDragging]);
+
+  // Auto-advance mobile carousel (scrolls full-width cards)
+  useEffect(() => {
+    if (!mobileRef.current) return;
+    const root = mobileRef.current;
+    const cards = root.querySelectorAll('[data-fp-card]');
+    if (cards.length === 0) return;
+
+    let index = 0;
+    const tick = () => {
+      index = (index + 1) % cards.length;
+      const target = cards[index];
+      if (target) {
+        // Use scrollLeft instead of scrollIntoView to avoid page jumping
+        const container = mobileRef.current;
+        const cardWidth = target.offsetWidth;
+        container.scrollLeft = cardWidth * index;
+        setCurrentSlide(index);
+      }
+    };
+
+    const id = setInterval(tick, 5000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <>
       <div
@@ -82,11 +120,12 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
           {/* Product Cards */}
           <div className="w-full">
             {/* Mobile: Full width carousel */}
-            <div className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide sm:hidden snap-x snap-mandatory">
-              {featuredProducts.map((product) => (
+            <div ref={mobileRef} className="flex flex-row gap-0 w-full overflow-x-auto scrollbar-hide sm:hidden snap-x snap-mandatory">
+              {featuredProducts.map((product, idx) => (
                 <div
                   key={product.id}
                   className="flex-shrink-0 w-full snap-start px-0 sm:px-2"
+                  data-fp-card
                 >
                   <FeaturedProductCard product={product} />
                 </div>
@@ -148,11 +187,14 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
             </div>
           </div>
 
-          {/* Mobile scroll indicator */}
+          {/* Mobile scroll indicator - fills based on auto-scroll */}
           <div className="sm:hidden w-full">
             <div className="flex justify-center">
-              <div className="w-20 h-1 bg-gray-200 rounded-full">
-                <div className="w-5 h-1 bg-[var(--color-primary)] rounded-full"></div>
+              <div className="w-20 h-1 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-1 bg-[var(--color-primary)] rounded-full transition-all duration-500"
+                  style={{ width: `${((currentSlide + 1) * (100 / featuredProducts.length))}%` }}
+                ></div>
               </div>
             </div>
           </div>

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function EngineeredBy7Hz() {
   const router = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const mobileRef = useRef(null);
 
   const handleShopAllClick = () => {
     router.push('/products');
@@ -12,9 +14,34 @@ export default function EngineeredBy7Hz() {
   const handleProductClick = (productId) => {
     router.push(`/products/${productId}`);
   };
+
+  // Auto-advance mobile carousel (scrolls full-width cards)
+  useEffect(() => {
+    if (!mobileRef.current) return;
+    const root = mobileRef.current;
+    const cards = root.querySelectorAll('[data-engineered-card]');
+    if (cards.length === 0) return;
+
+    let index = 0;
+    const tick = () => {
+      index = (index + 1) % cards.length;
+      const target = cards[index];
+      if (target) {
+        // Use scrollLeft instead of scrollIntoView to avoid page jumping
+        const container = mobileRef.current;
+        const cardWidth = target.offsetWidth;
+        container.scrollLeft = cardWidth * index;
+        setCurrentSlide(index);
+      }
+    };
+
+    const id = setInterval(tick, 5000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 overflow-hidden container mx-auto px-4 md:px-8 lg:px-10 xl:px-8 2xl:px-10 engineered-7hz-container">
+      <div className="py-6 md:py-8 lg:py-10 container mx-auto px-4 md:px-8 lg:px-10 xl:px-8 2xl:px-10 engineered-7hz-container overflow-hidden">
      
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
@@ -62,9 +89,9 @@ export default function EngineeredBy7Hz() {
 
           {/* Right Section - Product Cards */}
           <div className="flex-1 w-full">
-            <div className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-2 sm:gap-0">
+            <div ref={mobileRef} className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-2 sm:gap-0">
               {/* Product Card 1 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
                 <div 
                   className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("17")}
@@ -81,7 +108,7 @@ export default function EngineeredBy7Hz() {
                   <h3
                     className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+              
                       letterSpacing: "-0.32px",
                     }}
                   >
@@ -90,7 +117,7 @@ export default function EngineeredBy7Hz() {
                   <p
                     className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+                     
                       letterSpacing: "-0.28px",
                     }}
                   >
@@ -110,7 +137,7 @@ export default function EngineeredBy7Hz() {
                 </div>
               </div>
               {/* Product Card 2 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
                 <div 
                   className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("18")}
@@ -127,7 +154,7 @@ export default function EngineeredBy7Hz() {
                   <h3
                     className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+                     
                       letterSpacing: "-0.32px",
                     }}
                   >
@@ -136,7 +163,7 @@ export default function EngineeredBy7Hz() {
                   <p
                     className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+                   
                       letterSpacing: "-0.28px",
                     }}
                   >
@@ -156,7 +183,7 @@ export default function EngineeredBy7Hz() {
                 </div>
               </div>
               {/* Product Card 3 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0">
+              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
                 <div 
                   className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
                   onClick={() => handleProductClick("19")}
@@ -173,7 +200,7 @@ export default function EngineeredBy7Hz() {
                   <h3
                     className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+                 
                       letterSpacing: "-0.32px",
                     }}
                   >
@@ -182,7 +209,7 @@ export default function EngineeredBy7Hz() {
                   <p
                     className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
                     style={{
-                      // fontFamily: "'Nunito Sans', sans-serif",
+                    
                       letterSpacing: "-0.28px",
                     }}
                   >
@@ -203,10 +230,13 @@ export default function EngineeredBy7Hz() {
               </div>
             </div>
             {/* Mobile scroll indicator */}
-            <div className="lg:hidden w-full mt-4">
+            <div className="md:hidden w-full mt-4">
               <div className="flex justify-center">
-                <div className="w-20 h-1 bg-gray-200 rounded-full">
-                  <div className="w-7 h-1 bg-[var(--color-primary)] rounded-full"></div>
+                <div className="w-20 h-1 bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-1 bg-[var(--color-primary)] rounded-full transition-all duration-500"
+                    style={{ width: `${((currentSlide + 1) * (100 / 2))}%` }}
+                  ></div>
                 </div>
               </div>
             </div>

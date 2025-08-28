@@ -116,7 +116,7 @@ export default function HaircareBanner({ selectedCategory }) {
               </p>
               <button 
                 onClick={handleShopNow}
-                className="bg-[var(--color-primary)] text-white px-3 py-1.5 rounded text-sm font-medium cursor-pointer hover:bg-[var(--color-primary)]/90 transition-colors"
+                className="bg-transparent text-white px-3 py-1.5 rounded text-sm font-semibold cursor-pointer border-2 border-white hover:text-gray-200 hover:border-white/90 transition-colors"
               >
                 Shop now
               </button>

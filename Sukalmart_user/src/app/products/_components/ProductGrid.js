@@ -24,7 +24,7 @@ export default function ProductGrid({
   const modifiedProducts = Array.isArray(products) ? products : [];
 
   return (
-    <div className="bg-white px-4 sm:px-10 md:px-0 lg:px-4">
+    <div className="bg-white px-4 sm:px-10 md:px-0 lg:px-4 2xl:px-0">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         {/* md-only Filter/Sort triggers aligned to the end */}
@@ -100,7 +100,7 @@ export default function ProductGrid({
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
         {modifiedProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
@@ -113,7 +113,7 @@ export default function ProductGrid({
       </div>
 
       {/* Second row of products */}
-      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
         {modifiedProducts.map((product, index) => (
           <div
             key={`second-${product.id}`}
@@ -129,7 +129,7 @@ export default function ProductGrid({
       </div>
 
       {/* Third row of products */}
-      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
         {modifiedProducts.map((product, index) => (
           <div
             key={`third-${product.id}`}

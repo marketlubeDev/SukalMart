@@ -185,6 +185,7 @@ export default function ProductSidebar({
               <div
                 className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.min / 20000) * 100}%` }}
+
               >
                 <img src="/pricecircle.svg" alt="start" className="w-3 h-3" />
               </div>
@@ -229,6 +230,7 @@ export default function ProductSidebar({
                   setPriceRange((prev) => ({
                     ...prev,
                     max: newMax,
+                  
                   }));
                 }
               }}
