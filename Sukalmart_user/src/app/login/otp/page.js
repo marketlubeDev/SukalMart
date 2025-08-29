@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function OTPPage() {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -95,7 +96,7 @@ export default function OTPPage() {
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2">
               
-              <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-10 sm:h-12 w-auto" />
+              <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={48} className="h-10 sm:h-12 w-auto" />
             </div>
           </div>
         </div>
@@ -168,9 +169,11 @@ export default function OTPPage() {
                 }}
                 onClick={onEditEmail}
               >
-                <img
+                <Image
                   src="/editbutton.svg"
                   alt="Edit"
+                  width={16}
+                  height={16}
                   className="inline-block w-4 h-4 mr-1 align-text-bottom"
                   style={{ marginRight: "2px" }}
                 />

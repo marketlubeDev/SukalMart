@@ -1,5 +1,39 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+// NewLaunchCard component - inline to avoid separate file dependency
+function NewLaunchCard({ product, onClick }) {
+  return (
+    <div 
+      className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 border border-gray-200"
+      onClick={() => onClick(product.id)}
+    >
+      {/* Product Image with overlay and text */}
+      <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/200x250?text=New+Launch";
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
+          <h3 className="text-xs font-semibold mb-1 line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-[10px] text-white/90 line-clamp-2">
+            {product.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function NewLaunchesSection() {
   const router = useRouter();
@@ -58,70 +92,47 @@ export default function NewLaunchesSection() {
           </h2>
         </div>
 
-        {/* Products Grid - Mobile: horizontal scroll with 6 cards in a row */}
-        <div className="md:hidden -mx-4 px-4">
-          <div className="flex gap-2 overflow-x-auto scrollbar-primary">
-            {newLaunchesProducts.map((product) => (
-              <div key={product.id} className="flex-none w-1/3">
-                <div 
-                  className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 flex flex-col h-[260px] border border-gray-200"
-                  onClick={() => handleProductClick(product.id)}
-                >
-                  {/* Product Image with overlay and text */}
-                  <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                      <h3 className="text-xs font-semibold mb-1 line-clamp-2">
-                        {product.name}
-                      </h3>
-                      <p className="text-[10px] text-white/90 line-clamp-2">
-                        {product.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Spacer to keep consistent overall height */}
-                  <div className="flex-1 bg-white" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Products Grid - Desktop/Tablet */}
-        <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
+        {/* Unified Responsive Grid with Mobile Scrolling */}
+        <div className="flex sm:grid sm:grid-cols-3 md:flex lg:flex xl:grid xl:grid-cols-6 gap-2 md:gap-3 lg:gap-4 overflow-x-auto sm:overflow-x-visible md:overflow-x-auto lg:overflow-x-auto xl:overflow-x-visible pb-4 sm:pb-0 md:pb-4 lg:pb-4 xl:pb-0 scrollbar-hide sm:scrollbar-auto md:scrollbar-auto lg:scrollbar-auto xl:scrollbar-auto">
           {newLaunchesProducts.map((product) => (
-            <div 
-              key={product.id} 
-              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 w-full h-[260px] flex flex-col border border-gray-200"
-              onClick={() => handleProductClick(product.id)}
-            >
-              {/* Product Image with overlay and text */}
-              <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                  <h3 className="text-xs font-semibold mb-1 line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-[10px] text-white/90 line-clamp-2">
-                    {product.description}
-                  </p>
-                </div>
-              </div>
+            <div key={product.id} className="flex-shrink-0 w-[calc(50%-4px)] sm:w-full md:w-[200px] lg:w-[200px] xl:w-full">
+              <NewLaunchCard 
+                product={product} 
+                onClick={handleProductClick}
+              />
             </div>
           ))}
         </div>
       </div>
+
+      {/* Custom CSS for utilities */}
+      <style jsx>{`
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .scrollbar-primary {
+          scrollbar-width: thin;
+          scrollbar-color: var(--color-primary, #007bff) #f1f1f1;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar {
+          height: 4px;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 4px;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+          background: var(--color-primary, #007bff);
+          border-radius: 4px;
+        }
+      `}</style>
     </div>
   );
-} 
+}

@@ -6,6 +6,7 @@ import ProductSidebar from "./_components/ProductSidebar";
 import ProductGrid from "./_components/ProductGrid";
 import useProducts from "@/lib/hooks/useProducts";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -292,7 +293,7 @@ export default function ProductsPage() {
             className="flex items-center gap-2 text-gray-900"
             aria-label="Filter"
           >
-            <img src="/filtericon.svg" alt="Filter" className="w-6 h-6" />
+            <Image src="/filtericon.svg" alt="Filter" width={24} height={24} className="w-6 h-6" />
             <span className="font-semibold text-base">Filter</span>
           </button>
           <div className="h-6 w-px bg-gray-300" aria-hidden="true" />
@@ -301,7 +302,7 @@ export default function ProductsPage() {
             className="flex items-center gap-2 text-gray-900"
             aria-label="Sort"
           >
-            <img src="/sorticon.svg" alt="Sort" className="w-6 h-6" />
+            <Image src="/sorticon.svg" alt="Sort" width={24} height={24} className="w-6 h-6" />
             <span className="font-semibold text-base">Sort</span>
           </button>
         </div>

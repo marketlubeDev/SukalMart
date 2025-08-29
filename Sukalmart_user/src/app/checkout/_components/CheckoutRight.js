@@ -1,13 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import AddressForm from "./AddressForm";
 
 export default function CheckoutRight() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [showAddressForm, setShowAddressForm] = useState(false);
+
+  // Check URL parameter to show address form
+  useEffect(() => {
+    const showAddressFormParam = searchParams.get('showAddressForm');
+    if (showAddressFormParam === 'true') {
+      setShowAddressForm(true);
+      // Clean up the URL parameter
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.delete('showAddressForm');
+      window.history.replaceState({}, '', newUrl);
+    }
+  }, [searchParams]);
 
   // Current address data
   const [currentAddressData, setCurrentAddressData] = useState({
@@ -24,11 +38,13 @@ export default function CheckoutRight() {
 
   const handleLogout = () => {
     // Clear any stored authentication data
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('selectedCategory');
-    localStorage.removeItem('cartItems');
-    sessionStorage.clear();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('selectedCategory');
+      localStorage.removeItem('cartItems');
+      sessionStorage.clear();
+    }
     router.push('/login');
   };
 
@@ -60,16 +76,16 @@ export default function CheckoutRight() {
             <div className="pb-4 space-y-2">
               <div className="flex items-center justify-between px-6">
                 <p className="font-medium text-gray-800">{currentAddressData.firstName} {currentAddressData.lastName}</p>
-                <img src="/threedoticon.svg" alt="More options" className="w-6 h-6" />
+                <Image src="/threedoticon.svg" alt="More options" width={24} height={24} className="w-6 h-6" />
               </div>
               <p className="text-sm text-gray-600 px-6">
                 {currentAddressData.address}
               </p>
               <p className="text-sm text-gray-600 px-6">{currentAddressData.phone}</p>
               <div className="border-b border-gray-200 mt-4 px-6"></div>
-              <button 
+              <button
                 onClick={() => setShowAddressForm(true)}
-                className="ml-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer" 
+                className="ml-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer font-medium"
                 style={{ marginTop: 0, alignSelf: "flex-start" }}
               >
                 Edit Address
@@ -134,8 +150,8 @@ export default function CheckoutRight() {
                   UPI, Netbanking, Debit Card/Credit Card can be used
                 </p>
                 <div className="flex items-center space-x-2 md:justify-end">
-                  <img src="/upi.png" alt="UPI" className="h-4 w-auto md:h-6" />
-                  <img src="/rupay.png" alt="RuPay" className="h-4 w-auto md:h-6" />
+                  <Image src="/upi.png" alt="UPI" width={16} height={12} className="h-3 w-auto md:h-4" />
+                  <Image src="/rupay.png" alt="RuPay" width={16} height={12} className="h-3 w-auto md:h-4" />
                   <span className="text-xs text-gray-500">+more</span>
                 </div>
               </div>
@@ -145,4 +161,4 @@ export default function CheckoutRight() {
       </div>
     </div>
   );
-} 
+}

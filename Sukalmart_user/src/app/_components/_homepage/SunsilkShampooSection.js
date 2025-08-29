@@ -1,13 +1,73 @@
 "use client";
-import ProductCard from "./ProductCard";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
 
-export default function SunsilkShampooSection({ selectedCategory }) {
+// ProductCard component - inline to avoid separate file dependency
+function ProductCard({ product, onClick }) {
+  return (
+    <div 
+      className="bg-white rounded-lg p-3 cursor-pointer hover:shadow-lg transition-all duration-200 border border-gray-100 h-full flex flex-col"
+      onClick={() => onClick(product.id)}
+    >
+      {/* Product Image */}
+      <div className="relative aspect-square mb-3 bg-gray-50 rounded-lg overflow-hidden">
+        {product.image?.includes('marketlube') ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="object-cover hover:scale-105 transition-transform duration-200 w-full h-full absolute inset-0"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/200x200?text=Product+Image";
+            }}
+          />
+        ) : (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover hover:scale-105 transition-transform duration-200"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/200x200?text=Product+Image";
+            }}
+          />
+        )}
+      </div>
+
+      {/* Product Info */}
+      <div className="flex-1 flex flex-col">
+        <h3 className="font-medium text-sm sm:text-base text-gray-800 mb-2 line-clamp-2 flex-1">
+          {product.name}
+        </h3>
+        
+        <div className="text-xs text-gray-500 mb-2">
+          {product.type}
+        </div>
+
+        {/* Price */}
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-lg text-[var(--color-primary)]">
+            ₹{product.price}
+          </span>
+          {product.originalPrice && product.price < product.originalPrice && (
+            <span className="text-sm text-gray-500 line-through">
+              ₹{product.originalPrice}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProductSection({ selectedCategory = "Hair Care" }) {
   const router = useRouter();
+  const [sessionData, setSessionData] = useState({});
 
   const handleViewAllClick = () => {
-    // Navigate to products page with Hair Care category selected
-    localStorage.setItem('selectedCategory', 'Hair Care');
+    // Store category in component state instead of localStorage
+    setSessionData({ selectedCategory: 'Hair Care' });
     router.push('/products');
   };
 
@@ -76,7 +136,7 @@ export default function SunsilkShampooSection({ selectedCategory }) {
       ];
     }
     
-    // Sunsilk shampoo products for Hair Care category with unique IDs
+    // Sunsilk shampoo products for Hair Care category
     if (category === "Hair Care") {
       return [
         {
@@ -198,52 +258,74 @@ export default function SunsilkShampooSection({ selectedCategory }) {
   const products = getProducts(selectedCategory);
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10 2xl:px-10">
+    <div className="py-8 container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-10">
       <div className="mx-auto">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl xl:text-[28px] font-bold text-gray-800">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">
             {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
           </h2>
           <button
-              className="flex items-center gap-2 font-medium transition-colors cursor-pointer"
-              style={{ color: "var(--color-primary)" }}
-              onClick={handleViewAllClick}
-            >
-              <span>View all</span>
-              <img src="/nextarrow.svg" alt="Next arrow" className="w-7 h-7" />
-            </button>
+            className="flex items-center gap-2 font-medium transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded"
+            style={{ color: "var(--color-primary)" }}
+            onClick={handleViewAllClick}
+            aria-label="View all best sellers"
+          >
+            <span className="text-sm sm:text-base">View all</span>
+            <Image
+              src="/nextarrow.svg"
+              alt="Next arrow"
+              width={28}
+              height={28}
+              className="w-5 h-5 sm:w-6 sm:h-6"
+            />
+          </button>
         </div>
 
-        {/* Products Grid - Mobile: horizontal scroll with 6 cards in a row */}
-        <div className="md:hidden -mx-4 px-4">
-          <div className="flex gap-2 overflow-x-auto scrollbar-primary">
-            {products.map((product) => (
-              <div key={product.id} className="flex-none w-1/3">
-                <div 
-                  className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick(product.id)}
-                >
-                  <ProductCard product={product} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Products Grid - Desktop/Tablet */}
-        <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
+        {/* Unified Responsive Grid with Mobile Scrolling */}
+        <div className="flex sm:grid sm:grid-cols-3 md:flex lg:flex xl:grid xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-5 overflow-x-auto sm:overflow-x-visible md:overflow-x-auto lg:overflow-x-auto xl:overflow-x-visible pb-4 sm:pb-0 md:pb-4 lg:pb-4 xl:pb-0 scrollbar-hide sm:scrollbar-auto md:scrollbar-auto lg:scrollbar-auto xl:scrollbar-auto">
           {products.map((product) => (
             <div 
               key={product.id} 
-              className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 max-w-[200px] mx-auto"
-              onClick={() => handleProductClick(product.id)}
+              className="flex-shrink-0 w-[calc(50%-6px)] sm:w-full sm:max-w-[200px] sm:mx-auto md:w-[200px] lg:w-[200px] xl:w-full xl:max-w-[200px] xl:mx-auto"
             >
-              <ProductCard product={product} />
+              <ProductCard 
+                product={product} 
+                onClick={handleProductClick}
+              />
             </div>
           ))}
         </div>
       </div>
+
+      {/* Custom CSS for scrollbar styling */}
+      <style jsx>{`
+        .scrollbar-primary {
+          scrollbar-width: thin;
+          scrollbar-color: var(--color-primary, #007bff) #f1f1f1;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar {
+          height: 4px;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 4px;
+        }
+        
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+          background: var(--color-primary, #007bff);
+          border-radius: 4px;
+        }
+        
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      `}</style>
     </div>
   );
-} 
+}

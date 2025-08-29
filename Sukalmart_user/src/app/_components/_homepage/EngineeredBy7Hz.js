@@ -1,11 +1,41 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Button from '@/app/_components/common/Button';
+
+const products = [
+  {
+    id: "17",
+    name: "Glow & Hydrate Face Serum",
+    category: "Skincare",
+    price: 899,
+    originalPrice: 1099,
+    image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+  },
+  {
+    id: "18",
+    name: "Luxury Beauty Collection Set",
+    category: "Beauty Essentials",
+    price: 2499,
+    originalPrice: 3199,
+    image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
+  },
+  {
+    id: "19",
+    name: "Anti-Aging Night Cream",
+    category: "Anti-Aging",
+    price: 1299,
+    originalPrice: 1599,
+    image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
+  }
+];
 
 export default function EngineeredBy7Hz() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const mobileRef = useRef(null);
+  const carouselRef = useRef(null);
 
   const handleShopAllClick = () => {
     router.push('/products');
@@ -15,265 +45,135 @@ export default function EngineeredBy7Hz() {
     router.push(`/products/${productId}`);
   };
 
-  // Auto-advance mobile carousel (scrolls full-width cards)
+  // Auto-advance carousel for mobile
   useEffect(() => {
-    if (!mobileRef.current) return;
-    const root = mobileRef.current;
-    const cards = root.querySelectorAll('[data-engineered-card]');
-    if (cards.length === 0) return;
+    const carousel = carouselRef.current;
+    if (!carousel) return;
 
-    let index = 0;
-    const tick = () => {
-      index = (index + 1) % cards.length;
-      const target = cards[index];
-      if (target) {
-        // Use scrollLeft instead of scrollIntoView to avoid page jumping
-        const container = mobileRef.current;
-        const cardWidth = target.offsetWidth;
-        container.scrollLeft = cardWidth * index;
-        setCurrentSlide(index);
-      }
-    };
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) return;
 
-    const id = setInterval(tick, 5000);
-    return () => clearInterval(id);
+    const interval = setInterval(() => {
+      setCurrentSlide(prev => {
+        const nextSlide = (prev + 1) % products.length;
+        const cardWidth = carousel.children[0]?.offsetWidth || 0;
+        const gap = 8; // 8px gap between cards
+        carousel.scrollTo({
+          left: nextSlide * (cardWidth + gap),
+          behavior: 'smooth'
+        });
+        return nextSlide;
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <>
-      <div className="py-6 md:py-8 lg:py-10 container mx-auto px-4 md:px-8 lg:px-10 xl:px-8 2xl:px-10 engineered-7hz-container overflow-hidden">
-     
+      <div className="py-6 md:py-8 lg:py-10 container mx-auto px-4 md:px-8 lg:px-10 xl:px-8 2xl:px-10 overflow-hidden">
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">
-            <h2
-              className="mb-4 sm:mb-6 text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px]"
-              style={{
-                color: "#333",
-
-                fontStyle: "normal",
-              }}
-            >
+            <h2 className="mb-4 sm:mb-6 text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px] text-[#333]">
               Premium Beauty Collection
             </h2>
-            <p
-              className="mb-6 sm:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.17px] lg:tracking-[-0.18px]"
-              style={{
-                color: "rgba(51, 51, 51, 0.8)",
-                fontStyle: "normal",
-                letterSpacing: "-0.28px",
-              }}
-            >
+            <p className="mb-6 sm:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.17px] lg:tracking-[-0.18px] text-[rgba(51,51,51,0.8)]">
               Expertly formulated skincare and beauty products delivering radiant
               results, innovative ingredients, and dermatologist-approved
               performance. Experience the transformation.
             </p>
-            <button
+            <Button
+              variant="primary"
+              size="large"
               onClick={handleShopAllClick}
-              className="flex justify-center items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 lg:px-4 lg:py-2 text-xs sm:text-sm md:text-base lg:text-base font-medium cursor-pointer"
-              style={{
-                borderRadius: "4px",
-                background: "var(--color-primary)",
-                color: "#fff",
-                transition: "background 0.2s",
-                cursor: 'pointer'
-              }}
-              onMouseOver={(e) =>
-                (e.currentTarget.style.background = "#520A1E")
-              }
-              onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
+              className="rounded-[4px] hover:bg-[#520A1E] text-xs sm:text-sm md:text-base lg:text-base"
             >
               Shop all
-            </button>
+            </Button>
           </div>
 
           {/* Right Section - Product Cards */}
           <div className="flex-1 w-full">
-            <div ref={mobileRef} className="flex flex-row w-full overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory engineered-by-7hz-cards-row gap-2 sm:gap-0">
-              {/* Product Card 1 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
+            <div 
+              ref={carouselRef} 
+              className="flex overflow-x-auto scrollbar-hide lg:overflow-visible snap-x snap-mandatory gap-2 lg:gap-0"
+            >
+              {products.map((product, index) => (
                 <div 
-                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("17")}
+                  key={product.id}
+                  className="flex-shrink-0 w-1/2 lg:w-1/3 snap-start"
                 >
-                  <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                    <Image
-                      src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
-                      alt="Glow & Hydrate Face Serum"
-                      fill
-                      sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
-                      className="object-contain"
-                    />
-                  </div>
-                  <h3
-                    className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
-                    style={{
-              
-                      letterSpacing: "-0.32px",
-                    }}
+                  <div 
+                    className="bg-white rounded-lg p-0 lg:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+                    onClick={() => handleProductClick(product.id)}
                   >
-                    Glow & Hydrate Face Serum
-                  </h3>
-                  <p
-                    className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
-                    style={{
-                     
-                      letterSpacing: "-0.28px",
-                    }}
-                  >
-                    Skincare
-                  </p>
-                  <div className="flex items-center gap-2 mt-auto">
-                    <span
-                      className="text-base sm:text-lg font-bold"
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      ₹899
-                    </span>
-                    <span className="text-xs sm:text-sm text-gray-500 line-through">
-                      ₹1,099
-                    </span>
+                    <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg">
+                      {product.image?.includes('marketlube') ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="object-contain w-full h-full"
+                          onError={(e) => {
+                            e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
+                          className="object-contain"
+                          onError={(e) => {
+                            e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
+                          }}
+                        />
+                      )}
+                    </div>
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 tracking-[-0.32px] px-2 lg:px-0">
+                      {product.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 tracking-[-0.28px] px-2 lg:px-0">
+                      {product.category}
+                    </p>
+                    <div className="flex items-center gap-2 mt-auto px-2 lg:px-0 pb-2 lg:pb-0">
+                      <span className="text-base sm:text-lg font-bold text-[var(--color-primary)]">
+                        ₹{product.price}
+                      </span>
+                      <span className="text-xs sm:text-sm text-gray-500 line-through">
+                        ₹{product.originalPrice}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* Product Card 2 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
-                <div 
-                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("18")}
-                >
-                  <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                    <Image
-                      src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-                      alt="Luxury Beauty Collection Set"
-                      fill
-                      sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
-                      className="object-contain"
-                    />
-                  </div>
-                  <h3
-                    className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
-                    style={{
-                     
-                      letterSpacing: "-0.32px",
-                    }}
-                  >
-                    Luxury Beauty Collection Set
-                  </h3>
-                  <p
-                    className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
-                    style={{
-                   
-                      letterSpacing: "-0.28px",
-                    }}
-                  >
-                    Beauty Essentials
-                  </p>
-                  <div className="flex items-center gap-2 mt-auto">
-                    <span
-                      className="text-base sm:text-lg font-bold"
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      ₹2,499
-                    </span>
-                    <span className="text-xs sm:text-sm text-gray-500 line-through">
-                      ₹3,199
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {/* Product Card 3 */}
-              <div className="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 snap-start px-0" data-engineered-card>
-                <div 
-                  className="bg-white rounded-lg p-0 sm:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
-                  onClick={() => handleProductClick("19")}
-                >
-                  <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4">
-                    <Image
-                      src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
-                      alt="Anti-Aging Night Cream"
-                      fill
-                      sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
-                      className="object-contain"
-                    />
-                  </div>
-                  <h3
-                    className="text-sm sm:text-base font-semibold text-gray-900 mb-2"
-                    style={{
-                 
-                      letterSpacing: "-0.32px",
-                    }}
-                  >
-                    Anti-Aging Night Cream
-                  </h3>
-                  <p
-                    className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
-                    style={{
-                    
-                      letterSpacing: "-0.28px",
-                    }}
-                  >
-                    Anti-Aging
-                  </p>
-                  <div className="flex items-center gap-2 mt-auto">
-                    <span
-                      className="text-base sm:text-lg font-bold"
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      ₹1,299
-                    </span>
-                    <span className="text-xs sm:text-sm text-gray-500 line-through">
-                      ₹1,599
-                    </span>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+            
             {/* Mobile scroll indicator */}
-            <div className="md:hidden w-full mt-4">
+            <div className="lg:hidden w-full mt-4">
               <div className="flex justify-center">
                 <div className="w-20 h-1 bg-gray-200 rounded-full overflow-hidden">
                   <div 
                     className="h-1 bg-[var(--color-primary)] rounded-full transition-all duration-500"
-                    style={{ width: `${((currentSlide + 1) * (100 / 2))}%` }}
-                  ></div>
+                    style={{ width: `${((currentSlide + 1) * (100 / products.length))}%` }}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <style jsx>{`
-          /* Card layout fix for desktop and big tablets */
-          @media (min-width: 992px) {
-            .flex-1 > .flex {
-              flex-wrap: nowrap;
-              gap: 0;
-            }
-            .flex-1 > .flex > div {
-              min-width: 0;
-              width: 33.3333%;
-              max-width: 33.3333%;
-            }
-          }
-          /* Remove gap for tablet and desktop only */
-          @media (min-width: 640px) {
-            .engineered-by-7hz-cards-row {
-              gap: 0 !important;
-            }
-          }
-          /* Show two cards per screen on mobile with gap */
-          @media (max-width: 639.98px) {
-            .engineered-by-7hz-cards-row > div {
-              width: 50% !important;
-              max-width: 50% !important;
-            }
-            .engineered-by-7hz-cards-row {
-              gap: 8px !important;
-            }
-          }
-        `}</style>
       </div>
-    
+      
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;  /* Internet Explorer 10+ */
+          scrollbar-width: none;  /* Firefox */
+        }
+        .scrollbar-hide::-webkit-scrollbar { 
+          display: none;  /* Safari and Chrome */
+        }
+      `}</style>
     </>
   );
 }

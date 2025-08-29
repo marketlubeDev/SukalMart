@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 
 export default function LoginPage() {
@@ -38,7 +39,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center">
                       <div className="flex items-center justify-center">
-              <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-10 sm:h-12 w-auto" />
+              <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={48} className="h-10 sm:h-12 w-auto" />
             </div>
         </div>
 
@@ -219,25 +220,25 @@ export default function LoginPage() {
               className="sm:text-[14px]"
             >
               By continuing, you agree to our{" "}
-              <Link
-                href="/terms"
-                className="underline font-medium"
+              <span
+                className="underline font-medium cursor-pointer"
                 style={{ color: "var(--color-primary)" }}
+                onClick={() => router.push("/my-account?tab=terms")}
                 onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Terms
-              </Link>{" "}
+              </span>{" "}
               and{" "}
-              <Link
-                href="/privacy"
-                className="underline font-medium"
+              <span
+                className="underline font-medium cursor-pointer"
                 style={{ color: "var(--color-primary)" }}
+                onClick={() => router.push("/my-account?tab=privacy-policy")}
                 onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
                 Privacy Policy
-              </Link>
+              </span>
             </p>
           </div>
         </form>

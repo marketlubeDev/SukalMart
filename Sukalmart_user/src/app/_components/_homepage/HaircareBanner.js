@@ -1,21 +1,34 @@
 "use client";
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import Image from 'next/image';
+import Button from '@/app/_components/common/Button';
 
 export default function HaircareBanner({ selectedCategory }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Function to handle shop now button click
-  const handleShopNow = () => {
-    // Set the selected category in localStorage
-    localStorage.setItem('selectedCategory', selectedCategory || 'Hair Care');
-    // Navigate to products page
-    router.push('/products');
+  const handleShopNow = async () => {
+    setIsLoading(true);
+    try {
+      // Use sessionStorage instead of localStorage for better Next.js compatibility
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('selectedCategory', selectedCategory || 'Hair Care');
+      }
+      // Navigate to products page
+      await router.push('/products');
+    } catch (error) {
+      console.error('Navigation error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Function to get banner content based on category
   const getBannerContent = (category) => {
-    if (category === "Body & Shower") {
-      return {
+    const contentMap = {
+      "Body & Shower": {
         title: "Body Care That Radiates Confidence",
         description: "Premium body care products deliver transformative results, rich nourishment and immersive care - engineered for true beauty enthusiasts.",
         mainImage: "/bodywah.jpg",
@@ -24,11 +37,8 @@ export default function HaircareBanner({ selectedCategory }) {
         mainAlt: "Premium Body Care Product",
         secondaryAlt: "Body Care Product",
         accentAlt: "Body Care Product"
-      };
-    }
-
-    if (category === "Soap & Deodorants") {
-      return {
+      },
+      "Soap & Deodorants": {
         title: "Premium Beauty Collection",
         description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
         mainImage: "/soap1.jpeg",
@@ -37,12 +47,8 @@ export default function HaircareBanner({ selectedCategory }) {
         mainAlt: "Soap & Deodorants Product",
         secondaryAlt: "Soap & Deodorants Product",
         accentAlt: "Soap & Deodorants Product"
-      };
-    }
-
-    // Inserted: Skin Care banner uses /skin1.jpg
-    if (category === "Skin Care") {
-      return {
+      },
+      "Skin Care": {
         title: "Premium Beauty Collection",
         description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
         mainImage: "/skin1.jpg",
@@ -51,12 +57,8 @@ export default function HaircareBanner({ selectedCategory }) {
         mainAlt: "Skin Care Product",
         secondaryAlt: "Skin Care Product",
         accentAlt: "Skin Care Product"
-      };
-    }
-
-    // Inserted: Oral & Misc banner uses /tooth1.jpg
-    if (category === "Oral & Misc") {
-      return {
+      },
+      "Oral & Misc": {
         title: "Premium Beauty Collection",
         description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
         mainImage: "/tooth1.jpg",
@@ -65,11 +67,8 @@ export default function HaircareBanner({ selectedCategory }) {
         mainAlt: "Oral & Misc Product",
         secondaryAlt: "Oral & Misc Product",
         accentAlt: "Oral & Misc Product"
-      };
-    }
-
-    if (category === "Hair Care") {
-      return {
+      },
+      "Hair Care": {
         title: "Hair That Speaks With Confidence",
         description: "Precision-crafted haircare products deliver transformative results, rich nourishment and immersive care - engineered for true beauty enthusiasts.",
         mainImage: "/haircare1.jpg",
@@ -78,11 +77,10 @@ export default function HaircareBanner({ selectedCategory }) {
         mainAlt: "Premium Haircare Product",
         secondaryAlt: "Haircare Product",
         accentAlt: "Haircare Product"
-      };
-    }
+      }
+    };
 
-    // Default content for other categories
-    return {
+    return contentMap[category] || {
       title: "Premium Beauty Collection",
       description: "Expertly formulated beauty products delivering radiant results, innovative ingredients, and dermatologist-approved performance.",
       mainImage: "/haircare1.jpg",
@@ -98,88 +96,97 @@ export default function HaircareBanner({ selectedCategory }) {
 
   return (
     <div className="py-8 container mx-auto px-4 md:px-8 lg:px-10 xl:px-10 2xl:px-10">
-      {/* Mobile: full-width background banner with overlay and text */}
-      <div className="lg:hidden">
-        <div className="relative w-full h-[260px] md:h-[350px] overflow-hidden rounded-lg">
+      <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 to-amber-200 rounded-lg">
+        {/* Mobile overlay banner (visible on small screens) */}
+        <div className="lg:hidden relative w-full h-[260px] md:h-[350px]">
           <div
-            className="absolute inset-0 bg-center bg-cover"
+            className="absolute inset-0 bg-center bg-cover rounded-lg"
             style={{ backgroundImage: `url('${content.mainImage}')` }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
-          <div className="absolute inset-0 flex items-center">
-            <div className="px-4">
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent rounded-lg" />
+          <div className="absolute inset-0 flex items-center p-4">
+            <div className="max-w-md">
               <h2 className="text-white text-xl font-semibold mb-2 leading-snug">
                 {content.title}
               </h2>
-              <p className="text-white/90 text-sm mb-3 leading-relaxed line-clamp-3">
+              <p className="text-white/90 text-sm mb-4 leading-relaxed line-clamp-3">
                 {content.description}
               </p>
-              <button 
+              <Button 
+                variant="secondary"
+                size="large"
                 onClick={handleShopNow}
-                className="bg-transparent text-white px-3 py-1.5 rounded text-sm font-semibold cursor-pointer border-2 border-white hover:text-gray-200 hover:border-white/90 transition-colors"
+                disabled={isLoading}
+                className="bg-transparent text-white px-4 py-2 rounded text-sm font-semibold cursor-pointer border-2 border-white hover:text-gray-200 hover:border-white/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Shop now
-              </button>
+                {isLoading ? 'Loading...' : 'Shop now'}
+              </Button>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Desktop/Tablet: existing rich layout */}
-      <div className="hidden lg:block">
-        <div className="mx-auto">
-          <div className="relative overflow-hidden bg-gradient-to-br from-amber-100 to-amber-200 p-8 md:p-12">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 to-transparent"></div>
+        {/* Desktop/Tablet rich layout (visible on large screens) */}
+        <div className="hidden lg:block p-8 md:p-12">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 to-transparent" />
+          </div>
+          
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+            {/* Left Section - Text Content */}
+            <div className="flex-1 text-gray-800">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
+                {content.title}
+              </h2>
+              <p className="text-lg md:text-xl mb-6 opacity-90 leading-relaxed">
+                {content.description}
+              </p>
+              <Button 
+                variant="secondary"
+                size="large"
+                onClick={handleShopNow}
+                disabled={isLoading}
+                className="inline-flex items-center px-6 py-3 bg-transparent text-gray-800 font-semibold rounded-lg hover:text-gray-600 transition-all duration-200 border-2 border-gray-800 hover:border-gray-600 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Loading...' : 'Shop now'}
+              </Button>
             </div>
             
-            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between">
-              {/* Left Section - Text Content */}
-              <div className="flex-1 text-gray-800 mb-8 lg:mb-0 lg:mr-8">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-4 leading-tight">
-                  {content.title}
-                </h2>
-                <p className="text-lg md:text-xl mb-6 opacity-90 leading-relaxed">
-                  {content.description}
-                </p>
-                <button 
-                  onClick={handleShopNow}
-                  className="inline-flex items-center px-4 py-2 bg-transparent text-gray-800 font-semibold rounded-lg hover:text-gray-600 transition-colors duration-200 border-2 border-gray-800 cursor-pointer"
-                >
-                  Shop now
-                </button>
-              </div>
-              
-              {/* Right Section - Product Images */}
-              <div className="flex-1 flex justify-center lg:justify-end">
-                <div className="relative">
-                  {/* Main Product Image */}
-                  <div className="relative z-20">
-                    <img
-                      src={content.mainImage}
-                      alt={content.mainAlt}
-                      className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 object-cover rounded-lg shadow-lg"
-                    />
-                  </div>
-                  
-                  {/* Secondary Product Image */}
-                  <div className="absolute -top-4 -right-4 z-10">
-                    <img
-                      src={content.secondaryImage}
-                      alt={content.secondaryAlt}
-                      className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-lg shadow-lg"
-                    />
-                  </div>
-                  
-                  {/* Accent Product Image */}
-                  <div className="absolute -bottom-4 -left-4 z-10">
-                    <img
-                      src={content.accentImage}
-                      alt={content.accentAlt}
-                      className="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-cover rounded-lg shadow-lg"
-                    />
-                  </div>
+            {/* Right Section - Product Images */}
+            <div className="flex-1 flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Main Product Image */}
+                <div className="relative z-20">
+                  <Image
+                    src={content.mainImage}
+                    alt={content.mainAlt}
+                    width={256}
+                    height={256}
+                    className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 object-cover rounded-lg shadow-lg"
+                    priority
+                  />
+                </div>
+                
+                {/* Secondary Product Image */}
+                <div className="absolute -top-4 -right-4 z-10">
+                  <Image
+                    src={content.secondaryImage}
+                    alt={content.secondaryAlt}
+                    width={160}
+                    height={160}
+                    className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-lg shadow-lg"
+                  />
+                </div>
+                
+                {/* Accent Product Image */}
+                <div className="absolute -bottom-4 -left-4 z-10">
+                  <Image
+                    src={content.accentImage}
+                    alt={content.accentAlt}
+                    width={128}
+                    height={128}
+                    className="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-cover rounded-lg shadow-lg"
+                  />
                 </div>
               </div>
             </div>
@@ -188,4 +195,4 @@ export default function HaircareBanner({ selectedCategory }) {
       </div>
     </div>
   );
-} 
+}

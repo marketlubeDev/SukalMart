@@ -1,192 +1,211 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Drawer, Button, Input, Modal } from "antd";
-import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import Link from "next/link";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import CouponSidebar from "./CouponSidebar";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import Button from "../common/Button";
+
+// Dynamically import CouponSidebar to reduce initial bundle size
+const CouponSidebar = dynamic(() => import("./CouponSidebar"), {
+  loading: () => <div>Loading...</div>,
+  ssr: false
+});
 
 export default function CartSidebar({ isOpen, onClose }) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [drawerWidth, setDrawerWidth] = useState(550);
+  const [drawerWidth, setDrawerWidth] = useState("550px");
   const [quantities, setQuantities] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
   const [showCouponSidebar, setShowCouponSidebar] = useState(false);
 
+  // Handle client-side mounting
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const loadCart = () => {
-    if (!mounted) return; // Don't load cart during SSR
+  // Cart operations with error handling and performance optimization
+  const loadCart = useCallback(() => {
+    if (!mounted || typeof window === "undefined") return;
+    
     try {
-      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('cartItems') : null;
+      const raw = localStorage.getItem('cartItems');
       const parsed = raw ? JSON.parse(raw) : [];
-      setCartItems(Array.isArray(parsed) ? parsed : []);
+      const validatedItems = Array.isArray(parsed) ? parsed : [];
+      
+      setCartItems(validatedItems);
+      
       const initialQuantities = {};
-      (Array.isArray(parsed) ? parsed : []).forEach((item) => {
-        initialQuantities[item.id] = Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+      validatedItems.forEach((item) => {
+        initialQuantities[item.id] = Math.max(Number(item.quantity) || 1, 1);
       });
-      setQuantities((prev) => ({ ...prev, ...initialQuantities }));
-    } catch (err) {
-      console.error('Failed to load cart from localStorage', err);
+      setQuantities(initialQuantities);
+    } catch (error) {
+      console.error('Failed to load cart from localStorage:', error);
       setCartItems([]);
+      setQuantities({});
     }
-  };
+  }, [mounted]);
 
-  const persistCart = (items) => {
-    if (!mounted) return; // Don't persist cart during SSR
+  const persistCart = useCallback((items) => {
+    if (!mounted || typeof window === "undefined") return;
+    
     try {
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('cartItems', JSON.stringify(items));
-        // Notify listeners
-        window.dispatchEvent(new Event('cart-updated'));
-      }
-    } catch (err) {
-      console.error('Failed to persist cart to localStorage', err);
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      // Dispatch custom event for cart updates
+      window.dispatchEvent(new CustomEvent('cart-updated', { detail: items }));
+    } catch (error) {
+      console.error('Failed to persist cart to localStorage:', error);
     }
-  };
+  }, [mounted]);
 
   // Prevent background scrolling when cart is open
   useEffect(() => {
-    if (!mounted) return; // Don't modify body style during SSR
+    if (!mounted || typeof document === "undefined") return;
+    
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      // Add a small delay to prevent jarring transition
       const timer = setTimeout(() => {
         document.body.style.overflow = "unset";
-      }, 300); // Match the animation duration
-
+      }, 300);
       return () => clearTimeout(timer);
     }
 
-    // Cleanup function to restore scrolling when component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen, mounted]);
 
-  // Update drawer width responsively on client only
+  // Responsive drawer width
   useEffect(() => {
-    if (!mounted) return; // Don't update width during SSR
+    if (!mounted || typeof window === "undefined") return;
+    
     const updateWidth = () => {
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-      setDrawerWidth(isMobile ? '100%' : 550);
+      setDrawerWidth(window.innerWidth < 768 ? "100%" : "550px");
     };
 
     updateWidth();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', updateWidth);
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', updateWidth);
-      }
-    };
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
   }, [mounted]);
 
-  // Load cart when opened and when external updates happen
+  // Load cart when opened and listen for external updates
   useEffect(() => {
-    if (isOpen && mounted) loadCart();
-  }, [isOpen, mounted]);
+    if (isOpen && mounted) {
+      loadCart();
+    }
+  }, [isOpen, mounted, loadCart]);
 
   useEffect(() => {
-    if (!mounted) return; // Don't add event listeners during SSR
-    const onCartUpdated = () => loadCart();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('cart-updated', onCartUpdated);
-    }
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('cart-updated', onCartUpdated);
-      }
-    };
-  }, [mounted]);
+    if (!mounted || typeof window === "undefined") return;
+    
+    const handleCartUpdate = () => loadCart();
+    window.addEventListener('cart-updated', handleCartUpdate);
+    
+    return () => window.removeEventListener('cart-updated', handleCartUpdate);
+  }, [mounted, loadCart]);
 
-  const updateQuantity = (itemId, newQuantity) => {
-    if (!mounted) return; // Don't update quantities during SSR
-    if (newQuantity >= 1) {
-      setQuantities((prev) => ({
-        ...prev,
-        [itemId]: newQuantity,
-      }));
-      // Also persist to localStorage
-      setCartItems((prev) => {
-        const next = prev.map((item) =>
-          item.id === itemId ? { ...item, quantity: newQuantity } : item
-        );
-        persistCart(next);
-        return next;
-      });
-    }
-  };
+  // Optimized quantity update
+  const updateQuantity = useCallback((itemId, newQuantity) => {
+    if (!mounted || newQuantity < 1) return;
+    
+    setQuantities(prev => ({
+      ...prev,
+      [itemId]: newQuantity,
+    }));
+    
+    setCartItems(prev => {
+      const updated = prev.map(item =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      );
+      persistCart(updated);
+      return updated;
+    });
+  }, [mounted, persistCart]);
 
-  const removeItem = (itemId) => {
-    const next = cartItems.filter((item) => item.id !== itemId);
-    setCartItems(next);
-    const { [itemId]: _, ...rest } = quantities;
-    setQuantities(rest);
-    persistCart(next);
-  };
+  // Optimized item removal
+  const removeItem = useCallback((itemId) => {
+    setCartItems(prev => {
+      const filtered = prev.filter(item => item.id !== itemId);
+      persistCart(filtered);
+      return filtered;
+    });
+    
+    setQuantities(prev => {
+      const { [itemId]: _, ...rest } = prev;
+      return rest;
+    });
+  }, [persistCart]);
 
-  const handleProceedToCheckout = () => {
+  // Navigation handlers
+  const handleProceedToCheckout = useCallback(() => {
     onClose();
     router.push('/checkout');
-  };
+  }, [onClose, router]);
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + (item.price || 0) * (quantities[item.id] || item.quantity || 1),
-    0
-  );
-  const total = subtotal + 400; // Adding delivery cost
-  const discount = 400;
-  const couponDiscount = 199;
+  const handleShopNow = useCallback(() => {
+    onClose();
+    router.push('/products');
+  }, [onClose, router]);
+
+  // Memoized calculations
+  const calculations = useMemo(() => {
+    const subtotal = cartItems.reduce(
+      (sum, item) => sum + (item.price || 0) * (quantities[item.id] || item.quantity || 1),
+      0
+    );
+    const deliveryCost = 400;
+    const discount = 400;
+    const couponDiscount = 199;
+    const total = subtotal + deliveryCost;
+    const finalTotal = total - discount - couponDiscount;
+    
+    return {
+      subtotal,
+      total,
+      discount,
+      couponDiscount,
+      finalTotal,
+      itemCount: cartItems.length
+    };
+  }, [cartItems, quantities]);
+
+  // Don't render anything during SSR
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
-      <Drawer
-        title={null}
-        placement="right"
-        onClose={onClose}
-        open={isOpen}
-        width={drawerWidth}
-        className="cart-drawer-custom"
-        styles={{
-          body: {
-            padding: 0,
-            backgroundColor: '#F5F5F5',
-            height: '100vh',
-            maxHeight: '100vh',
-            overflow: 'hidden',
-          },
-          header: {
-            display: 'none',
-          },
-          mask: {
-            backgroundColor: 'rgba(0, 0, 0, 0.45)',
-          },
-          wrapper: {
-            height: '100vh',
-            maxHeight: '100vh',
-            overflow: 'hidden',
-          },
-          content: {
-            height: '100vh',
-            maxHeight: '100vh',
-            overflow: 'hidden',
-          },
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-transparent"
+          onClick={onClose}
+          style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.25), rgba(0,0,0,0.15), rgba(0,0,0,0.08), rgba(0,0,0,0))' }}
+        />
+      )}
+
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 right-0 z-50 h-full bg-gray-100 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{
+          width: drawerWidth,
+          maxWidth: '100vw',
+          height: '100vh',
+          maxHeight: '100vh',
+          overflow: 'hidden',
         }}
-        closeIcon={null}
       >
-        {/* Header - Fixed height */}
-        <div 
+        {/* Header - Fixed */}
+        <header 
           className="flex items-center justify-between p-4 border-b border-gray-200 bg-white"
           style={{
-            backgroundColor: "white",
             height: "80px",
             minHeight: "80px",
             maxHeight: "80px",
@@ -196,14 +215,15 @@ export default function CartSidebar({ isOpen, onClose }) {
           <div className="flex items-center">
             <button
               onClick={onClose}
-              className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
-              style={{ cursor: "pointer" }}
+              className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              aria-label="Close cart"
             >
               <svg
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -214,11 +234,12 @@ export default function CartSidebar({ isOpen, onClose }) {
               </svg>
             </button>
             <h2
-              className="font-[600]"
+              className="font-semibold"
               style={{
                 color: "#333333",
                 fontSize: "22px",
                 fontStyle: "normal",
+                fontWeight: 600,
                 lineHeight: "normal",
                 letterSpacing: "-0.44px",
               }}
@@ -226,20 +247,18 @@ export default function CartSidebar({ isOpen, onClose }) {
               Your cart
             </h2>
           </div>
-        </div>
+        </header>
 
-        {/* Cart Content */}
-        <div className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
-          {/* Items Section - Scrollable content */}
+        {/* Main Content */}
+        <main className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
+          {/* Scrollable Content */}
           <div
-            className="flex-1 overflow-y-auto"
+            className="flex-1 overflow-y-auto overflow-x-hidden"
             style={{ 
               paddingTop: "16px",
               paddingBottom: "16px",
-              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px) = 160px
-              maxHeight: "calc(100vh - 80px - 80px)",
-              overflowY: "auto",
-              overflowX: "hidden"
+              height: "calc(100vh - 160px)",
+              maxHeight: "calc(100vh - 160px)",
             }}
           >
             {/* Items Header */}
@@ -266,42 +285,21 @@ export default function CartSidebar({ isOpen, onClose }) {
                   letterSpacing: "-0.28px",
                 }}
               >
-                {cartItems.length} products
+                {calculations.itemCount} products
               </span>
             </div>
 
-            {/* Cart Items - Arranged in a single white card, separated by dotted borders, full width */}
-            <div
-              className="w-full bg-white"
-              style={{
-                borderRadius: "0px",
-                boxShadow: "none",
-                padding: 0,
-                margin: 0
-              }}
-            >
-              {cartItems.length === 0 ? (
-                // Empty Cart Message
+            {/* Cart Items Container */}
+            <div className="w-full bg-white">
+              {calculations.itemCount === 0 ? (
+                // Empty Cart State
                 <div
                   className="flex flex-col items-center justify-center py-12 px-4"
-                  style={{
-                    minHeight: "200px",
-                    textAlign: "center"
-                  }}
+                  style={{ minHeight: "200px", textAlign: "center" }}
                 >
-                  {/* Empty Cart Icon */}
                   <div
-                    className="mb-4"
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      borderRadius: "50%",
-                      backgroundColor: "#F5F5F5",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: "16px"
-                    }}
+                    className="mb-4 flex items-center justify-center rounded-full bg-gray-100"
+                    style={{ width: "80px", height: "80px" }}
                   >
                     <svg
                       width="40"
@@ -313,6 +311,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       style={{ color: "#999" }}
+                      aria-hidden="true"
                     >
                       <circle cx="9" cy="21" r="1"></circle>
                       <circle cx="20" cy="21" r="1"></circle>
@@ -320,7 +319,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                     </svg>
                   </div>
                   
-                  {/* Empty Cart Text */}
                   <h3
                     style={{
                       color: "#333333",
@@ -349,12 +347,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                     Looks like you haven't added any items to your cart yet
                   </p>
                   
-                  {/* Shop Now Button */}
                   <button
-                    onClick={() => {
-                      onClose();
-                      router.push('/products');
-                    }}
+                    onClick={handleShopNow}
+                    className="transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                     style={{
                       display: "flex",
                       padding: "12px 24px",
@@ -368,15 +363,8 @@ export default function CartSidebar({ isOpen, onClose }) {
                       fontSize: "16px",
                       lineHeight: "normal",
                       border: "none",
-                      transition: "background 0.2s",
                       cursor: "pointer",
                     }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.background = "#520A1E")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.background = "var(--color-primary)")
-                    }
                   >
                     Shop Now
                   </button>
@@ -384,302 +372,240 @@ export default function CartSidebar({ isOpen, onClose }) {
               ) : (
                 // Cart Items List
                 cartItems.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className="relative flex w-full"
-                  style={{
-                    display: "flex",
-                    paddingBottom: "16px",
-                    alignItems: "center",
-                    gap: "12px",
-                    alignSelf: "stretch",
-                    paddingTop: "18px",
-                    paddingLeft: "16px",
-                    paddingRight: "16px",
-                    borderBottom:
-                      idx !== cartItems.length - 1
-                        ? "1px dashed rgba(209, 213, 219, 1)"
-                        : "none",
-                  }}
-                >
-                  {/* Remove Button */}
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="absolute top-3 right-3 p-1 hover:bg-gray-200 rounded-full transition-colors"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-
-                  {/* Product Image */}
-                  <div
-                    className="bg-white rounded-lg flex items-center justify-center flex-shrink-0"
+                  <article
+                    key={`cart-item-${item.id}`}
+                    className="relative flex w-full"
                     style={{
-                      width: "64px",
-                      height: "64px",
-                      aspectRatio: "1/1",
-                      marginRight: "16px",
+                      display: "flex",
+                      paddingBottom: "16px",
+                      alignItems: "center",
+                      gap: "12px",
+                      alignSelf: "stretch",
+                      paddingTop: "18px",
+                      paddingLeft: "16px",
+                      paddingRight: "16px",
+                      borderBottom:
+                        idx !== cartItems.length - 1
+                          ? "1px dashed rgba(209, 213, 219, 1)"
+                          : "none",
                     }}
                   >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </div>
+                    {/* Remove Button */}
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="absolute top-3 right-3 p-1 hover:bg-gray-200 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+                      aria-label={`Remove ${item.name} from cart`}
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
 
-                  {/* Product Details */}
-                  <div className="flex-1 min-w-0 w-full">
-                    <h4
-                      className="text-[16px] font-semibold mb-1"
-                      style={{
-                        overflow: "hidden",
-                        color: "#333",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 1,
-                        fontSize: "16px",
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        lineHeight: "140%",
-                        letterSpacing: "-0.32px",
-                        alignSelf: "stretch",
-                        marginBottom: "2px",
-                      }}
-                      title={item.name}
-                    >
-                      {item.name}
-                    </h4>
+                    {/* Product Image */}
                     <div
-                      className="mb-1"
+                      className="bg-white rounded-lg flex items-center justify-center flex-shrink-0 relative"
                       style={{
-                        display: "block",
-                        overflow: "hidden",
-                        fontSize: "14px",
-                        color: "rgba(51, 51, 51, 0.70)",
-                        fontWeight: 500,
-                        lineHeight: "140%",
-                        letterSpacing: "-0.28px",
-                        marginBottom: "6px",
+                        width: "64px",
+                        height: "64px",
+                        aspectRatio: "1/1",
+                        marginRight: "16px",
                       }}
                     >
-                      <span style={{ marginRight: "16px" }}>
-                        Type:{" "}
-                        <span style={{ color: "#222", fontWeight: 500 }}>
-                          {item.color || 'Standard'}
-                        </span>
-                      </span>
-                      <span>
-                        Size:{" "}
-                        <span style={{ color: "#222", fontWeight: 500 }}>
-                          {item.plug || 'Default'}
-                        </span>
-                      </span>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={64}
+                        height={64}
+                        className="object-contain"
+                        sizes="64px"
+                        priority={idx < 3}
+                        onError={(e) => {
+                          e.target.src = '/placeholder-product.png';
+                        }}
+                      />
                     </div>
 
-                    {/* Quantity and Price Row */}
-                    <div className="flex items-center justify-between w-full">
-                      {/* Quantity Selector */}
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-600">Qty :</span>
-                        <div
-                          style={{
-                            display: "flex",
-                            height: "32px",
-                            padding: "0 3px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: "6px",
-                            borderRadius: "4px",
-                            border: "1px solid rgba(109, 13, 38, 0.40)",
-                            background: "rgba(109, 13, 38, 0.06)",
-                            minWidth: "72px",
-                            maxWidth: "80px",
-                            position: "relative",
-                          }}
-                        >
-                          <button
-                            onClick={() =>
-                              updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) - 1)
-                            }
+                    {/* Product Details */}
+                    <div className="flex-1 min-w-0 w-full">
+                      <h4
+                        className="text-base font-semibold mb-1 line-clamp-1"
+                        style={{
+                          overflow: "hidden",
+                          color: "#333",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 1,
+                          fontSize: "16px",
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          lineHeight: "140%",
+                          letterSpacing: "-0.32px",
+                          alignSelf: "stretch",
+                          marginBottom: "2px",
+                        }}
+                        title={item.name}
+                      >
+                        {item.name}
+                      </h4>
+                      
+                      <div
+                        className="mb-1 text-sm text-gray-600"
+                        style={{
+                          display: "block",
+                          overflow: "hidden",
+                          fontSize: "14px",
+                          color: "rgba(51, 51, 51, 0.70)",
+                          fontWeight: 500,
+                          lineHeight: "140%",
+                          letterSpacing: "-0.28px",
+                          marginBottom: "6px",
+                        }}
+                      >
+                        <span style={{ marginRight: "16px" }}>
+                          Type:{" "}
+                          <span style={{ color: "#222", fontWeight: 500 }}>
+                            {item.color || 'Standard'}
+                          </span>
+                        </span>
+                        <span>
+                          Size:{" "}
+                          <span style={{ color: "#222", fontWeight: 500 }}>
+                            {item.plug || 'Default'}
+                          </span>
+                        </span>
+                      </div>
+
+                      {/* Quantity and Price Row */}
+                      <div className="flex items-center justify-between w-full">
+                        {/* Quantity Selector */}
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-gray-600">Qty:</span>
+                          <div
+                            className="flex items-center"
                             style={{
-                              width: "28px",
-                              height: "28px",
                               display: "flex",
-                              alignItems: "center",
+                              height: "32px",
+                              padding: "0 3px",
                               justifyContent: "center",
-                              background: "transparent",
-                              border: "none",
-                              color: "var(--color-primary)",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                              cursor: "pointer",
-                              transition: "background 0.2s",
-                              borderRadius: "3px",
-                              lineHeight: 1,
+                              alignItems: "center",
+                              gap: "6px",
+                              borderRadius: "4px",
+                              border: "1px solid rgba(109, 13, 38, 0.40)",
+                              background: "rgba(109, 13, 38, 0.06)",
+                              minWidth: "72px",
+                              maxWidth: "80px",
                             }}
-                            onMouseOver={(e) =>
-                              (e.currentTarget.style.background = "rgba(109, 13, 38, 0.1)")
-                            }
-                            onMouseOut={(e) =>
-                              (e.currentTarget.style.background = "transparent")
-                            }
                           >
-                            -
-                          </button>
+                            <button
+                              onClick={() =>
+                                updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) - 1)
+                              }
+                              disabled={(quantities[item.id] || item.quantity || 1) <= 1}
+                              className="flex items-center justify-center transition-colors hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                              style={{
+                                width: "28px",
+                                height: "28px",
+                                background: "transparent",
+                                border: "none",
+                                color: "var(--color-primary)",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                                borderRadius: "3px",
+                                lineHeight: 1,
+                              }}
+                              aria-label="Decrease quantity"
+                            >
+                              -
+                            </button>
+                            
+                            <span
+                              className="text-center select-none"
+                              style={{
+                                padding: "0 2px",
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                color: "var(--color-primary)",
+                                minWidth: "20px",
+                                textAlign: "center",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                height: "100%",
+                              }}
+                              aria-label={`Quantity: ${quantities[item.id] || item.quantity || 1}`}
+                            >
+                              {String(quantities[item.id] || item.quantity || 1).padStart(2, "0")}
+                            </span>
+                            
+                            <button
+                              onClick={() =>
+                                updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) + 1)
+                              }
+                              className="flex items-center justify-center transition-colors hover:bg-red-100 focus:outline-none focus:ring-1 focus:ring-red-300"
+                              style={{
+                                width: "28px",
+                                height: "28px",
+                                background: "transparent",
+                                border: "none",
+                                color: "var(--color-primary)",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                                borderRadius: "3px",
+                                lineHeight: 1,
+                              }}
+                              aria-label="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Price Section */}
+                        <div className="flex items-center space-x-2 ml-4">
                           <span
                             style={{
-                              padding: "0 2px",
-                              fontSize: "15px",
+                              color: "var(--color-primary)",
+                              fontSize: "16px",
+                              fontStyle: "normal",
                               fontWeight: 600,
-                              color: "var(--color-primary)",
-                              minWidth: "20px",
-                              textAlign: "center",
-                              userSelect: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              height: "100%",
+                              lineHeight: "100%",
+                              letterSpacing: "-0.32px",
                             }}
                           >
-                            {String(quantities[item.id] || item.quantity || 1).padStart(2, "0")}
+                            ₹{(item.price || 0).toLocaleString('en-IN')}
                           </span>
-                          <button
-                            onClick={() =>
-                              updateQuantity(item.id, (quantities[item.id] || item.quantity || 1) + 1)
-                            }
-                            style={{
-                              width: "28px",
-                              height: "28px",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              background: "transparent",
-                              border: "none",
-                              color: "var(--color-primary)",
-                              fontSize: "18px",
-                              fontWeight: "bold",
-                              cursor: "pointer",
-                              transition: "background 0.2s",
-                              borderRadius: "3px",
-                              lineHeight: 1,
-                            }}
-                            onMouseOver={(e) =>
-                              (e.currentTarget.style.background = "rgba(109, 13, 38, 0.1)")
-                            }
-                            onMouseOut={(e) =>
-                              (e.currentTarget.style.background = "transparent")
-                            }
-                          >
-                            +
-                          </button>
+                          {item.originalPrice && item.originalPrice > item.price && (
+                            <span className="text-xs text-gray-400 line-through">
+                              ₹{item.originalPrice.toLocaleString('en-IN')}
+                            </span>
+                          )}
                         </div>
                       </div>
-                      {/* Price Section */}
-                      <div className="flex items-center space-x-2 ml-4">
-                        <span
-                          style={{
-                            overflow: "hidden",
-                            color: "var(--color-primary)",
-                            textOverflow: "ellipsis",
-                            fontSize: "16px",
-                            fontStyle: "normal",
-                            fontWeight: 600,
-                            lineHeight: "100%",
-                            letterSpacing: "-0.32px",
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 2,
-                            background: "white",
-                            padding: "0 2px",
-                          }}
-                        >
-                          ₹{(item.price || 0).toLocaleString()}
-                        </span>
-                        <span className="text-xs text-gray-400 line-through">
-                          ₹{(item.originalPrice || 0).toLocaleString()}
-                        </span>
-                      </div>
                     </div>
-                  </div>
-                </div>
+                  </article>
                 ))
               )}
             </div>
 
-            {/* Coupon Section - Only show when cart has items */}
-            {cartItems.length > 0 && (
-            <div className="mt-6 bg-[#F5F5F5]">
-              <h3
-                style={{
-                  color: "#333333",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  lineHeight: "normal",
-                  letterSpacing: "-0.4px",
-                }}
-                className="mb-3 px-4"
-              >
-                Coupon
-              </h3>
-              <button
-                onClick={() => setShowCouponSidebar(true)}
-                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full transition-colors cursor-pointer"
-                style={{ cursor: "pointer" }}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
-                    <img src="/coupon.svg" alt="Coupon" className="w-6 h-6" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-medium text-gray-800">
-                      Apply Coupon & Offers
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Use a valid coupon code and get an instant discount.
-                    </p>
-                  </div>
-                </div>
-                <svg
-                  className="w-5 h-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-            )}
-
-            {/* Order Summary - Only show when cart has items */}
-            {cartItems.length > 0 && (
-            <div className="mt-6">
-              <div className="flex items-center justify-between mb-3 px-4">
+            {/* Coupon Section */}
+            {calculations.itemCount > 0 && (
+              <section className="mt-6 bg-gray-100">
                 <h3
+                  className="mb-3 px-4"
                   style={{
                     color: "#333333",
                     fontSize: "20px",
@@ -689,29 +615,75 @@ export default function CartSidebar({ isOpen, onClose }) {
                     letterSpacing: "-0.4px",
                   }}
                 >
-                  Order Summary
+                  Coupon
                 </h3>
-                <div className="flex flex-col items-center ml-2">
+                <button
+                  onClick={() => setShowCouponSidebar(true)}
+                  className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full transition-colors hover:bg-gray-50 focus:outline-none"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white">
+                      <Image
+                        src="/coupon.svg"
+                        alt="Coupon"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-gray-800">
+                        Apply Coupon & Offers
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        Use a valid coupon code and get an instant discount.
+                      </p>
+                    </div>
+                  </div>
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </section>
+            )}
+
+            {/* Order Summary */}
+            {calculations.itemCount > 0 && (
+              <section className="mt-6">
+                <div className="flex items-center justify-between mb-3 px-4">
+                  <h3
+                    style={{
+                      color: "#333333",
+                      fontSize: "20px",
+                      fontStyle: "normal",
+                      fontWeight: 600,
+                      lineHeight: "normal",
+                      letterSpacing: "-0.4px",
+                    }}
+                  >
+                    Order Summary
+                  </h3>
                   <button
-                    type="button"
+                    onClick={() => setOrderSummaryOpen(prev => !prev)}
+                    className="p-1 hover:bg-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                     aria-label={
                       orderSummaryOpen
                         ? "Collapse order summary"
                         : "Expand order summary"
                     }
-                    onClick={() => setOrderSummaryOpen((open) => !open)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                      margin: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "none",
-                      cursor: "pointer",
-                    }}
-                    tabIndex={0}
+                    aria-expanded={orderSummaryOpen}
                   >
                     <svg
                       className="w-5 h-5 text-gray-400 transition-transform duration-200"
@@ -722,8 +694,8 @@ export default function CartSidebar({ isOpen, onClose }) {
                         transform: orderSummaryOpen
                           ? "rotate(0deg)"
                           : "rotate(-90deg)",
-                        transition: "transform 0.2s",
                       }}
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -734,61 +706,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                     </svg>
                   </button>
                 </div>
-              </div>
 
-              {orderSummaryOpen && (
-                <div className="space-y-2 text-sm bg-white px-6 py-4">
-                  <div className="flex justify-between">
-                    <span
-                      style={{
-                        color: "#333",
-                        fontSize: "16px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "normal",
-                        letterSpacing: "-0.32px",
-                      }}
-                    >
-                      Subtotal
-                    </span>
-                    <span
-                      style={{
-                        color: "#333",
-                        fontSize: "18px",
-                        fontStyle: "normal",
-                        fontWeight: 700,
-                        lineHeight: "normal",
-                        letterSpacing: "-0.36px",
-                      }}
-                    >
-                      ₹{subtotal.toLocaleString()}
-                    </span>
-                  </div>
-                  <div
-                    className="flex flex-col border-t border-dashed border-gray-200"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: "12px",
-                      alignSelf: "stretch",
-                      padding: "16px 0 16px",
-                      borderTop: "1px dashed rgba(51, 51, 51, 0.10)",
-                    }}
-                  >
-                    <div className="flex justify-between w-full">
-                      <span
-                        style={{
-                          color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        Total
-                      </span>
+                {orderSummaryOpen && (
+                  <div className="space-y-2 text-sm bg-white px-6 py-4">
+                    <div className="flex justify-between">
                       <span
                         style={{
                           color: "#333",
@@ -799,182 +720,221 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        ₹{total.toLocaleString()}
+                        Subtotal
+                      </span>
+                      <span
+                        style={{
+                          color: "#333",
+                          fontSize: "18px",
+                          fontStyle: "normal",
+                          fontWeight: 700,
+                          lineHeight: "normal",
+                          letterSpacing: "-0.36px",
+                        }}
+                      >
+                        ₹{calculations.subtotal.toLocaleString('en-IN')}
                       </span>
                     </div>
-                    <div className="flex justify-between w-full">
-                      <span
-                        style={{
-                          color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        Discount
-                      </span>
-                      <span
-                        style={{
-                          color: "var(--color-primary)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        -₹{discount.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between w-full">
-                      <span
-                        style={{
-                          color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        Delivery
-                      </span>
-                      <span
-                        style={{
-                          color: "var(--color-primary)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        Free
-                      </span>
-                    </div>
-                    <div className="flex justify-between w-full">
-                      <span
-                        style={{
-                          color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        Coupon discount
-                      </span>
-                      <span
-                        style={{
-                          color: "var(--color-primary)",
-                          fontSize: "16px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "normal",
-                          letterSpacing: "-0.32px",
-                        }}
-                      >
-                        -₹{couponDiscount.toLocaleString()}
-                      </span>
+                    
+                    <div
+                      className="flex flex-col border-t border-dashed border-gray-200"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: "12px",
+                        alignSelf: "stretch",
+                        padding: "16px 0",
+                        borderTop: "1px dashed rgba(51, 51, 51, 0.10)",
+                      }}
+                    >
+                      <div className="flex justify-between w-full">
+                        <span
+                          style={{
+                            color: "rgba(51, 51, 51, 0.70)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          Total
+                        </span>
+                        <span
+                          style={{
+                            color: "#333",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          ₹{calculations.total.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between w-full">
+                        <span
+                          style={{
+                            color: "rgba(51, 51, 51, 0.70)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          Discount
+                        </span>
+                        <span
+                          style={{
+                            color: "var(--color-primary)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          -₹{calculations.discount.toLocaleString('en-IN')}
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between w-full">
+                        <span
+                          style={{
+                            color: "rgba(51, 51, 51, 0.70)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          Delivery
+                        </span>
+                        <span
+                          style={{
+                            color: "var(--color-primary)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          Free
+                        </span>
+                      </div>
+                      
+                      <div className="flex justify-between w-full">
+                        <span
+                          style={{
+                            color: "rgba(51, 51, 51, 0.70)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          Coupon discount
+                        </span>
+                        <span
+                          style={{
+                            color: "var(--color-primary)",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: 500,
+                            lineHeight: "normal",
+                            letterSpacing: "-0.32px",
+                          }}
+                        >
+                          -₹{calculations.couponDiscount.toLocaleString('en-IN')}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </section>
             )}
           </div>
 
-          {/* Bottom Action Bar - Fixed height */}
-          <div
-            className="border-t border-gray-200 p-3 bg-white"
-            style={{
-              width: "100%",
-              backgroundColor: "white",
-              height: "80px",
-              minHeight: "80px",
-              maxHeight: "80px",
-              flexShrink: 0
-            }}
-          >
-            {cartItems.length === 0 ? (
-              // Empty cart bottom bar - hidden when cart is empty
-              <div style={{ display: "none" }}></div>
-            ) : (
-              // Cart with items bottom bar
-            <div className="flex items-center justify-between">
-              <div>
-                <div
-                  className="text-[18px] sm:text-[20px]"
-                  style={{
-                    color: "#333333",
-                    fontStyle: "normal",
-                    fontWeight: 700,
-                    lineHeight: "normal",
-                    letterSpacing: "-0.4px",
-                  }}
-                >
-                  ₹{(total - discount - couponDiscount).toLocaleString()}
+          {/* Bottom Action Bar - Fixed */}
+          {calculations.itemCount > 0 && (
+            <footer
+              className="border-t border-gray-200 p-3 bg-white flex-shrink-0"
+              style={{
+                width: "100%",
+                height: "80px",
+                minHeight: "80px",
+                maxHeight: "80px",
+              }}
+            >
+              <div className="flex items-center justify-between h-full">
+                <div>
+                  <div
+                    className="text-lg sm:text-xl font-bold"
+                    style={{
+                      color: "#333333",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "normal",
+                      letterSpacing: "-0.4px",
+                    }}
+                  >
+                    ₹{calculations.finalTotal.toLocaleString('en-IN')}
+                  </div>
+                  <button
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors underline focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    style={{
+                      fontSize: "14px",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                      letterSpacing: "-0.28px",
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                    }}
+                  >
+                    View Details
+                  </button>
                 </div>
-                <button
+                
+                <Button
+                  variant="primary"
+                  size="large"
+                  onClick={handleProceedToCheckout}
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded"
                   style={{
-                    color: "rgba(51, 51, 51, 0.70)",
-                    fontSize: "14px",
-                    fontStyle: "normal",
+                    display: "flex",
+                    width: "200px",
+                    padding: "12px 16px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    flexShrink: 0,
+                    borderRadius: "4px",
+                    background: "var(--color-primary)",
+                    color: "#fff",
                     fontWeight: 500,
+                    fontSize: "14px",
                     lineHeight: "normal",
-                    letterSpacing: "-0.28px",
-                    background: "none",
                     border: "none",
-                    padding: 0,
                     cursor: "pointer",
-                    textDecoration: "underline",
                   }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#333")}
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.color = "rgba(51, 51, 51, 0.7)")
-                  }
                 >
-                  View Details
-                </button>
+                  Proceed to checkout
+                </Button>
               </div>
-              <button
-                onClick={handleProceedToCheckout}
-                style={{
-                  display: "flex",
-                  width: "200px",
-                  padding: "12px 16px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  flexShrink: 0,
-                  borderRadius: "4px",
-                  background: "var(--color-primary)",
-                  color: "#fff",
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  lineHeight: "normal",
-                  border: "none",
-                  transition: "background 0.2s",
-                  cursor: "pointer",
-                }}
-                className="font-medium sm:w-[260px] sm:px-6 sm:py-4 sm:text-base"
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.background = "#520A1E")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.background = "var(--color-primary)")
-                }
-              >
-                Proceed to checkout
-              </button>
-            </div>
-            )}
-          </div>
-        </div>
-      </Drawer>
+            </footer>
+          )}
+        </main>
+      </div>
 
       {/* Coupon Sidebar */}
       <CouponSidebar

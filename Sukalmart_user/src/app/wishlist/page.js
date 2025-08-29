@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa6";
 import { useWishlist } from "../_components/context/WishlistContext";
+import Image from "next/image";
 
 const sortOptions = [
   "Featured",
@@ -32,7 +33,17 @@ function WishlistCard({ product, onRemove }) {
     >
       <div className="relative">
         <div className="aspect-square flex items-center justify-center">
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <Image 
+            src={product.image} 
+            alt={product.name} 
+            fill 
+            className="object-cover" 
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
+            }}
+            unoptimized={product.image?.includes('amazonaws.com')}
+          />
         </div>
         {/* Heart overlay */}
         <button
@@ -113,9 +124,11 @@ export default function WishlistPage() {
                   </option>
                 ))}
               </select>
-              <img
+              <Image
                 src="/dropdownicon.svg"
                 alt="dropdown"
+                width={12}
+                height={12}
                 className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
                 style={{ minWidth: "12px", minHeight: "12px" }}
               />

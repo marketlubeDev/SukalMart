@@ -1,8 +1,12 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
+import Button from "@/app/_components/common/Button";
 
 export default function SavedAddress() {
+	const router = useRouter();
+	
 	const savedAddresses = [
 		{
 			id: 1,
@@ -20,13 +24,29 @@ export default function SavedAddress() {
 		}
 	];
 
+	const handleAddNewAddress = () => {
+		// Navigate to checkout page with address form open
+		router.push('/checkout?showAddressForm=true');
+	};
+
+	const handleDeleteAddress = (addressId) => {
+		// Handle address deletion logic here
+		console.log('Deleting address with ID:', addressId);
+		// You can add confirmation modal or direct deletion logic
+		// For now, just log the action
+	};
+
 	return (
 		<div className="bg-white rounded-lg p-4 sm:p-6">
 			<div className="flex items-center justify-between mb-4 sm:mb-6">
 				<h2 className="text-lg sm:text-xl font-semibold text-gray-900">Saved Addresses</h2>
-				<button className="px-3 py-2 sm:px-4 sm:py-2 text-sm bg-[var(--color-primary)] text-white rounded-md transition-colors cursor-pointer" style={{ backgroundColor: "var(--color-primary)", transition: "background-color 0.2s" }} onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")} onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}>
+				<Button 
+				variant="primary"
+				size="large"
+				onClick={handleAddNewAddress}
+				className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 text-xs sm:text-sm md:text-base bg-[var(--color-primary)] text-white rounded-md transition-colors cursor-pointer" style={{ backgroundColor: "var(--color-primary)", transition: "background-color 0.2s" }} onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")} onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}>
 					Add New Address
-				</button>
+				</Button>
 			</div>
 
 			<div className="space-y-3 sm:space-y-4">
@@ -46,8 +66,18 @@ export default function SavedAddress() {
 								<p className="text-gray-600 text-xs sm:text-sm">{address.phone}</p>
 							</div>
 							<div className="flex space-x-3 sm:space-x-2 sm:self-start sm:mt-0 mt-1">
-								<button className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm cursor-pointer">Edit</button>
-								<button className="text-red-600 hover:text-red-700 text-xs sm:text-sm cursor-pointer">Delete</button>
+								<button 
+									onClick={() => router.push(`/checkout?showAddressForm=true&editAddress=${address.id}`)}
+									className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm md:text-base cursor-pointer px-1 py-0.5 sm:px-2 sm:py-1 md:px-3 md:py-1.5 transition-colors"
+								>
+									Edit
+								</button>
+								<button 
+									onClick={() => handleDeleteAddress(address.id)}
+									className="text-red-600 hover:text-red-700 text-xs sm:text-sm md:text-base cursor-pointer px-1 py-0.5 sm:px-2 sm:py-1 md:px-3 md:py-1.5 transition-colors"
+								>
+									Delete
+								</button>
 							</div>
 						</div>
 					</div>

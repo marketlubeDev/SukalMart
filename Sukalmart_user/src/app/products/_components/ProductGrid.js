@@ -3,6 +3,7 @@
 import PromotionalBanner from "../../_components/_homepage/promotion/PromotionalBanner";
 import ProductShowcaseBanner from "../../_components/_homepage/promotion/ProductShowcaseBanner";
 import ProductCard from "../../_components/_homepage/ProductCard";
+import Image from "next/image";
 
 export default function ProductGrid({
   products,
@@ -33,7 +34,7 @@ export default function ProductGrid({
             onClick={() => window.dispatchEvent(new Event("open-filter"))}
             className="flex items-center gap-2 text-gray-900"
           >
-            <img src="/filtericon.svg" alt="Filter" className="w-5 h-5" />
+            <Image src="/filtericon.svg" alt="Filter" width={20} height={20} className="w-5 h-5" />
             <span className="font-semibold text-sm">Filter</span>
           </button>
           <div className="h-5 w-px bg-gray-200" />
@@ -41,7 +42,7 @@ export default function ProductGrid({
             onClick={() => window.dispatchEvent(new Event("open-sort"))}
             className="flex items-center gap-2 text-gray-900"
           >
-            <img src="/sorticon.svg" alt="Sort" className="w-5 h-5" />
+            <Image src="/sorticon.svg" alt="Sort" width={20} height={20} className="w-5 h-5" />
             <span className="font-semibold text-sm">Sort</span>
           </button>
         </div>
@@ -84,9 +85,11 @@ export default function ProductGrid({
                   </option>
                 ))}
               </select>
-              <img
+              <Image
                 src="/dropdownicon.svg"
                 alt="dropdown"
+                width={12}
+                height={12}
                 className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
                 style={{ minWidth: "12px", minHeight: "12px" }}
               />

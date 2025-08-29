@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import Image from "next/image";
 
 export default function ProductShowcaseBanner({ fullWidth = false }) {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -81,10 +82,12 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
               }}
             >
               {/* Full-width image */}
-              <img
+              <Image
                 src={showcaseItems[currentSlide].image}
                 alt={`Haircare Banner ${currentSlide + 1}`}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -117,10 +120,12 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
             borderRadius: "3.324px",
           }}
         >
-          <img
+          <Image
             src="/banner/haircarebanner1.jpg"
             alt="Haircare Banner 1"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </div>
 
@@ -134,10 +139,12 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
               borderRadius: "3.324px",
             }}
           >
-            <img
+            <Image
               src="/banner/haircarebanner2.jpg"
               alt="Haircare Banner 2"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 25vw"
             />
           </div>
 
@@ -149,10 +156,12 @@ export default function ProductShowcaseBanner({ fullWidth = false }) {
               borderRadius: "3.324px",
             }}
           >
-            <img
+            <Image
               src="/banner/haircarebanner3.jpg"
               alt="Haircare Banner 3"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 25vw"
             />
           </div>
         </div>

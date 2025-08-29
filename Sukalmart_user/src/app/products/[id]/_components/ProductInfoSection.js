@@ -1,6 +1,8 @@
 "use client";
 
 import ProductServiceBenefits from "./ProductServiceBenefits";
+import Button from "@/app/_components/common/Button";
+import Image from "next/image";
 
 export default function ProductInfoSection({
   product,
@@ -43,10 +45,12 @@ export default function ProductInfoSection({
         <div className="flex items-center gap-2 mb-4">
           <div className="flex items-center">
             {[1, 2, 3, 4, 5].map((star) => (
-              <img
+              <Image
                 key={star}
                 src={star <= 4 ? "/filledstar.svg" : "/star.svg"}
                 alt="star"
+                width={16}
+                height={16}
                 className="w-3 h-3 sm:w-4 sm:h-4"
               />
             ))}
@@ -116,7 +120,7 @@ export default function ProductInfoSection({
                     }}
                   >
                     <div className="flex items-center justify-center flex-shrink-0">
-                      <img src="/coupon.svg" alt="coupon" className="w-4 h-4 md:w-5 md:h-5" />
+                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
@@ -142,7 +146,7 @@ export default function ProductInfoSection({
                     }}
                   >
                     <div className="flex items-center justify-center flex-shrink-0">
-                      <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
@@ -168,7 +172,7 @@ export default function ProductInfoSection({
                     }}
                   >
                     <div className="flex items-center justify-center flex-shrink-0">
-                      <img src="/coupon.svg" alt="coupon" className="w-5 h-5" />
+                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
@@ -221,7 +225,7 @@ export default function ProductInfoSection({
                   }}
                 >
                   <div className="flex items-center justify-center flex-shrink-0">
-                    <img src="/coupon.svg" alt="coupon" className="w-4 h-4 md:w-5 md:h-5" />
+                    <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
@@ -294,56 +298,22 @@ export default function ProductInfoSection({
         </div>
 
         <div className="flex gap-4 w-full">
-          <button
+          <Button
+            variant="buy"
+            size="large"
             onClick={buyNow}
-            className="flex items-center justify-center gap-2 flex-1 cursor-pointer text-sm sm:text-base"
-            style={{
-              padding: "12px 16px",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "8px",
-              borderRadius: "4px",
-              background: "var(--color-primary)",
-              color: "#fff",
-              fontWeight: 500,
-              fontSize: "13px",
-              border: "none",
-              transition: "background 0.2s",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.background = "#520a1e")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.background = "var(--color-primary)")
-            }
+            className="flex-1 text-sm sm:text-base"
           >
             Buy now
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="cart"
+            size="large"
             onClick={addToCart}
-            className="flex items-center justify-center gap-2 flex-1 cursor-pointer text-sm sm:text-base"
-            style={{
-              padding: "12px 16px",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "8px",
-              borderRadius: "4px",
-              border: "1px solid var(--color-primary)",
-              fontSize: "13px",
-              background: "#fff",
-              color: "var(--color-primary)",
-              fontWeight: 500,
-              transition: "background 0.2s",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.background = "#F7F3F4")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.background = "#fff")
-            }
+            className="flex-1 text-sm sm:text-base"
           >
             Add to cart
-          </button>
+          </Button>
         </div>
         <div className="mt-2">
           <span

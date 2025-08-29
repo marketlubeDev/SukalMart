@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function ProductFeaturesBanner({ productType }) {
   const getImageSrc = () => {
     switch (productType) {
@@ -37,9 +39,11 @@ export default function ProductFeaturesBanner({ productType }) {
         Product features
       </div>
       <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
-        <img
+        <Image
           src={getImageSrc()}
           alt={`${productType} Product Features`}
+          width={1500}
+          height={500}
           className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[500px]"
         />
       </div>

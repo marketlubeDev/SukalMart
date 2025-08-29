@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal, Rate, Input, Button } from "antd";
 import { MdAttachFile } from "react-icons/md";
+import Image from "next/image";
 
 export default function ReviewsSection({ product, selectedImage }) {
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
@@ -79,10 +80,12 @@ export default function ReviewsSection({ product, selectedImage }) {
               </span>
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <img
+                  <Image
                     key={star}
                     src={star <= 4 ? "/filledstar.svg" : "/star.svg"}
                     alt="star"
+                    width={20}
+                    height={20}
                     className="w-5 h-5"
                   />
                 ))}
@@ -94,7 +97,7 @@ export default function ReviewsSection({ product, selectedImage }) {
               {[5, 4, 3, 2, 1].map((star, idx) => (
                 <div key={star} className="flex items-center gap-2">
                   <span className="text-sm text-gray-700 w-4">{star}</span>
-                  <img src="/filledstar.svg" alt="star" className="w-3 h-3" />
+                  <Image src="/filledstar.svg" alt="star" width={12} height={12} className="w-3 h-3" />
                   <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                     <div
                       className="h-1.5 bg-[var(--color-primary)] rounded-full"
@@ -139,11 +142,17 @@ export default function ReviewsSection({ product, selectedImage }) {
                 </h5>
                 <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                   {Array.from({ length: 6 }).map((_, idx) => (
-                    <img
+                    <Image
                       key={idx}
                       src={product.images && product.images.length > 0 ? product.images[selectedImage] : product.image}
                       alt="Selected product"
+                      width={64}
+                      height={64}
                       className="w-16 h-16 rounded object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/64x64?text=Product";
+                      }}
+                      unoptimized={(product.images && product.images.length > 0 ? product.images[selectedImage] : product.image)?.includes('amazonaws.com')}
                     />
                   ))}
                 </div>
@@ -178,9 +187,11 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#17632D] text-white text-xs font-semibold">
                   <span className="mr-0.5">5</span>
-                  <img
+                  <Image
                     src="/whitestar.svg"
                     alt="5 star"
+                    width={12}
+                    height={12}
                     className="w-3 h-3 inline"
                   />
                 </span>
@@ -192,15 +203,27 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-start gap-2 mt-2">
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2">
-                    <img
+                    <Image
                       src={product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image}
                       alt="Selected product review 1"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                      }}
+                      unoptimized={(product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image)?.includes('amazonaws.com')}
                     />
-                    <img
+                    <Image
                       src={product.images && product.images[0] ? product.images[0] : product.image}
                       alt="Selected product review 2"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                      }}
+                      unoptimized={(product.images && product.images[0] ? product.images[0] : product.image)?.includes('amazonaws.com')}
                     />
                   </div>
                   <p className="text-sm text-gray-700 mt-2">
@@ -220,9 +243,11 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#17632D] text-white text-xs font-semibold">
                   <span className="mr-0.5">4</span>
-                  <img
+                  <Image
                     src="/whitestar.svg"
                     alt="5 star"
+                    width={12}
+                    height={12}
                     className="w-3 h-3 inline"
                   />
                 </span>
@@ -250,9 +275,11 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#F9A825] text-white text-xs font-semibold">
                   <span className="mr-0.5">3</span>
-                  <img
+                  <Image
                     src="/whitestar.svg"
                     alt="5 star"
+                    width={12}
+                    height={12}
                     className="w-3 h-3 inline"
                   />
                 </span>
@@ -265,10 +292,16 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-start gap-2 mt-2">
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2">
-                    <img
+                    <Image
                       src={product?.images?.[selectedImage] || product?.image || "/shop2.png"}
                       alt="Selected product image"
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                      }}
+                      unoptimized={(product?.images?.[selectedImage] || product?.image)?.includes('amazonaws.com')}
                     />
                   </div>
                   <p className="text-sm text-gray-700 mt-2">
@@ -289,9 +322,11 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#F57C00] text-white text-xs font-semibold">
                   <span className="mr-0.5">2</span>
-                  <img
+                  <Image
                     src="/whitestar.svg"
                     alt="5 star"
+                    width={12}
+                    height={12}
                     className="w-3 h-3 inline"
                   />
                 </span>
@@ -320,9 +355,11 @@ export default function ReviewsSection({ product, selectedImage }) {
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#B71C1C] text-white text-xs font-semibold">
                   <span className="mr-0.5">1</span>
-                  <img
+                  <Image
                     src="/whitestar.svg"
                     alt="5 star"
+                    width={12}
+                    height={12}
                     className="w-3 h-3 inline"
                   />
                 </span>
@@ -440,9 +477,11 @@ export default function ReviewsSection({ product, selectedImage }) {
                 <div className="flex flex-wrap gap-2">
                   {selectedImages.map((image, index) => (
                     <div key={index} className="relative">
-                      <img
+                      <Image
                         src={image.preview}
                         alt={`Upload ${index + 1}`}
+                        width={64}
+                        height={64}
                         className="w-16 h-16 object-cover rounded border border-gray-200"
                       />
                       <button

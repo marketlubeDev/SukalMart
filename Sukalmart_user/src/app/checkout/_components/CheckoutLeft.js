@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Button from "@/app/_components/common/Button";
 
 export default function CheckoutLeft({
   cartItems,
@@ -50,11 +52,17 @@ export default function CheckoutLeft({
               </button>
 
               {/* Product Image */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-lg flex items-center justify-center flex-shrink-0 mr-4 sm:mr-5 md:mr-6">
-                <img
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-lg flex items-center justify-center flex-shrink-0 mr-4 sm:mr-5 md:mr-6 relative">
+                <Image
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-full object-contain"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
+                  onError={(e) => {
+                    e.target.src = "https://via.placeholder.com/96x96?text=Product";
+                  }}
+                  unoptimized={item.image?.includes('amazonaws.com')}
                 />
               </div>
 
@@ -171,19 +179,23 @@ export default function CheckoutLeft({
                 </span>
               </div>
             </div>
-
-            {/* Proceed to Pay Button */}
-              <button 
-                className="w-full bg-[var(--color-primary)] text-white py-3 px-4 rounded font-medium transition-colors cursor-pointer"
-                style={{ cursor: "pointer" }}
-                onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
-                onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
-              >
-              Proceed to Pay
-            </button>
           </div>
         )}
       </div>
+
+      {/* Proceed to Pay Button Section */}
+      <div className="rounded-lg flex justify-center">
+        <Button
+          variant="primary"
+          size="large"
+          className="w-[80%] text-white py-3 px-4 rounded font-medium transition-colors cursor-pointer"
+          style={{ backgroundColor: "var(--color-primary)" }}
+          onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
+          onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
+        >
+          Proceed to Pay
+        </Button>
+      </div>
     </div>
   );
-} 
+}

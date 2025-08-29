@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Button from "@/app/_components/common/Button";
 
 export default function AddressForm({ onBack, initialData, onSave }) {
   const [formData, setFormData] = useState({
@@ -39,7 +41,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <button className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 underline">
+          <button className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 underline cursor-pointer">
             Login
           </button>
         </div>
@@ -164,19 +166,21 @@ export default function AddressForm({ onBack, initialData, onSave }) {
                 placeholder="Phone number"
                 className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
               />
-              <img src="/iicon.svg" alt="Info" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
+              <Image src="/iicon.svg" alt="Info" width={16} height={16} className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
             </div>
           </div>
 
           {/* Save Button */}
-          <button
+          <Button
+            variant="outlinePrimary"
+            size="medium"
             onClick={handleSave}
-            className="mt-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors"
+            className="mt-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer font-medium"
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </div>
   );
-} 
+}

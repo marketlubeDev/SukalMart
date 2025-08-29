@@ -4,6 +4,7 @@ import { useState, useRef, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
+import Image from "next/image";
 
 // Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
 import { useEffect, useState as useReactState } from "react";
@@ -282,7 +283,7 @@ function NavContent() {
 
   return (
     <>
-      <nav className="bg-white shadow-sm sticky top-0 z-50">
+      <nav className="bg-white shadow-sm sticky top-0 z-50 ">
      
 
         {/* Main Header */}
@@ -292,7 +293,7 @@ function NavContent() {
             {/* Logo - Leftmost with small padding */}
             <div className="flex-shrink-0 pr-6 hidden lg:block">
               <Link href="/" className="flex items-center">
-                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-8 w-auto" />
+                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
               </Link>
             </div>
 
@@ -301,9 +302,11 @@ function NavContent() {
               {showSearchBar ? (
                 <div className="relative">
                   <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
-                    <img
+                    <Image
                       src="/searchicon.svg"
                       alt="search"
+                      width={16}
+                      height={16}
                       className="w-4 h-4 mr-2 opacity-60"
                     />
                     <input
@@ -332,10 +335,16 @@ function NavContent() {
                             }}
                           >
                             {p.image && (
-                              <img
+                              <Image
                                 src={p.image}
                                 alt={p.name}
+                                width={40}
+                                height={40}
                                 className="w-10 h-10 object-cover rounded"
+                                onError={(e) => {
+                                  e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                }}
+                                unoptimized={p.image?.includes('amazonaws.com')}
                               />
                             )}
                             <div className="flex flex-col min-w-0">
@@ -354,9 +363,11 @@ function NavContent() {
                         ))
                       ) : (
                         <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <img
+                          <Image
                             src="/searchicon.svg"
                             alt="no results"
+                            width={16}
+                            height={16}
                             className="w-4 h-4 opacity-60"
                           />
                           <span className="text-sm">No products found</span>
@@ -367,9 +378,11 @@ function NavContent() {
                 </div>
               ) : (
                 <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
-                  <img
+                  <Image
                     src="/searchicon.svg"
                     alt="search"
+                    width={16}
+                    height={16}
                     className="w-4 h-4 mr-2 opacity-60"
                   />
                   <input
@@ -387,11 +400,13 @@ function NavContent() {
                 {/* Language Selector */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <img src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} className="w-5 h-5 rounded-full" />
+                    <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={20} height={20} className="w-5 h-5 rounded-full" />
                     <span className="text-sm font-medium text-gray-700">{language}</span>
-                    <img
+                    <Image
                       src="/dropdownicon.svg"
                       alt="dropdown"
+                      width={8}
+                      height={5}
                       className="w-[8px] h-[5px]"
                     />
                   </button>
@@ -412,7 +427,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/english.svg" alt="English" className="w-5 h-5 rounded-full mr-3" />
+                        <Image src="/english.svg" alt="English" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
                         <span className={`${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                       </button>
                       <button 
@@ -428,7 +443,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/arabicicon.svg" alt="Arabic" className="w-5 h-5 rounded-full mr-3" />
+                        <Image src="/arabicicon.svg" alt="Arabic" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
                         <span className={`${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
                       </button>
                     </div>
@@ -440,9 +455,11 @@ function NavContent() {
                   onClick={toggleCart}
                   className="relative p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 >
-                  <img
+                  <Image
                     src="/Carticon.svg"
                     alt="cart"
+                    width={44}
+                    height={44}
                     className="w-[44px] h-[44px]"
                   />
                 </button>
@@ -451,10 +468,12 @@ function NavContent() {
                 {isAuthenticated ? (
                 <div className="relative group">
                   <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <img src="/usericon.svg" alt="user" className="w-6 h-6" />
-                    <img
+                    <Image src="/usericon.svg" alt="user" width={24} height={24} className="w-6 h-6" />
+                    <Image
                       src="/dropdownicon.svg"
                       alt="dropdown"
+                      width={8}
+                      height={5}
                       className="w-[8px] h-[5px]"
                     />
                   </button>
@@ -594,10 +613,12 @@ function NavContent() {
               ) : (
                 <div className="relative group">
                   <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <img src="/usericon.svg" alt="login" className="w-6 h-6" />
-                    <img
+                    <Image src="/usericon.svg" alt="login" width={24} height={24} className="w-6 h-6" />
+                    <Image
                       src="/dropdownicon.svg"
                       alt="dropdown"
+                      width={8}
+                      height={5}
                       className="w-[8px] h-[5px]"
                     />
                   </button>
@@ -619,7 +640,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/icon7.svg" alt="personal info" className="w-5 h-5 mr-3" />
+                        <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5 mr-3" />
                         Personal info
                       </button>
 
@@ -637,7 +658,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/icon6.svg" alt="my orders" className="w-5 h-5 mr-3" />
+                        <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5 mr-3" />
                         My orders
                       </button>
 
@@ -655,7 +676,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/icon4.svg" alt="addresses" className="w-5 h-5 mr-3" />
+                        <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5 mr-3" />
                         Addresses
                       </button>
 
@@ -686,7 +707,7 @@ function NavContent() {
                           e.currentTarget.style.color = "#374151";
                         }}
                       >
-                        <img src="/icon3.svg" alt="help support" className="w-5 h-5 mr-3" />
+                        <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5 mr-3" />
                         Help & Support
                       </button>
 
@@ -704,7 +725,7 @@ function NavContent() {
                               e.currentTarget.style.color = "#374151";
                             }}
                           >
-                            <img src="/icon8.svg" alt="privacy policy" className="w-5 h-5 mr-3" />
+                            <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5 mr-3" />
                             Privacy Policy
                           </button>
 
@@ -715,7 +736,7 @@ function NavContent() {
                         onClick={handleSignOut}
                         className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
                       >
-                        <img src="/icon5.svg" alt="logout" className="w-5 h-5 mr-3" />
+                        <Image src="/icon5.svg" alt="logout" width={20} height={20} className="w-5 h-5 mr-3" />
                         Logout
                       </button>
                     </div>
@@ -761,9 +782,11 @@ function NavContent() {
                     >
                       <span>{item.label}</span>
                       {item.hasDropdown && (
-                        <img
+                        <Image
                           src="/dropdownicon.svg"
                           alt="dropdown"
+                          width={7}
+                          height={4}
                           className={`w-[7px] h-[4px] transition-transform duration-200 filter brightness-0 invert ${
                             activeDropdown === item.label
                               ? "rotate-180"
@@ -848,7 +871,7 @@ function NavContent() {
             {/* Mobile Logo - Hidden on small screens when search is open */}
             {!showSearchBar && (
               <Link href="/" className="flex items-center ml-2">
-                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-6 w-auto" />
+                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={150} height={24} className="h-6 w-auto" />
               </Link>
             )}
           </div>
@@ -859,7 +882,7 @@ function NavContent() {
               <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[400px]">
                 <div className="relative">
                   <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
-                    <img src="/searchicon.svg" alt="search" className="w-4 h-4 mr-2 opacity-60" />
+                    <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4 mr-2 opacity-60" />
                     <input
                       type="text"
                       value={searchQuery}
@@ -883,7 +906,17 @@ function NavContent() {
                             }}
                           >
                             {p.image && (
-                              <img src={p.image} alt={p.name} className="w-10 h-10 object-cover rounded" />
+                              <Image 
+                                src={p.image} 
+                                alt={p.name} 
+                                width={40} 
+                                height={40} 
+                                className="w-10 h-10 object-cover rounded"
+                                onError={(e) => {
+                                  e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                }}
+                                unoptimized={p.image?.includes('amazonaws.com')}
+                              />
                             )}
                             <div className="flex flex-col min-w-0">
                               <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
@@ -899,7 +932,7 @@ function NavContent() {
                         ))
                       ) : (
                         <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <img src="/searchicon.svg" alt="no results" className="w-4 h-4 opacity-60" />
+                          <Image src="/searchicon.svg" alt="no results" width={16} height={16} className="w-4 h-4 opacity-60" />
                           <span className="text-sm">No products found</span>
                         </div>
                       )}
@@ -926,7 +959,7 @@ function NavContent() {
                 onClick={() => setShowSearchBar(true)}
                 className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
-                <img src="/searchicon.svg" alt="search" className="w-4 h-4" />
+                <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4" />
               </button>
             )}
 
@@ -936,11 +969,13 @@ function NavContent() {
                 onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
                 className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
-                <img src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} className="w-4 h-4 rounded-full" />
+                <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={16} height={16} className="w-4 h-4 rounded-full" />
                 <span className="text-xs font-medium text-gray-700">{language}</span>
-                <img
+                <Image
                   src="/dropdownicon.svg"
                   alt="dropdown"
+                  width={6}
+                  height={4}
                   className="w-[6px] h-[4px]"
                 />
               </button>
@@ -960,7 +995,7 @@ function NavContent() {
                       e.currentTarget.style.color = "#374151";
                     }}
                   >
-                    <img src="/english.svg" alt="English" className="w-4 h-4 rounded-full mr-2" />
+                    <Image src="/english.svg" alt="English" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
                     <span className={`text-xs ${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
                   </button>
                   <button 
@@ -976,7 +1011,7 @@ function NavContent() {
                       e.currentTarget.style.color = "#374151";
                     }}
                   >
-                    <img src="/arabicicon.svg" alt="Arabic" className="w-4 h-4 rounded-full mr-2" />
+                    <Image src="/arabicicon.svg" alt="Arabic" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
                     <span className={`text-xs ${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
                   </button>
                 </div>
@@ -988,9 +1023,11 @@ function NavContent() {
               onClick={toggleCart}
               className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
             >
-              <img
+              <Image
                 src="/Carticon.svg"
                 alt="cart"
+                width={32}
+                height={32}
                 className="w-8 h-8"
               />
             </button>
@@ -1047,9 +1084,11 @@ function NavContent() {
                   >
                     <span>{item.label}</span>
                     {item.hasDropdown && (
-                      <img
+                      <Image
                         src="/dropdownicon.svg"
                         alt="dropdown"
+                        width={7}
+                        height={4}
                         className={`w-[7px] h-[4px] transition-transform duration-200 ${
                           activeDropdown === item.label ? "rotate-180" : ""
                         }`}
@@ -1094,7 +1133,7 @@ function NavContent() {
                   onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
                   onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
-                  <img src="/icon7.svg" alt="personal info" className="w-5 h-5" />
+                  <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
                   <span>Personal info</span>
                 </button>
 
@@ -1105,7 +1144,7 @@ function NavContent() {
                   onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
                   onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
-                  <img src="/icon6.svg" alt="my orders" className="w-5 h-5" />
+                  <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
                   <span>My orders</span>
                 </button>
 
@@ -1116,7 +1155,7 @@ function NavContent() {
                   onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
                   onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                 >
-                  <img src="/icon4.svg" alt="addresses" className="w-5 h-5" />
+                  <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
                   <span>Addresses</span>
                 </button>
 
@@ -1191,62 +1230,62 @@ function NavContent() {
                   </>
                 ) : (
                   <>
-                    <button
-                      onClick={() => navigateToTab("account")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    >
-                      <img src="/icon7.svg" alt="personal info" className="w-5 h-5" />
-                      <span>Personal info</span>
-                    </button>
+                                    <button
+                  onClick={() => navigateToTab("account")}
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                >
+                  <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
+                  <span>Personal info</span>
+                </button>
 
-                    <button
-                      onClick={() => navigateToTab("my-orders")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    >
-                      <img src="/icon6.svg" alt="my orders" className="w-5 h-5" />
-                      <span>My orders</span>
-                    </button>
+                                    <button
+                  onClick={() => navigateToTab("my-orders")}
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                >
+                  <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
+                  <span>My orders</span>
+                </button>
 
-                    <button
-                      onClick={() => navigateToTab("addresses")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    >
-                      <img src="/icon4.svg" alt="addresses" className="w-5 h-5" />
-                      <span>Addresses</span>
-                    </button>
+                                    <button
+                  onClick={() => navigateToTab("addresses")}
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                >
+                  <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
+                  <span>Addresses</span>
+                </button>
 
                
 
-                    <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    >
-                      <img src="/icon3.svg" alt="help support" className="w-5 h-5" />
+                                    <button
+                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
+                  style={{ cursor: "pointer" }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                >
+                  <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5" />
                   <span>Help & Support</span>
                 </button>
 
-                <button
+                                <button
                   onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=privacy-policy"); }}
                   className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
                   style={{ cursor: "pointer" }}
                   onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
                   onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    >
-                      <img src="/icon8.svg" alt="privacy policy" className="w-5 h-5" />
-                      <span>Privacy Policy</span>
-                    </button>
+                >
+                  <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5" />
+                  <span>Privacy Policy</span>
+                </button>
 
                     <hr className="my-2" />
 
@@ -1257,7 +1296,7 @@ function NavContent() {
                       onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
                       onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
                     >
-                      <img src="/usericon.svg" alt="login" className="w-5 h-5" />
+                      <Image src="/usericon.svg" alt="login" width={20} height={20} className="w-5 h-5" />
                       <span>Login</span>
                     </button>
                     <button
@@ -1347,7 +1386,7 @@ export default function Nav() {
           <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
             <div className="flex items-center h-20 justify-between">
               <div className="flex-shrink-0 pr-4 hidden lg:block">
-                <img src="/souqalmart-logo-name.svg" alt="Souqalmart" className="h-8 w-auto" />
+                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
               </div>
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[var(--color-primary)]"></div>

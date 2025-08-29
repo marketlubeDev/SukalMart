@@ -2,6 +2,8 @@
 
 import { categories } from "../../../lib/data";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useMemo } from "react";
 
 export default function ShopOtherCategoriesSection({ currentCategory }) {
   const router = useRouter();
@@ -13,12 +15,13 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
 
-  const currentSlug = normalizeSlug(currentCategory);
-
-  // Filter out the current category and get remaining categories
-  const otherCategories = categories.filter((category) =>
-    normalizeSlug(category.name) !== currentSlug
-  );
+  // Memoize filtered categories to avoid recalculation on every render
+  const otherCategories = useMemo(() => {
+    const currentSlug = normalizeSlug(currentCategory);
+    return categories.filter((category) =>
+      normalizeSlug(category.name) !== currentSlug
+    );
+  }, [currentCategory]);
 
   const handleCategoryClick = (categoryName) => {
     // Navigate to category-specific page using normalized slug
@@ -26,104 +29,60 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
   };
 
   return (
-    <div className="py-8 container mx-auto px-4 sm:px-0 md:px-8 lg:px-10 xl:px-10">
+    <section className="py-8 container mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
       <div className="mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
+        {/* Header */}
+        <header className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Shop other categories
           </h2>
-        </div>
+        </header>
         
-        {/* Mobile Layout - Only show on mobile */}
-        <div className="w-full sm:hidden">
-          {/* First row - 3 categories */}
-          <div
-            className="flex w-full mb-2"
-            style={{
-              justifyContent: "space-between",
-              gap: "8px",
-            }}
-          >
-            {otherCategories.slice(0, 3).map((category, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center justify-start cursor-pointer"
-                style={{
-                  flex: "0 0 32%",
-                  maxWidth: "120px",
-                }}
-                onClick={() => handleCategoryClick(category.name)}
-              >
-                <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-[#000000] font-medium text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
-                  {category.name}
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Second row - remaining categories centered */}
-          {otherCategories.length > 3 && (
-            <div
-              className="flex w-full"
-              style={{
-                justifyContent: "center",
-                gap: "8px",
-              }}
-            >
-              {otherCategories.slice(3).map((category, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center justify-start cursor-pointer"
-                  style={{
-                    flex: "0 0 32%",
-                    maxWidth: "120px",
-                  }}
-                  onClick={() => handleCategoryClick(category.name)}
-                >
-                  <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="text-[#000000] font-medium text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
-                    {category.name}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        
-        {/* Desktop/Tablet Layout - Only show on sm and above */}
-        <div className="hidden sm:flex sm:flex-nowrap sm:justify-center sm:items-center sm:gap-3 md:gap-4 lg:gap-3 xl:gap-6 w-full">
+        {/* Unified Responsive Grid */}
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
           {otherCategories.map((category, index) => (
             <div 
-              key={index} 
-              className="flex flex-col items-center justify-start cursor-pointer"
+              key={`${category.name}-${index}`}
+              className="group flex flex-col items-center justify-start cursor-pointer transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-lg w-20 sm:w-24 md:w-32 lg:w-36 xl:w-40"
               onClick={() => handleCategoryClick(category.name)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleCategoryClick(category.name);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label={`Shop ${category.name} category`}
             >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[200px] h-[200px] md:w-[160px] md:h-[160px] lg:w-[200px] lg:h-[200px] xl:w-[220px] xl:h-[220px]">
-                <img
+              {/* Image Container */}
+              <div className="relative overflow-hidden rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-200">
+                <Image
                   src={category.image}
-                  alt={category.name}
-                  className="w-full h-full object-cover"
+                  alt={`${category.name} category`}
+                  width={100}
+                  height={100}
+                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 object-cover transition-transform duration-200 group-hover:scale-110"
+                  sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 128px, (max-width: 1280px) 144px, 160px"
+                  priority={index < 6} // Priority load for first 6 images
                 />
               </div>
-              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[10px] lg:text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
+              
+              {/* Category Name */}
+              <p className="text-gray-900 font-medium text-center mt-2 text-xs sm:text-sm md:text-base leading-tight tracking-tight transition-colors duration-200">
                 {category.name}
-              </div>
+              </p>
             </div>
           ))}
         </div>
+        
+        {/* Empty State */}
+        {otherCategories.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No other categories available at the moment.</p>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
-} 
+}

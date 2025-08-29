@@ -1,4 +1,7 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function ProductSidebar({
   selectedCategory,
@@ -8,6 +11,9 @@ export default function ProductSidebar({
   priceRange,
   setPriceRange,
 }) {
+  const router = useRouter();
+  const [sessionData, setSessionData] = useState({});
+
   const categories = [
     "Hair Care",
     "Body & Shower",
@@ -32,6 +38,12 @@ export default function ProductSidebar({
     "Over ₹4000",
   ];
 
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    // Store in component state instead of localStorage
+    setSessionData({ selectedCategory: category });
+  };
+
   return (
     <div 
       className="bg-white p-4 rounded-lg w-full" 
@@ -53,7 +65,6 @@ export default function ProductSidebar({
             color: "#333",
             leadingTrim: "both",
             textEdge: "cap",
-            // fontFamily: "Nunito Sans",
             fontSize: "18px",
             fontStyle: "normal",
             fontWeight: "600",
@@ -67,10 +78,7 @@ export default function ProductSidebar({
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => {
-                setSelectedCategory(category);
-                localStorage.setItem('selectedCategory', category);
-              }}
+              onClick={() => handleCategoryClick(category)}
               className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedCategory === category
                   ? "bg-green-100"
@@ -104,7 +112,6 @@ export default function ProductSidebar({
             color: "#333",
             leadingTrim: "both",
             textEdge: "cap",
-            // fontFamily: "Nunito Sans",
             fontSize: "18px",
             fontStyle: "normal",
             fontWeight: "600",
@@ -152,7 +159,6 @@ export default function ProductSidebar({
             color: "#333",
             leadingTrim: "both",
             textEdge: "cap",
-            // fontFamily: "Nunito Sans",
             fontSize: "18px",
             fontStyle: "normal",
             fontWeight: "600",
@@ -185,9 +191,8 @@ export default function ProductSidebar({
               <div
                 className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.min / 20000) * 100}%` }}
-
               >
-                <img src="/pricecircle.svg" alt="start" className="w-3 h-3" />
+                <Image src="/pricecircle.svg" alt="start" width={12} height={12} className="w-3 h-3" />
               </div>
 
               {/* End circle */}
@@ -195,7 +200,7 @@ export default function ProductSidebar({
                 className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.max / 20000) * 100}%` }}
               >
-                <img src="/pricecircle.svg" alt="end" className="w-3 h-3" />
+                <Image src="/pricecircle.svg" alt="end" width={12} height={12} className="w-3 h-3" />
               </div>
             </div>
 
@@ -230,7 +235,6 @@ export default function ProductSidebar({
                   setPriceRange((prev) => ({
                     ...prev,
                     max: newMax,
-                  
                   }));
                 }
               }}
@@ -264,9 +268,11 @@ export default function ProductSidebar({
             >
               ₹ {priceRange.min.toLocaleString()}
             </div>
-            <img
+            <Image
               src="/doublearrow.svg"
               alt="range"
+              width={20}
+              height={8}
               className="w-5 h-2 mx-2 flex-shrink-0"
             />
             <div

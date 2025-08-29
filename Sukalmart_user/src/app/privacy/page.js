@@ -105,7 +105,7 @@ export default function PrivacyPage() {
         <div className="text-center mt-12">
           <Link
             href="/login"
-            className="inline-flex items-center text-green-600 hover:text-green-700 font-medium"
+            className="inline-flex items-center text-[var(--color-primary)] hover:text-[var(--color-primary)] font-medium"
           >
             ← Back to Login
           </Link>

@@ -1,6 +1,7 @@
 "use client";
-  import { bestSellers } from "../../../../lib/data";
-  import { useRouter } from "next/navigation";
+import { bestSellers } from "../../../../lib/data";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function RecommendedSection() {
   const router = useRouter();
@@ -13,7 +14,6 @@ export default function RecommendedSection() {
             className="font-bold"
             style={{
               color: "#333",
-             
               fontSize: "clamp(18px, 4vw, 24px)",
               fontWeight: 700,
               fontStyle: "normal",
@@ -23,32 +23,45 @@ export default function RecommendedSection() {
           >
             Recommended for you
           </h2>
-          <button onClick={() => router.push('/products')} className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer" style={{ color: "var(--color-primary)" }}>
+          <button
+            onClick={() => router.push('/products')}
+            className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
+            style={{ color: "var(--color-primary)", background: "none", border: "none", padding: 0 }}
+          >
             <span className="text-sm md:text-base">View all</span>
-            <img
-              src="/nextarrow.svg"
-              alt="Next arrow"
-              className="w-5 h-5 md:w-7 md:h-7"
-            />
+            <span className="flex items-center">
+              <Image
+                src="/nextarrow.svg"
+                alt="Next arrow"
+                width={20}
+                height={20}
+                className="w-5 h-5 md:w-7 md:h-7 cursor-pointer"
+                style={{ display: "inline-block" }}
+              />
+            </span>
           </button>
         </div>
 
         {/* Recommended Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-2">
           {/* Product 1 - A1 Badge */}
           <div onClick={() => router.push('/products/1')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
-              <img
+              <Image
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
                 alt="Dove Nutritive Solutions"
+                width={300}
+                height={300}
                 className="w-full h-full aspect-square object-cover"
               />
               {/* A1 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                <img
+                  <Image
                     src="/badge.svg"
                     alt="Badge"
+                    width={64}
+                    height={40}
                     className="w-16 h-10 md:w-20 md:h-12"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -59,7 +72,7 @@ export default function RecommendedSection() {
                 </div>
               </div>
             </div>
-            <div className="p-2 md:p-4">
+            <div className="p-2 md:p-3">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
                 Dove Nutritive Solutions
               </h3>
@@ -78,17 +91,21 @@ export default function RecommendedSection() {
           {/* Product 2 - #2 Badge */}
           <div onClick={() => router.push('/products/2')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
-              <img
+              <Image
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
                 alt="Lux Body Wash"
+                width={300}
+                height={300}
                 className="w-full h-full aspect-square object-cover"
               />
               {/* #2 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                <img
+                  <Image
                     src="/badge.svg"
                     alt="Badge"
+                    width={64}
+                    height={40}
                     className="w-16 h-10 md:w-20 md:h-12"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -99,7 +116,7 @@ export default function RecommendedSection() {
                 </div>
               </div>
             </div>
-            <div className="p-2 md:p-4">
+            <div className="p-2 md:p-3">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
                 Lux Body Wash
               </h3>
@@ -120,17 +137,21 @@ export default function RecommendedSection() {
           {/* Product 3 - #3 Badge */}
           <div onClick={() => router.push('/products/3')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
-              <img
+              <Image
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
                 alt="Rexona / Sure Deo"
+                width={300}
+                height={300}
                 className="w-full h-full aspect-square object-cover"
               />
               {/* #3 Badge */}
               <div className="absolute top-1 md:top-2 left-[-16px]">
                 <div className="relative">
-                <img
+                  <Image
                     src="/badge.svg"
                     alt="Badge"
+                    width={64}
+                    height={40}
                     className="w-16 h-10 md:w-20 md:h-12"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -141,7 +162,7 @@ export default function RecommendedSection() {
                 </div>
               </div>
             </div>
-            <div className="p-2 md:p-4">
+            <div className="p-2 md:p-3">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
                 Rexona / Sure Deo
               </h3>
@@ -162,13 +183,15 @@ export default function RecommendedSection() {
           {/* Product 4 - No Badge */}
           <div onClick={() => router.push('/products/4')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="relative">
-                <img
+              <Image
                 src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
                 alt="Vaseline Body Lotion"
+                width={300}
+                height={300}
                 className="w-full h-full aspect-square object-cover"
-                />
+              />
             </div>
-            <div className="p-2 md:p-4">
+            <div className="p-2 md:p-3">
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
                 Vaseline Body Lotion
               </h3>
@@ -187,4 +210,4 @@ export default function RecommendedSection() {
       </div>
     </div>
   );
-} 
+}

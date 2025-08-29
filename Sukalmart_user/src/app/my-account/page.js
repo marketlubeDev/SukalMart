@@ -7,6 +7,7 @@ import SavedAddress from "./_components/SavedAddress";
 import MyOrders from "./_components/MyOrders";
 import HelpSupport from "./_components/HelpSupport";
 import PrivacyPolicy from "./_components/PrivacyPolicy";
+import TermsConditions from "./_components/TermsConditions";
 
 function MyAccountContent() {
   const searchParams = useSearchParams();
@@ -32,6 +33,10 @@ function MyAccountContent() {
       case "policy":
       case "privacy-policy":
         return "Privacy & Policy";
+      case "terms":
+      case "conditions":
+      case "terms-conditions":
+        return "Terms & Conditions";
       default:
         return "Account Info";
     }
@@ -44,7 +49,8 @@ function MyAccountContent() {
     "Saved Address", 
     "My Orders",
     "Help & Support",
-    "Privacy & Policy"
+    "Privacy & Policy",
+    "Terms & Conditions"
   ];
 
   const renderTabContent = () => {
@@ -59,6 +65,8 @@ function MyAccountContent() {
         return <HelpSupport />;
       case "Privacy & Policy":
         return <PrivacyPolicy />;
+      case "Terms & Conditions":
+        return <TermsConditions />;
       default:
         return <AccountInfo />;
     }

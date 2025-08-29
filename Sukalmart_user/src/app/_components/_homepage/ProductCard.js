@@ -3,6 +3,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { FaHeart } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
 import { useWishlist } from "../../_components/context/WishlistContext";
@@ -44,10 +45,16 @@ export default function ProductCard({
     >
       <div className="relative">
         <div className="aspect-square flex items-center justify-center">
-          <img
+          <Image
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
+            }}
+            unoptimized={product.image?.includes('amazonaws.com')}
           />
         </div>
         {/* Wishlist Heart */}

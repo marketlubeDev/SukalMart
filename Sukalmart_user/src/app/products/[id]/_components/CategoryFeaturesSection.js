@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function CategoryFeaturesSection({ productType }) {
   const getTitle = () => {
     switch (productType) {
@@ -133,9 +135,11 @@ export default function CategoryFeaturesSection({ productType }) {
         </div>
         {/* Right: Product Image */}
         <div className="flex-1 flex justify-end items-center w-full">
-          <img
+          <Image
             src={getImageSrc()}
             alt={`${productType} Advanced Features`}
+            width={500}
+            height={300}
             className="object-contain"
             style={{ width: "100%", maxWidth: "500px", height: "auto" }}
           />

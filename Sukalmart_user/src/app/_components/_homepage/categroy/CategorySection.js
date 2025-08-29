@@ -1,224 +1,150 @@
-"use client";
+'use client';
 
-import useCategories from "../../../../lib/hooks/useCategories";
-import { useRouter } from "next/navigation";
+// This is your complete Next.js CategorySection component
+// Copy this entire code block to replace your existing component
 
-export default function CategorySection() {
+import { useCallback } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import useCategories from '../../../../lib/hooks/useCategories';
+
+const CategorySection = () => {
   const router = useRouter();
   const { categories, loading, error } = useCategories();
 
-  // Temporary static categories data
-  // const categories = [
-  //   {
-  //     name: "Hair Care",
-  //     image:
-  //       "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/A_collection_of_hair_care_products_displayed_in_a_sleek_salon-inspired_setting_15-02-2025_at_23-21-09.webp",
-  //   },
-  //   {
-  //     name: "Body & Shower",
-  //     image:
-  //       "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/https___hypebeast.com_wp-content_blogs.dir_6_files_2019_10_luxury-bath-shower-products-soap-body-scrub-shampoo-aesop-glossier-chanel-00.avif",
-  //   },
-  //   {
-  //     name: "Soap & Deodorants",
-  //     image:
-  //       "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/JBX_Soap_Deo_Mix_Pack.webp",
-  //   },
-  //   {
-  //     name: "Skin Care",
-  //     image:
-  //       "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/168838_00_2x.webp",
-  //   },
-  //   {
-  //     name: "Oral & Misc",
-  //     image:
-  //       "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/category/mouthwash-other-oral-hygiene-products-colored-table-top-view-with-copy-space-flat-lay-dental-hygiene-oral-care-products-space-text-light-background-concept_79075-26657.avif",
-  //   },
-  // ];
+  // Utility function to normalize slug
+  const normalizeSlug = useCallback((value) => {
+    return String(value)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }, []);
 
-  // Get first 3 categories for first row and remaining 2 for second row
+  // Handle category click
+  const handleCategoryClick = useCallback((categoryName) => {
+    router.push(`/category/${normalizeSlug(categoryName)}`);
+  }, [router, normalizeSlug]);
+
+  // Loading state component
+  const LoadingState = () => (
+    <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+      <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
+        Shop by category
+      </h2>
+      <div className="flex justify-center items-center w-full h-32">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900" />
+      </div>
+    </div>
+  );
+
+  // Error state component
+  const ErrorState = () => (
+    <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+      <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
+        Shop by category
+      </h2>
+      <div className="text-red-500 text-center">
+        Failed to load categories. Please try again later.
+      </div>
+    </div>
+  );
+
+  // Category item component
+  const CategoryItem = ({ category, index }) => (
+    <div
+      key={category.id || `category-${index}`}
+      className="flex flex-col items-center justify-start cursor-pointer group transition-transform duration-200 hover:scale-105"
+      onClick={() => handleCategoryClick(category.name)}
+    >
+      {/* Category Image Container - Responsive sizing */}
+      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-200 
+                     w-[100px] h-[100px] 
+                     sm:w-[160px] sm:h-[160px] 
+                     md:w-[180px] md:h-[180px] 
+                     lg:w-[160px] lg:h-[160px] 
+                     xl:w-[180px] xl:h-[180px]">
+        <Image
+          src={category.image}
+          alt={category.name}
+          fill
+          className="object-cover transition-transform duration-200 group-hover:scale-110"
+          sizes="(max-width: 640px) 100px, (max-width: 768px) 160px, (max-width: 1024px) 180px, (max-width: 1280px) 160px, 180px"
+        />
+      </div>
+      
+      {/* Category Name - Responsive text sizing */}
+      <p className="text-[#000000] font-medium text-center mt-2 leading-normal tracking-[-0.28px] transition-colors duration-200 group-hover:text-[var(--color-primary)]
+                   text-[10px] 
+                   sm:text-xs 
+                   md:text-[13px] 
+                   lg:text-xs 
+                   xl:text-sm">
+        {category.name}
+      </p>
+    </div>
+  );
+
+  // Early returns for loading, error, and empty states
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState />;
+  if (!categories?.length) return null;
+
+  // Get categories for mobile layout (first 3 + remaining 2)
   const firstRowCategories = categories.slice(0, 3);
   const secondRowCategories = categories.slice(3, 5);
 
-  const normalizeSlug = (value) =>
-    String(value)
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-
-  const handleCategoryClick = (categoryName) => {
-    // Navigate to category-specific page using normalized slug
-    router.push(`/category/${normalizeSlug(categoryName)}`);
-  };
-
-  // Show loading state
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10 xl:px-10 2xl:px-10">
-        <div className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-          Shop by category
-        </div>
-        <div className="flex justify-center items-center w-full h-32">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-        </div>
-      </div>
-    );
-  }
-
-  // Show error state
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10 xl:px-10 2xl:px-10">
-        <div className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-          Shop by category
-        </div>
-        <div className="text-red-500 text-center">
-          Failed to load categories. Please try again later.
-        </div>
-      </div>
-    );
-  }
-
-  // Don't render if no categories
-  if (!categories || categories.length === 0) {
-    return null;
-  }
-
   return (
-    <>
-      <div
-        className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 lg:px-10"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-          alignSelf: "stretch",
-          background: "#FFF",
-        }}
-      >
-        <div
-          className="text-[#333333] text-center text-[20px] sm:text-[24px] md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px]"
-          style={{
-            fontStyle: "normal",
-            alignSelf: "stretch",
-          }}
-        >
-          Shop by category
-        </div>
+    <section className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10 bg-white">
+      {/* Section Title */}
+      <h2 className="text-[#333333] text-center font-bold leading-normal tracking-[-0.28px] mb-5
+                    text-xl 
+                    sm:text-2xl 
+                    md:text-[26px] 
+                    lg:text-[28px]">
+        Shop by category
+      </h2>
 
-        {/* Mobile Layout - Only show on mobile */}
-        <div className="w-full sm:hidden">
+      {/* Categories Grid - Responsive Layout */}
+      <div className="w-full">
+        
+        {/* Mobile Layout (< sm) - Special 3+2 layout */}
+        <div className="sm:hidden w-full space-y-2">
           {/* First row - 3 categories */}
-          <div
-            className="flex w-full mb-2"
-            style={{
-              justifyContent: "space-between",
-              gap: "8px",
-            }}
-          >
+          <div className="flex justify-between gap-2">
             {firstRowCategories.map((category, index) => (
-              <div
-                key={category.id || index}
-                className="flex flex-col items-center justify-start cursor-pointer"
-                style={{
-                  flex: "0 0 32%",
-                  maxWidth: "120px",
-                }}
-                onClick={() => handleCategoryClick(category.name)}
-              >
-                <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-[#000000] font-medium text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
-                  {category.name}
-                </div>
-              </div>
+              <CategoryItem key={`mobile-first-${index}`} category={category} index={index} />
             ))}
           </div>
+          
           {/* Second row - 2 categories centered */}
-          <div
-            className="flex w-full"
-            style={{
-              justifyContent: "center",
-              gap: "8px",
-            }}
-          >
+          <div className="flex justify-center gap-2">
             {secondRowCategories.map((category, index) => (
-              <div
-                key={category.id || index}
-                className="flex flex-col items-center justify-start cursor-pointer"
-                style={{
-                  flex: "0 0 32%",
-                  maxWidth: "120px",
-                }}
-                onClick={() => handleCategoryClick(category.name)}
-              >
-                <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[100px] h-[100px]">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-[#000000] font-medium text-center mt-2 text-[10px] font-medium leading-normal tracking-[-0.28px]">
-                  {category.name}
-                </div>
-              </div>
+              <CategoryItem key={`mobile-second-${index}`} category={category} index={index + 3} />
             ))}
           </div>
         </div>
 
-        {/* Tablet Layout - Show on sm and md */}
-        <div className="hidden sm:flex lg:hidden sm:flex-wrap sm:justify-center sm:items-center sm:gap-2 md:gap-3 w-full">
+        {/* Tablet Layout (sm to lg) - Flexbox wrap */}
+        <div className="hidden sm:flex lg:hidden flex-wrap justify-center items-center gap-2 md:gap-3 w-full">
           {categories.map((category, index) => (
-            <div
-              key={category.id || index}
-              className="flex flex-col items-center justify-start cursor-pointer mb-4"
-              style={{ flex: "0 0 calc(33.333% - 8px)" }}
-              onClick={() => handleCategoryClick(category.name)}
-            >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[160px] h-[160px] md:w-[180px] md:h-[180px]">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] md:text-[13px] font-medium leading-normal tracking-[-0.28px]">
-                {category.name}
-              </div>
+            <div key={`tablet-${index}`} className="flex-[0_0_calc(33.333%-8px)] mb-4">
+              <CategoryItem category={category} index={index} />
             </div>
           ))}
         </div>
 
-        {/* Desktop Layout - Show on lg and above */}
-        <div className="hidden lg:flex lg:flex-nowrap lg:justify-center lg:items-center lg:gap-3 xl:gap-6 w-full">
+        {/* Desktop Layout (lg+) - Horizontal flex */}
+        <div className="hidden lg:flex justify-center items-center gap-3 xl:gap-6 w-full">
           {categories.map((category, index) => (
-            <div
-              key={category.id || index}
-              className="flex flex-col items-center justify-start cursor-pointer"
-              onClick={() => handleCategoryClick(category.name)}
-            >
-              <div className="flex flex-col items-center justify-center overflow-hidden rounded w-[160px] h-[160px] xl:w-[180px] xl:h-[180px]">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-[#000000] font-medium text-center mt-2 text-[12px] xl:text-[14px] font-medium leading-normal tracking-[-0.28px]">
-                {category.name}
-              </div>
-            </div>
+            <CategoryItem key={`desktop-${index}`} category={category} index={index} />
           ))}
         </div>
-        <div className="border-b border-black/10 w-full mt-6"></div>
       </div>
-    </>
+
+      {/* Bottom divider */}
+      <div className="border-b border-black/10 w-full mt-6" />
+    </section>
   );
-}
+};
+
+export default CategorySection;

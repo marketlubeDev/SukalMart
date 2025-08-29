@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function ProductImageSection({ productType }) {
   const getImageSource = (type) => {
     switch (type) {
@@ -21,9 +23,11 @@ export default function ProductImageSection({ productType }) {
 
   return (
     <div className="flex justify-start items-center w-full">
-      <img
+      <Image
         src={getImageSource(productType)}
         alt={`${productType} Advanced Features`}
+        width={500}
+        height={300}
         className="object-contain"
         style={{
           width: "100%",

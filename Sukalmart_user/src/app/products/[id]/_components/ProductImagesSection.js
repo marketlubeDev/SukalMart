@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { FaHeart } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
+import Image from "next/image";
 
 export default function ProductImagesSection({ 
   product, 
@@ -31,10 +32,16 @@ export default function ProductImagesSection({
                 : "border-gray-200"
             }`}
           >
-            <img
+            <Image
               src={image}
               alt={`${product.name} ${index + 1}`}
+              width={80}
+              height={80}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/80x80?text=Image";
+              }}
+              unoptimized={image?.includes('amazonaws.com')}
             />
           </button>
         ))}
@@ -43,10 +50,16 @@ export default function ProductImagesSection({
       {/* Main Image - Right Side */}
       <div className="flex-1">
         <div className="aspect-square rounded-lg overflow-hidden relative">
-          <img
+          <Image
             src={product.images[selectedImage]}
             alt={product.name}
-            className="w-full h-full object-contain"
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/500x500?text=Product+Image";
+            }}
+            unoptimized={product.images[selectedImage]?.includes('amazonaws.com')}
           />
           {/* Like Button - Only render when mounted */}
           {mounted && (
@@ -73,10 +86,16 @@ export default function ProductImagesSection({
                   selectedImage === index ? "border-[var(--color-primary)]" : "border-gray-200"
                 }`}
               >
-                <img
+                <Image
                   src={image}
                   alt={`${product.name} ${index + 1}`}
+                  width={64}
+                  height={64}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = "https://via.placeholder.com/64x64?text=Image";
+                  }}
+                  unoptimized={image?.includes('amazonaws.com')}
                 />
               </button>
             ))}
