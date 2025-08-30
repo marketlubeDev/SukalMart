@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Button from "@/app/_components/common/Button";
 
 export default function SavedAddress() {
@@ -26,7 +27,7 @@ export default function SavedAddress() {
 
 	const handleAddNewAddress = () => {
 		// Navigate to checkout page with address form open
-		router.push('/checkout?showAddressForm=true');
+		router.push('/checkout?showAddressForm=true&scrollToCenter=true');
 	};
 
 	const handleDeleteAddress = (addressId) => {
@@ -34,6 +35,11 @@ export default function SavedAddress() {
 		console.log('Deleting address with ID:', addressId);
 		// You can add confirmation modal or direct deletion logic
 		// For now, just log the action
+	};
+
+	const handleDeleteClick = (e, addressId) => {
+		e.preventDefault(); // Prevent default link behavior
+		handleDeleteAddress(addressId);
 	};
 
 	return (
@@ -66,18 +72,19 @@ export default function SavedAddress() {
 								<p className="text-gray-600 text-xs sm:text-sm">{address.phone}</p>
 							</div>
 							<div className="flex space-x-3 sm:space-x-2 sm:self-start sm:mt-0 mt-1">
-								<button 
-									onClick={() => router.push(`/checkout?showAddressForm=true&editAddress=${address.id}`)}
-									className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm md:text-base cursor-pointer px-1 py-0.5 sm:px-2 sm:py-1 md:px-3 md:py-1.5 transition-colors"
+								<Link 
+									href={`/checkout?showAddressForm=true&editAddress=${address.id}&scrollToCenter=true`}
+									className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm md:text-base cursor-pointer px-1 py-0.5 sm:px-2 sm:py-1 md:px-3 md:px-3 md:py-1.5 transition-colors"
 								>
 									Edit
-								</button>
-								<button 
-									onClick={() => handleDeleteAddress(address.id)}
+								</Link>
+								<Link 
+									href="#"
+									onClick={(e) => handleDeleteClick(e, address.id)}
 									className="text-red-600 hover:text-red-700 text-xs sm:text-sm md:text-base cursor-pointer px-1 py-0.5 sm:px-2 sm:py-1 md:px-3 md:py-1.5 transition-colors"
 								>
 									Delete
-								</button>
+								</Link>
 							</div>
 						</div>
 					</div>

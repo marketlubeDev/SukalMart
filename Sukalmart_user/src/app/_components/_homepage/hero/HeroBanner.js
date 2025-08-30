@@ -134,7 +134,7 @@ export default function HeroBanner() {
   return (
     <div className="relative w-full overflow-hidden">
       {/* Main banner container with responsive height */}
-      <div className="relative h-[500px] md:h-[500px] lg:h-[640px] bg-white">
+      <div className="relative h-[500px] md:h-[500px] lg:h-[640px] bg-white overflow-hidden">
         
         {/* Background image with responsive sizing */}
         <div
@@ -226,7 +226,7 @@ export default function HeroBanner() {
                 variant="primary"
                 size="large"
                 onClick={() => router.push(`/category/${normalizeSlug(currentBanner.title)}`)}
-                className="self-start md:self-auto text-xs md:text-sm lg:text-base"
+                className="self-start md:self-auto text-xs md:text-sm lg:text-base rounded-md"
               >
                 Shop now
               </Button>

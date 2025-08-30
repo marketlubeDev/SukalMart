@@ -14,11 +14,28 @@ export default function CheckoutRight() {
   // Check URL parameter to show address form
   useEffect(() => {
     const showAddressFormParam = searchParams.get('showAddressForm');
+    const scrollToCenterParam = searchParams.get('scrollToCenter');
+    
     if (showAddressFormParam === 'true') {
       setShowAddressForm(true);
-      // Clean up the URL parameter
+      
+      // Scroll to center if requested
+      if (scrollToCenterParam === 'true') {
+        setTimeout(() => {
+          const checkoutRight = document.querySelector('[data-checkout-right]');
+          if (checkoutRight) {
+            checkoutRight.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
+        }, 100); // Small delay to ensure component is rendered
+      }
+      
+      // Clean up the URL parameters
       const newUrl = new URL(window.location);
       newUrl.searchParams.delete('showAddressForm');
+      newUrl.searchParams.delete('scrollToCenter');
       window.history.replaceState({}, '', newUrl);
     }
   }, [searchParams]);
@@ -49,7 +66,7 @@ export default function CheckoutRight() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-checkout-right>
       {!showAddressForm ? (
         <>
           {/* Account Info */}

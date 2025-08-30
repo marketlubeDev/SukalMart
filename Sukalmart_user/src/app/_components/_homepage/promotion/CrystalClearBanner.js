@@ -45,7 +45,7 @@ export default function CrystalClearBanner() {
                 variant="secondary"
                 size="large"
                 onClick={handleShopNowClick}
-                className="bg-transparent hover:bg-white/10 text-white border-white hover:scale-105 focus:ring-white/50 focus:ring-offset-transparent text-sm sm:text-base"
+                className="bg-transparent hover:bg-white/10 text-white border-white hover:scale-105 focus:ring-white/50 focus:ring-offset-transparent text-sm sm:text-base rounded"
               >
                 Shop Now
               </Button>

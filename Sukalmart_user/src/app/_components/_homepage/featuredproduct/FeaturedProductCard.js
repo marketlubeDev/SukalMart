@@ -142,7 +142,7 @@ export default function FeaturedProductCard({ product }) {
             size="large"
             onClick={addToCart}
             disabled={!isClient}
-            className="gap-2 px-3 py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 text-sm md:text-base text-[var(--color-primary)] bg-white border border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed self-start"
+            className="gap-2 px-3 py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 text-sm md:text-base text-[var(--color-primary)] bg-white border border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed self-start rounded"
             aria-label={`Add ${product.name} to cart`}
           >
             Add to cart

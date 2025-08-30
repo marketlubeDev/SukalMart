@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/app/_components/common/Button";
 
 export default function AccountInfo() {
+  const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
     email: "muhsinachachu8446@gmail.com",
@@ -12,8 +14,16 @@ export default function AccountInfo() {
   });
 
   const handleLogout = () => {
-    // Handle logout logic here
-    console.log("Logging out...");
+    // Clear any stored authentication data
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('selectedCategory');
+      localStorage.removeItem('cartItems');
+      sessionStorage.clear();
+    }
+    // Navigate to login page
+    router.push('/login');
   };
 
   return (

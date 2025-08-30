@@ -1,21 +1,22 @@
 "use client";
 
-import { useState, useRef, useMemo, Suspense } from "react";
+import { useState, useRef, useMemo, Suspense, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import CartSidebar from "../../app/_components/cart/CartSidebar";
 import Image from "next/image";
+import NavigationBar from "./NavigationBar";
+import CartSidebar from "../../app/_components/cart/CartSidebar";
 
-// Custom hook to detect bigTablet screen (min-width: 992px and max-width: 1199.98px)
-import { useEffect, useState as useReactState } from "react";
+// Import your data
 import {
   featuredProducts as fp,
   bestSellers as bs,
   catalogProducts,
 } from "../../lib/data";
 
+// Custom hook to detect bigTablet screen
 function useBigTablet() {
-  const [isBigTablet, setIsBigTablet] = useReactState(false);
+  const [isBigTablet, setIsBigTablet] = useState(false);
 
   useEffect(() => {
     function handleResize() {
@@ -31,6 +32,7 @@ function useBigTablet() {
 }
 
 function NavContent() {
+  // All state management
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -39,35 +41,45 @@ function NavContent() {
   const [searchResults, setSearchResults] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [language, setLanguage] = useState("EN");
+  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
+  const [authToken, setAuthToken] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
+  // Refs
   const resultsRef = useRef(null);
+  const mobileLangRef = useRef(null);
+  
+  // Hooks
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
   const isBigTablet = useBigTablet();
 
-  // Add state and ref for mobile language dropdown
-  const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
-  const mobileLangRef = useRef(null);
-
-  // Check authentication status on component mount
+  // Initialize authentication state
   useEffect(() => {
-    const token = localStorage.getItem("token") || localStorage.getItem("userToken");
-    setIsAuthenticated(!!token);
-    const savedLang = localStorage.getItem("language");
-    if (savedLang === "EN" || savedLang === "AR") {
-      setLanguage(savedLang);
+    if (typeof window !== 'undefined') {
+      const token = window.localStorage?.getItem("token") || window.localStorage?.getItem("userToken");
+      const user = window.localStorage?.getItem("user");
+      const savedLang = window.localStorage?.getItem("language");
+      
+      setAuthToken(token);
+      setIsAuthenticated(!!token);
+      if (user) {
+        try {
+          setUserData(JSON.parse(user));
+        } catch (e) {
+          console.error("Error parsing user data:", e);
+        }
+      }
+      if (savedLang === "EN" || savedLang === "AR") {
+        setLanguage(savedLang);
+      }
     }
   }, []);
 
-  // Handle login navigation
-  const handleLogin = () => {
-    setIsMobileMenuOpen(false);
-    setShowSearchBar(false);
-    router.push("/login");
-  };
-
-  // Build a simple in-memory product list for search suggestions
+  // Build product search list
   const allProducts = useMemo(() => {
     const fpProducts = (fp || []).map((p) => ({
       id: String(p.id), 
@@ -97,8 +109,9 @@ function NavContent() {
     }));
     
     return [...fpProducts, ...bsProducts, ...catalogProductsList];
-  }, [fp, bs, catalogProducts]);
+  }, []);
 
+  // Search functionality
   useEffect(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) {
@@ -114,11 +127,10 @@ function NavContent() {
     setSearchResults(results);
   }, [searchQuery, allProducts]);
 
-  // Close results when clicking outside
+  // Close search results on outside click
   useEffect(() => {
     function handleClickOutside(e) {
-      if (!resultsRef.current) return;
-      if (!resultsRef.current.contains(e.target)) {
+      if (!resultsRef.current?.contains(e.target)) {
         setSearchQuery("");
         setSearchResults([]);
       }
@@ -136,8 +148,7 @@ function NavContent() {
   // Close mobile language dropdown on outside click
   useEffect(() => {
     function handleOutside(e) {
-      if (!mobileLangRef.current) return;
-      if (!mobileLangRef.current.contains(e.target)) {
+      if (!mobileLangRef.current?.contains(e.target)) {
         setIsMobileLanguageOpen(false);
       }
     }
@@ -151,10 +162,29 @@ function NavContent() {
     };
   }, [isMobileLanguageOpen]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    setShowSearchBar(false);
-  };
+  // Close desktop dropdowns on outside click
+  useEffect(() => {
+    function handleOutsideClick(e) {
+      // Check if click is outside both dropdowns
+      const isOutsideLanguageDropdown = !e.target.closest('.language-dropdown');
+      const isOutsideUserDropdown = !e.target.closest('.user-dropdown');
+      
+      if (isOutsideLanguageDropdown && isOutsideUserDropdown) {
+        setIsLanguageDropdownOpen(false);
+        setIsUserDropdownOpen(false);
+      }
+    }
+
+    if (isLanguageDropdownOpen || isUserDropdownOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("touchstart", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isLanguageDropdownOpen, isUserDropdownOpen]);
 
   // Lock background scroll when mobile menu is open
   useEffect(() => {
@@ -168,19 +198,61 @@ function NavContent() {
     return () => {
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
-  };
+    };
   }, [isMobileMenuOpen]);
+
+  // Cart event listeners
+  useEffect(() => {
+    const openCart = () => setIsCartOpen(true);
+    const handler = () => openCart();
+    if (typeof window !== "undefined") {
+      window.addEventListener("open-cart", handler);
+      window.__openCart = openCart;
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("open-cart", handler);
+        delete window.__openCart;
+      }
+    };
+  }, []);
+
+  // Event handlers
+  const handleLogin = () => {
+    setIsMobileMenuOpen(false);
+    setShowSearchBar(false);
+    router.push("/login");
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setShowSearchBar(false);
+  };
 
   const toggleDropdown = (dropdownName) => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
 
-  const toggleLanguage = () => {
-    setLanguage((prev) => {
-      const next = prev === "EN" ? "AR" : "EN";
-      try { localStorage.setItem("language", next); } catch {}
-      return next;
-    });
+  const toggleLanguage = (newLang) => {
+    setLanguage(newLang);
+    setIsLanguageDropdownOpen(false);
+    if (typeof window !== 'undefined') {
+      try { 
+        window.localStorage?.setItem("language", newLang); 
+      } catch (e) {
+        console.error("Error saving language:", e);
+      }
+    }
+  };
+
+  const toggleLanguageDropdown = () => {
+    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+    setIsUserDropdownOpen(false);
+  };
+
+  const toggleUserDropdown = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+    setIsLanguageDropdownOpen(false);
   };
 
   const toggleCart = () => {
@@ -193,44 +265,38 @@ function NavContent() {
 
   const navigateToTab = (tab) => {
     if (pathname === "/my-account") {
-      // If we're already on my-account page, just update the tab parameter
       const params = new URLSearchParams(searchParams);
       params.set("tab", tab);
       router.push(`/my-account?${params.toString()}`);
     } else {
-      // If we're on a different page, navigate to my-account with the tab
       router.push(`/my-account?tab=${tab}`);
     }
     setIsMobileMenuOpen(false);
   };
 
   const handleSignOut = () => {
-    // Clear any stored authentication data
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("selectedCategory");
-    sessionStorage.clear();
+    if (typeof window !== 'undefined') {
+      window.localStorage?.removeItem("token");
+      window.localStorage?.removeItem("user");
+      window.localStorage?.removeItem("selectedCategory");
+      window.sessionStorage?.clear();
+    }
+    setAuthToken(null);
+    setUserData(null);
+    setIsAuthenticated(false);
     setIsMobileMenuOpen(false);
+    setIsUserDropdownOpen(false);
     router.push("/login");
   };
 
-  // Allow global triggers to open the cart
-  useEffect(() => {
-    const openCart = () => setIsCartOpen(true);
-    const handler = () => openCart();
-    if (typeof window !== "undefined") {
-      window.addEventListener("open-cart", handler);
-      // Expose helper for direct calls as well
-      window.__openCart = openCart;
-    }
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("open-cart", handler);
-        delete window.__openCart;
-      }
-    };
-  }, []);
+  const handleSearchProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+    setSearchQuery("");
+    setSearchResults([]);
+    setShowSearchBar(false);
+  };
 
+  // Navigation items
   const navigationItems = [
     {
       label: "Products",
@@ -240,11 +306,13 @@ function NavContent() {
     {
       label: "Hair Care",
       hasDropdown: true,
+      href: "/products?category=Hair%20Care",
       submenu: ["Shampoo", "Conditioner", "Hair Oil", "Hair Serum"],
     },
     {
       label: "Body & Shower",
       hasDropdown: true,
+      href: "/products?category=Body%20%26%20Shower",
       submenu: [
         "Body Wash",
         "Body Lotion",
@@ -256,6 +324,7 @@ function NavContent() {
     {
       label: "Soap & Deodorants",
       hasDropdown: true,
+      href: "/products?category=Soap%20%26%20Deodorants",
       submenu: [
         "Deodorant",
         "Deodorant Stick",
@@ -266,6 +335,7 @@ function NavContent() {
     {
       label: "Skin Care",
       hasDropdown: true,
+      href: "/products?category=Skin%20Care",
       submenu: [
         "Face Wash",
         "Face Cream",
@@ -277,31 +347,105 @@ function NavContent() {
     {
       label: "Oral & Misc",
       hasDropdown: true,
-      submenu: ["Toothpaste", "Toothbrush", "Mouthwash", "Mouthwash"],
+      href: "/products?category=Oral%20%26%20Misc",
+      submenu: ["Toothpaste", "Toothbrush", "Mouthwash"],
     },
   ];
 
   return (
     <>
-      <nav className="bg-white shadow-sm sticky top-0 z-50 ">
-     
-
+      <nav className="bg-white shadow-sm sticky top-0 z-50 relative " style={{ isolation: 'isolate' }}>
         {/* Main Header */}
         <div className="bg-white">
-                    <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
+          <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
             <div className="flex items-center h-3 lg:h-16 justify-between">
-            {/* Logo - Leftmost with small padding */}
-            <div className="flex-shrink-0 pr-6 hidden lg:block">
-              <Link href="/" className="flex items-center">
-                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
-              </Link>
-            </div>
+              {/* Desktop Logo */}
+              <div className="flex-shrink-0 pr-6 hidden lg:block">
+                <Link href="/" className="flex items-center">
+                  <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
+                </Link>
+              </div>
 
-            {/* Search Bar - Center */}
-            <div className="hidden lg:flex lg:items-center flex-1 justify-center">
-              {showSearchBar ? (
-                <div className="relative">
-                  <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
+              {/* Desktop Search Bar */}
+              <div className="hidden lg:flex lg:items-center flex-1 justify-center">
+                {showSearchBar ? (
+                  <div className="relative">
+                    <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
+                      <Image
+                        src="/searchicon.svg"
+                        alt="search"
+                        width={16}
+                        height={16}
+                        className="w-4 h-4 mr-2 opacity-60"
+                      />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Find your next favorite product..."
+                        className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                      />
+                    </div>
+                    {searchQuery.trim().length > 0 && (
+                      <div
+                        ref={resultsRef}
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] md:w-[700px] lg:w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50"
+                      >
+                        {searchResults.length > 0 ? (
+                          searchResults.map((p) => (
+                            <div 
+                              key={`${p.id}-${p.name}`} 
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
+                              onClick={() => handleSearchProductClick(p.id)}
+                            >
+                              {p.image && (
+                                <Image
+                                  src={p.image}
+                                  alt={p.name}
+                                  width={40}
+                                  height={40}
+                                  className="w-10 h-10 object-cover rounded"
+                                  onError={(e) => {
+                                    e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                  }}
+                                  unoptimized={p.image?.includes('amazonaws.com')}
+                                />
+                              )}
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-gray-900 text-sm font-medium truncate">
+                                  {p.name}
+                                </span>
+                                {(p.category || p.price) && (
+                                  <span className="text-xs text-gray-500 truncate">
+                                    {p.category ? `${p.category}` : ""}
+                                    {p.category && p.price ? " · " : ""}
+                                    {p.price ? `${p.price}` : ""}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
+                            <Image
+                              src="/searchicon.svg"
+                              alt="no results"
+                              width={16}
+                              height={16}
+                              className="w-4 h-4 opacity-60"
+                            />
+                            <span className="text-sm">No products found</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div 
+                    className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px] cursor-pointer" 
+                    style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}
+                    onClick={() => setShowSearchBar(true)}
+                  >
                     <Image
                       src="/searchicon.svg"
                       alt="search"
@@ -311,729 +455,404 @@ function NavContent() {
                     />
                     <input
                       type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Find your next favorite product..."
-                      className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                      placeholder="Search by product name or category.."
+                      className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400 cursor-pointer"
+                      readOnly
                     />
                   </div>
-                  {searchQuery.trim().length > 0 && (
-                    <div
-                      ref={resultsRef}
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[400px] md:w-[700px] lg:w-[520px] xl:w-[640px] bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto"
-                    >
-                      {searchResults.length > 0 ? (
-                        searchResults.map((p) => (
-                          <div 
-                            key={`${p.id}-${p.name}`} 
-                            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
-                            onClick={() => {
-                              router.push(`/products/${p.id}`);
-                              setSearchQuery("");
-                              setSearchResults([]);
-                              setShowSearchBar(false);
-                            }}
-                          >
-                            {p.image && (
-                              <Image
-                                src={p.image}
-                                alt={p.name}
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 object-cover rounded"
-                                onError={(e) => {
-                                  e.target.src = "https://via.placeholder.com/40x40?text=Product";
-                                }}
-                                unoptimized={p.image?.includes('amazonaws.com')}
-                              />
-                            )}
-                            <div className="flex flex-col min-w-0">
-                              <span className="text-gray-900 text-sm font-medium truncate">
-                                {p.name}
-                              </span>
-                              {(p.category || p.price) && (
-                                <span className="text-xs text-gray-500 truncate">
-                                  {p.category ? `${p.category}` : ""}
-                                  {p.category && p.price ? " · " : ""}
-                                  {p.price ? `${p.price}` : ""}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <Image
-                            src="/searchicon.svg"
-                            alt="no results"
-                            width={16}
-                            height={16}
-                            className="w-4 h-4 opacity-60"
-                          />
-                          <span className="text-sm">No products found</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
-                  <Image
-                    src="/searchicon.svg"
-                    alt="search"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4 mr-2 opacity-60"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Search by product name or category.."
-                    className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Desktop Action Buttons - Rightmost with same padding */}
-            <div className="hidden lg:flex lg:items-center flex-shrink-0">
-              <div className="flex items-center space-x-2">
-                {/* Language Selector */}
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={20} height={20} className="w-5 h-5 rounded-full" />
-                    <span className="text-sm font-medium text-gray-700">{language}</span>
-                    <Image
-                      src="/dropdownicon.svg"
-                      alt="dropdown"
-                      width={8}
-                      height={5}
-                      className="w-[8px] h-[5px]"
-                    />
-                  </button>
-
-                  {/* Language Dropdown */}
-                  <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="py-2">
-                      <button 
-                        onClick={() => setLanguage("EN")}
-                        className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/english.svg" alt="English" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
-                        <span className={`${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
-                      </button>
-                      <button 
-                        onClick={() => setLanguage("AR")}
-                        className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/arabicicon.svg" alt="Arabic" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
-                        <span className={`${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Cart */}
-                <button
-                  onClick={toggleCart}
-                  className="relative p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
-                >
-                  <Image
-                    src="/Carticon.svg"
-                    alt="cart"
-                    width={44}
-                    height={44}
-                    className="w-[44px] h-[44px]"
-                  />
-                </button>
-
-                {/* User Profile / Login */}
-                {isAuthenticated ? (
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <Image src="/usericon.svg" alt="user" width={24} height={24} className="w-6 h-6" />
-                    <Image
-                      src="/dropdownicon.svg"
-                      alt="dropdown"
-                      width={8}
-                      height={5}
-                      className="w-[8px] h-[5px]"
-                    />
-                  </button>
-
-                {/* User Dropdown */}
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="py-2">
-                      {/* Personal Info */}
-                    <button
-                      onClick={() => navigateToTab("account")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        Personal info
-                    </button>
-
-                      {/* My Orders */}
-                    <button
-                      onClick={() => router.push("/my-account?tab=my-orders")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
-                        My orders
-                    </button>
-
-                      {/* Addresses */}
-                      <button
-                        onClick={() => router.push("/my-account?tab=saved-address")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Addresses
-                      </button>
-
-
-
-                      {/* Contact us
-                    <button
-                        onClick={() => navigateToTab("contact")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        Contact us
-                      </button> */}
-
-                      {/* Help & Support */}
-                    <button
-                      onClick={() => router.push("/my-account?tab=help")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
-                        </svg>
-                      Help & Support
-                    </button>
-
-                      {/* Privacy Policy */}
-                    <button
-                      onClick={() => router.push("/my-account?tab=privacy-policy")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        Privacy Policy
-                    </button>
-
-                    <hr className="my-2" />
-
-                      {/* Logout */}
-                    <button
-                      onClick={handleSignOut}
-                        className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
-                    >
-                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        Logout
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
-              ) : (
-                <div className="relative group">
-                  <button className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer">
-                    <Image src="/usericon.svg" alt="login" width={24} height={24} className="w-6 h-6" />
-                    <Image
-                      src="/dropdownicon.svg"
-                      alt="dropdown"
-                      width={8}
-                      height={5}
-                      className="w-[8px] h-[5px]"
-                    />
-                  </button>
 
-                  {/* Login Dropdown */}
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="py-2">
-                      {/* Personal Info */}
-                      <button
-                        onClick={() => router.push("/my-account")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5 mr-3" />
-                        Personal info
-                      </button>
-
-                      {/* My Orders */}
-                      <button
-                        onClick={() => router.push("/my-account?tab=my-orders")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5 mr-3" />
-                        My orders
-                      </button>
-
-                      {/* Addresses */}
-                      <button
-                        onClick={() => router.push("/my-account?tab=saved-address")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5 mr-3" />
-                        Addresses
-                      </button>
-
-                      <hr className="my-2" />
-
-                   
-
-                      {/* Contact us
-                      // <button
-                      //   onClick={() => router.push("/contact")}
-                      //   className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 cursor-pointer"
-                      // >
-                      //   <img src="/icon1.svg" alt="contact us" className="w-5 h-5 mr-3" />
-                      //   Contact us
-                      // </button> */}
-
-                      {/* Help & Support */}
-                      <button
-                        onClick={() => router.push("/my-account?tab=help")}
-                        className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.backgroundColor = "transparent";
-                          e.currentTarget.style.color = "#374151";
-                        }}
-                      >
-                        <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5 mr-3" />
-                        Help & Support
-                      </button>
-
-                      {/* Privacy Policy */}
-                          <button
-                            onClick={() => router.push("/my-account?tab=privacy-policy")}
-                            className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer"
-                            style={{ cursor: "pointer" }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                              e.currentTarget.style.color = "#6D0D26";
-                            }}
-                            onMouseOut={(e) => {
-                              e.currentTarget.style.backgroundColor = "transparent";
-                              e.currentTarget.style.color = "#374151";
-                            }}
-                          >
-                            <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5 mr-3" />
-                            Privacy Policy
-                          </button>
-
-                      <hr className="my-2" />
-
-                      {/* Logout */}
-                      <button
-                        onClick={handleSignOut}
-                        className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
-                      >
-                        <Image src="/icon5.svg" alt="logout" width={20} height={20} className="w-5 h-5 mr-3" />
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-              </div>
-              )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Bar */}
-        <div className="bg-[var(--color-primary)]">
-          <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
-            <div className="hidden lg:flex lg:items-center lg:justify-evenly py-0.5">
-              {navigationItems.map((item, index) => (
-                <div key={index} className="relative group flex-shrink-0">
-                  {item.href ? (
-                    <Link
-                      href={item.href}
-                      className="flex items-center space-x-1 text-white font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "white")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "white")}
-                      onClick={() => {
-                        // Reset category when Products is clicked
-                        if (item.label === "Products") {
-                          localStorage.removeItem("selectedCategory");
-                        }
-                      }}
+              {/* Desktop Action Buttons */}
+              <div className="hidden lg:flex lg:items-center flex-shrink-0">
+                <div className="flex items-center space-x-2">
+                  {/* Language Selector */}
+                  <div className="relative group language-dropdown">
+                    <button 
+                      className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                      onClick={toggleLanguageDropdown}
                     >
-                      <span>{item.label}</span>
-                    </Link>
-                  ) : (
-                    <button
-                      className="flex items-center space-x-1 text-white font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "white")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "white")}
-                      onClick={() =>
-                        item.hasDropdown && toggleDropdown(item.label)
-                      }
-                    >
-                      <span>{item.label}</span>
-                      {item.hasDropdown && (
-                        <Image
-                          src="/dropdownicon.svg"
-                          alt="dropdown"
-                          width={7}
-                          height={4}
-                          className={`w-[7px] h-[4px] transition-transform duration-200 filter brightness-0 invert ${
-                            activeDropdown === item.label
-                              ? "rotate-180"
-                              : ""
-                          }`}
-                        />
-                      )}
+                      <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={20} height={20} className="w-5 h-5 rounded-full" />
+                      <span className="text-sm font-medium text-gray-700">{language}</span>
+                      <Image
+                        src="/dropdownicon.svg"
+                        alt="dropdown"
+                        width={8}
+                        height={5}
+                        className={`w-[8px] h-[5px] transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`}
+                      />
                     </button>
-                  )}
 
-                  {/* Desktop Dropdown Menu */}
-                  {item.hasDropdown && (
-                    <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    {/* Language Dropdown */}
+                    <div className={`absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isLanguageDropdownOpen || 'group-hover:opacity-100 group-hover:visible'} ${isLanguageDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
                       <div className="py-2">
-                        {item.submenu.map((subItem, subIndex) => (
-                          <a
-                            key={subIndex}
-                            href="#"
-                            className="block px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer text-sm tracking-[0.02em]"
-                            style={{ cursor: "pointer" }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                              e.currentTarget.style.color = "#6D0D26";
-                            }}
-                            onMouseOut={(e) => {
-                              e.currentTarget.style.backgroundColor = "transparent";
-                              e.currentTarget.style.color = "#374151";
-                            }}
-                          >
-                            {subItem}
-                          </a>
-                        ))}
+                        <button 
+                          onClick={() => toggleLanguage("EN")}
+                          className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                        >
+                          <Image src="/english.svg" alt="English" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
+                          <span className={`${language === "EN" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>EN</span>
+                        </button>
+                        <button 
+                          onClick={() => toggleLanguage("AR")}
+                          className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                        >
+                          <Image src="/arabicicon.svg" alt="Arabic" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
+                          <span className={`${language === "AR" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>AR</span>
+                        </button>
                       </div>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Layout - Three Groups: Left (Hamburger + Logo), Center (Search), Right (Cart) */}
-        <div className="lg:hidden flex items-center justify-between w-full h-14 px-3 md:px-6">
-          {/* Left Group - Hamburger and Logo */}
-          <div className="flex items-center">
-            <button
-              onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-1.5 rounded-lg text-gray-600 hover:text-[#6D0D26] hover:bg-gray-100 transition-colors duration-200"
-            >
-              <span className="sr-only">Open main menu</span>
-              {!isMobileMenuOpen ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              )}
-            </button>
-
-            {/* Mobile Logo - Hidden on small screens when search is open */}
-            {!showSearchBar && (
-              <Link href="/" className="flex items-center ml-2">
-                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={150} height={24} className="h-6 w-auto" />
-              </Link>
-            )}
-          </div>
-
-          {/* Center Group - Search Bar */}
-          {showSearchBar && (
-            <div className="flex-1 flex justify-center mx-2">
-              <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[400px]">
-                <div className="relative">
-                  <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
-                    <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4 mr-2 opacity-60" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search products..."
-                      className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
-                    />
                   </div>
-                  {searchQuery.trim().length > 0 && (
-                    <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50">
-                      {searchResults.length > 0 ? (
-                        searchResults.map((p) => (
-                          <div 
-                            key={`${p.id}-${p.name}`} 
-                            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
-                            onClick={() => {
-                              router.push(`/products/${p.id}`);
-                              setSearchQuery("");
-                              setSearchResults([]);
-                              setShowSearchBar(false);
-                            }}
-                          >
-                            {p.image && (
-                              <Image 
-                                src={p.image} 
-                                alt={p.name} 
-                                width={40} 
-                                height={40} 
-                                className="w-10 h-10 object-cover rounded"
-                                onError={(e) => {
-                                  e.target.src = "https://via.placeholder.com/40x40?text=Product";
-                                }}
-                                unoptimized={p.image?.includes('amazonaws.com')}
-                              />
-                            )}
-                            <div className="flex flex-col min-w-0">
-                              <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
-                              {(p.category || p.price) && (
-                                <span className="text-xs text-gray-500 truncate">
-                                  {p.category ? `${p.category}` : ''}
-                                  {p.category && p.price ? ' · ' : ''}
-                                  {p.price ? `${p.price}` : ''}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                          <Image src="/searchicon.svg" alt="no results" width={16} height={16} className="w-4 h-4 opacity-60" />
-                          <span className="text-sm">No products found</span>
-                        </div>
-                      )}
+
+                  {/* Cart */}
+                  <button
+                    onClick={toggleCart}
+                    className="relative p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                  >
+                    <Image
+                      src="/Carticon.svg"
+                      alt="cart"
+                      width={44}
+                      height={44}
+                      className="w-[44px] h-[44px]"
+                    />
+                  </button>
+
+                  {/* User Profile / Login */}
+                  <div className="relative group user-dropdown">
+                    <button 
+                      className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                      onClick={toggleUserDropdown}
+                    >
+                      <Image src="/usericon.svg" alt="user" width={24} height={24} className="w-6 h-6" />
+                      <Image
+                        src="/dropdownicon.svg"
+                        alt="dropdown"
+                        width={8}
+                        height={5}
+                        className={`w-[8px] h-[5px] transition-transform duration-200 ${isUserDropdownOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+
+                    {/* User Dropdown */}
+                    <div className={`absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isUserDropdownOpen || 'group-hover:opacity-100 group-hover:visible'} ${isUserDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                      <div className="py-2">
+                        {isAuthenticated ? (
+                          <>
+                            <button
+                              onClick={() => {
+                                navigateToTab("account");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                              Personal info
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                router.push("/my-account?tab=my-orders");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                              </svg>
+                              My orders
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                router.push("/my-account?tab=saved-address");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              Addresses
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                router.push("/my-account?tab=help");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
+                              </svg>
+                              Help & Support
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                router.push("/my-account?tab=privacy-policy");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              </svg>
+                              Privacy Policy
+                            </button>
+
+                            <hr className="my-2" />
+
+                            <button
+                              onClick={handleSignOut}
+                              className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
+                            >
+                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                              </svg>
+                              Logout
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => {
+                                router.push("/my-account");
+                                setIsUserDropdownOpen(false);
+                              }}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5 mr-3" />
+                              Personal info
+                            </button>
+
+                            <button
+                              onClick={() => router.push("/my-account?tab=my-orders")}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5 mr-3" />
+                              My orders
+                            </button>
+
+                            <button
+                              onClick={() => router.push("/my-account?tab=saved-address")}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5 mr-3" />
+                              Addresses
+                            </button>
+
+                            <button
+                              onClick={() => router.push("/my-account?tab=help")}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5 mr-3" />
+                              Help & Support
+                            </button>
+
+                            <button
+                              onClick={() => router.push("/my-account?tab=privacy-policy")}
+                              className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                            >
+                              <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5 mr-3" />
+                              Privacy Policy
+                            </button>
+
+                            <hr className="my-2" />
+
+                            <button
+                              onClick={handleSignOut}
+                              className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
+                            >
+                              <Image src="/icon5.svg" alt="logout" width={20} height={20} className="w-5 h-5 mr-3" />
+                              Logout
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Right Group - Search Icon, Language Selector, and Cart */}
-          <div className="flex items-center space-x-1">
-            {showSearchBar ? (
-              <button 
-                onClick={() => setShowSearchBar(false)}
-                className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+          {/* Navigation Bar */}
+          <NavigationBar />
+
+          {/* Mobile Layout */}
+          <div className="lg:hidden flex items-center justify-between w-full h-14 px-3 md:px-6">
+            {/* Left Group - Hamburger and Logo */}
+            <div className="flex items-center">
+              <button
+                onClick={toggleMobileMenu}
+                className="inline-flex items-center justify-center p-1.5 rounded-lg text-gray-600 hover:text-[#6D0D26] hover:bg-gray-100 transition-colors duration-200"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <span className="sr-only">Open main menu</span>
+                {!isMobileMenuOpen ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
               </button>
-            ) : (
-              <button 
-                onClick={() => setShowSearchBar(true)}
-                className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
-              >
-                <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4" />
-              </button>
+
+              {!showSearchBar && (
+                <Link href="/" className="flex items-center ml-2">
+                  <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={150} height={24} className="h-6 w-auto" />
+                </Link>
+              )}
+            </div>
+
+            {/* Center Group - Search Bar */}
+            {showSearchBar && (
+              <div className="flex-1 flex justify-center mx-2">
+                <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[400px]">
+                  <div className="relative">
+                    <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
+                      <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4 mr-2 opacity-60" />
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search products..."
+                        className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                      />
+                    </div>
+                    {searchQuery.trim().length > 0 && (
+                      <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50">
+                        {searchResults.length > 0 ? (
+                          searchResults.map((p) => (
+                            <div 
+                              key={`${p.id}-${p.name}`} 
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
+                              onClick={() => handleSearchProductClick(p.id)}
+                            >
+                              {p.image && (
+                                <Image 
+                                  src={p.image} 
+                                  alt={p.name} 
+                                  width={40} 
+                                  height={40} 
+                                  className="w-10 h-10 object-cover rounded"
+                                  onError={(e) => {
+                                    e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                  }}
+                                  unoptimized={p.image?.includes('amazonaws.com')}
+                                />
+                              )}
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                                {(p.category || p.price) && (
+                                  <span className="text-xs text-gray-500 truncate">
+                                    {p.category ? `${p.category}` : ''}
+                                    {p.category && p.price ? ' · ' : ''}
+                                    {p.price ? `${p.price}` : ''}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
+                            <Image src="/searchicon.svg" alt="no results" width={16} height={16} className="w-4 h-4 opacity-60" />
+                            <span className="text-sm">No products found</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             )}
 
-            {/* Mobile Language Selector */}
-            <div className="relative" ref={mobileLangRef}>
-              <button 
-                onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
-                className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+            {/* Right Group - Search Icon, Language Selector, and Cart */}
+            <div className="flex items-center space-x-1">
+              {showSearchBar ? (
+                <button 
+                  onClick={() => setShowSearchBar(false)}
+                  className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              ) : (
+                <button 
+                  onClick={() => setShowSearchBar(true)}
+                  className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                >
+                  <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4" />
+                </button>
+              )}
+
+              {/* Mobile Language Selector */}
+              <div className="relative" ref={mobileLangRef}>
+                <button 
+                  onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
+                  className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                >
+                  <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={16} height={16} className="w-4 h-4 rounded-full" />
+                  <span className="text-xs font-medium text-gray-700">{language}</span>
+                  <Image
+                    src="/dropdownicon.svg"
+                    alt="dropdown"
+                    width={6}
+                    height={4}
+                    className="w-[6px] h-[4px]"
+                  />
+                </button>
+                
+                {/* Mobile Language Dropdown */}
+                <div className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isMobileLanguageOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                  <div className="py-1">
+                    <button 
+                      onClick={() => { 
+                        toggleLanguage("EN"); 
+                        setIsMobileLanguageOpen(false); 
+                      }}
+                      className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                    >
+                      <Image src="/english.svg" alt="English" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
+                      <span className={`text-xs ${language === "EN" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>EN</span>
+                    </button>
+                    <button 
+                      onClick={() => { 
+                        toggleLanguage("AR"); 
+                        setIsMobileLanguageOpen(false); 
+                      }}
+                      className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+                    >
+                      <Image src="/arabicicon.svg" alt="Arabic" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
+                      <span className={`text-xs ${language === "AR" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>AR</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Cart */}
+              <button
+                onClick={toggleCart}
+                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
-                <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={16} height={16} className="w-4 h-4 rounded-full" />
-                <span className="text-xs font-medium text-gray-700">{language}</span>
                 <Image
-                  src="/dropdownicon.svg"
-                  alt="dropdown"
-                  width={6}
-                  height={4}
-                  className="w-[6px] h-[4px]"
+                  src="/Carticon.svg"
+                  alt="cart"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8"
                 />
               </button>
-              {/* Mobile Language Dropdown */}
-              <div className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isMobileLanguageOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
-                <div className="py-1">
-                  <button 
-                    onClick={() => { setLanguage("EN"); try { localStorage.setItem("language", "EN"); } catch {} setIsMobileLanguageOpen(false); }}
-                    className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer"
-                    style={{ cursor: "pointer" }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                      e.currentTarget.style.color = "#6D0D26";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "#374151";
-                    }}
-                  >
-                    <Image src="/english.svg" alt="English" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
-                    <span className={`text-xs ${language === "EN" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>EN</span>
-                  </button>
-                  <button 
-                    onClick={() => { setLanguage("AR"); try { localStorage.setItem("language", "AR"); } catch {} setIsMobileLanguageOpen(false); }}
-                    className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer"
-                    style={{ cursor: "pointer" }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
-                      e.currentTarget.style.color = "#6D0D26";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "#374151";
-                    }}
-                  >
-                    <Image src="/arabicicon.svg" alt="Arabic" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
-                    <span className={`text-xs ${language === "AR" ? "text-[var(--color-primary)] font-medium" : "text-gray-400"}`}>AR</span>
-                  </button>
-                </div>
-              </div>
             </div>
-
-            {/* Mobile Cart */}
-            <button
-              onClick={toggleCart}
-              className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
-            >
-              <Image
-                src="/Carticon.svg"
-                alt="cart"
-                width={32}
-                height={32}
-                className="w-8 h-8"
-              />
-            </button>
           </div>
         </div>
-      </div>
 
         {/* Mobile Menu */}
         <div
@@ -1044,8 +863,6 @@ function NavContent() {
           }`}
         >
           <div className="px-4 pt-0 pb-6 space-y-2 bg-white border-t border-gray-200">
-            {/* Mobile Search - removed per request */}
-
             {/* Mobile Navigation Items */}
             {navigationItems.map((item, index) => (
               <div
@@ -1055,16 +872,13 @@ function NavContent() {
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer"
-                    style={{ cursor: "pointer" }}
-                    onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                    onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
                     onClick={(e) => {
-                      // Reset category when Products is clicked
                       if (item.label === "Products") {
                         e.preventDefault();
-                        localStorage.removeItem("selectedCategory");
-                        // Use router navigation instead of window.location.href
+                        if (typeof window !== 'undefined') {
+                          window.localStorage?.removeItem("selectedCategory");
+                        }
                         router.push("/products");
                       }
                       setIsMobileMenuOpen(false);
@@ -1073,14 +887,17 @@ function NavContent() {
                     <span>{item.label}</span>
                   </Link>
                 ) : (
-                  <button
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer"
-                    style={{ cursor: "pointer" }}
-                    onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                    onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                    onClick={() =>
-                      item.hasDropdown && toggleDropdown(item.label)
-                    }
+                  <Link
+                    href={item.href}
+                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
+                    onClick={(e) => {
+                      if (item.hasDropdown) {
+                        e.preventDefault();
+                        toggleDropdown(item.label);
+                      } else {
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
                   >
                     <span>{item.label}</span>
                     {item.hasDropdown && (
@@ -1094,27 +911,21 @@ function NavContent() {
                         }`}
                       />
                     )}
-                  </button>
+                  </Link>
                 )}
 
                 {/* Mobile Submenu */}
                 {item.hasDropdown && activeDropdown === item.label && (
                   <div className="pl-4 pb-2 space-y-1">
                     {item.submenu.map((subItem, subIndex) => (
-                      <a
+                      <Link
                         key={subIndex}
-                        href="#"
-                        className="block py-2 text-gray-600 transition-colors duration-200 cursor-pointer"
-                        style={{ cursor: "pointer" }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.color = "#6D0D26";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.color = "#6B7280";
-                        }}
+                        href={`/products?category=${encodeURIComponent(subItem)}`}
+                        className="block py-2 text-gray-600 transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
+                        onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {subItem}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -1126,223 +937,131 @@ function NavContent() {
               <div className="space-y-2">
                 {isAuthenticated ? (
                   <>
-                <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
-                  <span>Personal info</span>
-                </button>
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account"); }}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
+                      <span>Personal info</span>
+                    </button>
 
-                <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=my-orders"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
-                  <span>My orders</span>
-                </button>
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=my-orders"); }}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
+                      <span>My orders</span>
+                    </button>
 
-                <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=saved-address"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
-                  <span>Addresses</span>
-                </button>
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=saved-address"); }}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
+                      <span>Addresses</span>
+                    </button>
 
-                <button
-                  onClick={() => navigateToTab("help")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
-                    />
-                  </svg>
-                  <span>Help & Support</span>
-                </button>
+                    <button
+                      onClick={() => navigateToTab("help")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
+                      </svg>
+                      <span>Help & Support</span>
+                    </button>
 
-                <button
-                  onClick={() => navigateToTab("privacy-policy")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z"
-                    />
-                  </svg>
-                  <span>Privacy & Policy</span>
-                </button>
+                    <button
+                      onClick={() => navigateToTab("privacy-policy")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z" />
+                      </svg>
+                      <span>Privacy & Policy</span>
+                    </button>
 
-                <button
-                  onClick={handleSignOut}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                  <span>Sign Out</span>
-                </button>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span>Sign Out</span>
+                    </button>
                   </>
                 ) : (
                   <>
-                                    <button
-                  onClick={() => navigateToTab("account")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
-                  <span>Personal info</span>
-                </button>
+                    <button
+                      onClick={() => navigateToTab("account")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
+                      <span>Personal info</span>
+                    </button>
 
-                                    <button
-                  onClick={() => navigateToTab("my-orders")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
-                  <span>My orders</span>
-                </button>
+                    <button
+                      onClick={() => navigateToTab("my-orders")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
+                      <span>My orders</span>
+                    </button>
 
-                                    <button
-                  onClick={() => navigateToTab("addresses")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
-                  <span>Addresses</span>
-                </button>
+                    <button
+                      onClick={() => navigateToTab("addresses")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
+                      <span>Addresses</span>
+                    </button>
 
-               
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5" />
+                      <span>Help & Support</span>
+                    </button>
 
-                                    <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5" />
-                  <span>Help & Support</span>
-                </button>
-
-                                <button
-                  onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=privacy-policy"); }}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5" />
-                  <span>Privacy Policy</span>
-                </button>
+                    <button
+                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=privacy-policy"); }}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5" />
+                      <span>Privacy Policy</span>
+                    </button>
 
                     <hr className="my-2" />
 
                     <button
                       onClick={handleLogin}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                      style={{ cursor: "pointer" }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                      onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
                       <Image src="/usericon.svg" alt="login" width={20} height={20} className="w-5 h-5" />
                       <span>Login</span>
                     </button>
+                    
                     <button
                       onClick={() => router.push("/register")}
-                  className="flex items-center space-x-3 py-2 mb-4 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                    />
-                  </svg>
+                      className="flex items-center space-x-3 py-2 mb-4 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
                       <span>Register</span>
-                </button>
-                <button
+                    </button>
+                    
+                    <button
                       onClick={() => router.push("/forgot-password")}
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left"
-                  style={{ cursor: "pointer" }}
-                  onMouseOver={(e) => (e.currentTarget.style.color = "#6D0D26")}
-                  onMouseOut={(e) => (e.currentTarget.style.color = "#374151")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                          d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-                    />
-                  </svg>
+                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                      </svg>
                       <span>Forgot Password?</span>
-                </button>
+                    </button>
                   </>
                 )}
               </div>
@@ -1357,14 +1076,13 @@ function NavContent() {
       <style dangerouslySetInnerHTML={{
         __html: `
         .scrollbar-hide {
-          -ms-overflow-style: none;  /* Internet Explorer 10+ */
-          scrollbar-width: none;  /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
         .scrollbar-hide::-webkit-scrollbar {
-          display: none;  /* Safari and Chrome */
+          display: none;
         }
         
-        /* Hide scrollbar for lg screens */
         .lg-scrollbar-hide {
           -ms-overflow-style: none !important;
           scrollbar-width: none !important;
@@ -1382,7 +1100,7 @@ export default function Nav() {
   return (
     <Suspense
       fallback={
-        <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 ">
           <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
             <div className="flex items-center h-20 justify-between">
               <div className="flex-shrink-0 pr-4 hidden lg:block">

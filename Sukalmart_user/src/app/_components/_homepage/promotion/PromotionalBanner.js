@@ -80,7 +80,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
               variant="secondary"
               size="large"
               onClick={() => handleShopNowClick(banners[currentBanner].productId)}
-              className="text-xs sm:text-sm md:text-base lg:text-base"
+              className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
             >
               {banners[currentBanner].buttonText}
             </Button>
@@ -129,13 +129,14 @@ export default function PromotionalBanner({ fullWidth = false }) {
               <p className="text-base mb-4 text-[#333333]">
                 {banner.description}
               </p>
-              <Button
-                variant="secondary"
-                size="large"
-                onClick={() => handleShopNowClick(banner.productId)}
-              >
-                {banner.buttonText}
-              </Button>
+                <Button
+                  variant="secondary"
+                  size="large"
+                  onClick={() => handleShopNowClick(banner.productId)}
+                  className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
+                >
+                  {banner.buttonText}
+                </Button>
             </div>
           </div>
         ))}
