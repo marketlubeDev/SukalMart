@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import CheckoutLeft from "./_components/CheckoutLeft";
 import CheckoutRight from "./_components/CheckoutRight";
 
@@ -104,7 +104,9 @@ export default function CheckoutPage() {
 
         {/* Right Column - White Background */}
         <div className="w-full lg:w-1/2 bg-white px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-6 sm:py-8 md:py-10 lg:py-12">
-          <CheckoutRight />
+          <Suspense fallback={<div className="animate-pulse">Loading checkout form...</div>}>
+            <CheckoutRight />
+          </Suspense>
         </div>
       </div>
     </div>
