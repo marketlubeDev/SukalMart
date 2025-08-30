@@ -164,8 +164,8 @@ export default function HeroBanner() {
           className="absolute inset-0 transition-all duration-500 ease-in-out"
           style={{
             backgroundImage: `url('${currentBanner.image}')`,
-            backgroundSize: "contain md:cover lg:cover",
-            backgroundPosition: "center md:bottom lg:bottom",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundColor: "#f8f9fa",
           }}
