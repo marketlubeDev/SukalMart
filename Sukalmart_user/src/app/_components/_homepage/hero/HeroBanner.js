@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import useBanner from "@/lib/hooks/useBanner";
+// import useBanner from "@/lib/hooks/useBanner"; // BACKEND INTERACTION: Removed dynamic banner fetching
 import Button from "@/app/_components/common/Button";
 
 export default function HeroBanner() {
@@ -19,9 +19,55 @@ export default function HeroBanner() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef(null);
 
-  const { banners, loading, error } = useBanner({ bannerFor: "hero" });
+  // BACKEND INTERACTION: Previously used useBanner hook to fetch banners from API
+  // const { banners, loading, error } = useBanner({ bannerFor: "hero" });
+  // 
+  // The useBanner hook would:
+  // 1. Make API call to /api/banners?bannerFor=hero
+  // 2. Fetch banner data from database (MongoDB)
+  // 3. Handle loading states while fetching
+  // 4. Handle error states if API fails
+  // 5. Return banners array with image URLs, titles, descriptions, etc.
 
-  // Auto-slide functionality
+  // STATIC BANNERS: Replaced dynamic fetching with static banner data
+  // This eliminates the need for:
+  // - API calls to backend
+  // - Database queries
+  // - Loading states
+  // - Error handling for network issues
+  // - Admin panel banner management
+  const banners = [
+    {
+      id: 1,
+      image: "/banners1.jpg", // Static image from public folder
+      title: "Discover Your Perfect Style",
+      subtitle: "Premium Beauty Collection",
+      description: "Explore our curated selection of premium beauty products designed to enhance your natural beauty and boost your confidence."
+    },
+    {
+      id: 2,
+      image: "/banners2.jpg", // Static image from public folder
+      title: "Summer Beauty Essentials",
+      subtitle: "Fresh & Radiant Look",
+      description: "Get ready for summer with our essential beauty products that keep you looking fresh and radiant all day long."
+    },
+    {
+      id: 3,
+      image: "/banners1.jpg", // Reusing first image with different content
+      title: "Professional Hair Care",
+      subtitle: "Salon-Quality Results",
+      description: "Transform your hair with our professional-grade hair care products that deliver salon-quality results at home."
+    },
+    {
+      id: 4,
+      image: "/banners2.jpg", // Reusing second image with different content
+      title: "Skincare Revolution",
+      subtitle: "Advanced Formulations",
+      description: "Experience the future of skincare with our advanced formulations that target your specific skin concerns."
+    }
+  ];
+
+  // Auto-slide functionality (unchanged from original implementation)
   useEffect(() => {
     if (isAutoPlaying && banners.length > 0) {
       intervalRef.current = setInterval(() => {
@@ -60,76 +106,51 @@ export default function HeroBanner() {
 
   const currentBanner = banners[currentSlide];
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="relative w-full overflow-hidden">
-        <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
-            <p className="text-gray-600 text-sm md:text-base">Loading banners...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div className="relative w-full overflow-hidden">
-        <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <p className="text-red-600 text-base md:text-lg">Failed to load banners</p>
-            <p className="text-gray-500 text-xs md:text-sm mt-2">Please try again later</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // No banners state
-  if (!banners || banners.length === 0) {
-    // If still loading, show loading section instead of error message
-    if (loading) {
-      return (
-        <div className="relative w-full overflow-hidden">
-          <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
-              <p className="text-gray-600 text-sm md:text-base">Loading banners...</p>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    // Only show "no banners" message if not loading
-    return (
-      <div className="relative w-full overflow-hidden">
-        <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <p className="text-gray-600 text-base md:text-lg">No banners available</p>
-            <p className="text-gray-500 text-xs md:text-sm mt-2">
-              Please add some banners in the admin panel
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Invalid banner data state
-  if (!currentBanner) {
-    return (
-      <div className="relative w-full overflow-hidden">
-        <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
-          <div className="text-center">
-            <p className="text-gray-600 text-base md:text-lg">Banner data is invalid</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // BACKEND INTERACTION REMOVED: Previously had loading, error, and empty states
+  // 
+  // Loading State (Removed):
+  // if (loading) {
+  //   return (
+  //     <div className="relative w-full overflow-hidden">
+  //       <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
+  //         <div className="text-center">
+  //           <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-[var(--color-primary)] mx-auto mb-4"></div>
+  //           <p className="text-gray-600 text-sm md:text-base">Loading banners...</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  //
+  // Error State (Removed):
+  // if (error) {
+  //   return (
+  //     <div className="relative w-full overflow-hidden">
+  //       <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
+  //         <div className="text-center">
+  //           <p className="text-red-600 text-base md:text-lg">Failed to load banners</p>
+  //           <p className="text-gray-500 text-xs md:text-sm mt-2">Please try again later</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  //
+  // Empty State (Removed):
+  // if (!banners || banners.length === 0) {
+  //   return (
+  //     <div className="relative w-full overflow-hidden">
+  //       <div className="h-[500px] md:h-[500px] lg:h-[640px] flex items-center justify-center bg-gray-100">
+  //         <div className="text-center">
+  //           <p className="text-gray-600 text-base md:text-lg">No banners available</p>
+  //           <p className="text-gray-500 text-xs md:text-sm mt-2">
+  //             Please add some banners in the admin panel
+  //           </p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -137,6 +158,8 @@ export default function HeroBanner() {
       <div className="relative h-[500px] md:h-[500px] lg:h-[640px] bg-white overflow-hidden">
         
         {/* Background image with responsive sizing */}
+        {/* BACKEND INTERACTION: Previously used dynamic image URLs from database */}
+        {/* Now uses static image paths from public folder */}
         <div
           className="absolute inset-0 transition-all duration-500 ease-in-out"
           style={{
@@ -200,11 +223,13 @@ export default function HeroBanner() {
             <div className="max-w-full md:max-w-xl lg:max-w-2xl">
               
               {/* Heading with responsive text sizes */}
+              {/* BACKEND INTERACTION: Previously used dynamic title from database */}
               <h1 className="text-2xl md:text-3xl lg:text-5xl font-semibold text-white mb-3 md:mb-4 lg:mb-6 leading-tight transition-all duration-500">
                 {currentBanner.title}
               </h1>
 
               {/* Subtitle - hidden on mobile, shown on tablet+ */}
+              {/* BACKEND INTERACTION: Previously used dynamic subtitle from database */}
               {currentBanner.subtitle && (
                 <p className="hidden md:block text-base lg:text-xl text-gray-200 mb-2 lg:mb-0 leading-relaxed transition-all duration-500">
                   {currentBanner.subtitle}
@@ -212,16 +237,18 @@ export default function HeroBanner() {
               )}
 
               {/* Description with responsive text sizes */}
+              {/* BACKEND INTERACTION: Previously used dynamic description from database */}
               <p className="text-xs md:text-base lg:text-xl text-gray-200 mb-6 md:mb-6 lg:mb-8 leading-relaxed transition-all duration-500">
                 {/* Show both subtitle and description on mobile, just description on larger screens */}
                 <span className="md:hidden">
                   {currentBanner.subtitle}
                   {currentBanner.subtitle && <br />}
                 </span>
-                {currentBanner.description}
+                {/* {currentBanner.description} */}
               </p>
 
               {/* Shop now button with responsive sizing */}
+              {/* BACKEND INTERACTION: Previously used dynamic category slug from database */}
               <Button
                 variant="primary"
                 size="large"

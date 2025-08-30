@@ -1,16 +1,62 @@
 'use client';
 
-// This is your complete Next.js CategorySection component
-// Copy this entire code block to replace your existing component
-
 import { useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import useCategories from '../../../../lib/hooks/useCategories';
+// import useCategories from '../../../../lib/hooks/useCategories'; // BACKEND INTERACTION: Removed dynamic category fetching
 
 const CategorySection = () => {
   const router = useRouter();
-  const { categories, loading, error } = useCategories();
+  
+  // BACKEND INTERACTION: Previously used useCategories hook to fetch categories from API
+  // const { categories, loading, error } = useCategories();
+  // 
+  // The useCategories hook would:
+  // 1. Make API call to /api/categories
+  // 2. Fetch category data from database (MongoDB)
+  // 3. Handle loading states while fetching
+  // 4. Handle error states if API fails
+  // 5. Return categories array with image URLs, names, etc.
+
+  // STATIC CATEGORIES: Replaced dynamic fetching with static category data
+  // This eliminates the need for:
+  // - API calls to backend
+  // - Database queries
+  // - Loading states
+  // - Error handling for network issues
+  // - Admin panel category management
+  const categories = [
+    {
+      id: 1,
+      name: "Hair Care",
+      image: "/hair.jpg", // Static image from public folder
+      slug: "hair-care"
+    },
+    {
+      id: 2,
+      name: "Body & Shower",
+      image: "/body.jpg", // Static image from public folder
+      slug: "body-shower"
+    },
+    {
+      id: 3,
+      name: "Soap & Deodorants",
+      image: "/soap.jpg", // Static image from public folder
+      slug: "soap-deodorants"
+    },
+    {
+      id: 4,
+      name: "Skin Care",
+      image: "/skin.jpg", // Static image from public folder
+      slug: "skin-care"
+    },
+    {
+      id: 5,
+      name: "Oral & Misc",
+      image: "/tooth.jpg", // Static image from public folder
+      slug: "oral-misc"
+    }
+  ];
 
   // Utility function to normalize slug
   const normalizeSlug = useCallback((value) => {
@@ -25,29 +71,31 @@ const CategorySection = () => {
     router.push(`/category/${normalizeSlug(categoryName)}`);
   }, [router, normalizeSlug]);
 
-  // Loading state component
-  const LoadingState = () => (
-    <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
-      <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-        Shop by category
-      </h2>
-      <div className="flex justify-center items-center w-full h-32">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900" />
-      </div>
-    </div>
-  );
-
-  // Error state component
-  const ErrorState = () => (
-    <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
-      <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-        Shop by category
-      </h2>
-      <div className="text-red-500 text-center">
-        Failed to load categories. Please try again later.
-      </div>
-    </div>
-  );
+  // BACKEND INTERACTION REMOVED: Previously had loading and error states
+  // 
+  // Loading State (Removed):
+  // const LoadingState = () => (
+  //   <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+  //     <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
+  //       Shop by category
+  //     </h2>
+  //     <div className="flex justify-center items-center w-full h-32">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900" />
+  //     </div>
+  //   </div>
+  // );
+  //
+  // Error State (Removed):
+  // const ErrorState = () => (
+  //   <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
+  //     <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
+  //       Shop by category
+  //     </h2>
+  //     <div className="text-red-500 text-center">
+  //       Failed to load categories. Please try again later.
+  //     </div>
+  //   </div>
+  // );
 
   // Category item component
   const CategoryItem = ({ category, index }) => (
@@ -57,6 +105,7 @@ const CategorySection = () => {
       onClick={() => handleCategoryClick(category.name)}
     >
       {/* Category Image Container - Responsive sizing */}
+      {/* BACKEND INTERACTION: Previously used dynamic image URLs from database */}
       <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-200 
                      w-[100px] h-[100px] 
                      sm:w-[160px] sm:h-[160px] 
@@ -73,6 +122,7 @@ const CategorySection = () => {
       </div>
       
       {/* Category Name - Responsive text sizing */}
+      {/* BACKEND INTERACTION: Previously used dynamic category names from database */}
       <p className="text-[#000000] font-medium text-center mt-2 leading-normal tracking-[-0.28px] transition-colors duration-200 group-hover:text-[var(--color-primary)]
                    text-[10px] 
                    sm:text-xs 
@@ -84,10 +134,10 @@ const CategorySection = () => {
     </div>
   );
 
-  // Early returns for loading, error, and empty states
-  if (loading) return <LoadingState />;
-  if (error) return <ErrorState />;
-  if (!categories?.length) return null;
+  // BACKEND INTERACTION REMOVED: No longer need loading, error, or empty state checks
+  // if (loading) return <LoadingState />;
+  // if (error) return <ErrorState />;
+  // if (!categories?.length) return null;
 
   // Get categories for mobile layout (first 3 + remaining 2)
   const firstRowCategories = categories.slice(0, 3);
