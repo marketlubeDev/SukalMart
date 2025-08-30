@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import ProductCard from "../_components/_homepage/ProductCard";
 import ProductSidebar from "./_components/ProductSidebar";
 import ProductGrid from "./_components/ProductGrid";
@@ -8,7 +8,7 @@ import useProducts from "@/lib/hooks/useProducts";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-export default function ProductsPage() {
+function ProductsPageContent() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDiscount, setSelectedDiscount] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 0, max: 12999 });
@@ -645,5 +645,13 @@ export default function ProductsPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">Loading products...</div>}>
+      <ProductsPageContent />
+    </Suspense>
   );
 }
