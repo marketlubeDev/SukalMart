@@ -52,7 +52,7 @@ const ProductTableRow = ({
   return (
     <>
       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <td className="w-4 p-4">
+        {/* <td className="w-4 p-4">
           <div className="flex items-center">
             <input
               id={`checkbox-table-search-${product._id}`}
@@ -68,7 +68,7 @@ const ProductTableRow = ({
               checkbox
             </label>
           </div>
-        </td>
+        </td> */}
         <th
           scope="row"
           className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-2 cursor-pointer"
