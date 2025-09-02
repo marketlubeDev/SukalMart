@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaHeart } from "react-icons/fa6";
 import { useWishlist } from "../_components/context/WishlistContext";
 import Image from "next/image";
 
@@ -53,12 +52,12 @@ function WishlistCard({ product, onRemove }) {
             onRemove(product.id);
           }}
           aria-label="Remove from wishlist"
-          className="absolute top-2 right-2 bg-white/90 rounded-full p-2 shadow hover:scale-105 transition-transform cursor-pointer"
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 shadow hover:scale-105 transition-transform cursor-pointer"
         >
-          <FaHeart className="w-4 h-4 text-red-600" />
+          <Image src="/like-black.svg" alt="Remove from wishlist" width={16} height={16} className="w-4 h-4" />
         </button>
       </div>
-      <div className="p-4">
+      <div className="p-3">
         <h3 className="text-sm font-semibold text-gray-900 mb-1">{product.name}</h3>
         <p className="text-xs text-gray-600 mb-3">{product.type}</p>
         <div className="flex items-center gap-2">
@@ -139,7 +138,7 @@ export default function WishlistPage() {
         {products.length === 0 ? (
           <div className="text-center text-gray-600 py-16">Your wishlist is empty.</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {products.map((product) => (
               <WishlistCard key={product.id} product={product} onRemove={remove} />
             ))}

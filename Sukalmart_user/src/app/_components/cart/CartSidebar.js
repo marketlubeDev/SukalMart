@@ -143,6 +143,7 @@ export default function CartSidebar({ isOpen, onClose }) {
         onClose={onClose}
         open={isOpen}
         width={drawerWidth}
+        overflow="hidden"
         className="cart-drawer-custom"
         styles={{
           body: {

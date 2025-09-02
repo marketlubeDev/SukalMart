@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
+        {/* <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0">
           <Button
           variant="primary"
             size="large"
@@ -89,7 +89,7 @@ export default function PrivacyPolicy() {
             className="w-full sm:w-auto px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded-md hover:bg-[var(--color-primary)]/10 transition-colors text-sm cursor-pointer">
             Print Policy
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -504,6 +504,21 @@ function NavContent() {
                     </div>
                   </div>
 
+                  {/* Wishlist */}
+                  <Link
+                    href="/wishlist"
+                    className="relative p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                    aria-label="Wishlist"
+                  >
+                    <Image
+                      src="/like-black.svg"
+                      alt="wishlist"
+                      width={24}
+                      height={20}
+                      className="w-6 h-5"
+                    />
+                  </Link>
+
                   {/* Cart */}
                   <button
                     onClick={toggleCart}
@@ -837,6 +852,21 @@ function NavContent() {
                 </div>
               </div>
 
+              {/* Mobile Wishlist */}
+              <Link
+                href="/wishlist"
+                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                aria-label="Wishlist"
+              >
+                <Image
+                  src="/like-black.svg"
+                  alt="wishlist"
+                  width={20}
+                  height={18}
+                  className="w-5 h-[18px]"
+                />
+              </Link>
+
               {/* Mobile Cart */}
               <button
                 onClick={toggleCart}
@@ -931,6 +961,18 @@ function NavContent() {
                 )}
               </div>
             ))}
+
+            {/* Wishlist Link */}
+            <div className="border-b border-gray-100 last:border-b-0">
+              <Link
+                href="/wishlist"
+                className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Wishlist</span>
+                <Image src="/like-black.svg" alt="wishlist" width={18} height={16} className="w-[18px] h-4" />
+              </Link>
+            </div>
 
             {/* Mobile User Section */}
             <div className="pt-4 mt-4 border-t border-gray-200">
