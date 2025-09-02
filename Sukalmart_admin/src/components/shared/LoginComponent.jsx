@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../sevices/adminApis";
 import { toast } from "react-toastify";
-
+import Logo from "../../../public/logo/souqalmart-logo-name.svg";
 function LoginComponent() {
   const [values, setValues] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,9 @@ function LoginComponent() {
     <div className="h-screen flex items-center w-full">
       <div className="w-1/2 bg-[var(--color-primary)] h-full hidden md:flex  items-center justify-center">
         <img
-          src="/public/logo/souqalmart-logo-white.svg"
+          src={
+            "https://marketlube-ecommerce.s3.ap-south-1.amazonaws.com/sukalmart/Logo/souqalmart-logo-white.svg"
+          }
           alt="logo image"
           className="w-[20rem]"
         />

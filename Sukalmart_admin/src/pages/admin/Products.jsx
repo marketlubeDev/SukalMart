@@ -339,12 +339,12 @@ function Products({ role }) {
                   x Remove Offer
                 </button>
               )} */}
-              <button
+              {/* <button
                 onClick={() => setShowBulkOfferModal(true)}
                 className="border-2 border-green-500 text-green-500 p-2 rounded-md hover:bg-green-500 hover:text-white transition-colors"
               >
                 + Add Bulk Offer
-              </button>
+              </button> */}
               {!isProductSelected && (
                 <button
                   onClick={() =>

@@ -47,7 +47,7 @@ function DashBoard() {
       <div className="flex flex-col lg:flex-row items-center justify-evenly  py-3 bg-white md:p-4">
         <div>
           <img
-            src="/public/logo/souqalmart-logo-name.svg"
+            src="https://marketlube-ecommerce.s3.ap-south-1.amazonaws.com/sukalmart/Logo/souqalmart-logo-name.svg"
             alt="logo image"
             className="w-[14rem] md:w-[12rem] md:p-4"
           />
