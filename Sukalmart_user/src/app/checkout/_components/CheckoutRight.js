@@ -10,6 +10,7 @@ export default function CheckoutRight() {
   const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [showAddressForm, setShowAddressForm] = useState(false);
+  const [showMoreCards, setShowMoreCards] = useState(false);
 
   // Check URL parameter to show address form
   useEffect(() => {
@@ -169,7 +170,18 @@ export default function CheckoutRight() {
                 <div className="flex items-center space-x-2 md:justify-end">
                   <Image src="/upi.png" alt="UPI" width={16} height={12} className="h-3 w-auto md:h-4" />
                   <Image src="/rupay.png" alt="RuPay" width={16} height={12} className="h-3 w-auto md:h-4" />
-                  <span className="text-xs text-gray-500">+more</span>
+                  {showMoreCards && (
+                    <>
+                      <Image src="/card3.png" alt="Card 3" width={16} height={12} className="h-3 w-auto md:h-4" />
+                      <Image src="/card4.png" alt="Card 4" width={16} height={12} className="h-3 w-auto md:h-4" />
+                    </>
+                  )}
+                  <button
+                    onClick={() => setShowMoreCards(!showMoreCards)}
+                    className="text-xs text-gray-500 hover:text-gray-700 cursor-pointer"
+                  >
+                    {showMoreCards ? '− less' : '+ more'}
+                  </button>
                 </div>
               </div>
             </div>

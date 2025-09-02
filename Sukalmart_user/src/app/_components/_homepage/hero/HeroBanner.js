@@ -39,28 +39,28 @@ export default function HeroBanner() {
   const banners = [
     {
       id: 1,
-      image: "/banners1.jpg", // Static image from public folder
+      image: "/banners1-resize.jpg", // Static image from public folder
       title: "Discover Your Perfect Style",
       subtitle: "Premium Beauty Collection",
       description: "Explore our curated selection of premium beauty products designed to enhance your natural beauty and boost your confidence."
     },
     {
       id: 2,
-      image: "/banners2.jpg", // Static image from public folder
+      image: "/banners2-resize.jpg", // Static image from public folder
       title: "Summer Beauty Essentials",
       subtitle: "Fresh & Radiant Look",
       description: "Get ready for summer with our essential beauty products that keep you looking fresh and radiant all day long."
     },
     {
       id: 3,
-      image: "/banners1.jpg", // Reusing first image with different content
+      image: "/banners1-resize.jpg", // Reusing first image with different content
       title: "Professional Hair Care",
       subtitle: "Salon-Quality Results",
       description: "Transform your hair with our professional-grade hair care products that deliver salon-quality results at home."
     },
     {
       id: 4,
-      image: "/banners2.jpg", // Reusing second image with different content
+      image: "/banners2-resize.jpg", // Reusing second image with different content
       title: "Skincare Revolution",
       subtitle: "Advanced Formulations",
       description: "Experience the future of skincare with our advanced formulations that target your specific skin concerns."

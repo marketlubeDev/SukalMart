@@ -29,31 +29,31 @@ const CategorySection = () => {
     {
       id: 1,
       name: "Hair Care",
-      image: "/hair.jpg", // Static image from public folder
+      image: "/hair-resize.jpg", // Static image from public folder
       slug: "hair-care"
     },
     {
       id: 2,
       name: "Body & Shower",
-      image: "/body.jpg", // Static image from public folder
+      image: "/body-resize.jpg", // Static image from public folder
       slug: "body-shower"
     },
     {
       id: 3,
       name: "Soap & Deodorants",
-      image: "/soap.jpg", // Static image from public folder
+      image: "/soap-resize.jpg", // Static image from public folder
       slug: "soap-deodorants"
     },
     {
       id: 4,
       name: "Skin Care",
-      image: "/skin.jpg", // Static image from public folder
+      image: "/skin-resize.jpg", // Static image from public folder
       slug: "skin-care"
     },
     {
       id: 5,
       name: "Oral & Misc",
-      image: "/tooth.jpg", // Static image from public folder
+      image: "/tooth-resize.jpg", // Static image from public folder
       slug: "oral-misc"
     }
   ];
