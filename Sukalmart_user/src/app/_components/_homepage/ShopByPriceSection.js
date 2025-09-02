@@ -212,7 +212,12 @@ export default function ShopByPriceSection({ selectedCategory }) {
               />
             </div>
             <div className="text-center">
-              <p className="text-[10px] sm:text-sm md:text-xs font-medium sm:font-semibold text-gray-800 leading-tight tracking-tight">
+              <p className="text-[#000000] font-medium text-center mt-2 leading-normal tracking-[-0.28px] transition-colors duration-200 group-hover:text-[var(--color-primary)]
+                   text-[10px] 
+                   sm:text-xs 
+                   md:text-[13px] 
+                   lg:text-xs 
+                   xl:text-sm">
                 {item.range}
               </p>
             </div>

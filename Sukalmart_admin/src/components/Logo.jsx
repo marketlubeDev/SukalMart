@@ -2,10 +2,10 @@ import React from "react";
 
 function Logo() {
   return (
-    <div>
+    <div className="w-24 md:w-32">
       <img
-        src="/public/logo/Logo.png"
-        className="w-3 h-3 md:w-[3rem] md:h-[3rem] object-cover"
+        src="/public/logo/souqalmart-logo-name.svg"
+        className="w-full h-auto object-contain"
         alt="Logo image"
       />
     </div>

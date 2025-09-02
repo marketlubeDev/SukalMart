@@ -39,11 +39,11 @@ function LoginComponent() {
 
   return (
     <div className="h-screen flex items-center w-full">
-      <div className="w-1/2 bg-[#76B69B] h-full hidden md:flex  items-center justify-center">
+      <div className="w-1/2 bg-[var(--color-primary)] h-full hidden md:flex  items-center justify-center">
         <img
-          src="/public/logo/Logo.png"
+          src="/public/logo/souqalmart-logo-white.svg"
           alt="logo image"
-          className="w-[15rem]"
+          className="w-[20rem]"
         />
       </div>
       <div className="w-full md:w-1/2 flex justify-center p-3 md:p-0">
@@ -100,7 +100,7 @@ function LoginComponent() {
 
               <button
                 type="button"
-                className={`text-white w-full bg-[#76B69B] hover:bg-[#76B69B] focus:ring-4 focus:outline-none focus:ring-[#76B69B] dark:focus:ring-[#76B69B] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ${
+                className={`text-white w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary)] focus:ring-4 focus:outline-none focus:ring-[var(--color-primary)] dark:focus:ring-[var(--color-primary)] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ${
                   isLoading ? "opacity-75 cursor-not-allowed" : ""
                 }`}
                 onClick={onlogin}
