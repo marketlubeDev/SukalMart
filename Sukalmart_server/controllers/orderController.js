@@ -75,7 +75,6 @@ const utilitesModel = require("../model/utilitesModel");
 const payment = catchAsync(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user });
 
-
   let totalAmount = 0;
   let deliveryCharges = 0;
   if (cart.couponStatus) {
@@ -155,7 +154,6 @@ const verifyPayment = catchAsync(async (req, res, next) => {
         (v) => v._id.toString() === item.variant.toString()
       );
 
-
       price = variant.offerPrice || variant.price;
       stock = variant.stock;
 
@@ -178,7 +176,6 @@ const verifyPayment = catchAsync(async (req, res, next) => {
     }
 
     // const itemTotal = price * item.quantity;
-
 
     validatedProducts.push({
       productId: product._id,
@@ -324,7 +321,6 @@ const placeOrder = catchAsync(async (req, res, next) => {
     finalAmount -= cart.couponApplied.discountAmount;
   }
 
-
   let deliveryCharges = 0;
 
   const utilites = await utilitesModel.find();
@@ -333,8 +329,6 @@ const placeOrder = catchAsync(async (req, res, next) => {
     deliveryCharges = utilites[0].deliveryCharges;
     finalAmount = finalAmount + deliveryCharges;
   }
-
-
 
   let newOrder;
 
@@ -552,11 +546,11 @@ const filterOrders = catchAsync(async (req, res, next) => {
     totalPages = Math.ceil(totalOrders / limit);
   }
 
-  if (orders.length === 0) {
-    return res
-      .status(404)
-      .json({ message: "No orders found matching the criteria." });
-  }
+  // if (orders.length === 0) {
+  //   return res
+  //     .status(404)
+  //     .json({ message: "No orders found matching the criteria." });
+  // }
 
   res.status(200).json({
     message: "Orders retrieved successfully",
