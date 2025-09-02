@@ -72,29 +72,129 @@ function ProductsPageContent() {
   });
 
   // Static product data
-  const staticProduct = {
-    id: "static-premium-hair-oil",
-    name: "Premium Hair Growth Oil",
-    type: "Hair Care",
-    category: "Hair Care",
-    price: 899,
-    originalPrice: 1299,
-    image: "/haircare1.jpg",
-    description: "Advanced hair growth formula with natural ingredients",
-    features: [
-      "Promotes hair growth",
-      "Reduces hair fall",
-      "Natural ingredients",
-      "Suitable for all hair types"
-    ],
-    rating: 4.8,
-    reviews: 1247,
-    inStock: true,
-    discount: 31
-  };
+  const staticProducts = [
+    {
+      id: "static-premium-hair-oil",
+      name: "Premium Hair Growth Oil",
+      type: "Hair Care",
+      category: "Hair Care",
+      price: 899,
+      originalPrice: 1299,
+      image: "/haircare1.jpg",
+      description: "Advanced hair growth formula with natural ingredients",
+      features: [
+        "Promotes hair growth",
+        "Reduces hair fall",
+        "Natural ingredients",
+        "Suitable for all hair types"
+      ],
+      rating: 4.8,
+      reviews: 1247,
+      inStock: true,
+      discount: 31
+    },
+    {
+      id: "static-herbal-shampoo",
+      name: "Herbal Strengthening Shampoo",
+      type: "Hair Care",
+      category: "Hair Care",
+      price: 499,
+      originalPrice: 699,
+      image: "/haircare2.jpg",
+      description: "Gentle daily shampoo with herbal actives for stronger hair",
+      features: [
+        "Strengthens hair",
+        "Gentle cleansing",
+        "Herbal formulation"
+      ],
+      rating: 4.5,
+      reviews: 682,
+      inStock: true,
+      discount: 29
+    },
+    {
+      id: "static-silky-conditioner",
+      name: "Silky Smooth Conditioner",
+      type: "Hair Care",
+      category: "Hair Care",
+      price: 549,
+      originalPrice: 799,
+      image: "/haircare3.jpg",
+      description: "Nourishing conditioner for soft, tangle-free hair",
+      features: [
+        "Deep nourishment",
+        "Reduces frizz",
+        "Detangles effectively"
+      ],
+      rating: 4.6,
+      reviews: 512,
+      inStock: true,
+      discount: 31
+    },
+    {
+      id: "static-body-wash",
+      name: "Refreshing Body Wash",
+      type: "Body & Shower",
+      category: "Body & Shower",
+      price: 399,
+      originalPrice: 549,
+      image: "/newlaunch4.jpeg",
+      description: "Invigorating body wash with moisturizing ingredients",
+      features: [
+        "Moisturizes skin",
+        "Fresh fragrance",
+        "Soap-free formula"
+      ],
+      rating: 4.4,
+      reviews: 334,
+      inStock: true,
+      discount: 27
+    },
+    {
+      id: "static-skin-serum",
+      name: "Radiance Boost Face Serum",
+      type: "Skin Care",
+      category: "Skin Care",
+      price: 1199,
+      originalPrice: 1599,
+      image: "/newlaunch3.jpg",
+      description: "Vitamin-rich serum for glowing, even-toned skin",
+      features: [
+        "Brightens complexion",
+        "Lightweight texture",
+        "Dermatologically tested"
+      ],
+      rating: 4.7,
+      reviews: 741,
+      inStock: true,
+      discount: 25
+    },
+    {
+      id: "static-oral-care",
+      name: "Complete Oral Care Toothpaste",
+      type: "Oral & Misc",
+      category: "Oral & Misc",
+      price: 199,
+      originalPrice: 249,
+      image: "/newlaunch2.jpg",
+      description: "Multi-action toothpaste for clean teeth and fresh breath",
+      features: [
+        "Anti-cavity protection",
+        "Fresh mint",
+        "Whitening action"
+      ],
+      rating: 4.3,
+      reviews: 268,
+      inStock: true,
+      discount: 20
+    }
+  ];
 
   // Combine static product with API products
-  const allProducts = [staticProduct, ...(Array.isArray(products) ? products : [])];
+  const allProducts = [
+    ...staticProducts,
+    ...(Array.isArray(products) ? products : [])
+  ];
 
   console.log(allProducts, "productsewrewrewr");
   // Reset category when page loads (when coming from Products navbar link)
