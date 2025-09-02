@@ -6,6 +6,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import NavigationBar from "./NavigationBar";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
+import useCategories from "../../lib/hooks/useCategories"; // BACKEND INTERACTION: Removed dynamic category fetching
 
 // Import your data
 import {
@@ -50,20 +51,29 @@ function NavContent() {
   // Refs
   const resultsRef = useRef(null);
   const mobileLangRef = useRef(null);
-  
+
   // Hooks
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isBigTablet = useBigTablet();
+  const {
+    categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useCategories();
+
+  console.log(categories, "API categories for navigation");
 
   // Initialize authentication state
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = window.localStorage?.getItem("token") || window.localStorage?.getItem("userToken");
+    if (typeof window !== "undefined") {
+      const token =
+        window.localStorage?.getItem("token") ||
+        window.localStorage?.getItem("userToken");
       const user = window.localStorage?.getItem("user");
       const savedLang = window.localStorage?.getItem("language");
-      
+
       setAuthToken(token);
       setIsAuthenticated(!!token);
       if (user) {
@@ -82,32 +92,32 @@ function NavContent() {
   // Build product search list
   const allProducts = useMemo(() => {
     const fpProducts = (fp || []).map((p) => ({
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price, 
-      originalPrice: p.originalPrice, 
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price,
+      originalPrice: p.originalPrice,
       category: p.category,
     }));
-    
+
     const bsProducts = (bs || []).map((p) => ({
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price, 
-      originalPrice: p.originalPrice, 
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price,
+      originalPrice: p.originalPrice,
       category: p.category,
     }));
-    
+
     const catalogProductsList = (catalogProducts || []).map((p) => ({
-      id: String(p.id), 
-      name: p.name, 
-      image: p.image, 
-      price: p.price ? `₹${p.price}` : undefined, 
-      originalPrice: p.originalPrice, 
+      id: String(p.id),
+      name: p.name,
+      image: p.image,
+      price: p.price ? `₹${p.price}` : undefined,
+      originalPrice: p.originalPrice,
       category: p.category || p.type,
     }));
-    
+
     return [...fpProducts, ...bsProducts, ...catalogProductsList];
   }, []);
 
@@ -118,12 +128,12 @@ function NavContent() {
       setSearchResults([]);
       return;
     }
-    
+
     const nameMatches = allProducts.filter((p) =>
       p.name.toLowerCase().includes(q)
     );
     const results = nameMatches.slice(0, 8);
-    
+
     setSearchResults(results);
   }, [searchQuery, allProducts]);
 
@@ -166,9 +176,9 @@ function NavContent() {
   useEffect(() => {
     function handleOutsideClick(e) {
       // Check if click is outside both dropdowns
-      const isOutsideLanguageDropdown = !e.target.closest('.language-dropdown');
-      const isOutsideUserDropdown = !e.target.closest('.user-dropdown');
-      
+      const isOutsideLanguageDropdown = !e.target.closest(".language-dropdown");
+      const isOutsideUserDropdown = !e.target.closest(".user-dropdown");
+
       if (isOutsideLanguageDropdown && isOutsideUserDropdown) {
         setIsLanguageDropdownOpen(false);
         setIsUserDropdownOpen(false);
@@ -236,9 +246,9 @@ function NavContent() {
   const toggleLanguage = (newLang) => {
     setLanguage(newLang);
     setIsLanguageDropdownOpen(false);
-    if (typeof window !== 'undefined') {
-      try { 
-        window.localStorage?.setItem("language", newLang); 
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage?.setItem("language", newLang);
       } catch (e) {
         console.error("Error saving language:", e);
       }
@@ -275,7 +285,7 @@ function NavContent() {
   };
 
   const handleSignOut = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.localStorage?.removeItem("token");
       window.localStorage?.removeItem("user");
       window.localStorage?.removeItem("selectedCategory");
@@ -296,65 +306,45 @@ function NavContent() {
     setShowSearchBar(false);
   };
 
-  // Navigation items
-  const navigationItems = [
-    {
-      label: "Products",
-      hasDropdown: false,
-      href: "/products",
-    },
-    {
-      label: "Hair Care",
-      hasDropdown: true,
-      href: "/products?category=Hair%20Care",
-      submenu: ["Shampoo", "Conditioner", "Hair Oil", "Hair Serum"],
-    },
-    {
-      label: "Body & Shower",
-      hasDropdown: true,
-      href: "/products?category=Body%20%26%20Shower",
-      submenu: [
-        "Body Wash",
-        "Body Lotion",
-        "Body Cream",
-        "Body Oil",
-        "Body Soap",
-      ],
-    },
-    {
-      label: "Soap & Deodorants",
-      hasDropdown: true,
-      href: "/products?category=Soap%20%26%20Deodorants",
-      submenu: [
-        "Deodorant",
-        "Deodorant Stick",
-        "Deodorant Spray",
-        "Deodorant Roll-On",
-      ],
-    },
-    {
-      label: "Skin Care",
-      hasDropdown: true,
-      href: "/products?category=Skin%20Care",
-      submenu: [
-        "Face Wash",
-        "Face Cream",
-        "Face Oil",
-        "Face Serum",
-        "Face Moisturizer",
-      ],
-    },
-    {
-      label: "Oral & Misc",
-      hasDropdown: true,
-      href: "/products?category=Oral%20%26%20Misc",
-      submenu: ["Toothpaste", "Toothbrush", "Mouthwash"],
-    },
-  ];
+  // Dynamic navigation items from API categories
+  const navigationItems = useMemo(() => {
+    const items = [
+      {
+        label: "Products",
+        hasDropdown: false,
+        href: "/products",
+      },
+    ];
 
+    // Add categories from API
+    if (categories && categories.length > 0) {
+      categories.forEach((category) => {
+        const hasSubcategories =
+          category.subcategories &&
+          Array.isArray(category.subcategories) &&
+          category.subcategories.length > 0;
+
+        items.push({
+          label: category.name,
+          hasDropdown: hasSubcategories,
+          href: `/products?category=${encodeURIComponent(category.name)}`,
+          submenu: hasSubcategories
+            ? category.subcategories.map((sub) => sub.name || sub)
+            : [],
+        });
+      });
+    }
+
+    return items;
+  }, [categories]);
+
+  console.log(navigationItems, "navigationItems");
   return (
     <>
-      <nav className="bg-white shadow-sm sticky top-0 z-50 relative " style={{ isolation: 'isolate' }}>
+      <nav
+        className="bg-white shadow-sm sticky top-0 z-50 relative "
+        style={{ isolation: "isolate" }}
+      >
         {/* Main Header */}
         <div className="bg-white">
           <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
@@ -362,7 +352,13 @@ function NavContent() {
               {/* Desktop Logo */}
               <div className="flex-shrink-0 pr-6 hidden lg:block">
                 <Link href="/" className="flex items-center">
-                  <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
+                  <Image
+                    src="/souqalmart-logo-name.svg"
+                    alt="Souqalmart"
+                    width={200}
+                    height={32}
+                    className="h-8 w-auto"
+                  />
                 </Link>
               </div>
 
@@ -370,7 +366,14 @@ function NavContent() {
               <div className="hidden lg:flex lg:items-center flex-1 justify-center">
                 {showSearchBar ? (
                   <div className="relative">
-                    <div className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]" style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}>
+                    <div
+                      className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px]"
+                      style={{
+                        borderRadius: "8px",
+                        border: "1px solid rgba(0, 0, 0, 0.10)",
+                        background: "rgba(0, 0, 0, 0.02)",
+                      }}
+                    >
                       <Image
                         src="/searchicon.svg"
                         alt="search"
@@ -393,8 +396,8 @@ function NavContent() {
                       >
                         {searchResults.length > 0 ? (
                           searchResults.map((p) => (
-                            <div 
-                              key={`${p.id}-${p.name}`} 
+                            <div
+                              key={`${p.id}-${p.name}`}
                               className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
                               onClick={() => handleSearchProductClick(p.id)}
                             >
@@ -406,9 +409,12 @@ function NavContent() {
                                   height={40}
                                   className="w-10 h-10 object-cover rounded"
                                   onError={(e) => {
-                                    e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                    e.target.src =
+                                      "https://via.placeholder.com/40x40?text=Product";
                                   }}
-                                  unoptimized={p.image?.includes('amazonaws.com')}
+                                  unoptimized={p.image?.includes(
+                                    "amazonaws.com"
+                                  )}
                                 />
                               )}
                               <div className="flex flex-col min-w-0">
@@ -441,9 +447,13 @@ function NavContent() {
                     )}
                   </div>
                 ) : (
-                  <div 
-                    className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px] cursor-pointer" 
-                    style={{ borderRadius: '8px', border: '1px solid rgba(0, 0, 0, 0.10)', background: 'rgba(0, 0, 0, 0.02)' }}
+                  <div
+                    className="flex items-center h-10 rounded-lg px-4 w-[350px] md:w-[500px] lg:w-[450px] xl:w-[550px] cursor-pointer"
+                    style={{
+                      borderRadius: "8px",
+                      border: "1px solid rgba(0, 0, 0, 0.10)",
+                      background: "rgba(0, 0, 0, 0.02)",
+                    }}
                     onClick={() => setShowSearchBar(true)}
                   >
                     <Image
@@ -468,37 +478,86 @@ function NavContent() {
                 <div className="flex items-center space-x-2">
                   {/* Language Selector */}
                   <div className="relative group language-dropdown">
-                    <button 
+                    <button
                       className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                       onClick={toggleLanguageDropdown}
                     >
-                      <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={20} height={20} className="w-5 h-5 rounded-full" />
-                      <span className="text-sm font-medium text-gray-700">{language}</span>
+                      <Image
+                        src={
+                          language === "EN" ? "/english.svg" : "/arabicicon.svg"
+                        }
+                        alt={language === "EN" ? "English" : "Arabic"}
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 rounded-full"
+                      />
+                      <span className="text-sm font-medium text-gray-700">
+                        {language}
+                      </span>
                       <Image
                         src="/dropdownicon.svg"
                         alt="dropdown"
                         width={8}
                         height={5}
-                        className={`w-[8px] h-[5px] transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`}
+                        className={`w-[8px] h-[5px] transition-transform duration-200 ${
+                          isLanguageDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
                     {/* Language Dropdown */}
-                    <div className={`absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isLanguageDropdownOpen || 'group-hover:opacity-100 group-hover:visible'} ${isLanguageDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                    <div
+                      className={`absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+                        isLanguageDropdownOpen ||
+                        "group-hover:opacity-100 group-hover:visible"
+                      } ${
+                        isLanguageDropdownOpen
+                          ? "opacity-100 visible"
+                          : "opacity-0 invisible"
+                      }`}
+                    >
                       <div className="py-2">
-                        <button 
+                        <button
                           onClick={() => toggleLanguage("EN")}
                           className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                         >
-                          <Image src="/english.svg" alt="English" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
-                          <span className={`${language === "EN" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>EN</span>
+                          <Image
+                            src="/english.svg"
+                            alt="English"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 rounded-full mr-3"
+                          />
+                          <span
+                            className={`${
+                              language === "EN"
+                                ? "text-[#6D0D26] font-medium"
+                                : "text-gray-400"
+                            }`}
+                          >
+                            EN
+                          </span>
                         </button>
-                        <button 
+                        <button
                           onClick={() => toggleLanguage("AR")}
                           className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                         >
-                          <Image src="/arabicicon.svg" alt="Arabic" width={20} height={20} className="w-5 h-5 rounded-full mr-3" />
-                          <span className={`${language === "AR" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>AR</span>
+                          <Image
+                            src="/arabicicon.svg"
+                            alt="Arabic"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 rounded-full mr-3"
+                          />
+                          <span
+                            className={`${
+                              language === "AR"
+                                ? "text-[#6D0D26] font-medium"
+                                : "text-gray-400"
+                            }`}
+                          >
+                            AR
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -535,22 +594,39 @@ function NavContent() {
 
                   {/* User Profile / Login */}
                   <div className="relative group user-dropdown">
-                    <button 
+                    <button
                       className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                       onClick={toggleUserDropdown}
                     >
-                      <Image src="/usericon.svg" alt="user" width={24} height={24} className="w-6 h-6" />
+                      <Image
+                        src="/usericon.svg"
+                        alt="user"
+                        width={24}
+                        height={24}
+                        className="w-6 h-6"
+                      />
                       <Image
                         src="/dropdownicon.svg"
                         alt="dropdown"
                         width={8}
                         height={5}
-                        className={`w-[8px] h-[5px] transition-transform duration-200 ${isUserDropdownOpen ? 'rotate-180' : ''}`}
+                        className={`w-[8px] h-[5px] transition-transform duration-200 ${
+                          isUserDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
                     {/* User Dropdown */}
-                    <div className={`absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isUserDropdownOpen || 'group-hover:opacity-100 group-hover:visible'} ${isUserDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+                    <div
+                      className={`absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+                        isUserDropdownOpen ||
+                        "group-hover:opacity-100 group-hover:visible"
+                      } ${
+                        isUserDropdownOpen
+                          ? "opacity-100 visible"
+                          : "opacity-0 invisible"
+                      }`}
+                    >
                       <div className="py-2">
                         {isAuthenticated ? (
                           <>
@@ -561,8 +637,18 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
                               </svg>
                               Personal info
                             </button>
@@ -574,8 +660,18 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                />
                               </svg>
                               My orders
                             </button>
@@ -587,9 +683,24 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
                               </svg>
                               Addresses
                             </button>
@@ -601,8 +712,18 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
+                                />
                               </svg>
                               Help & Support
                             </button>
@@ -614,8 +735,18 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
                               </svg>
                               Privacy Policy
                             </button>
@@ -626,8 +757,18 @@ function NavContent() {
                               onClick={handleSignOut}
                               className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
                             >
-                              <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                              <svg
+                                className="w-4 h-4 mr-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                                />
                               </svg>
                               Logout
                             </button>
@@ -641,39 +782,77 @@ function NavContent() {
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon7.svg"
+                                alt="personal info"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               Personal info
                             </button>
 
                             <button
-                              onClick={() => router.push("/my-account?tab=my-orders")}
+                              onClick={() =>
+                                router.push("/my-account?tab=my-orders")
+                              }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon6.svg"
+                                alt="my orders"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               My orders
                             </button>
 
                             <button
-                              onClick={() => router.push("/my-account?tab=saved-address")}
+                              onClick={() =>
+                                router.push("/my-account?tab=saved-address")
+                              }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon4.svg"
+                                alt="addresses"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               Addresses
                             </button>
 
                             <button
-                              onClick={() => router.push("/my-account?tab=help")}
+                              onClick={() =>
+                                router.push("/my-account?tab=help")
+                              }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon3.svg"
+                                alt="help support"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               Help & Support
                             </button>
 
                             <button
-                              onClick={() => router.push("/my-account?tab=privacy-policy")}
+                              onClick={() =>
+                                router.push("/my-account?tab=privacy-policy")
+                              }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
-                              <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon8.svg"
+                                alt="privacy policy"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               Privacy Policy
                             </button>
 
@@ -683,7 +862,13 @@ function NavContent() {
                               onClick={handleSignOut}
                               className="flex items-center w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 cursor-pointer"
                             >
-                              <Image src="/icon5.svg" alt="logout" width={20} height={20} className="w-5 h-5 mr-3" />
+                              <Image
+                                src="/icon5.svg"
+                                alt="logout"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5 mr-3"
+                              />
                               Logout
                             </button>
                           </>
@@ -697,7 +882,7 @@ function NavContent() {
           </div>
 
           {/* Navigation Bar */}
-          <NavigationBar />
+          <NavigationBar navigationItems={navigationItems} />
 
           {/* Mobile Layout */}
           <div className="lg:hidden flex items-center justify-between w-full h-14 px-3 md:px-6">
@@ -709,19 +894,45 @@ function NavContent() {
               >
                 <span className="sr-only">Open main menu</span>
                 {!isMobileMenuOpen ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
                   </svg>
                 ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 )}
               </button>
 
               {!showSearchBar && (
                 <Link href="/" className="flex items-center ml-2">
-                  <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={150} height={24} className="h-6 w-auto" />
+                  <Image
+                    src="/souqalmart-logo-name.svg"
+                    alt="Souqalmart"
+                    width={150}
+                    height={24}
+                    className="h-6 w-auto"
+                  />
                 </Link>
               )}
             </div>
@@ -732,7 +943,13 @@ function NavContent() {
                 <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[400px]">
                   <div className="relative">
                     <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
-                      <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4 mr-2 opacity-60" />
+                      <Image
+                        src="/searchicon.svg"
+                        alt="search"
+                        width={16}
+                        height={16}
+                        className="w-4 h-4 mr-2 opacity-60"
+                      />
                       <input
                         type="text"
                         value={searchQuery}
@@ -745,31 +962,36 @@ function NavContent() {
                       <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-auto z-50">
                         {searchResults.length > 0 ? (
                           searchResults.map((p) => (
-                            <div 
-                              key={`${p.id}-${p.name}`} 
+                            <div
+                              key={`${p.id}-${p.name}`}
                               className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer"
                               onClick={() => handleSearchProductClick(p.id)}
                             >
                               {p.image && (
-                                <Image 
-                                  src={p.image} 
-                                  alt={p.name} 
-                                  width={40} 
-                                  height={40} 
+                                <Image
+                                  src={p.image}
+                                  alt={p.name}
+                                  width={40}
+                                  height={40}
                                   className="w-10 h-10 object-cover rounded"
                                   onError={(e) => {
-                                    e.target.src = "https://via.placeholder.com/40x40?text=Product";
+                                    e.target.src =
+                                      "https://via.placeholder.com/40x40?text=Product";
                                   }}
-                                  unoptimized={p.image?.includes('amazonaws.com')}
+                                  unoptimized={p.image?.includes(
+                                    "amazonaws.com"
+                                  )}
                                 />
                               )}
                               <div className="flex flex-col min-w-0">
-                                <span className="text-gray-900 text-sm font-medium truncate">{p.name}</span>
+                                <span className="text-gray-900 text-sm font-medium truncate">
+                                  {p.name}
+                                </span>
                                 {(p.category || p.price) && (
                                   <span className="text-xs text-gray-500 truncate">
-                                    {p.category ? `${p.category}` : ''}
-                                    {p.category && p.price ? ' · ' : ''}
-                                    {p.price ? `${p.price}` : ''}
+                                    {p.category ? `${p.category}` : ""}
+                                    {p.category && p.price ? " · " : ""}
+                                    {p.price ? `${p.price}` : ""}
                                   </span>
                                 )}
                               </div>
@@ -777,7 +999,13 @@ function NavContent() {
                           ))
                         ) : (
                           <div className="flex items-center gap-2 px-4 py-6 text-gray-500">
-                            <Image src="/searchicon.svg" alt="no results" width={16} height={16} className="w-4 h-4 opacity-60" />
+                            <Image
+                              src="/searchicon.svg"
+                              alt="no results"
+                              width={16}
+                              height={16}
+                              className="w-4 h-4 opacity-60"
+                            />
                             <span className="text-sm">No products found</span>
                           </div>
                         )}
@@ -791,31 +1019,55 @@ function NavContent() {
             {/* Right Group - Search Icon, Language Selector, and Cart */}
             <div className="flex items-center space-x-1">
               {showSearchBar ? (
-                <button 
+                <button
                   onClick={() => setShowSearchBar(false)}
                   className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               ) : (
-                <button 
+                <button
                   onClick={() => setShowSearchBar(true)}
                   className="p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 >
-                  <Image src="/searchicon.svg" alt="search" width={16} height={16} className="w-4 h-4" />
+                  <Image
+                    src="/searchicon.svg"
+                    alt="search"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4"
+                  />
                 </button>
               )}
 
               {/* Mobile Language Selector */}
               <div className="relative" ref={mobileLangRef}>
-                <button 
+                <button
                   onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
                   className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 >
-                  <Image src={language === "EN" ? "/english.svg" : "/arabicicon.svg"} alt={language === "EN" ? "English" : "Arabic"} width={16} height={16} className="w-4 h-4 rounded-full" />
-                  <span className="text-xs font-medium text-gray-700">{language}</span>
+                  <Image
+                    src={language === "EN" ? "/english.svg" : "/arabicicon.svg"}
+                    alt={language === "EN" ? "English" : "Arabic"}
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 rounded-full"
+                  />
+                  <span className="text-xs font-medium text-gray-700">
+                    {language}
+                  </span>
                   <Image
                     src="/dropdownicon.svg"
                     alt="dropdown"
@@ -824,29 +1076,63 @@ function NavContent() {
                     className="w-[6px] h-[4px]"
                   />
                 </button>
-                
+
                 {/* Mobile Language Dropdown */}
-                <div className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${isMobileLanguageOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                <div
+                  className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+                    isMobileLanguageOpen
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible"
+                  }`}
+                >
                   <div className="py-1">
-                    <button 
-                      onClick={() => { 
-                        toggleLanguage("EN"); 
-                        setIsMobileLanguageOpen(false); 
+                    <button
+                      onClick={() => {
+                        toggleLanguage("EN");
+                        setIsMobileLanguageOpen(false);
                       }}
                       className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                     >
-                      <Image src="/english.svg" alt="English" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
-                      <span className={`text-xs ${language === "EN" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>EN</span>
+                      <Image
+                        src="/english.svg"
+                        alt="English"
+                        width={16}
+                        height={16}
+                        className="w-4 h-4 rounded-full mr-2"
+                      />
+                      <span
+                        className={`text-xs ${
+                          language === "EN"
+                            ? "text-[#6D0D26] font-medium"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        EN
+                      </span>
                     </button>
-                    <button 
-                      onClick={() => { 
-                        toggleLanguage("AR"); 
-                        setIsMobileLanguageOpen(false); 
+                    <button
+                      onClick={() => {
+                        toggleLanguage("AR");
+                        setIsMobileLanguageOpen(false);
                       }}
                       className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                     >
-                      <Image src="/arabicicon.svg" alt="Arabic" width={16} height={16} className="w-4 h-4 rounded-full mr-2" />
-                      <span className={`text-xs ${language === "AR" ? "text-[#6D0D26] font-medium" : "text-gray-400"}`}>AR</span>
+                      <Image
+                        src="/arabicicon.svg"
+                        alt="Arabic"
+                        width={16}
+                        height={16}
+                        className="w-4 h-4 rounded-full mr-2"
+                      />
+                      <span
+                        className={`text-xs ${
+                          language === "AR"
+                            ? "text-[#6D0D26] font-medium"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        AR
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -906,7 +1192,7 @@ function NavContent() {
                     onClick={(e) => {
                       if (item.label === "Products") {
                         e.preventDefault();
-                        if (typeof window !== 'undefined') {
+                        if (typeof window !== "undefined") {
                           window.localStorage?.removeItem("selectedCategory");
                         }
                         router.push("/products");
@@ -950,7 +1236,9 @@ function NavContent() {
                     {item.submenu.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
-                        href={`/products?category=${encodeURIComponent(subItem)}`}
+                        href={`/products?category=${encodeURIComponent(
+                          subItem
+                        )}`}
                         className="block py-2 text-gray-600 transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -970,7 +1258,13 @@ function NavContent() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span>Wishlist</span>
-                <Image src="/like-black.svg" alt="wishlist" width={18} height={16} className="w-[18px] h-4" />
+                <Image
+                  src="/like-black.svg"
+                  alt="wishlist"
+                  width={18}
+                  height={16}
+                  className="w-[18px] h-4"
+                />
               </Link>
             </div>
 
@@ -980,26 +1274,53 @@ function NavContent() {
                 {isAuthenticated ? (
                   <>
                     <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account"); }}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        router.push("/my-account");
+                      }}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon7.svg"
+                        alt="personal info"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Personal info</span>
                     </button>
 
                     <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=my-orders"); }}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        router.push("/my-account?tab=my-orders");
+                      }}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon6.svg"
+                        alt="my orders"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>My orders</span>
                     </button>
 
                     <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=saved-address"); }}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        router.push("/my-account?tab=saved-address");
+                      }}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon4.svg"
+                        alt="addresses"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Addresses</span>
                     </button>
 
@@ -1007,8 +1328,18 @@ function NavContent() {
                       onClick={() => navigateToTab("help")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
+                        />
                       </svg>
                       <span>Help & Support</span>
                     </button>
@@ -1017,8 +1348,18 @@ function NavContent() {
                       onClick={() => navigateToTab("privacy-policy")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z"
+                        />
                       </svg>
                       <span>Privacy & Policy</span>
                     </button>
@@ -1027,8 +1368,18 @@ function NavContent() {
                       onClick={handleSignOut}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        />
                       </svg>
                       <span>Sign Out</span>
                     </button>
@@ -1039,7 +1390,13 @@ function NavContent() {
                       onClick={() => navigateToTab("account")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon7.svg" alt="personal info" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon7.svg"
+                        alt="personal info"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Personal info</span>
                     </button>
 
@@ -1047,7 +1404,13 @@ function NavContent() {
                       onClick={() => navigateToTab("my-orders")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon6.svg" alt="my orders" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon6.svg"
+                        alt="my orders"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>My orders</span>
                     </button>
 
@@ -1055,23 +1418,47 @@ function NavContent() {
                       onClick={() => navigateToTab("addresses")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon4.svg" alt="addresses" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon4.svg"
+                        alt="addresses"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Addresses</span>
                     </button>
 
                     <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=help"); }}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        router.push("/my-account?tab=help");
+                      }}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon3.svg" alt="help support" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon3.svg"
+                        alt="help support"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Help & Support</span>
                     </button>
 
                     <button
-                      onClick={() => { setIsMobileMenuOpen(false); router.push("/my-account?tab=privacy-policy"); }}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        router.push("/my-account?tab=privacy-policy");
+                      }}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/icon8.svg" alt="privacy policy" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/icon8.svg"
+                        alt="privacy policy"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Privacy Policy</span>
                     </button>
 
@@ -1081,26 +1468,52 @@ function NavContent() {
                       onClick={handleLogin}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <Image src="/usericon.svg" alt="login" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/usericon.svg"
+                        alt="login"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                       <span>Login</span>
                     </button>
-                    
+
                     <button
                       onClick={() => router.push("/register")}
                       className="flex items-center space-x-3 py-2 mb-4 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                        />
                       </svg>
                       <span>Register</span>
                     </button>
-                    
+
                     <button
                       onClick={() => router.push("/forgot-password")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                        />
                       </svg>
                       <span>Forgot Password?</span>
                     </button>
@@ -1115,8 +1528,9 @@ function NavContent() {
       {/* Cart Sidebar */}
       <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
@@ -1124,7 +1538,7 @@ function NavContent() {
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }
-        
+
         .lg-scrollbar-hide {
           -ms-overflow-style: none !important;
           scrollbar-width: none !important;
@@ -1132,8 +1546,9 @@ function NavContent() {
         .lg-scrollbar-hide::-webkit-scrollbar {
           display: none !important;
         }
-      `
-      }} />
+      `,
+        }}
+      />
     </>
   );
 }
@@ -1146,7 +1561,13 @@ export default function Nav() {
           <div className="max-w-7xl mx-auto px-0.5 sm:px-0.5 lg:px-0.5">
             <div className="flex items-center h-20 justify-between">
               <div className="flex-shrink-0 pr-4 hidden lg:block">
-                <Image src="/souqalmart-logo-name.svg" alt="Souqalmart" width={200} height={32} className="h-8 w-auto" />
+                <Image
+                  src="/souqalmart-logo-name.svg"
+                  alt="Souqalmart"
+                  width={200}
+                  height={32}
+                  className="h-8 w-auto"
+                />
               </div>
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[var(--color-primary)]"></div>

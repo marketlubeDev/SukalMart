@@ -45,12 +45,12 @@ export default function ProductSidebar({
   };
 
   return (
-    <div 
-      className="bg-white p-4 rounded-lg w-full" 
-      style={{ 
-        overscrollBehavior: 'contain',
-        minWidth: '320px',
-        maxWidth: '100%'
+    <div
+      className="bg-white p-4 rounded-lg w-full"
+      style={{
+        overscrollBehavior: "contain",
+        minWidth: "320px",
+        maxWidth: "100%",
       }}
       onWheel={(e) => {
         // Prevent scroll propagation to parent elements
@@ -182,8 +182,12 @@ export default function ProductSidebar({
                     ((priceRange.max - priceRange.min) / (20000 - 0)) * 100
                   }%`,
                   left: `${(priceRange.min / 20000) * 100}%`,
-                  borderRadius: priceRange.min === 0 ? '4px 0 0 4px' : 
-                               priceRange.max === 20000 ? '0 4px 4px 0' : '0'
+                  borderRadius:
+                    priceRange.min === 0
+                      ? "4px 0 0 4px"
+                      : priceRange.max === 20000
+                      ? "0 4px 4px 0"
+                      : "0",
                 }}
               />
 
@@ -192,7 +196,13 @@ export default function ProductSidebar({
                 className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.min / 20000) * 100}%` }}
               >
-                <Image src="/pricecircle.svg" alt="start" width={12} height={12} className="w-3 h-3" />
+                <Image
+                  src="/pricecircle.svg"
+                  alt="start"
+                  width={12}
+                  height={12}
+                  className="w-3 h-3"
+                />
               </div>
 
               {/* End circle */}
@@ -200,7 +210,13 @@ export default function ProductSidebar({
                 className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
                 style={{ left: `${(priceRange.max / 20000) * 100}%` }}
               >
-                <Image src="/pricecircle.svg" alt="end" width={12} height={12} className="w-3 h-3" />
+                <Image
+                  src="/pricecircle.svg"
+                  alt="end"
+                  width={12}
+                  height={12}
+                  className="w-3 h-3"
+                />
               </div>
             </div>
 
@@ -220,8 +236,8 @@ export default function ProductSidebar({
                 }
               }}
               className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-20"
-              style={{ 
-                pointerEvents: 'auto'
+              style={{
+                pointerEvents: "auto",
               }}
             />
             <input
@@ -239,8 +255,8 @@ export default function ProductSidebar({
                 }
               }}
               className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-30"
-              style={{ 
-                pointerEvents: 'auto'
+              style={{
+                pointerEvents: "auto",
               }}
             />
           </div>
