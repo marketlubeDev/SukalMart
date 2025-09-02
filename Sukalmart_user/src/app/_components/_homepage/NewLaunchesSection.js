@@ -10,7 +10,7 @@ function NewLaunchCard({ product, onClick }) {
       onClick={() => onClick(product.id)}
     >
       {/* Product Image with overlay and text */}
-      <div className="relative w-full h-[200px] rounded-t-lg overflow-hidden">
+      <div className="relative w-full h-[240px] rounded-t-lg overflow-hidden">
         <Image
           src={product.image}
           alt={product.name}
@@ -23,10 +23,10 @@ function NewLaunchCard({ product, onClick }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-          <h3 className="text-xs font-semibold mb-1 line-clamp-2">
+          <h3 className="text-[13px] font-semibold mb-1 line-clamp-2">
             {product.name}
           </h3>
-          <p className="text-[10px] text-white/90 line-clamp-2">
+          <p className="text-[11px] text-white/60 line-clamp-2">
             {product.description}
           </p>
         </div>
@@ -42,37 +42,37 @@ export default function NewLaunchesSection() {
   const newLaunchesProducts = [
     {
       id: "13",
-      name: "THE ANSWER Super Shampoo",
+      name: "The Answer Super Shampoo",
       description: "Hydrolyzed Keratin & Ceramide Formula",
       image: "/newlaunch1.jpg",
     },
     {
       id: "14",
-      name: "NEWEST Onion Protein Shampoo",
+      name: "Newest Onion Protein Shampoo",
       description: "Almond & Onion Ultra Nourishing",
       image: "/newlaunch2.jpg",
     },
     {
       id: "15",
-      name: "FLAKES Anti-Dandruff Shampoo",
+      name: "Flakes Anti-Dandruff Shampoo",
       description: "Professional Anti-Dandruff Formula",
       image: "/newlaunch3.jpg",
     },
     {
       id: "16",
-      name: "REDKEN Anti-Dandruff Shampoo",
+      name: "Redken Anti-Dandruff Shampoo",
       description: "Professional Hair Care Formula",
       image: "/newlaunch4.jpeg",
     },
     {
       id: "17",
-      name: "KERASTASE Repair Shampoo",
+      name: "Kerastase Repair Shampoo",
       description: "Fiber-strengthening care for damaged hair",
       image: "/newlaunch1.jpg",
     },
     {
       id: "18",
-      name: "MOROCCANOIL Hydrating Shampoo",
+      name: "Moroccanoil Hydrating Shampoo",
       description: "Argan oil infused moisture balance",
       image: "/newlaunch2.jpg",
     },

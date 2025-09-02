@@ -396,7 +396,7 @@ export const catalogProducts = [
   // New Launches Products
   {
     id: "13",
-    name: "THE ANSWER Super Shampoo",
+    name: "The Answer Super Shampoo",
     type: "Hair Care",
     price: 1299,
     originalPrice: 1599,
@@ -406,7 +406,7 @@ export const catalogProducts = [
   },
   {
     id: "14",
-    name: "NEWEST Onion Protein Shampoo",
+    name: "Newest Onion Protein Shampoo",
     type: "Hair Care",
     price: 899,
     originalPrice: 1199,
@@ -416,7 +416,7 @@ export const catalogProducts = [
   },
   {
     id: "15",
-    name: "FLAKES Anti-Dandruff Shampoo",
+    name: "Flakes Anti-Dandruff Shampoo",
     type: "Hair Care",
     price: 699,
     originalPrice: 899,
@@ -426,7 +426,7 @@ export const catalogProducts = [
   },
   {
     id: "16",
-    name: "REDKEN Anti-Dandruff Shampoo",
+    name: "Redken Anti-Dandruff Shampoo",
     type: "Hair Care",
     price: 1499,
     originalPrice: 1899,
