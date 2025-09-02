@@ -13,22 +13,21 @@ function AdminLayout() {
   const menuItems = [
     { name: "Dashboard", path: "/admin" },
     { name: "Products", path: "product" },
-    // {name:"Enquiries", path:"enquiry"},
-
     { name: "Orders", path: "order" },
-    // { name: "Stores", path: "store" },
     { name: "Categories", path: "category" },
     { name: "SubCategories", path: "subcategory" },
-    // { name: "Brands", path: "brand" },
-    { name: "Labels", path: "label" },
-    // { name: "Customers", path: "customer" },
     { name: "Banners", path: "banner" },
-    { name: "Banners With Links", path: "banner-with-link" },
-    { name: "Active Offers", path: "active-offer" },
-    { name: "Sales", path: "sales" },
-    { name: "Feedbacks", path: "feedback" },
-    { name: "Inventory", path: "inventory" },
-    { name: "Reviews", path: "review" },
+    { name: "Labels", path: "label" },
+    // {name:"Enquiries", path:"enquiry"},
+    // { name: "Stores", path: "store" },
+    // { name: "Brands", path: "brand" },
+    // { name: "Customers", path: "customer" },
+    // { name: "Banners With Links", path: "banner-with-link" },
+    // { name: "Active Offers", path: "active-offer" },
+    // { name: "Sales", path: "sales" },
+    // { name: "Feedbacks", path: "feedback" },
+    // { name: "Inventory", path: "inventory" },
+    // { name: "Reviews", path: "review" },
   ];
   const navigate = useNavigate();
 
