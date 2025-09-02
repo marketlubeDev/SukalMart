@@ -163,10 +163,10 @@ const ProductCard = ({ product, onAddToCart, onProductClick }) => {
       </div>
       
       <div className="p-2 md:p-4 lg:p-6 flex-1 flex flex-col">
-        <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2">
+        <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2" style={{ lineHeight: "1.1" }}>
           {product.name}
         </h3>
-        <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4">
+        <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4" style={{ lineHeight: "1.1" }}>
           {product.category}
         </p>
         

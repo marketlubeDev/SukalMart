@@ -189,7 +189,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
         {priceRanges.map((item, index) => (
           <div
             key={`${selectedCategory}-${item.range}-${index}`}
-            className="flex flex-col items-center justify-center bg-white rounded-lg p-2 sm:p-4 md:p-0 cursor-pointer hover:shadow-md transition-shadow duration-200"
+            className="flex flex-col items-center justify-center bg-white rounded-lg p-2 sm:p-4 md:p-0 cursor-pointer duration-200 group hover:scale-105 transition-transform"
             onClick={() => handlePriceClick(item.range)}
             role="button"
             tabIndex={0}
@@ -207,7 +207,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
                 alt={`${item.range} products`}
                 fill
                 sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 16vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-200 group-hover:scale-110"
                 priority={index < 6} // Prioritize first 6 images
               />
             </div>

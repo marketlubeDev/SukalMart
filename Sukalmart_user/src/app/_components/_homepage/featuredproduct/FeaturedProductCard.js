@@ -69,9 +69,9 @@ export default function FeaturedProductCard({ product }) {
   };
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-6 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-2 sm:py-3 md:py-4 lg:p-6 lg:pl-0 md:h-full hover:shadow-md transition-shadow duration-200">
+    <div className="flex flex-row gap-2 sm:gap-2 md:gap-3 lg:gap-4 w-full md:w-full lg:w-1/2 bg-white rounded-lg py-1 sm:py-2 md:py-2 lg:p-4 lg:pl-0 md:h-full hover:shadow-md transition-shadow duration-200">
       {/* Product Image - Responsive sizing */}
-      <div className="relative w-1/3 md:w-2/5 lg:w-1/2 aspect-[4/3] md:aspect-[3/2] lg:aspect-square rounded overflow-hidden flex-shrink-0">
+      <div className="relative w-1/3 md:w-2/5 lg:w-1/2 aspect-[16/9] md:aspect-[4/3] lg:aspect-[4/3] rounded overflow-hidden flex-shrink-0">
         <Image
           src={product.image}
           alt={product.name}
@@ -97,14 +97,14 @@ export default function FeaturedProductCard({ product }) {
 
       {/* Product Info */}
       <div className="flex-1 flex flex-col justify-between md:h-full min-w-0">
-        <div className="flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-3 md:flex-1">
+        <div className="flex flex-col gap-1 sm:gap-1 md:gap-1.5 lg:gap-2 md:flex-1">
           {/* Product Name */}
-          <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 leading-tight tracking-tight line-clamp-2">
+          <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight tracking-tight line-clamp-2">
             {product.name}
           </h3>
           
           {/* Category */}
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg font-normal text-gray-600 tracking-tight">
+          <p className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal text-gray-600 tracking-tight">
             {product.category}
           </p>
 
@@ -113,25 +113,25 @@ export default function FeaturedProductCard({ product }) {
             <div className="flex flex-row gap-0.5 md:gap-0.5 lg:gap-1 items-center">
               {renderStars()}
             </div>
-            <span className="text-xs sm:text-sm md:text-base lg:text-lg font-medium text-gray-800 tracking-tight">
+            <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-medium text-gray-800 tracking-tight">
               {product.rating}
             </span>
           </div>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg font-normal text-gray-700 tracking-tight leading-relaxed line-clamp-2 md:flex-1">
+          <p className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal text-gray-700 tracking-tight leading-relaxed line-clamp-2 md:flex-1">
             {product.description}
           </p>
         </div>
 
         {/* Price and Button */}
-        <div className="flex flex-col gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 md:mt-auto">
+                  <div className="flex flex-col gap-1 sm:gap-1.5 md:gap-2 lg:gap-3 md:mt-auto">
           {/* Price */}
           <div className="flex flex-row gap-1.5 md:gap-2 lg:gap-3 items-center">
-            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[var(--color-primary)] tracking-tight">
+            <span className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-[var(--color-primary)] tracking-tight">
               {product.price}
             </span>
-            <span className="text-xs sm:text-sm md:text-base lg:text-lg font-normal line-through text-gray-500 tracking-tight">
+            <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal line-through text-gray-500 tracking-tight">
               {product.originalPrice}
             </span>
           </div>
@@ -142,7 +142,7 @@ export default function FeaturedProductCard({ product }) {
             size="large"
             onClick={addToCart}
             disabled={!isClient}
-            className="gap-2 px-3 py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 text-sm md:text-base text-[var(--color-primary)] bg-white border border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed self-start rounded"
+            className="gap-1.5 px-2 py-1.5 md:px-3 md:py-1.5 lg:px-4 lg:py-2 text-xs md:text-sm text-[var(--color-primary)] bg-white border border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed self-start rounded"
             aria-label={`Add ${product.name} to cart`}
           >
             Add to cart

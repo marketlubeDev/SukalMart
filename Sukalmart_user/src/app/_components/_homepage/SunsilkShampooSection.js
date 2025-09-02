@@ -37,7 +37,7 @@ function ProductCard({ product, onClick }) {
 
       {/* Product Info */}
       <div className="flex-1 flex flex-col">
-        <h3 className="font-medium text-sm sm:text-base text-gray-800 mb-2 line-clamp-2 flex-1">
+        <h3 className="font-medium text-sm sm:text-base text-gray-800 mb-2 line-clamp-2 flex-1 leading-tight">
           {product.name}
         </h3>
         
