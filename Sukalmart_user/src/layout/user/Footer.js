@@ -8,17 +8,17 @@ import { useRouter } from "next/navigation";
 // You can move this to a separate constants file if needed
 const navigationLinks = [
   "Hair Care",
-  "Body & Shower", 
+  "Body & Shower",
   "Soap & Deodorants",
   "Skin Care",
-  "Oral & Misc"
+  "Oral & Misc",
 ];
 
 const socialLinks = [
   { name: "X (Twitter)", icon: "/link1.svg", href: "#" },
   { name: "Facebook", icon: "/link2.svg", href: "#" },
   { name: "Instagram", icon: "/link3.svg", href: "#" },
-  { name: "YouTube", icon: "/link4.svg", href: "#" }
+  { name: "YouTube", icon: "/link4.svg", href: "#" },
 ];
 
 export default function Footer() {
@@ -28,15 +28,15 @@ export default function Footer() {
   const normalizeSlug = (value) =>
     String(value)
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
 
   const handleCategoryClick = (categoryName) => {
     router.push(`/category/${normalizeSlug(categoryName)}`);
   };
 
   const handleLogoClick = () => {
-    router.push('/');
+    router.push("/");
   };
 
   const handleMarketlubeClick = () => {
@@ -47,7 +47,6 @@ export default function Footer() {
     <footer className="bg-[#202020] text-white overflow-hidden">
       <div className="flex flex-col items-center px-4 pt-6 pb-8 sm:pt-8 sm:pb-12 lg:pt-12 lg:pb-16">
         <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10 items-center justify-start w-full max-w-6xl">
-          
           {/* Logo Section */}
           <div className="flex justify-center w-full">
             <button
@@ -111,9 +110,9 @@ export default function Footer() {
             <p className="text-white/40 text-xs sm:text-sm lg:text-base font-normal whitespace-nowrap">
               © 2025 Souqalmart All rights reserved
             </p>
-            
+
             <div className="hidden sm:block w-px h-4 bg-white/20" />
-            
+
             <p className="text-[#f8f1ec]/40 text-xs sm:text-sm lg:text-base font-normal">
               Powered by{" "}
               <button

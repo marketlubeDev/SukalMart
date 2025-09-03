@@ -4,67 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const NavigationBar = () => {
+const NavigationBar = ({ navigationItems }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (dropdownName) => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
-
-  const navigationItems = [
-    {
-      label: "Products",
-      hasDropdown: false,
-      href: "/products",
-    },
-    {
-      label: "Hair Care",
-      hasDropdown: true,
-      href: "/products?category=Hair%20Care",
-      submenu: ["Shampoo", "Conditioner", "Hair Oil", "Hair Serum"],
-    },
-    {
-      label: "Body & Shower",
-      hasDropdown: true,
-      href: "/products?category=Body%20%26%20Shower",
-      submenu: [
-        "Body Wash",
-        "Body Lotion",
-        "Body Cream",
-        "Body Oil",
-        "Body Soap",
-      ],
-    },
-    {
-      label: "Soap & Deodorants",
-      hasDropdown: true,
-      href: "/products?category=Soap%20%26%20Deodorants",
-      submenu: [
-        "Deodorant",
-        "Deodorant Stick",
-        "Deodorant Spray",
-        "Deodorant Roll-On",
-      ],
-    },
-    {
-      label: "Skin Care",
-      hasDropdown: true,
-      href: "/products?category=Skin%20Care",
-      submenu: [
-        "Face Wash",
-        "Face Cream",
-        "Face Oil",
-        "Face Serum",
-        "Face Moisturizer",
-      ],
-    },
-    {
-      label: "Oral & Misc",
-      hasDropdown: true,
-      href: "/products?category=Oral%20%26%20Misc",
-      submenu: ["Toothpaste", "Toothbrush", "Mouthwash"],
-    },
-  ];
 
   return (
     <div className="bg-[var(--color-primary)]">
@@ -97,9 +42,7 @@ const NavigationBar = () => {
                     width={7}
                     height={4}
                     className={`w-[7px] h-[4px] transition-transform duration-200 filter brightness-0 invert ${
-                      activeDropdown === item.label
-                        ? "rotate-180"
-                        : ""
+                      activeDropdown === item.label ? "rotate-180" : ""
                     }`}
                   />
                 )}
@@ -112,11 +55,14 @@ const NavigationBar = () => {
                     {item.submenu.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
-                        href={`/products?category=${encodeURIComponent(subItem)}`}
+                        href={`/products?category=${encodeURIComponent(
+                          subItem
+                        )}`}
                         className="block px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer text-sm tracking-[0.02em]"
                         style={{ cursor: "pointer" }}
                         onMouseOver={(e) => {
-                          e.currentTarget.style.backgroundColor = "rgba(109, 13, 38, 0.1)";
+                          e.currentTarget.style.backgroundColor =
+                            "rgba(109, 13, 38, 0.1)";
                           e.currentTarget.style.color = "#6D0D26";
                         }}
                         onMouseOut={(e) => {
@@ -138,4 +84,4 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar; 
+export default NavigationBar;

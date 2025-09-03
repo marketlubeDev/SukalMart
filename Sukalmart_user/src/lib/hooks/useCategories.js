@@ -14,18 +14,20 @@ export default function useCategories() {
     async function load() {
       try {
         const apiResponse = await fetchAllCategories(controller.signal);
-        
+
         // Extract categories from the API response
         // Based on the server response structure: { success: true, envelop: { data: [...] } }
-        const items = Array.isArray(apiResponse?.envelop?.data) ? apiResponse.envelop.data : [];
-        
+        const items = Array.isArray(apiResponse?.envelop?.data)
+          ? apiResponse.envelop.data
+          : [];
+
         // Normalize the data to match the expected format
-        const normalized = items.map((item) => ({
-          id: item?._id || item?.id || Math.random().toString(36).slice(2),
+        const normalized = items.map((item, index) => ({
+          id: item?._id || item?.id || `category-${index}`,
           name: item?.name || "",
           image: item?.image || "",
           description: item?.description || "",
-          subcategories:item?.subcategories || "",
+          subcategories: item?.subcategories || "",
         }));
 
         setCategories(normalized);
@@ -46,5 +48,3 @@ export default function useCategories() {
 
   return { categories, loading, error };
 }
-
-
