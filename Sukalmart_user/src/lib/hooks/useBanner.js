@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchAllBanners, fetchBannersByType } from "@/lib/services/bannerService";
+import {
+  fetchAllBanners,
+  fetchBannersByType,
+} from "@/lib/services/bannerService";
 
 export default function useBanner(options = {}) {
   const { bannerFor } = options;
@@ -16,7 +19,7 @@ export default function useBanner(options = {}) {
     async function load() {
       try {
         let apiResponse;
-        
+
         if (bannerFor) {
           // If bannerFor is specified, fetch banners by type
           apiResponse = await fetchBannersByType(bannerFor, controller.signal);
@@ -27,16 +30,18 @@ export default function useBanner(options = {}) {
 
         const items = Array.isArray(apiResponse?.data) ? apiResponse.data : [];
 
-        const normalized = items.map((item) => {
+        const normalized = items.map((item, index) => {
           const categoryName = item?.category?.name;
           return {
-            id: item?._id || item?.id || Math.random().toString(36).slice(2),
+            id: item?._id || item?.id || `banner-${index}`,
             image: item?.image || "",
             mobileImage: item?.mobileImage || item?.image || "",
             title: categoryName || item?.title || "",
             subtitle: item?.category?.description || "",
-            description: item?.description || (item?.percentage ? `${item.percentage}% off` : ""),
-            bannerFor: item.bannerFor || ""
+            description:
+              item?.description ||
+              (item?.percentage ? `${item.percentage}% off` : ""),
+            bannerFor: item.bannerFor || "",
           };
         });
 
@@ -57,5 +62,3 @@ export default function useBanner(options = {}) {
 
   return { banners, loading, error };
 }
-
-

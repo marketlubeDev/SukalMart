@@ -37,8 +37,6 @@ function ProductsPageContent() {
     "Newest",
     "Popular",
   ];
-
-  // Filter data (replicated for mobile sheet)
   const categories = [
     "Hair Care",
     "Body & Shower",
@@ -71,132 +69,8 @@ function ProductsPageContent() {
       : {}),
   });
 
-  // Static product data
-  const staticProducts = [
-    {
-      id: "static-premium-hair-oil",
-      name: "Premium Hair Growth Oil",
-      type: "Hair Care",
-      category: "Hair Care",
-      price: 899,
-      originalPrice: 1299,
-      image: "/haircare1.jpg",
-      description: "Advanced hair growth formula with natural ingredients",
-      features: [
-        "Promotes hair growth",
-        "Reduces hair fall",
-        "Natural ingredients",
-        "Suitable for all hair types"
-      ],
-      rating: 4.8,
-      reviews: 1247,
-      inStock: true,
-      discount: 31
-    },
-    {
-      id: "static-herbal-shampoo",
-      name: "Herbal Strengthening Shampoo",
-      type: "Hair Care",
-      category: "Hair Care",
-      price: 499,
-      originalPrice: 699,
-      image: "/haircare2.jpg",
-      description: "Gentle daily shampoo with herbal actives for stronger hair",
-      features: [
-        "Strengthens hair",
-        "Gentle cleansing",
-        "Herbal formulation"
-      ],
-      rating: 4.5,
-      reviews: 682,
-      inStock: true,
-      discount: 29
-    },
-    {
-      id: "static-silky-conditioner",
-      name: "Silky Smooth Conditioner",
-      type: "Hair Care",
-      category: "Hair Care",
-      price: 549,
-      originalPrice: 799,
-      image: "/haircare3.jpg",
-      description: "Nourishing conditioner for soft, tangle-free hair",
-      features: [
-        "Deep nourishment",
-        "Reduces frizz",
-        "Detangles effectively"
-      ],
-      rating: 4.6,
-      reviews: 512,
-      inStock: true,
-      discount: 31
-    },
-    {
-      id: "static-body-wash",
-      name: "Refreshing Body Wash",
-      type: "Body & Shower",
-      category: "Body & Shower",
-      price: 399,
-      originalPrice: 549,
-      image: "/newlaunch4.jpeg",
-      description: "Invigorating body wash with moisturizing ingredients",
-      features: [
-        "Moisturizes skin",
-        "Fresh fragrance",
-        "Soap-free formula"
-      ],
-      rating: 4.4,
-      reviews: 334,
-      inStock: true,
-      discount: 27
-    },
-    {
-      id: "static-skin-serum",
-      name: "Radiance Boost Face Serum",
-      type: "Skin Care",
-      category: "Skin Care",
-      price: 1199,
-      originalPrice: 1599,
-      image: "/newlaunch3.jpg",
-      description: "Vitamin-rich serum for glowing, even-toned skin",
-      features: [
-        "Brightens complexion",
-        "Lightweight texture",
-        "Dermatologically tested"
-      ],
-      rating: 4.7,
-      reviews: 741,
-      inStock: true,
-      discount: 25
-    },
-    {
-      id: "static-oral-care",
-      name: "Complete Oral Care Toothpaste",
-      type: "Oral & Misc",
-      category: "Oral & Misc",
-      price: 199,
-      originalPrice: 249,
-      image: "/newlaunch2.jpg",
-      description: "Multi-action toothpaste for clean teeth and fresh breath",
-      features: [
-        "Anti-cavity protection",
-        "Fresh mint",
-        "Whitening action"
-      ],
-      rating: 4.3,
-      reviews: 268,
-      inStock: true,
-      discount: 20
-    }
-  ];
-
-  // Combine static product with API products
-  const allProducts = [
-    ...staticProducts,
-    ...(Array.isArray(products) ? products : [])
-  ];
-
-  console.log(allProducts, "productsewrewrewr");
+  // Use only API products
+  const allProducts = Array.isArray(products) ? products : [];
   // Reset category when page loads (when coming from Products navbar link)
   useEffect(() => {
     const storedCategory = localStorage.getItem("selectedCategory");
@@ -213,10 +87,7 @@ function ProductsPageContent() {
     if (!priceLabel) return;
 
     const parsePriceRangeLabel = (label) => {
-      const sanitized = label
-        .replaceAll(",", "")
-        .replaceAll("₹", "")
-        .trim();
+      const sanitized = label.replaceAll(",", "").replaceAll("₹", "").trim();
 
       // Under X
       const underMatch = sanitized.match(/^Under\s+(\d+)$/i);
@@ -330,22 +201,25 @@ function ProductsPageContent() {
   if (error) {
     console.error(error);
   }
+  // if (categoriesError) {
+  //   console.error(categoriesError);
+  // }
 
   return (
     <div className="min-h-screen bg-white">
       <div className="flex flex-col lg:flex-row max-w-7xl 2xl:max-w-[1920px] mx-auto">
         {/* Sidebar - 30% width */}
         <div className="hidden lg:block lg:w-[20%] 2xl:w-[15%] 2xl:ml-auto">
-          <div 
+          <div
             className="sticky top-[6rem] h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll"
-            style={{ 
-              overscrollBehavior: 'contain',
-              paddingLeft: '0.5rem',
-              paddingRight: '0.5rem',
-              position: 'sticky',
-              top: '6rem',
-              height: 'calc(100vh - 6rem)',
-              zIndex: 10
+            style={{
+              overscrollBehavior: "contain",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              position: "sticky",
+              top: "6rem",
+              height: "calc(100vh - 6rem)",
+              zIndex: 10,
             }}
           >
             <ProductSidebar
@@ -361,10 +235,10 @@ function ProductsPageContent() {
 
         {/* Main Content - 70% width */}
         <div className="lg:w-[80%] 2xl:w-[80%] 2xl:mr-auto">
-          <div 
+          <div
             className="px-0 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
-            style={{ 
-              overscrollBehavior: 'contain'
+            style={{
+              overscrollBehavior: "contain",
             }}
           >
             <ProductGrid
@@ -393,7 +267,13 @@ function ProductsPageContent() {
             className="flex items-center gap-2 text-gray-900"
             aria-label="Filter"
           >
-            <Image src="/filtericon.svg" alt="Filter" width={24} height={24} className="w-6 h-6" />
+            <Image
+              src="/filtericon.svg"
+              alt="Filter"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
             <span className="font-semibold text-base">Filter</span>
           </button>
           <div className="h-6 w-px bg-gray-300" aria-hidden="true" />
@@ -402,7 +282,13 @@ function ProductsPageContent() {
             className="flex items-center gap-2 text-gray-900"
             aria-label="Sort"
           >
-            <Image src="/sorticon.svg" alt="Sort" width={24} height={24} className="w-6 h-6" />
+            <Image
+              src="/sorticon.svg"
+              alt="Sort"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
             <span className="font-semibold text-base">Sort</span>
           </button>
         </div>
@@ -443,240 +329,285 @@ function ProductsPageContent() {
               ))}
             </div>
 
-              {/* Right Content */}
-              <div className="w-7/12 p-4 overflow-y-auto" style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}>
-                {activeFilterTab === 'Categories' && (
-                  <div className="space-y-0">
-                    {categories.map((cat) => (
-                      <div key={cat} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.10)" }}>
-                        <button
-                          onClick={() => { setSelectedCategory(cat); localStorage.setItem('selectedCategory', cat); }}
-                          className={`w-full text-left px-3 py-3 ${selectedCategory === cat ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
-                        >
-                          {cat}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeFilterTab === 'Discount' && (
-                  <div className="space-y-0">
-                    {discountOptions.map((opt) => (
-                      <div key={opt} style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}>
-                        <button
-                          onClick={() => setSelectedDiscount(opt)}
-                          className={`w-full text-left px-3 py-3 ${selectedDiscount === opt ? 'bg-green-100 text-[var(--color-primary)] font-semibold' : 'hover:bg-gray-50 text-gray-800'}`}
-                        >
-                          {opt}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeFilterTab === 'Price Range' && (
-                  <div>
-                    <div className="mb-3 text-sm font-semibold text-gray-900">Select Price range</div>
-                    
-                    {/* Price Range Display - Like the image */}
-                    <div className="flex justify-center gap-4 mb-6">
-                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                        ₹{priceRange.min.toLocaleString()}
-                      </div>
-                      <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                        ₹{priceRange.max.toLocaleString()}
-                      </div>
+            {/* Right Content */}
+            <div
+              className="w-7/12 p-4 overflow-y-auto"
+              style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}
+            >
+              {activeFilterTab === "Categories" && (
+                <div className="space-y-0">
+                  {categories.map((cat) => (
+                    <div
+                      key={cat}
+                      style={{
+                        borderBottom: "0.5px solid rgba(0, 0, 0, 0.10)",
+                      }}
+                    >
+                      <button
+                        onClick={() => {
+                          setSelectedCategory(cat);
+                          localStorage.setItem("selectedCategory", cat);
+                        }}
+                        className={`w-full text-left px-3 py-3 ${
+                          selectedCategory === cat
+                            ? "bg-green-100 text-[var(--color-primary)] font-semibold"
+                            : "hover:bg-gray-50 text-gray-800"
+                        }`}
+                      >
+                        {cat}
+                      </button>
                     </div>
+                  ))}
+                </div>
+              )}
 
-                    <div className="mb-6">
-                      <div className="relative">
-                        {/* Background track */}
-                        <div className="w-full h-2 bg-purple-300 rounded-lg relative">
-                          {/* Red selected portion */}
-                          <div
-                            className="h-2 bg-red-500 rounded-lg absolute top-0 left-0"
-                            style={{
-                              width: `${((priceRange.max - priceRange.min) / (20000 - 0)) * 100}%`,
-                              left: `${(priceRange.min / 20000) * 100}%`,
-                            }}
-                          />
-                        </div>
+              {activeFilterTab === "Discount" && (
+                <div className="space-y-0">
+                  {discountOptions.map((opt) => (
+                    <div
+                      key={opt}
+                      style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}
+                    >
+                      <button
+                        onClick={() => setSelectedDiscount(opt)}
+                        className={`w-full text-left px-3 py-3 ${
+                          selectedDiscount === opt
+                            ? "bg-green-100 text-[var(--color-primary)] font-semibold"
+                            : "hover:bg-gray-50 text-gray-800"
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-                        {/* Interactive track for dragging */}
-                        <div 
-                          className="absolute top-0 w-full h-8 cursor-pointer"
-                          style={{ 
-                            marginTop: '-12px',
-                            zIndex: 50
-                          }}
-                          onMouseDown={(e) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const clickX = e.clientX - rect.left;
-                            const percentage = (clickX / rect.width) * 100;
-                            const value = Math.round((percentage / 100) * 20000);
-                            
-                            // Determine which handle to move based on which is closer
-                            const minDistance = Math.abs(value - priceRange.min);
-                            const maxDistance = Math.abs(value - priceRange.max);
-                            
-                            if (minDistance <= maxDistance) {
-                              setDraggingHandle('min');
-                              setPriceRange(prev => ({
-                                ...prev,
-                                min: Math.min(value, prev.max)
-                              }));
-                            } else {
-                              setDraggingHandle('max');
-                              setPriceRange(prev => ({
-                                ...prev,
-                                max: Math.max(value, prev.min)
-                              }));
-                            }
-                          }}
-                          onMouseMove={(e) => {
-                            if (!draggingHandle) return;
-                            
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const moveX = e.clientX - rect.left;
-                            const percentage = (moveX / rect.width) * 100;
-                            const value = Math.round((percentage / 100) * 20000);
-                            
-                            if (draggingHandle === 'min') {
-                              setPriceRange(prev => ({
-                                ...prev,
-                                min: Math.min(Math.max(0, value), prev.max)
-                              }));
-                            } else {
-                              setPriceRange(prev => ({
-                                ...prev,
-                                max: Math.max(Math.min(20000, value), prev.min)
-                              }));
-                            }
-                          }}
-                          onMouseUp={() => setDraggingHandle(null)}
-                          onMouseLeave={() => setDraggingHandle(null)}
-                          onTouchStart={(e) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const touch = e.touches[0];
-                            const clickX = touch.clientX - rect.left;
-                            const percentage = (clickX / rect.width) * 100;
-                            const value = Math.round((percentage / 100) * 20000);
-                            
-                            const minDistance = Math.abs(value - priceRange.min);
-                            const maxDistance = Math.abs(value - priceRange.max);
-                            
-                            if (minDistance <= maxDistance) {
-                              setDraggingHandle('min');
-                              setPriceRange(prev => ({
-                                ...prev,
-                                min: Math.min(value, prev.max)
-                              }));
-                            } else {
-                              setDraggingHandle('max');
-                              setPriceRange(prev => ({
-                                ...prev,
-                                max: Math.max(value, prev.min)
-                              }));
-                            }
-                          }}
-                          onTouchMove={(e) => {
-                            if (!draggingHandle) return;
-                            e.preventDefault();
-                            
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const touch = e.touches[0];
-                            const moveX = touch.clientX - rect.left;
-                            const percentage = (moveX / rect.width) * 100;
-                            const value = Math.round((percentage / 100) * 20000);
-                            
-                            if (draggingHandle === 'min') {
-                              setPriceRange(prev => ({
-                                ...prev,
-                                min: Math.min(Math.max(0, value), prev.max)
-                              }));
-                            } else {
-                              setPriceRange(prev => ({
-                                ...prev,
-                                max: Math.max(Math.min(20000, value), prev.min)
-                              }));
-                            }
-                          }}
-                          onTouchEnd={() => setDraggingHandle(null)}
-                        />
+              {activeFilterTab === "Price Range" && (
+                <div>
+                  <div className="mb-3 text-sm font-semibold text-gray-900">
+                    Select Price range
+                  </div>
 
-                        {/* Visual circles positioned based on values */}
+                  {/* Price Range Display - Like the image */}
+                  <div className="flex justify-center gap-4 mb-6">
+                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                      ₹{priceRange.min.toLocaleString()}
+                    </div>
+                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                      ₹{priceRange.max.toLocaleString()}
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="relative">
+                      {/* Background track */}
+                      <div className="w-full h-2 bg-purple-300 rounded-lg relative">
+                        {/* Red selected portion */}
                         <div
-                          className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 pointer-events-none"
-                          style={{ 
+                          className="h-2 bg-red-500 rounded-lg absolute top-0 left-0"
+                          style={{
+                            width: `${
+                              ((priceRange.max - priceRange.min) /
+                                (20000 - 0)) *
+                              100
+                            }%`,
                             left: `${(priceRange.min / 20000) * 100}%`,
-                            zIndex: 40
                           }}
-                        >
-                          <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
-                          </div>
-
-                        <div
-                          className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 pointer-events-none"
-                          style={{ 
-                            left: `${(priceRange.max / 20000) * 100}%`,
-                            zIndex: 40
-                          }}
-                        >
-                          <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
-                        </div>
-                          </div>
-                        </div>
-
-                    {/* Input fields - Like the image */}
-                    <div className="flex items-center gap-4 justify-center">
-                      <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">₹</div>
-                        <input
-                          type="number"
-                          value={priceRange.min}
-                          onChange={(e) => {
-                            const newMin = parseInt(e.target.value) || 0;
-                            setPriceRange(prev => ({
-                              ...prev,
-                              min: Math.min(newMin, prev.max)
-                            }));
-                          }}
-                          className="w-20 px-3 py-2 text-center focus:outline-none"
-                          min="0"
-                          max="20000"
                         />
                       </div>
-                      <div className="text-gray-400">to</div>
-                      <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">₹</div>
-                        <input
-                          type="number"
-                          value={priceRange.max}
-                          onChange={(e) => {
-                            const newMax = parseInt(e.target.value) || 20000;
-                            setPriceRange(prev => ({
+
+                      {/* Interactive track for dragging */}
+                      <div
+                        className="absolute top-0 w-full h-8 cursor-pointer"
+                        style={{
+                          marginTop: "-12px",
+                          zIndex: 50,
+                        }}
+                        onMouseDown={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const clickX = e.clientX - rect.left;
+                          const percentage = (clickX / rect.width) * 100;
+                          const value = Math.round((percentage / 100) * 20000);
+
+                          // Determine which handle to move based on which is closer
+                          const minDistance = Math.abs(value - priceRange.min);
+                          const maxDistance = Math.abs(value - priceRange.max);
+
+                          if (minDistance <= maxDistance) {
+                            setDraggingHandle("min");
+                            setPriceRange((prev) => ({
                               ...prev,
-                              max: Math.max(newMax, prev.min)
+                              min: Math.min(value, prev.max),
                             }));
-                          }}
-                          className="w-20 px-3 py-2 text-center focus:outline-none"
-                          min="0"
-                          max="20000"
-                        />
+                          } else {
+                            setDraggingHandle("max");
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              max: Math.max(value, prev.min),
+                            }));
+                          }
+                        }}
+                        onMouseMove={(e) => {
+                          if (!draggingHandle) return;
+
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const moveX = e.clientX - rect.left;
+                          const percentage = (moveX / rect.width) * 100;
+                          const value = Math.round((percentage / 100) * 20000);
+
+                          if (draggingHandle === "min") {
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              min: Math.min(Math.max(0, value), prev.max),
+                            }));
+                          } else {
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              max: Math.max(Math.min(20000, value), prev.min),
+                            }));
+                          }
+                        }}
+                        onMouseUp={() => setDraggingHandle(null)}
+                        onMouseLeave={() => setDraggingHandle(null)}
+                        onTouchStart={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const touch = e.touches[0];
+                          const clickX = touch.clientX - rect.left;
+                          const percentage = (clickX / rect.width) * 100;
+                          const value = Math.round((percentage / 100) * 20000);
+
+                          const minDistance = Math.abs(value - priceRange.min);
+                          const maxDistance = Math.abs(value - priceRange.max);
+
+                          if (minDistance <= maxDistance) {
+                            setDraggingHandle("min");
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              min: Math.min(value, prev.max),
+                            }));
+                          } else {
+                            setDraggingHandle("max");
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              max: Math.max(value, prev.min),
+                            }));
+                          }
+                        }}
+                        onTouchMove={(e) => {
+                          if (!draggingHandle) return;
+                          e.preventDefault();
+
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const touch = e.touches[0];
+                          const moveX = touch.clientX - rect.left;
+                          const percentage = (moveX / rect.width) * 100;
+                          const value = Math.round((percentage / 100) * 20000);
+
+                          if (draggingHandle === "min") {
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              min: Math.min(Math.max(0, value), prev.max),
+                            }));
+                          } else {
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              max: Math.max(Math.min(20000, value), prev.min),
+                            }));
+                          }
+                        }}
+                        onTouchEnd={() => setDraggingHandle(null)}
+                      />
+
+                      {/* Visual circles positioned based on values */}
+                      <div
+                        className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 pointer-events-none"
+                        style={{
+                          left: `${(priceRange.min / 20000) * 100}%`,
+                          zIndex: 40,
+                        }}
+                      >
+                        <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
+                      </div>
+
+                      <div
+                        className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 pointer-events-none"
+                        style={{
+                          left: `${(priceRange.max / 20000) * 100}%`,
+                          zIndex: 40,
+                        }}
+                      >
+                        <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </div>
 
-            {/* Footer actions */}
-            <div className="flex items-center" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}>
-              <button onClick={discardFilters} className="flex-1 text-center py-3 text-red-600 font-medium">Discard</button>
-              <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-              <button onClick={() => setIsFilterOpen(false)} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
+                  {/* Input fields - Like the image */}
+                  <div className="flex items-center gap-4 justify-center">
+                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                      <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">
+                        ₹
+                      </div>
+                      <input
+                        type="number"
+                        value={priceRange.min}
+                        onChange={(e) => {
+                          const newMin = parseInt(e.target.value) || 0;
+                          setPriceRange((prev) => ({
+                            ...prev,
+                            min: Math.min(newMin, prev.max),
+                          }));
+                        }}
+                        className="w-20 px-3 py-2 text-center focus:outline-none"
+                        min="0"
+                        max="20000"
+                      />
+                    </div>
+                    <div className="text-gray-400">to</div>
+                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                      <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">
+                        ₹
+                      </div>
+                      <input
+                        type="number"
+                        value={priceRange.max}
+                        onChange={(e) => {
+                          const newMax = parseInt(e.target.value) || 20000;
+                          setPriceRange((prev) => ({
+                            ...prev,
+                            max: Math.max(newMax, prev.min),
+                          }));
+                        }}
+                        className="w-20 px-3 py-2 text-center focus:outline-none"
+                        min="0"
+                        max="20000"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+          </div>
+
+          {/* Footer actions */}
+          <div
+            className="flex items-center"
+            style={{ borderTop: "1px solid rgba(0, 0, 0, 0.10)" }}
+          >
+            <button
+              onClick={discardFilters}
+              className="flex-1 text-center py-3 text-red-600 font-medium"
+            >
+              Discard
+            </button>
+            <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold"
+            >
+              Apply
+            </button>
+          </div>
         </div>
       )}
 
@@ -707,7 +638,11 @@ function ProductsPageContent() {
               >
                 <button
                   onClick={() => setPendingSort(option)}
-                  className={`w-full text-left px-4 py-3 ${pendingSort === option ? 'text-[var(--color-primary)] font-semibold' : 'text-gray-800 hover:bg-gray-50'}`}
+                  className={`w-full text-left px-4 py-3 ${
+                    pendingSort === option
+                      ? "text-[var(--color-primary)] font-semibold"
+                      : "text-gray-800 hover:bg-gray-50"
+                  }`}
                 >
                   {option}
                 </button>
@@ -728,7 +663,15 @@ function ProductsPageContent() {
               Discard
             </button>
             <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <button onClick={() => { setSortBy(pendingSort); setIsSortOpen(false); }} className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold">Apply</button>
+            <button
+              onClick={() => {
+                setSortBy(pendingSort);
+                setIsSortOpen(false);
+              }}
+              className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold"
+            >
+              Apply
+            </button>
           </div>
         </div>
       )}
@@ -738,7 +681,7 @@ function ProductsPageContent() {
         .sidebar-scroll::-webkit-scrollbar {
           display: none;
         }
-        
+
         .sidebar-scroll {
           -ms-overflow-style: none;
           scrollbar-width: none;
@@ -750,7 +693,13 @@ function ProductsPageContent() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">Loading products...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          Loading products...
+        </div>
+      }
+    >
       <ProductsPageContent />
     </Suspense>
   );

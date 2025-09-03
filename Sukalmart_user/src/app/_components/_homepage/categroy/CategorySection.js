@@ -11,41 +11,6 @@ const CategorySection = () => {
   // BACKEND INTERACTION: Previously used useCategories hook to fetch categories from API
   const { categories, loading, error } = useCategories();
 
-  console.log(categories, "catedfdfdgories"); //
-
-  // const categories = [
-  //   {
-  //     id: 1,
-  //     name: "Hair Care",
-  //     image: "/hair-resize.jpg", // Static image from public folder
-  //     slug: "hair-care",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Body & Shower",
-  //     image: "/body-resize.jpg", // Static image from public folder
-  //     slug: "body-shower",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Soap & Deodorants",
-  //     image: "/soap-resize.jpg", // Static image from public folder
-  //     slug: "soap-deodorants",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Skin Care",
-  //     image: "/skin-resize.jpg", // Static image from public folder
-  //     slug: "skin-care",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Oral & Misc",
-  //     image: "/tooth-resize.jpg", // Static image from public folder
-  //     slug: "oral-misc",
-  //   },
-  // ];
-
   // Utility function to normalize slug
   const normalizeSlug = useCallback((value) => {
     return String(value)
