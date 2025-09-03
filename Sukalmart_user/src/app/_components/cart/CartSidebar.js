@@ -267,16 +267,20 @@ export default function CartSidebar({ isOpen, onClose }) {
                 boxShadow: "none",
                 padding: 0,
                 margin: 0,
-                overflow: "hidden"
+                overflow: "hidden",
+                minHeight: cartItems.length === 0 ? "calc(100vh - 160px)" : "auto"
               }}
             >
               {cartItems.length === 0 ? (
                 // Empty Cart Message
                 <div
-                  className="flex flex-col items-center justify-center py-12 px-4"
+                  className="flex flex-col items-center justify-start py-12 px-4"
                   style={{
-                    minHeight: "200px",
-                    textAlign: "center"
+                    minHeight: "calc(100vh - 160px)",
+                    height: "calc(100vh - 160px)",
+                    textAlign: "center",
+                    backgroundColor: "white",
+                    width: "100%"
                   }}
                 >
                   {/* Empty Cart Icon */}

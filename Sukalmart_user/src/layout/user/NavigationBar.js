@@ -16,7 +16,12 @@ const NavigationBar = ({ navigationItems }) => {
       <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="hidden lg:flex lg:items-center lg:justify-evenly py-0.5">
           {navigationItems.map((item, index) => (
-            <div key={index} className="relative group flex-shrink-0">
+            <div
+              key={index}
+              className="relative group flex-shrink-0"
+              onMouseEnter={() => item.hasDropdown && setActiveDropdown(item.label)}
+              onMouseLeave={() => item.hasDropdown && setActiveDropdown(null)}
+            >
               <Link
                 href={item.href}
                 className="flex items-center space-x-1 text-white font-normal transition-colors duration-200 py-2 cursor-pointer whitespace-nowrap text-sm xl:text-xs tracking-[0.02em]"
@@ -28,10 +33,7 @@ const NavigationBar = ({ navigationItems }) => {
                   if (item.label === "Products") {
                     localStorage.removeItem("selectedCategory");
                   }
-                  // Toggle dropdown for items with dropdowns
-                  if (item.hasDropdown) {
-                    toggleDropdown(item.label);
-                  }
+                  // Do not persist dropdown on click; hover controls visibility
                 }}
               >
                 <span>{item.label}</span>
@@ -41,7 +43,7 @@ const NavigationBar = ({ navigationItems }) => {
                     alt="dropdown"
                     width={7}
                     height={4}
-                    className={`w-[7px] h-[4px] transition-transform duration-200 filter brightness-0 invert ${
+                    className={`w-[7px] h-[4px] transition-transform duration-200 group-hover:rotate-180 filter brightness-0 invert ${
                       activeDropdown === item.label ? "rotate-180" : ""
                     }`}
                   />
@@ -50,7 +52,9 @@ const NavigationBar = ({ navigationItems }) => {
 
               {/* Desktop Dropdown Menu */}
               {item.hasDropdown && (
-                <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className={`absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+                  activeDropdown === item.label ? "opacity-100 visible" : "opacity-0 invisible"
+                }`}>
                   <div className="py-2">
                     {item.submenu.map((subItem, subIndex) => (
                       <Link

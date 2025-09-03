@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import Button from "@/app/_components/common/Button";
 
 export default function LoginPage() {
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -143,64 +143,16 @@ export default function LoginPage() {
 
           {/* Submit Button */}
           <div>
-            <button
+            <Button
               type="submit"
+              variant="primary"
+              size="medium"
               disabled={isLoading || !emailOrPhone.trim()}
-              className="w-full flex justify-center items-center gap-2 py-3 px-4 sm:py-4 sm:px-6 sm:text-[16px]"
-              style={{
-                display: "flex",
-                padding: "12px 16px",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                alignSelf: "stretch",
-                borderRadius: "4px",
-                background: "var(--color-primary)",
-                border: "none",
-                transition: "background-color 0.2s",
-                color: "#FFF",
-                textAlign: "center",
-                fontSize: "14px",
-                fontStyle: "normal",
-                fontWeight: 500,
-                lineHeight: "normal",
-                letterSpacing: "-0.48px",
-                leadingTrim: "both",
-                textEdge: "cap"
-              }}
-              onMouseOver={e => e.currentTarget.style.background = "#520A1E"}
-              onMouseOut={e => e.currentTarget.style.background = "var(--color-primary)"}
-              onFocus={e => e.currentTarget.style.boxShadow = "0 0 0 2px #6D0D2633"}
-              onBlur={e => e.currentTarget.style.boxShadow = "none"}
+              loading={isLoading}
+              className="w-full sm:text-[16px] rounded-md cursor-pointer"
             >
-              {isLoading ? (
-                <div className="flex items-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Sending OTP...
-                </div>
-              ) : (
-                "Send OTP"
-              )}
-            </button>
+              {isLoading ? "Sending OTP..." : "Send OTP"}
+            </Button>
           </div>
 
           {/* Legal Text */}

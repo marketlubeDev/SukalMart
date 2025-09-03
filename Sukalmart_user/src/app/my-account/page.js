@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState, Suspense, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import AccountInfo from "./_components/AccountInfo";
 import SavedAddress from "./_components/SavedAddress";
 import MyOrders from "./_components/MyOrders";
@@ -10,6 +10,8 @@ import PrivacyPolicy from "./_components/PrivacyPolicy";
 import TermsConditions from "./_components/TermsConditions";
 
 function MyAccountContent() {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const tabParam = (searchParams.get("tab") || "").toLowerCase();
 
@@ -43,6 +45,14 @@ function MyAccountContent() {
   };
 
   const [activeTab, setActiveTab] = useState(mapParamToTab(tabParam));
+
+  // Sync activeTab with URL query changes
+  useEffect(() => {
+    const nextTab = mapParamToTab(tabParam);
+    if (nextTab !== activeTab) {
+      setActiveTab(nextTab);
+    }
+  }, [tabParam]);
 
   const tabs = [
     "Account Info",
@@ -91,7 +101,16 @@ function MyAccountContent() {
             {tabs.map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => {
+                  setActiveTab(tab);
+                  const param = tab
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace("&-", "");
+                  const newSearch = new URLSearchParams(searchParams.toString());
+                  newSearch.set("tab", param);
+                  router.push(`${pathname}?${newSearch.toString()}`);
+                }}
                 className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer ${
                   activeTab === tab
                     ? "border-[var(--color-primary)] text-[var(--color-primary)]"

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Button from "@/app/_components/common/Button";
 
 export default function OTPPage() {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -266,70 +267,16 @@ export default function OTPPage() {
 
           {/* Submit Button */}
           <div className="flex justify-center">
-            <button
+            <Button
               type="submit"
+              variant="buy"
+              size="medium"
               disabled={isLoading || otp.join("").length !== 4}
-              className="flex justify-center items-center gap-2 py-3 px-4 sm:py-4 sm:px-6 sm:text-[16px]"
-              style={{
-                width: "calc(4 * 64px + 3 * 12px)", // 4 input boxes (64px each) + 3 gaps (12px each) = 292px
-                maxWidth: "292px",
-                display: "flex",
-                padding: "12px 16px",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                alignSelf: "stretch",
-                borderRadius: "4px",
-                background: "var(--color-primary)",
-                border: "none",
-                transition: "background-color 0.2s",
-                color: "#FFF",
-                textAlign: "center",
-                fontSize: "14px",
-                fontStyle: "normal",
-                fontWeight: 500,
-                lineHeight: "normal",
-                letterSpacing: "-0.48px",
-                leadingTrim: "both",
-                textEdge: "cap",
-              }}
-              onMouseOver={(e) =>
-                (e.currentTarget.style.background = "#520A1E")
-              }
-              onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
-              onFocus={(e) =>
-                (e.currentTarget.style.boxShadow = "0 0 0 2px #6D0D26")
-              }
-              onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}
+              loading={isLoading}
+              className="w-[292px] max-w-[292px] rounded-md cursor-pointer"
             >
-              {isLoading ? (
-                <div className="flex items-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Verifying...
-                </div>
-              ) : (
-                "Verify OTP"
-              )}
-            </button>
+              {isLoading ? "Verifying..." : "Verify OTP"}
+            </Button>
           </div>
 
           {/* Resend OTP */}
