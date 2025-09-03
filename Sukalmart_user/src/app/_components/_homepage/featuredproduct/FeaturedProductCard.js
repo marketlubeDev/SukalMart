@@ -4,10 +4,15 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from '@/app/_components/common/Button';
+import { FaHeart } from "react-icons/fa6";
+import { CiHeart } from "react-icons/ci";
+import { useWishlist } from "@/app/_components/context/WishlistContext";
 
 export default function FeaturedProductCard({ product }) {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const { toggleWishlistItem, isInWishlist } = useWishlist();
+  const wishlisted = isInWishlist(product.id);
 
   useEffect(() => {
     setIsClient(true);
@@ -80,18 +85,21 @@ export default function FeaturedProductCard({ product }) {
           sizes="(max-width: 768px) 33vw, (max-width: 1024px) 40vw, 50vw"
           priority={false}
         />
-        {/* Wishlist Button */}
-        <button 
-          className="absolute top-2 md:top-2 lg:top-3 left-2 md:left-2 lg:left-3 w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 flex items-center justify-center bg-white/80 hover:bg-white rounded-full transition-colors duration-200"
-          aria-label="Add to wishlist"
+        {/* Wishlist Button - matches ProductCard */}
+        <button
+          type="button"
+          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 sm:p-2 shadow hover:scale-105 transition-transform"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWishlistItem(product);
+          }}
         >
-          <Image 
-            src="/like.svg" 
-            alt="Wishlist" 
-            width={20}
-            height={20}
-            className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5" 
-          />
+          {wishlisted ? (
+            <FaHeart className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
+          ) : (
+            <CiHeart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
+          )}
         </button>
       </div>
 

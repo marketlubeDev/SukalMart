@@ -37,6 +37,7 @@ function NavContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -215,13 +216,30 @@ function NavContent() {
   useEffect(() => {
     const openCart = () => setIsCartOpen(true);
     const handler = () => openCart();
+
+    const readCartCount = () => {
+      try {
+        const raw = typeof window !== "undefined" ? window.localStorage.getItem("cartItems") : null;
+        const items = raw ? JSON.parse(raw) : [];
+        const count = Array.isArray(items) ? items.reduce((sum, it) => sum + (Number(it.quantity) || 1), 0) : 0;
+        setCartCount(count);
+      } catch {
+        setCartCount(0);
+      }
+    };
+
     if (typeof window !== "undefined") {
       window.addEventListener("open-cart", handler);
+      window.addEventListener("cart-updated", readCartCount);
+      window.addEventListener("storage", readCartCount);
       window.__openCart = openCart;
+      readCartCount();
     }
     return () => {
       if (typeof window !== "undefined") {
         window.removeEventListener("open-cart", handler);
+        window.removeEventListener("cart-updated", readCartCount);
+        window.removeEventListener("storage", readCartCount);
         delete window.__openCart;
       }
     };
@@ -590,6 +608,13 @@ function NavContent() {
                       height={44}
                       className="w-[44px] h-[44px]"
                     />
+                    {cartCount > 0 && (
+                      <span
+                        className="absolute top-3.5 right-3.5 block w-3 h-3 rounded-full bg-[#6D0D26]"
+                        aria-label={`Cart items: ${cartCount}`}
+                        title={`${cartCount}`}
+                      />
+                    )}
                   </button>
 
                   {/* User Profile / Login */}
@@ -655,7 +680,7 @@ function NavContent() {
 
                             <button
                               onClick={() => {
-                                router.push("/my-account?tab=my-orders");
+                                navigateToTab("my-orders");
                                 setIsUserDropdownOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
@@ -678,7 +703,7 @@ function NavContent() {
 
                             <button
                               onClick={() => {
-                                router.push("/my-account?tab=saved-address");
+                                navigateToTab("saved-address");
                                 setIsUserDropdownOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
@@ -707,7 +732,7 @@ function NavContent() {
 
                             <button
                               onClick={() => {
-                                router.push("/my-account?tab=help");
+                                navigateToTab("help");
                                 setIsUserDropdownOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
@@ -730,7 +755,7 @@ function NavContent() {
 
                             <button
                               onClick={() => {
-                                router.push("/my-account?tab=privacy-policy");
+                                navigateToTab("privacy-policy");
                                 setIsUserDropdownOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
@@ -777,7 +802,7 @@ function NavContent() {
                           <>
                             <button
                               onClick={() => {
-                                router.push("/my-account");
+                                navigateToTab("account");
                                 setIsUserDropdownOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
@@ -794,7 +819,7 @@ function NavContent() {
 
                             <button
                               onClick={() =>
-                                router.push("/my-account?tab=my-orders")
+                                navigateToTab("my-orders")
                               }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
@@ -810,7 +835,7 @@ function NavContent() {
 
                             <button
                               onClick={() =>
-                                router.push("/my-account?tab=saved-address")
+                                navigateToTab("saved-address")
                               }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
@@ -826,7 +851,7 @@ function NavContent() {
 
                             <button
                               onClick={() =>
-                                router.push("/my-account?tab=help")
+                                navigateToTab("help")
                               }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
@@ -842,7 +867,7 @@ function NavContent() {
 
                             <button
                               onClick={() =>
-                                router.push("/my-account?tab=privacy-policy")
+                                navigateToTab("privacy-policy")
                               }
                               className="flex items-center w-full text-left px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
                             >
@@ -1138,10 +1163,10 @@ function NavContent() {
                 </div>
               </div>
 
-              {/* Mobile Wishlist */}
+              {/* Mobile Wishlist - Hidden on small screens */}
               <Link
                 href="/wishlist"
-                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer hidden sm:block"
                 aria-label="Wishlist"
               >
                 <Image
@@ -1165,6 +1190,13 @@ function NavContent() {
                   height={32}
                   className="w-8 h-8"
                 />
+                {cartCount > 0 && (
+                  <span
+                    className="absolute top-3 right-3 block w-2 h-2 rounded-full bg-[#6D0D26]"
+                    aria-label={`Cart items: ${cartCount}`}
+                    title={`${cartCount}`}
+                  />
+                )}
               </button>
             </div>
           </div>
@@ -1250,27 +1282,24 @@ function NavContent() {
               </div>
             ))}
 
-            {/* Wishlist Link */}
-            <div className="border-b border-gray-100 last:border-b-0">
-              <Link
-                href="/wishlist"
-                className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span>Wishlist</span>
-                <Image
-                  src="/like-black.svg"
-                  alt="wishlist"
-                  width={18}
-                  height={16}
-                  className="w-[18px] h-4"
-                />
-              </Link>
-            </div>
-
             {/* Mobile User Section */}
-            <div className="pt-4 mt-4 border-t border-gray-200">
+            <div>
               <div className="space-y-2">
+                {/* Wishlist - moved here, icon first */}
+                <Link
+                  href="/wishlist"
+                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26] sm:hidden"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Image
+                    src="/like-black.svg"
+                    alt="wishlist"
+                    width={16}
+                    height={16}
+                    className="w-[16px] h-4"
+                  />
+                  <span>Wishlist</span>
+                </Link>
                 {isAuthenticated ? (
                   <>
                     <button
@@ -1461,8 +1490,7 @@ function NavContent() {
                       />
                       <span>Privacy Policy</span>
                     </button>
-
-                    <hr className="my-2" />
+                    <hr className="my-1" style={{ borderColor: "rgba(0,0,0,0.15)" }} />
 
                     <button
                       onClick={handleLogin}
@@ -1475,9 +1503,9 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Login</span>
+                      <span>Login / Signup</span>
                     </button>
-
+{/* 
                     <button
                       onClick={() => router.push("/register")}
                       className="flex items-center space-x-3 py-2 mb-4 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
@@ -1496,9 +1524,9 @@ function NavContent() {
                         />
                       </svg>
                       <span>Register</span>
-                    </button>
+                    </button> */}
 
-                    <button
+                    {/* <button
                       onClick={() => router.push("/forgot-password")}
                       className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
                     >
@@ -1516,7 +1544,7 @@ function NavContent() {
                         />
                       </svg>
                       <span>Forgot Password?</span>
-                    </button>
+                    </button> */}
                   </>
                 )}
               </div>
