@@ -9,8 +9,10 @@ import ProductGrid from "../../_components/ProductGrid";
 export default function CategoryPage() {
   const params = useParams();
   const category = params.category;
-  
-  const [selectedCategory, setSelectedCategory] = useState(decodeURIComponent(category));
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    decodeURIComponent(category)
+  );
   const [selectedDiscount, setSelectedDiscount] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 1000, max: 12999 });
   const [sortBy, setSortBy] = useState("Featured");
@@ -25,17 +27,17 @@ export default function CategoryPage() {
       originalPrice: 2099,
       image: "/iem1.jpg",
       category: "In-Ear Monitors",
-      discount: 10
+      discount: 10,
     },
     {
       id: 2,
       name: "7hz Salnotes Zero 2 Wired IEM",
-      type: "In-ear monitors", 
+      type: "In-ear monitors",
       price: 1899,
       originalPrice: 2099,
       image: "/iem1.jpg",
       category: "In-Ear Monitors",
-      discount: 10
+      discount: 10,
     },
     {
       id: 3,
@@ -45,7 +47,7 @@ export default function CategoryPage() {
       originalPrice: 2099,
       image: "/iem1.jpg",
       category: "In-Ear Monitors",
-      discount: 10
+      discount: 10,
     },
     {
       id: 4,
@@ -55,9 +57,9 @@ export default function CategoryPage() {
       originalPrice: 2099,
       image: "/iem1.jpg",
       category: "In-Ear Monitors",
-      discount: 10
-    }
-  ].filter(product => product.category === selectedCategory);
+      discount: 10,
+    },
+  ].filter((product) => product.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-white">
@@ -88,4 +90,4 @@ export default function CategoryPage() {
       </div>
     </div>
   );
-} 
+}
