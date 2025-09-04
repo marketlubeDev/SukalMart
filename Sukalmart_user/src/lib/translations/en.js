@@ -35,6 +35,10 @@ export const en = {
       shopAll: "Shop all",
     },
     shopByPrice: "Shop by Price",
+    sunsilkShampoo: "Sunsilk Shampoo",
+    bodyWash: "Body Wash",
+    newLaunches: "New Launches",
+    shopOtherCategories: "Shop other categories",
     instagram: {
       followUs: "Follow us on",
       instagram: "Instagram",

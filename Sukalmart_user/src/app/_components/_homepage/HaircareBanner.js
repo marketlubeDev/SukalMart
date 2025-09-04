@@ -3,8 +3,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/app/_components/common/Button';
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function HaircareBanner({ selectedCategory }) {
+  const { language } = useLanguage();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -119,7 +122,7 @@ export default function HaircareBanner({ selectedCategory }) {
                 disabled={isLoading}
                 className="bg-transparent text-white px-4 py-2 rounded text-sm font-semibold cursor-pointer border-2 border-white hover:text-gray-200 hover:border-white/90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Loading...' : 'Shop now'}
+                {isLoading ? t("common.loading", language) : t("homepage.hero.cta", language)}
               </Button>
             </div>
           </div>
@@ -148,7 +151,7 @@ export default function HaircareBanner({ selectedCategory }) {
                 disabled={isLoading}
                 className="inline-flex items-center px-6 py-3 bg-transparent text-gray-800 font-semibold rounded-lg hover:text-gray-600 transition-all duration-200 border-2 border-gray-800 hover:border-gray-600 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Loading...' : 'Shop now'}
+                {isLoading ? t("common.loading", language) : t("homepage.hero.cta", language)}
               </Button>
             </div>
             

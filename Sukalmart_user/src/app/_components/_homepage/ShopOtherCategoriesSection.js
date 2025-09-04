@@ -3,9 +3,12 @@
 import { categories } from "../../../lib/data";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "@/lib/translations";
 import { useMemo } from "react";
 
 export default function ShopOtherCategoriesSection({ currentCategory }) {
+  const { language } = useLanguage();
   const router = useRouter();
   
   // Normalize strings to consistent slugs (e.g., "Body & Shower" -> "body-shower")
@@ -34,7 +37,7 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
         {/* Header */}
         <header className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Shop other categories
+            {t("homepage.shopOtherCategories", language)}
           </h2>
         </header>
         

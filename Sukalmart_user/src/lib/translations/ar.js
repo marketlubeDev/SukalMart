@@ -35,6 +35,10 @@ export const ar = {
       shopAll: "تسوق الكل",
     },
     shopByPrice: "تسوق حسب السعر",
+    sunsilkShampoo: "شامبو صن سيلك",
+    bodyWash: "غسول الجسم",
+    newLaunches: "الإطلاقات الجديدة",
+    shopOtherCategories: "تسوق فئات أخرى",
     instagram: {
       followUs: "تابعنا على",
       instagram: "انستغرام",

@@ -1,6 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "@/lib/translations";
 
 // NewLaunchCard component - inline to avoid separate file dependency
 function NewLaunchCard({ product, onClick }) {
@@ -36,6 +38,7 @@ function NewLaunchCard({ product, onClick }) {
 }
 
 export default function NewLaunchesSection() {
+  const { language } = useLanguage();
   const router = useRouter();
 
   // New launches products data with proper IDs for navigation
@@ -88,7 +91,7 @@ export default function NewLaunchesSection() {
         {/* Section Header */}
         <div className="mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl xl:text-[28px] font-bold text-gray-800">
-            New Launches
+            {t("homepage.newLaunches", language)}
           </h2>
         </div>
 
