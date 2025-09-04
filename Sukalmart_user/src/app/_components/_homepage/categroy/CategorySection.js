@@ -4,9 +4,12 @@ import { useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import useCategories from "../../../../lib/hooks/useCategories"; // BACKEND INTERACTION: Removed dynamic category fetching
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 const CategorySection = () => {
   const router = useRouter();
+  const { language } = useLanguage();
 
   // BACKEND INTERACTION: Previously used useCategories hook to fetch categories from API
   const { categories, loading, error } = useCategories();
@@ -33,7 +36,7 @@ const CategorySection = () => {
   const LoadingState = () => (
     <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
       <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-        Shop by category
+                {t("homepage.categories.title", language)}
       </h2>
       <div className="flex justify-center items-center w-full h-32">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900" />
@@ -44,8 +47,8 @@ const CategorySection = () => {
   // Error State:
   const ErrorState = () => (
     <div className="flex flex-col items-center justify-center w-full overflow-hidden container mx-auto py-10 px-4 md:px-10">
-      <h2 className="text-[#333333] text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
-        Shop by category
+      <h2 className="text-center text-xl sm:text-2xl md:text-[26px] lg:text-[28px] font-bold leading-normal tracking-[-0.28px] mb-6">
+                {t("homepage.categories.title", language)}
       </h2>
       <div className="text-red-500 text-center">
         Failed to load categories. Please try again later.
@@ -117,7 +120,7 @@ const CategorySection = () => {
                     md:text-[26px]
                     lg:text-[28px]"
       >
-        Shop by category
+        {t("homepage.categories.title", language)}
       </h2>
 
       {/* Categories Grid - Responsive Layout */}

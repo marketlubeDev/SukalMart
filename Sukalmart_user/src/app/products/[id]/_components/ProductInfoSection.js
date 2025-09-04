@@ -3,6 +3,8 @@
 import ProductServiceBenefits from "./ProductServiceBenefits";
 import Button from "@/app/_components/common/Button";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ProductInfoSection({
   product,
@@ -22,6 +24,7 @@ export default function ProductInfoSection({
   showMoreDetails,
   setShowMoreDetails
 }) {
+  const { language } = useLanguage();
   return (
     <div className="space-y-6">
       <div>
@@ -95,7 +98,7 @@ export default function ProductInfoSection({
             className="text-xs text-gray-400 block mt-1 text-left"
             style={{ lineHeight: "1.2" }}
           >
-            (inclusive of all tax)
+            {t("product.inclusiveOfAllTax", language)}
           </span>
         </div>
 
@@ -251,7 +254,7 @@ export default function ProductInfoSection({
         {/* Volume Selection */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-gray-700 font-medium text-sm sm:text-base">Volume:</span>
+            <span className="text-gray-700 font-medium text-sm sm:text-base">{t("product.volume", language)}:</span>
             <span className="text-gray-900 font-semibold text-xs sm:text-sm">{selectedVolume}</span>
           </div>
           <div className="flex items-center gap-3">
@@ -273,7 +276,7 @@ export default function ProductInfoSection({
       <div className="space-y-4 w-full">
         <div className="flex items-center gap-3">
           <label className="text-xs sm:text-sm font-medium text-gray-700">
-            Qty :
+            {t("common.qty", language)} :
           </label>
           <div className="flex items-center bg-[#F7F3F4] border border-[#6D0D26] rounded-md px-1">
             <button
@@ -304,7 +307,7 @@ export default function ProductInfoSection({
             onClick={buyNow}
             className="flex-1 text-sm sm:text-base"
           >
-            Buy now
+            {t("product.buyNow", language)}
           </Button>
           <Button
             variant="cart"
@@ -312,7 +315,7 @@ export default function ProductInfoSection({
             onClick={addToCart}
             className="flex-1 text-sm sm:text-base"
           >
-            Add to cart
+            {t("product.addToCart", language)}
           </Button>
         </div>
         <div className="mt-2">
@@ -337,7 +340,7 @@ export default function ProductInfoSection({
       {/* About product */}
       <div className="rounded-lg py-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          About product
+          {t("product.aboutProduct", language)}
         </h3>
         <p className="text-gray-700 leading-relaxed mb-2 text-sm sm:text-base">
           {product.type === "Hair Care" && (
@@ -394,7 +397,7 @@ export default function ProductInfoSection({
       {/* Specification */}
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          Specification
+          {t("product.specifications", language)}
         </h3>
         <ul className="list-disc pl-5 text-gray-700 space-y-1 text-sm sm:text-base">
           {product.type === "Hair Care" && (
@@ -454,7 +457,7 @@ export default function ProductInfoSection({
       <div className="mt-8">
         <div className="border-t border-gray-200 mb-4"></div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          Return &amp; Refund Policy
+          {t("product.returnRefundPolicy", language)}
         </h3>
         <p className="text-gray-700 mb-2 text-sm sm:text-base">
           Returns are accepted within{" "}

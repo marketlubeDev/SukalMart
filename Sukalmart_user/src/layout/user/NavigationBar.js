@@ -3,16 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from "../../lib/hooks/useTranslation";
 
 const NavigationBar = ({ navigationItems }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const { t, isRTL } = useTranslation();
 
   const toggleDropdown = (dropdownName) => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName);
   };
 
   return (
-    <div className="bg-[var(--color-primary)]">
+    <div className="bg-[var(--color-primary)]" dir={isRTL ? "rtl" : "ltr"}>
       <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="hidden lg:flex lg:items-center lg:justify-evenly py-0.5">
           {navigationItems.map((item, index) => (
@@ -30,7 +32,7 @@ const NavigationBar = ({ navigationItems }) => {
                 onMouseOut={(e) => (e.currentTarget.style.color = "white")}
                 onClick={() => {
                   // Reset category when Products is clicked
-                  if (item.label === "Products") {
+                  if (item.label === t("nav.products")) {
                     localStorage.removeItem("selectedCategory");
                   }
                   // Do not persist dropdown on click; hover controls visibility
@@ -52,7 +54,7 @@ const NavigationBar = ({ navigationItems }) => {
 
               {/* Desktop Dropdown Menu */}
               {item.hasDropdown && (
-                <div className={`absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+                <div className={`absolute ${isRTL ? 'right-0' : 'left-0'} mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
                   activeDropdown === item.label ? "opacity-100 visible" : "opacity-0 invisible"
                 }`}>
                   <div className="py-2">

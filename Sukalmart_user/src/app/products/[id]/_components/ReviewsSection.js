@@ -4,8 +4,11 @@ import { useState } from "react";
 import { Modal, Rate, Input, Button } from "antd";
 import { MdAttachFile } from "react-icons/md";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ReviewsSection({ product, selectedImage }) {
+  const { language } = useLanguage();
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
@@ -69,7 +72,7 @@ export default function ReviewsSection({ product, selectedImage }) {
               className="text-xl font-semibold mb-2"
               style={{ color: "#333" }}
             >
-              Reviews & Rating
+              {t("product.reviewsAndRating", language)}
             </h3>
             <div className="flex items-center mb-2">
               <span
@@ -116,7 +119,7 @@ export default function ReviewsSection({ product, selectedImage }) {
               onClick={showReviewModal}
               className="mt-2 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded font-medium hover:bg-[var(--color-primary)] hover:text-white transition text-sm cursor-pointer"
             >
-              Rate Product
+              {t("product.rateProduct", language)}
             </button>
           </div>
 
@@ -138,7 +141,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                     letterSpacing: "-0.2px",
                   }}
                 >
-                  Review images
+                  {t("product.reviewImages", language)}
                 </h5>
                 <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                   {Array.from({ length: 6 }).map((_, idx) => (
@@ -182,7 +185,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                   letterSpacing: "-0.2px",
                 }}
               >
-                Customer Reviews
+                {t("product.customerReviews", language)}
               </h4>
               <div className="flex items-center gap-2 mb-2">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-[#17632D] text-white text-xs font-semibold">
@@ -390,7 +393,7 @@ export default function ReviewsSection({ product, selectedImage }) {
 
       {/* Review Modal */}
       <Modal
-        title="Add Review"
+        title={t("product.addReview", language)}
         open={isReviewModalVisible}
         onCancel={handleReviewModalCancel}
         footer={null}
@@ -401,10 +404,10 @@ export default function ReviewsSection({ product, selectedImage }) {
           {/* Rating Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              How was the item?
+              {t("product.howWasItem", language)}
             </h3>
             <p className="text-sm text-gray-600 mb-4">
-              Let us know your experience with the item in a few words!
+              {t("product.howWasItemDescription", language)}
             </p>
             <div className="flex items-center justify-between">
               <div className="flex gap-1">
@@ -430,7 +433,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 onClick={clearRating}
                 className="text-red-500 text-sm hover:text-red-700 cursor-pointer"
               >
-                Clear
+                {t("common.clear", language)}
               </button>
             </div>
           </div>
@@ -438,13 +441,13 @@ export default function ReviewsSection({ product, selectedImage }) {
           {/* Review Text Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Write your review <span className="text-red-500">*</span>
+              {t("product.writeYourReview", language)} <span className="text-red-500">*</span>
             </h3>
             <div className="relative">
               <Input.TextArea
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
-                placeholder="Tell us what you think.."
+                placeholder={t("product.reviewPlaceholder", language)}
                 rows={4}
                 style={{ 
                   resize: 'none',
@@ -515,7 +518,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 fontWeight: '600',
               }}
             >
-              Rate Product
+              {t("product.rateProduct", language)}
             </Button>
           </div>
         </div>

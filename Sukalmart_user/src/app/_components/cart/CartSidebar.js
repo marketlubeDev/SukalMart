@@ -4,8 +4,11 @@ import { useState, useEffect } from "react";
 import { Drawer } from "antd";
 import CouponSidebar from "./CouponSidebar";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "../../../lib/translations";
 
 export default function CartSidebar({ isOpen, onClose }) {
+  const { language } = useLanguage();
   const [quantities, setQuantities] = useState({
     1: 1,
     2: 1,
@@ -213,7 +216,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 letterSpacing: "-0.44px",
               }}
             >
-              Your cart
+              {t("cart.title", language)}
             </h2>
           </div>
         </div>
@@ -243,7 +246,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   letterSpacing: "-0.4px",
                 }}
               >
-                Items
+                {t("cart.items", language)}
               </h3>
               <span
                 style={{
@@ -255,7 +258,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   letterSpacing: "-0.28px",
                 }}
               >
-                {cartItems.length} products
+                {cartItems.length} {t("cart.products", language)}
               </span>
             </div>
 
@@ -326,7 +329,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       marginBottom: "8px"
                     }}
                   >
-                    Your cart is empty
+                    {t("cart.empty", language)}
                   </h3>
                   
                   <p
@@ -340,7 +343,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       marginBottom: "24px"
                     }}
                   >
-                    Looks like you haven't added any items to your cart yet
+                    {t("cart.emptyDescription", language)}
                   </p>
                   
                   {/* Shop Now Button */}
@@ -372,7 +375,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       (e.currentTarget.style.background = "var(--color-primary)")
                     }
                   >
-                    Shop Now
+                    {t("homepage.hero.cta", language)}
                   </button>
                 </div>
               ) : (
@@ -475,13 +478,13 @@ export default function CartSidebar({ isOpen, onClose }) {
                       }}
                     >
                       <span style={{ marginRight: "16px" }}>
-                        Type:{" "}
+                        {t("common.type", language)}:{" "}
                         <span style={{ color: "#222", fontWeight: 500 }}>
                           {item.color || 'Standard'}
                         </span>
                       </span>
                       <span>
-                        Size:{" "}
+                        {t("common.size", language)}:{" "}
                         <span style={{ color: "#222", fontWeight: 500 }}>
                           {item.plug || 'Default'}
                         </span>
@@ -492,7 +495,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <div className="flex items-center justify-between w-full">
                       {/* Quantity Selector */}
                       <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-600">Qty :</span>
+                        <span className="text-xs text-gray-600">{t("common.qty", language)} :</span>
                         <div
                           style={{
                             display: "flex",
@@ -632,7 +635,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 }}
                 className="mb-3 px-4"
               >
-                Coupon
+                {t("cart.coupon", language)}
               </h3>
               <button
                 onClick={() => setShowCouponSidebar(true)}
@@ -645,10 +648,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                   </div>
                   <div className="text-left">
                     <p className="text-sm font-medium text-gray-800">
-                      Apply Coupon & Offers
+                      {t("cart.applyCouponAndOffers", language)}
                     </p>
                     <p className="text-xs text-gray-600">
-                      Use a valid coupon code and get an instant discount.
+                      {t("cart.couponDescription", language)}
                     </p>
                   </div>
                 </div>
@@ -683,15 +686,15 @@ export default function CartSidebar({ isOpen, onClose }) {
                     letterSpacing: "-0.4px",
                   }}
                 >
-                  Order Summary
+                  {t("cart.orderSummary", language)}
                 </h3>
                 <div className="flex flex-col items-center ml-2">
                   <button
                     type="button"
                     aria-label={
                       orderSummaryOpen
-                        ? "Collapse order summary"
-                        : "Expand order summary"
+                                            ? t("cart.collapseOrderSummary", language)
+                    : t("cart.expandOrderSummary", language)
                     }
                     onClick={() => setOrderSummaryOpen((open) => !open)}
                     style={{
@@ -743,7 +746,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         letterSpacing: "-0.32px",
                       }}
                     >
-                      Subtotal
+                                              {t("cart.subtotal", language)}
                     </span>
                     <span
                       style={{
@@ -781,7 +784,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        Total
+                        {t("cart.total", language)}
                       </span>
                       <span
                         style={{
@@ -807,7 +810,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        Discount
+                        {t("cart.discount", language)}
                       </span>
                       <span
                         style={{
@@ -833,7 +836,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        Delivery
+                        {t("cart.delivery", language)}
                       </span>
                       <span
                         style={{
@@ -845,7 +848,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        Free
+                        {t("homepage.services.freeShipping", language)}
                       </span>
                     </div>
                     <div className="flex justify-between w-full">
@@ -859,7 +862,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        Coupon discount
+                        {t("cart.couponDiscount", language)}
                       </span>
                       <span
                         style={{
@@ -931,7 +934,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                     (e.currentTarget.style.color = "rgba(51, 51, 51, 0.7)")
                   }
                 >
-                  View Details
+                  {t("common.view", language)} {t("cart.details", language)}
                 </button>
               </div>
               <Button
@@ -941,7 +944,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 className="font-medium sm:w-[260px]"
                 style={{ borderRadius: "4px" }}
               >
-                Proceed to checkout
+                {t("cart.checkout", language)}
               </Button>
             </div>
             )}

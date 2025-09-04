@@ -8,9 +8,12 @@ import MyOrders from "./_components/MyOrders";
 import HelpSupport from "./_components/HelpSupport";
 import PrivacyPolicy from "./_components/PrivacyPolicy";
 import TermsConditions from "./_components/TermsConditions";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 function MyAccountContent() {
   const router = useRouter();
+  const { language } = useLanguage();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const tabParam = (searchParams.get("tab") || "").toLowerCase();
@@ -55,12 +58,12 @@ function MyAccountContent() {
   }, [tabParam]);
 
   const tabs = [
-    "Account Info",
-    "Saved Address", 
-    "My Orders",
-    "Help & Support",
-    "Privacy & Policy",
-    "Terms & Conditions"
+    "accountInfo",
+    "savedAddress", 
+    "myOrders",
+    "helpSupport",
+    "privacyPolicy",
+    "termsConditions"
   ];
 
   const renderTabContent = () => {
@@ -87,9 +90,9 @@ function MyAccountContent() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">My account</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{t("nav.myAccount", language)}</h1>
           <p className="text-sm sm:text-base text-gray-600">
-            Access and manage your personal information, orders, saved addresses, and support preferences.
+            {t("account.pageIntro", language)}
           </p>
         </div>
       </div>
@@ -98,26 +101,22 @@ function MyAccountContent() {
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex space-x-4 sm:space-x-8 overflow-x-auto scrollbar-hide">
-            {tabs.map((tab) => (
+            {tabs.map((tabKey) => (
               <button
-                key={tab}
+                key={tabKey}
                 onClick={() => {
-                  setActiveTab(tab);
-                  const param = tab
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")
-                    .replace("&-", "");
+                  setActiveTab(tabKey);
                   const newSearch = new URLSearchParams(searchParams.toString());
-                  newSearch.set("tab", param);
+                  newSearch.set("tab", tabKey);
                   router.push(`${pathname}?${newSearch.toString()}`);
                 }}
                 className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === tab
+                  activeTab === tabKey
                     ? "border-[var(--color-primary)] text-[var(--color-primary)]"
                     : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
-                {tab}
+                {t(`account.${tabKey}`, language)}
               </button>
             ))}
           </div>

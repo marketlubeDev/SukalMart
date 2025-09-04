@@ -1,47 +1,50 @@
 "use client";
 
 import React from "react";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 import Button from "@/app/_components/common/Button";
 
 export default function PrivacyPolicy() {
+  const { language } = useLanguage();
   const privacySections = [
     {
-      title: "Data Collection",
-      content: "We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support."
+      title: t("account.privacySections.dataCollection.title", language),
+      content: t("account.privacySections.dataCollection.content", language),
     },
     {
-      title: "Data Usage",
-      content: "We use your information to process orders, provide customer support, send you updates about your orders, and improve our services."
+      title: t("account.privacySections.dataUsage.title", language),
+      content: t("account.privacySections.dataUsage.content", language),
     },
     {
-      title: "Data Sharing",
-      content: "We do not sell your personal information. We may share your information with third-party service providers who assist us in operating our website and providing services."
+      title: t("account.privacySections.dataSharing.title", language),
+      content: t("account.privacySections.dataSharing.content", language),
     },
     {
-      title: "Data Security",
-      content: "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+      title: t("account.privacySections.dataSecurity.title", language),
+      content: t("account.privacySections.dataSecurity.content", language),
     },
     {
-      title: "Your Rights",
-      content: "You have the right to access, update, or delete your personal information. You can also opt out of marketing communications at any time."
+      title: t("account.privacySections.yourRights.title", language),
+      content: t("account.privacySections.yourRights.content", language),
     },
     {
-      title: "Cookies",
-      content: "We use cookies and similar technologies to enhance your browsing experience, analyze site traffic, and understand where our visitors are coming from."
-    }
+      title: t("account.privacySections.cookies.title", language),
+      content: t("account.privacySections.cookies.content", language),
+    },
   ];
 
   return (
     <div className="bg-white rounded-lg p-4 sm:p-6">
-      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Privacy & Policy</h2>
+      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">{t("account.privacyPolicy", language)}</h2>
 
       <div className="space-y-4 sm:space-y-6">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
           <div className="flex items-start space-x-3">
             <span className="text-blue-600 text-lg sm:text-xl">ℹ️</span>
             <div>
-              <h3 className="font-medium text-blue-900 mb-1 text-sm sm:text-base">Last Updated</h3>
-              <p className="text-blue-700 text-xs sm:text-sm">January 15, 2024</p>
+              <h3 className="font-medium text-blue-900 mb-1 text-sm sm:text-base">{t("account.lastUpdatedLabel", language)}</h3>
+              <p className="text-blue-700 text-xs sm:text-sm">{t("account.lastUpdatedDate", language)}</p>
             </div>
           </div>
         </div>
@@ -56,9 +59,9 @@ export default function PrivacyPolicy() {
         </div>
 
         <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-          <h3 className="font-medium text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Contact Us</h3>
+          <h3 className="font-medium text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">{t("footer.contact", language)}</h3>
           <p className="text-gray-600 text-xs sm:text-sm mb-3">
-            If you have any questions about this Privacy Policy, please contact us:
+            {t("account.privacyContactIntro", language)}
           </p>
           <div className="space-y-2 text-xs sm:text-sm">
             <div className="flex items-center space-x-2">

@@ -3,8 +3,11 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Button from '@/app/_components/common/Button';
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function CrystalClearBanner() {
+  const { language } = useLanguage();
   const router = useRouter();
 
   const handleShopNowClick = () => {
@@ -47,7 +50,7 @@ export default function CrystalClearBanner() {
                 onClick={handleShopNowClick}
                 className="bg-transparent hover:bg-white/10 text-white border-white hover:scale-105 focus:ring-white/50 focus:ring-offset-transparent text-sm sm:text-base rounded"
               >
-                Shop Now
+                {t("homepage.hero.cta", language)}
               </Button>
             </div>
           </div>

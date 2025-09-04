@@ -4,6 +4,8 @@ import PromotionalBanner from "../../_components/_homepage/promotion/Promotional
 import ProductShowcaseBanner from "../../_components/_homepage/promotion/ProductShowcaseBanner";
 import ProductCard from "../../_components/_homepage/ProductCard";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ProductGrid({
   products,
@@ -11,12 +13,13 @@ export default function ProductGrid({
   sortBy,
   setSortBy,
 }) {
+  const { language } = useLanguage();
   const sortOptions = [
-    "Featured",
-    "Price: Low to High",
-    "Price: High to Low",
-    "Newest",
-    "Popular",
+    "homepage.productSidebar.featured",
+    "homepage.productSidebar.priceLowToHigh",
+    "homepage.productSidebar.priceHighToLow",
+    "homepage.productSidebar.newest",
+    "homepage.productSidebar.popular",
   ];
 
   console.log(products, "ajsgdlhlagshl");
@@ -48,14 +51,14 @@ export default function ProductGrid({
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-lg sm:text-xl font-semibold text-gray-800">
-            Showing result for &quot;{selectedCategory || "All Products"}&quot;
+            {t("homepage.productSidebar.showingResultsFor", language)} &quot;{selectedCategory || t("homepage.productSidebar.allProducts", language)}&quot;
           </h1>
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
           {/* Sort Dropdown visible from sm+; hidden on mobile */}
           <div className="flex items-center gap-1 relative">
-            <span className="text-sm text-gray-600">Sort by :</span>
+            <span className="text-sm text-gray-600">{t("homepage.productSidebar.sortBy", language)}</span>
             <div
               className="relative flex items-center"
               style={{ marginRight: "12px" }}
@@ -81,7 +84,7 @@ export default function ProductGrid({
               >
                 {sortOptions.map((option) => (
                   <option key={option} value={option} className="font-normal">
-                    {option}
+                    {t(option, language)}
                   </option>
                 ))}
               </select>

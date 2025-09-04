@@ -4,9 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import AddressForm from "./AddressForm";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function CheckoutRight() {
   const router = useRouter();
+  const { language } = useLanguage();
   const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [showAddressForm, setShowAddressForm] = useState(false);
@@ -73,12 +76,12 @@ export default function CheckoutRight() {
           {/* Account Info */}
           <div className="bg-white rounded-lg">
             <div className="flex items-center justify-between px-4 pt-4 pb-2">
-              <h3 className="text-xl font-semibold text-gray-800">Account info</h3>
+              <h3 className="text-xl font-semibold text-gray-800">{t("checkout.accountInfo", language)}</h3>
               <button 
                 onClick={handleLogout}
                 className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 underline cursor-pointer"
               >
-                Logout
+                {t("nav.logout", language)}
               </button>
             </div>
             <div className="px-4 pb-4 border-b border-gray-200">
@@ -89,7 +92,7 @@ export default function CheckoutRight() {
           {/* Deliver to */}
           <div className="bg-white rounded-lg">
             <div className="px-4 pt-4 pb-2">
-              <h3 className="text-xl font-semibold text-gray-800">Deliver to</h3>
+              <h3 className="text-xl font-semibold text-gray-800">{t("checkout.deliverTo", language)}</h3>
             </div>
             <div className="pb-4 space-y-2">
               <div className="flex items-center justify-between px-6">
@@ -106,7 +109,7 @@ export default function CheckoutRight() {
                 className="ml-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer font-medium"
                 style={{ marginTop: 0, alignSelf: "flex-start" }}
               >
-                Edit Address
+                {t("checkout.editAddress", language)}
               </button>
             </div>
           </div>
@@ -122,7 +125,7 @@ export default function CheckoutRight() {
       {/* Payment Method */}
       <div className="bg-white rounded-lg">
         <div className="px-4 pt-4 pb-3">
-          <h3 className="text-xl font-semibold text-gray-800">Payment Method</h3>
+          <h3 className="text-xl font-semibold text-gray-800">{t("checkout.paymentMethod", language)}</h3>
         </div>
         <div className="px-4 pb-5 space-y-3">
           {/* Cash On Delivery */}
@@ -139,10 +142,10 @@ export default function CheckoutRight() {
             />
             <div className="flex-1">
               <label htmlFor="cod" className="block font-medium text-gray-800 cursor-pointer">
-                Cash On Delivery
+                {t("checkout.cashOnDelivery", language)}
               </label>
               <p className="text-sm text-gray-600 mt-1">
-                Cash, UPI and cards are accepted on delivery
+                {t("checkout.cashOnDeliveryNote", language)}
               </p>
             </div>
           </div>
@@ -161,11 +164,11 @@ export default function CheckoutRight() {
             />
             <div className="flex-1">
               <label htmlFor="online" className="block font-medium text-gray-800 cursor-pointer">
-                Online Payment
+                {t("checkout.onlinePayment", language)}
               </label>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-1 gap-2">
                 <p className="text-sm text-gray-600">
-                  UPI, Netbanking, Debit Card/Credit Card can be used
+                  {t("checkout.onlinePaymentNote", language)}
                 </p>
                 <div className="flex items-center space-x-2 md:justify-end">
                   <Image src="/upi.png" alt="UPI" width={16} height={12} className="h-3 w-auto md:h-4" />
@@ -180,7 +183,7 @@ export default function CheckoutRight() {
                     onClick={() => setShowMoreCards(!showMoreCards)}
                     className="text-xs text-gray-500 hover:text-gray-700 cursor-pointer"
                   >
-                    {showMoreCards ? '− less' : '+ more'}
+                    {showMoreCards ? t("checkout.less", language) : t("checkout.more", language)}
                   </button>
                 </div>
               </div>

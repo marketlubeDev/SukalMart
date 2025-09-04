@@ -2,9 +2,12 @@
 import { bestSellers } from "../../../../lib/data";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function RecommendedSection() {
   const router = useRouter();
+  const { language } = useLanguage();
   return (
     <div className="bg-white container mx-auto px-0 sm:px-10 md:px-0 lg:px-0 2xl:px-0 pt-0 pb-0 md:pt-16 md:pb-0 overflow-hidden">
       <div className="container mx-auto">
@@ -21,14 +24,14 @@ export default function RecommendedSection() {
               letterSpacing: "-0.24px",
             }}
           >
-            Recommended for you
+            {t("product.recommendedForYou", language)}
           </h2>
           <button
             onClick={() => router.push('/products')}
             className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
             style={{ color: "var(--color-primary)", background: "none", border: "none", padding: 0 }}
           >
-            <span className="text-sm md:text-base">View all</span>
+            <span className="text-sm md:text-base">{t("common.viewAll", language)}</span>
             <span className="flex items-center">
               <Image
                 src="/nextarrow.svg"

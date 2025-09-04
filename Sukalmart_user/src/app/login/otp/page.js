@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function OTPPage() {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -12,6 +14,7 @@ export default function OTPPage() {
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const router = useRouter();
+  const { language } = useLanguage();
 
   // Timer countdown
   useEffect(() => {
@@ -118,7 +121,7 @@ export default function OTPPage() {
             }}
             className="sm:text-[40px]"
           >
-            Verify{" "}
+            {t("homepage.otp.verify", language)}{" "}
             <span
               style={{
                 color: "#6D0D26",
@@ -132,7 +135,7 @@ export default function OTPPage() {
               }}
               className="sm:text-[40px]"
             >
-              OTP
+              {t("homepage.otp.otp", language)}
             </span>
           </h2>
           <div className="text-center">
@@ -150,7 +153,7 @@ export default function OTPPage() {
               }}
               className="sm:text-[16px]"
             >
-              We&apos;ve sent a 6-digit code to{" "}
+              {t("homepage.otp.sentCodeMessage", language)}{" "}
               <span
                 className="text-[var(--color-primary)] font-medium"
                 style={{
@@ -158,7 +161,7 @@ export default function OTPPage() {
                   letterSpacing: "-0.64px",
                 }}
               >
-                you@example.com
+                {t("homepage.otp.exampleEmail", language)}
               </span>
               <button
                 type="button"
@@ -178,7 +181,7 @@ export default function OTPPage() {
                   className="inline-block w-4 h-4 mr-1 align-text-bottom"
                   style={{ marginRight: "2px" }}
                 />
-                Edit
+                  {t("homepage.otp.edit", language)}
               </button>
             </p>
             <p
@@ -195,7 +198,7 @@ export default function OTPPage() {
               }}
               className="sm:text-[16px]"
             >
-              Please enter it below to continue.
+              {t("homepage.otp.enterCodeMessage", language)}
             </p>
           </div>
         </div>
@@ -229,7 +232,7 @@ export default function OTPPage() {
                       letterSpacing: "-0.52px",
                     }}
                   >
-                    Enter OTP
+                 {t("homepage.otp.enterOTPLabel", language)}
                   </label>
                   <div className="flex justify-center space-x-3">
                     {otp.map((digit, index) => (
@@ -275,7 +278,7 @@ export default function OTPPage() {
               loading={isLoading}
               className="w-[292px] max-w-[292px] rounded-md cursor-pointer"
             >
-              {isLoading ? "Verifying..." : "Verify OTP"}
+                             {isLoading ? t("homepage.otp.verifying", language) : t("homepage.otp.verifyOTP", language)}
             </Button>
           </div>
 
@@ -287,11 +290,11 @@ export default function OTPPage() {
                 onClick={handleResendOTP}
                 className="text-sm text-gray-600 hover:text-gray-700 font-medium"
               >
-                Resend OTP
+                                 {t("homepage.otp.resendOTP", language)}
               </button>
             ) : (
               <p className="text-sm text-gray-600">
-                Resend OTP in <span className="text-black">{timer} Sec</span>
+                                 {t("homepage.otp.resendOTP", language)} in <span className="text-black">{timer} Sec</span>
               </p>
             )}
           </div>

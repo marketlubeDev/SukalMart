@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useWishlist } from "../_components/context/WishlistContext";
 import Image from "next/image";
+import { useLanguage } from "../_components/context/LanguageContext";
+import { t } from "../../lib/translations";
 
 const sortOptions = [
   "Featured",
@@ -78,6 +80,7 @@ function WishlistCard({ product, onRemove }) {
 export default function WishlistPage() {
   const [sortBy, setSortBy] = useState("Featured");
   const { items, remove } = useWishlist();
+  const { language } = useLanguage();
 
   const products = useMemo(() => {
     const list = [...items];
@@ -92,11 +95,11 @@ export default function WishlistPage() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-semibold text-gray-800">Wishlist</h1>
+            <h1 className="text-xl font-semibold text-gray-800">{t("nav.wishlist", language)}</h1>
           </div>
 
           <div className="flex items-center gap-1 relative">
-            <span className="text-sm text-gray-600">Sort by :</span>
+            <span className="text-sm text-gray-600">{t("homepage.productSidebar.sortBy", language)}</span>
             <div className="relative flex items-center" style={{ marginRight: "12px" }}>
               <select
                 value={sortBy}
@@ -119,7 +122,7 @@ export default function WishlistPage() {
               >
                 {sortOptions.map((option) => (
                   <option key={option} value={option} className="font-normal">
-                    {option}
+                    {t(`homepage.productSidebar.${option === "Featured" ? "featured" : option === "Price: Low to High" ? "priceLowToHigh" : option === "Price: High to Low" ? "priceHighToLow" : option === "Newest" ? "newest" : "popular"}`, language)}
                   </option>
                 ))}
               </select>
@@ -136,7 +139,7 @@ export default function WishlistPage() {
         </div>
 
         {products.length === 0 ? (
-          <div className="text-center text-gray-600 py-16">Your wishlist is empty.</div>
+          <div className="text-center text-gray-600 py-16">{t("wishlist.empty", language)}</div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {products.map((product) => (

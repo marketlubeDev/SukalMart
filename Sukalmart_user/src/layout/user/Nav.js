@@ -7,6 +7,7 @@ import Image from "next/image";
 import NavigationBar from "./NavigationBar";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 import useCategories from "../../lib/hooks/useCategories"; // BACKEND INTERACTION: Removed dynamic category fetching
+import { useTranslation } from "../../lib/hooks/useTranslation";
 
 // Import your data
 import {
@@ -42,12 +43,14 @@ function NavContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [language, setLanguage] = useState("EN");
   const [isMobileLanguageOpen, setIsMobileLanguageOpen] = useState(false);
   const [authToken, setAuthToken] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
+  // Language hook
+  const { t, language, isRTL, changeLanguage } = useTranslation();
 
   // Refs
   const resultsRef = useRef(null);
@@ -73,7 +76,6 @@ function NavContent() {
         window.localStorage?.getItem("token") ||
         window.localStorage?.getItem("userToken");
       const user = window.localStorage?.getItem("user");
-      const savedLang = window.localStorage?.getItem("language");
 
       setAuthToken(token);
       setIsAuthenticated(!!token);
@@ -83,9 +85,6 @@ function NavContent() {
         } catch (e) {
           console.error("Error parsing user data:", e);
         }
-      }
-      if (savedLang === "EN" || savedLang === "AR") {
-        setLanguage(savedLang);
       }
     }
   }, []);
@@ -262,15 +261,9 @@ function NavContent() {
   };
 
   const toggleLanguage = (newLang) => {
-    setLanguage(newLang);
+    changeLanguage(newLang);
     setIsLanguageDropdownOpen(false);
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage?.setItem("language", newLang);
-      } catch (e) {
-        console.error("Error saving language:", e);
-      }
-    }
+    setIsMobileLanguageOpen(false);
   };
 
   const toggleLanguageDropdown = () => {
@@ -282,6 +275,60 @@ function NavContent() {
     setIsUserDropdownOpen(!isUserDropdownOpen);
     setIsLanguageDropdownOpen(false);
   };
+
+  // Reusable Language Dropdown Component
+  const LanguageDropdown = ({ isOpen, onClose, isMobile = false, className = "" }) => (
+    <div
+      className={`absolute right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      } ${className}`}
+    >
+      <div className={isMobile ? "py-1" : "py-2"}>
+        <button
+          onClick={() => toggleLanguage("EN")}
+          className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+        >
+          <Image
+            src="/english.svg"
+            alt="English"
+            width={isMobile ? 16 : 20}
+            height={isMobile ? 16 : 20}
+            className={`${isMobile ? "w-4 h-4" : "w-5 h-5"} rounded-full mr-2`}
+          />
+          <span
+            className={`${isMobile ? "text-xs" : ""} ${
+              language === "EN"
+                ? "text-[#6D0D26] font-medium"
+                : "text-gray-400"
+            }`}
+          >
+            English
+          </span>
+        </button>
+        <button
+          onClick={() => toggleLanguage("AR")}
+          className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+        >
+          <Image
+            src="/arabicicon.svg"
+            alt="Arabic"
+            width={isMobile ? 16 : 20}
+            height={isMobile ? 16 : 20}
+            className={`${isMobile ? "w-4 h-4" : "w-5 h-5"} rounded-full mr-2`}
+          />
+          <span
+            className={`${isMobile ? "text-xs" : ""} ${
+              language === "AR"
+                ? "text-[#6D0D26] font-medium"
+                : "text-gray-400"
+            }`}
+          >
+            العربية
+          </span>
+        </button>
+      </div>
+    </div>
+  );
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -328,7 +375,7 @@ function NavContent() {
   const navigationItems = useMemo(() => {
     const items = [
       {
-        label: "Products",
+        label: "Products", // Use static text here, will be translated in the component
         hasDropdown: false,
         href: "/products",
       },
@@ -356,17 +403,28 @@ function NavContent() {
     return items;
   }, [categories]);
 
-  console.log(navigationItems, "navigationItems");
+  // Get translated navigation items
+  const translatedNavigationItems = useMemo(() => {
+    if (!t || typeof t !== 'function') return navigationItems; // Safety check
+    
+    return navigationItems.map(item => ({
+      ...item,
+      label: item.label === "Products" ? t("nav.products") : item.label
+    }));
+  }, [t, navigationItems]);
+
+  console.log(translatedNavigationItems, "translatedNavigationItems");
   return (
     <>
       <nav
-        className="bg-white shadow-sm sticky top-0 z-50 relative "
+        className="bg-white shadow-sm sticky top-0 z-50 relative"
         style={{ isolation: "isolate" }}
+        dir={isRTL ? "rtl" : "ltr"}
       >
         {/* Main Header */}
         <div className="bg-white">
-          <div className="container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16">
-            <div className="flex items-center h-3 lg:h-16 justify-between">
+          <div className={`container mx-auto px-4 sm:px-6 md:px-6 lg:px-8 xl:px-12 2xl:px-16 ${isRTL ? 'text-right' : 'text-left'}`}>
+            <div className={`flex items-center h-3 lg:h-16 ${isRTL ? 'flex-row-reverse' : 'justify-between'}`}>
               {/* Desktop Logo */}
               <div className="flex-shrink-0 pr-6 hidden lg:block">
                 <Link href="/" className="flex items-center">
@@ -403,7 +461,7 @@ function NavContent() {
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Find your next favorite product..."
+                        placeholder={t("nav.searchPlaceholder")}
                         className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
                       />
                     </div>
@@ -458,7 +516,7 @@ function NavContent() {
                               height={16}
                               className="w-4 h-4 opacity-60"
                             />
-                            <span className="text-sm">No products found</span>
+                            <span className="text-sm">{t("common.noProductsFound")}</span>
                           </div>
                         )}
                       </div>
@@ -479,11 +537,11 @@ function NavContent() {
                       alt="search"
                       width={16}
                       height={16}
-                      className="w-4 h-4 mr-2 opacity-60"
+                      className={`w-4 h-4 opacity-60 ${isRTL ? 'ml-2' : 'mr-2'}`}
                     />
                     <input
                       type="text"
-                      placeholder="Search by product name or category.."
+                      placeholder={t("nav.searchPlaceholder")}
                       className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400 cursor-pointer"
                       readOnly
                     />
@@ -493,11 +551,11 @@ function NavContent() {
 
               {/* Desktop Action Buttons */}
               <div className="hidden lg:flex lg:items-center flex-shrink-0">
-                <div className="flex items-center space-x-2">
+                <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
                   {/* Language Selector */}
                   <div className="relative group language-dropdown">
                     <button
-                      className="flex items-center space-x-2 p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'} p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer`}
                       onClick={toggleLanguageDropdown}
                     >
                       <Image
@@ -524,61 +582,11 @@ function NavContent() {
                     </button>
 
                     {/* Language Dropdown */}
-                    <div
-                      className={`absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
-                        isLanguageDropdownOpen ||
-                        "group-hover:opacity-100 group-hover:visible"
-                      } ${
-                        isLanguageDropdownOpen
-                          ? "opacity-100 visible"
-                          : "opacity-0 invisible"
-                      }`}
-                    >
-                      <div className="py-2">
-                        <button
-                          onClick={() => toggleLanguage("EN")}
-                          className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
-                        >
-                          <Image
-                            src="/english.svg"
-                            alt="English"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 rounded-full mr-3"
-                          />
-                          <span
-                            className={`${
-                              language === "EN"
-                                ? "text-[#6D0D26] font-medium"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            EN
-                          </span>
-                        </button>
-                        <button
-                          onClick={() => toggleLanguage("AR")}
-                          className="flex items-center w-full px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
-                        >
-                          <Image
-                            src="/arabicicon.svg"
-                            alt="Arabic"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 rounded-full mr-3"
-                          />
-                          <span
-                            className={`${
-                              language === "AR"
-                                ? "text-[#6D0D26] font-medium"
-                                : "text-gray-400"
-                            }`}
-                          >
-                            AR
-                          </span>
-                        </button>
-                      </div>
-                    </div>
+                    <LanguageDropdown 
+                      isOpen={isLanguageDropdownOpen}
+                      onClose={() => setIsLanguageDropdownOpen(false)}
+                      className="mt-2 w-32"
+                    />
                   </div>
 
                   {/* Wishlist */}
@@ -675,7 +683,7 @@ function NavContent() {
                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                                 />
                               </svg>
-                              Personal info
+                              {t("account.personalInfo")}
                             </button>
 
                             <button
@@ -698,7 +706,7 @@ function NavContent() {
                                   d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
                                 />
                               </svg>
-                              My orders
+                              {t("account.orders")}
                             </button>
 
                             <button
@@ -727,7 +735,7 @@ function NavContent() {
                                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                 />
                               </svg>
-                              Addresses
+                              {t("account.addresses")}
                             </button>
 
                             <button
@@ -750,7 +758,7 @@ function NavContent() {
                                   d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
                                 />
                               </svg>
-                              Help & Support
+                              {t("account.help")}
                             </button>
 
                             <button
@@ -773,7 +781,7 @@ function NavContent() {
                                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                 />
                               </svg>
-                              Privacy Policy
+                              {t("footer.privacy")}
                             </button>
 
                             <hr className="my-2" />
@@ -795,7 +803,7 @@ function NavContent() {
                                   d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                                 />
                               </svg>
-                              Logout
+                              {t("nav.logout")}
                             </button>
                           </>
                         ) : (
@@ -814,7 +822,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              Personal info
+                              {t("account.personalInfo")}
                             </button>
 
                             <button
@@ -830,7 +838,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              My orders
+                              {t("account.orders")}
                             </button>
 
                             <button
@@ -846,7 +854,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              Addresses
+                              {t("account.addresses")}
                             </button>
 
                             <button
@@ -862,7 +870,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              Help & Support
+                              {t("account.help")}
                             </button>
 
                             <button
@@ -878,7 +886,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              Privacy Policy
+                              {t("footer.privacy")}
                             </button>
 
                             <hr className="my-2" />
@@ -894,7 +902,7 @@ function NavContent() {
                                 height={20}
                                 className="w-5 h-5 mr-3"
                               />
-                              Logout
+                              {t("nav.logout")}
                             </button>
                           </>
                         )}
@@ -907,12 +915,12 @@ function NavContent() {
           </div>
 
           {/* Navigation Bar */}
-          <NavigationBar navigationItems={navigationItems} />
+          <NavigationBar navigationItems={translatedNavigationItems} />
 
           {/* Mobile Layout */}
-          <div className="lg:hidden flex items-center justify-between w-full h-14 px-3 md:px-6">
+          <div className={`lg:hidden flex items-center ${isRTL ? 'flex-row-reverse' : 'justify-between'} w-full h-14 px-3 md:px-6`}>
             {/* Left Group - Hamburger and Logo */}
-            <div className="flex items-center">
+            <div className={`flex items-center ${isRTL ? 'ml-2' : 'ml-2'}`}>
               <button
                 onClick={toggleMobileMenu}
                 className="inline-flex items-center justify-center p-1.5 rounded-lg text-gray-600 hover:text-[#6D0D26] hover:bg-gray-100 transition-colors duration-200"
@@ -950,7 +958,7 @@ function NavContent() {
               </button>
 
               {!showSearchBar && (
-                <Link href="/" className="flex items-center ml-2">
+                <Link href="/" className={`flex items-center ${isRTL ? 'mr-2' : 'ml-2'}`}>
                   <Image
                     src="/souqalmart-logo-name.svg"
                     alt="Souqalmart"
@@ -964,7 +972,7 @@ function NavContent() {
 
             {/* Center Group - Search Bar */}
             {showSearchBar && (
-              <div className="flex-1 flex justify-center mx-2">
+              <div className={`flex-1 flex justify-center ${isRTL ? 'mx-2' : 'mx-2'}`}>
                 <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[400px]">
                   <div className="relative">
                     <div className="flex items-center h-10 border border-gray-300 rounded-lg px-3 bg-white">
@@ -973,13 +981,13 @@ function NavContent() {
                         alt="search"
                         width={16}
                         height={16}
-                        className="w-4 h-4 mr-2 opacity-60"
+                        className={`w-4 h-4 opacity-60 ${isRTL ? 'ml-2' : 'mr-2'}`}
                       />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search products..."
+                        placeholder={t("nav.searchPlaceholder")}
                         className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
                       />
                     </div>
@@ -1031,7 +1039,7 @@ function NavContent() {
                               height={16}
                               className="w-4 h-4 opacity-60"
                             />
-                            <span className="text-sm">No products found</span>
+                            <span className="text-sm">{t("common.noProductsFound")}</span>
                           </div>
                         )}
                       </div>
@@ -1042,7 +1050,7 @@ function NavContent() {
             )}
 
             {/* Right Group - Search Icon, Language Selector, and Cart */}
-            <div className="flex items-center space-x-1">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-1' : 'space-x-1'}`}>
               {showSearchBar ? (
                 <button
                   onClick={() => setShowSearchBar(false)}
@@ -1081,7 +1089,7 @@ function NavContent() {
               <div className="relative" ref={mobileLangRef}>
                 <button
                   onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
-                  className="flex items-center space-x-1 p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                  className={`flex items-center ${isRTL ? 'space-x-reverse space-x-1' : 'space-x-1'} p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer`}
                 >
                   <Image
                     src={language === "EN" ? "/english.svg" : "/arabicicon.svg"}
@@ -1103,64 +1111,12 @@ function NavContent() {
                 </button>
 
                 {/* Mobile Language Dropdown */}
-                <div
-                  className={`absolute right-0 mt-1 w-24 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
-                    isMobileLanguageOpen
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible"
-                  }`}
-                >
-                  <div className="py-1">
-                    <button
-                      onClick={() => {
-                        toggleLanguage("EN");
-                        setIsMobileLanguageOpen(false);
-                      }}
-                      className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
-                    >
-                      <Image
-                        src="/english.svg"
-                        alt="English"
-                        width={16}
-                        height={16}
-                        className="w-4 h-4 rounded-full mr-2"
-                      />
-                      <span
-                        className={`text-xs ${
-                          language === "EN"
-                            ? "text-[#6D0D26] font-medium"
-                            : "text-gray-400"
-                        }`}
-                      >
-                        EN
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        toggleLanguage("AR");
-                        setIsMobileLanguageOpen(false);
-                      }}
-                      className="flex items-center w-full px-3 py-1.5 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
-                    >
-                      <Image
-                        src="/arabicicon.svg"
-                        alt="Arabic"
-                        width={16}
-                        height={16}
-                        className="w-4 h-4 rounded-full mr-2"
-                      />
-                      <span
-                        className={`text-xs ${
-                          language === "AR"
-                            ? "text-[#6D0D26] font-medium"
-                            : "text-gray-400"
-                        }`}
-                      >
-                        AR
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                <LanguageDropdown 
+                  isOpen={isMobileLanguageOpen}
+                  onClose={() => setIsMobileLanguageOpen(false)}
+                  isMobile={true}
+                  className="mt-1 w-24"
+                />
               </div>
 
               {/* Mobile Wishlist - Hidden on small screens */}
@@ -1192,7 +1148,7 @@ function NavContent() {
                 />
                 {cartCount > 0 && (
                   <span
-                    className="absolute top-3 right-3 block w-2 h-2 rounded-full bg-[#6D0D26]"
+                    className={`absolute top-3 block w-2 h-2 rounded-full bg-[#6D0D26] ${isRTL ? 'left-3' : 'right-3'}`}
                     aria-label={`Cart items: ${cartCount}`}
                     title={`${cartCount}`}
                   />
@@ -1212,7 +1168,7 @@ function NavContent() {
         >
           <div className="px-4 pt-0 pb-6 space-y-2 bg-white border-t border-gray-200">
             {/* Mobile Navigation Items */}
-            {navigationItems.map((item, index) => (
+            {translatedNavigationItems.map((item, index) => (
               <div
                 key={index}
                 className="border-b border-gray-100 last:border-b-0"
@@ -1220,9 +1176,9 @@ function NavContent() {
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
+                    className={`flex items-center justify-between w-full py-3 ${isRTL ? 'text-right' : 'text-left'} text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]`}
                     onClick={(e) => {
-                      if (item.label === "Products") {
+                      if (item.label === t("nav.products")) {
                         e.preventDefault();
                         if (typeof window !== "undefined") {
                           window.localStorage?.removeItem("selectedCategory");
@@ -1237,7 +1193,7 @@ function NavContent() {
                 ) : (
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between w-full py-3 text-left text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
+                    className={`flex items-center justify-between w-full py-3 ${isRTL ? 'text-right' : 'text-left'} text-gray-700 font-normal transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]`}
                     onClick={(e) => {
                       if (item.hasDropdown) {
                         e.preventDefault();
@@ -1264,18 +1220,18 @@ function NavContent() {
 
                 {/* Mobile Submenu */}
                 {item.hasDropdown && activeDropdown === item.label && (
-                  <div className="pl-4 pb-2 space-y-1">
+                  <div className={`${isRTL ? 'pr-4' : 'pl-4'} pb-2 space-y-1`}>
                     {item.submenu.map((subItem, subIndex) => (
-                      <Link
-                        key={subIndex}
-                        href={`/products?category=${encodeURIComponent(
-                          subItem
-                        )}`}
-                        className="block py-2 text-gray-600 transition-colors duration-200 cursor-pointer hover:text-[#6D0D26]"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {subItem}
-                      </Link>
+                                              <Link
+                          key={subIndex}
+                          href={`/products?category=${encodeURIComponent(
+                            subItem
+                          )}`}
+                          className={`block py-2 text-gray-600 transition-colors duration-200 cursor-pointer hover:text-[#6D0D26] ${isRTL ? 'text-right' : 'text-left'}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {subItem}
+                        </Link>
                     ))}
                   </div>
                 )}
@@ -1288,7 +1244,7 @@ function NavContent() {
                 {/* Wishlist - moved here, icon first */}
                 <Link
                   href="/wishlist"
-                  className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26] sm:hidden"
+                  className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26] sm:hidden`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Image
@@ -1298,7 +1254,7 @@ function NavContent() {
                     height={16}
                     className="w-[16px] h-4"
                   />
-                  <span>Wishlist</span>
+                  <span>{t("nav.wishlist")}</span>
                 </Link>
                 {isAuthenticated ? (
                   <>
@@ -1307,7 +1263,7 @@ function NavContent() {
                         setIsMobileMenuOpen(false);
                         router.push("/my-account");
                       }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon7.svg"
@@ -1316,7 +1272,7 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Personal info</span>
+                      <span>{t("account.personalInfo")}</span>
                     </button>
 
                     <button
@@ -1324,7 +1280,7 @@ function NavContent() {
                         setIsMobileMenuOpen(false);
                         router.push("/my-account?tab=my-orders");
                       }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon6.svg"
@@ -1333,7 +1289,7 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>My orders</span>
+                      <span>{t("account.orders")}</span>
                     </button>
 
                     <button
@@ -1341,7 +1297,7 @@ function NavContent() {
                         setIsMobileMenuOpen(false);
                         router.push("/my-account?tab=saved-address");
                       }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon4.svg"
@@ -1350,12 +1306,12 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Addresses</span>
+                      <span>{t("account.addresses")}</span>
                     </button>
 
                     <button
                       onClick={() => navigateToTab("help")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <svg
                         className="w-5 h-5"
@@ -1370,12 +1326,12 @@ function NavContent() {
                           d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM9.75 9a2.25 2.25 0 114.5 0c0 1.5-2.25 1.875-2.25 3.375m0 3.375h.008v.008H12v-.008z"
                         />
                       </svg>
-                      <span>Help & Support</span>
+                      <span>{t("account.help")}</span>
                     </button>
 
                     <button
                       onClick={() => navigateToTab("privacy-policy")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <svg
                         className="w-5 h-5"
@@ -1390,12 +1346,12 @@ function NavContent() {
                           d="M12 12a3 3 0 013 3v3H9v-3a3 3 0 013-3zm0-7a5 5 0 00-5 5v2h10V10a5 5 0 00-5-5z"
                         />
                       </svg>
-                      <span>Privacy & Policy</span>
+                      <span>{t("footer.privacy")}</span>
                     </button>
 
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <svg
                         className="w-5 h-5"
@@ -1410,14 +1366,14 @@ function NavContent() {
                           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                         />
                       </svg>
-                      <span>Sign Out</span>
+                      <span>{t("nav.logout")}</span>
                     </button>
                   </>
                 ) : (
                   <>
                     <button
                       onClick={() => navigateToTab("account")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon7.svg"
@@ -1426,12 +1382,12 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Personal info</span>
+                      <span>{t("account.personalInfo")}</span>
                     </button>
 
                     <button
                       onClick={() => navigateToTab("my-orders")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon6.svg"
@@ -1440,12 +1396,12 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>My orders</span>
+                      <span>{t("account.orders")}</span>
                     </button>
 
                     <button
                       onClick={() => navigateToTab("addresses")}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon4.svg"
@@ -1454,7 +1410,7 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Addresses</span>
+                      <span>{t("account.addresses")}</span>
                     </button>
 
                     <button
@@ -1462,7 +1418,7 @@ function NavContent() {
                         setIsMobileMenuOpen(false);
                         router.push("/my-account?tab=help");
                       }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon3.svg"
@@ -1471,7 +1427,7 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Help & Support</span>
+                      <span>{t("account.help")}</span>
                     </button>
 
                     <button
@@ -1479,7 +1435,7 @@ function NavContent() {
                         setIsMobileMenuOpen(false);
                         router.push("/my-account?tab=privacy-policy");
                       }}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/icon8.svg"
@@ -1488,13 +1444,13 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Privacy Policy</span>
+                      <span>{t("footer.privacy")}</span>
                     </button>
                     <hr className="my-1" style={{ borderColor: "rgba(0,0,0,0.15)" }} />
 
                     <button
                       onClick={handleLogin}
-                      className="flex items-center space-x-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full text-left hover:text-[#6D0D26]"
+                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26]`}
                     >
                       <Image
                         src="/usericon.svg"
@@ -1503,7 +1459,7 @@ function NavContent() {
                         height={20}
                         className="w-5 h-5"
                       />
-                      <span>Login / Signup</span>
+                      <span>{t("nav.login")}</span>
                     </button>
 {/* 
                     <button

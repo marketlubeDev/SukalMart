@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Button from '@/app/_components/common/Button';
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 // Product data - you can move this to a separate data file
 const bestSellersData = [
@@ -98,7 +100,7 @@ const useCart = () => {
 };
 
 // Product Card Component
-const ProductCard = ({ product, onAddToCart, onProductClick }) => {
+const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
   const handleAddToCart = (e) => {
     e.stopPropagation();
     onAddToCart({
@@ -198,7 +200,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick }) => {
               borderRadius: "4px"
             }}
           >
-            Add to cart
+            {t("product.addToCart", language)}
           </Button>
         </div>
       </div>
@@ -211,6 +213,7 @@ export default function BestSellersSection() {
   const router = useRouter();
   const scrollerRef = useRef(null);
   const { addToCart } = useCart();
+  const { language } = useLanguage();
 
   // Scroll behavior effect (simplified and optimized)
   useEffect(() => {
@@ -250,7 +253,7 @@ export default function BestSellersSection() {
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2 className="font-bold text-lg md:text-2xl lg:text-3xl text-gray-800">
-            Best Sellers
+            {t("homepage.bestSellers.title", language)}
           </h2>
           
           <button
@@ -259,7 +262,7 @@ export default function BestSellersSection() {
             onClick={handleViewAll}
             aria-label="View all best sellers"
           >
-            <span className="text-sm md:text-base">View all</span>
+            <span className="text-sm md:text-base">{t("homepage.bestSellers.viewAll", language)}</span>
             <span
               className="inline-flex"
               style={{ cursor: "pointer" }}
@@ -310,6 +313,7 @@ export default function BestSellersSection() {
               product={product}
               onAddToCart={addToCart}
               onProductClick={handleProductClick}
+              language={language}
             />
           ))}
         </div>

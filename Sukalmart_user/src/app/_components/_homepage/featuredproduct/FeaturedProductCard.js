@@ -4,15 +4,13 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from '@/app/_components/common/Button';
-import { FaHeart } from "react-icons/fa6";
-import { CiHeart } from "react-icons/ci";
-import { useWishlist } from "@/app/_components/context/WishlistContext";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function FeaturedProductCard({ product }) {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const { toggleWishlistItem, isInWishlist } = useWishlist();
-  const wishlisted = isInWishlist(product.id);
+  const { language } = useLanguage();
 
   useEffect(() => {
     setIsClient(true);
@@ -85,21 +83,18 @@ export default function FeaturedProductCard({ product }) {
           sizes="(max-width: 768px) 33vw, (max-width: 1024px) 40vw, 50vw"
           priority={false}
         />
-        {/* Wishlist Button - matches ProductCard */}
-        <button
-          type="button"
-          aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 sm:p-2 shadow hover:scale-105 transition-transform"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleWishlistItem(product);
-          }}
+        {/* Wishlist Button */}
+        <button 
+          className="absolute top-2 md:top-2 lg:top-3 left-2 md:left-2 lg:left-3 w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 flex items-center justify-center bg-white/80 hover:bg-white rounded-full transition-colors duration-200"
+          aria-label="Add to wishlist"
         >
-          {wishlisted ? (
-            <FaHeart className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
-          ) : (
-            <CiHeart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" />
-          )}
+          <Image 
+            src="/like.svg" 
+            alt="Wishlist" 
+            width={20}
+            height={20}
+            className="w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5" 
+          />
         </button>
       </div>
 
@@ -153,7 +148,7 @@ export default function FeaturedProductCard({ product }) {
             className="gap-1.5 px-2 py-1.5 md:px-3 md:py-1.5 lg:px-4 lg:py-2 text-xs md:text-sm text-[var(--color-primary)] bg-white border border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed self-start rounded"
             aria-label={`Add ${product.name} to cart`}
           >
-            Add to cart
+            {t("product.addToCart", language)}
           </Button>
         </div>
       </div>

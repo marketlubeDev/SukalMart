@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function MyOrders() {
+	const { language } = useLanguage();
 	const orders = [
 		{
 			id: "ORD-001",
@@ -41,7 +44,7 @@ export default function MyOrders() {
 
 	return (
 		<div className="bg-white rounded-lg p-4 sm:p-6">
-			<h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">My Orders</h2>
+			<h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">{t("account.myOrders", language)}</h2>
 
 			<div className="space-y-3 sm:space-y-4">
 				{orders.map((order) => (
@@ -71,9 +74,9 @@ export default function MyOrders() {
 						</div>
 
 						<div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
-							<button className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm cursor-pointer">
-								View Details
-							</button>
+													<button className="text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 text-xs sm:text-sm cursor-pointer">
+							{t("common.view", language)} {t("account.orderDetails", language)}
+						</button>
 						</div>
 					</div>
 				))}

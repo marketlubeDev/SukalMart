@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "@/lib/translations";
 
 // ProductCard component - inline to avoid separate file dependency
 function ProductCard({ product, onClick }) {
@@ -62,6 +64,7 @@ function ProductCard({ product, onClick }) {
 }
 
 export default function ProductSection({ selectedCategory = "Hair Care" }) {
+  const { language } = useLanguage();
   const router = useRouter();
   const [sessionData, setSessionData] = useState({});
 
@@ -263,7 +266,7 @@ export default function ProductSection({ selectedCategory = "Hair Care" }) {
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">
-            {selectedCategory === "Body & Shower" ? "Body Wash" : "Sunsilk Shampoo"}
+            {selectedCategory === "Body & Shower" ? t("homepage.bodyWash", language) : t("homepage.sunsilkShampoo", language)}
           </h2>
           <button
             className="flex items-center gap-2 font-medium transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded"
@@ -271,7 +274,7 @@ export default function ProductSection({ selectedCategory = "Hair Care" }) {
             onClick={handleViewAllClick}
             aria-label="View all best sellers"
           >
-            <span className="text-sm sm:text-base">View all</span>
+            <span className="text-sm sm:text-base">{t("common.viewAll", language)}</span>
             <Image
               src="/nextarrow.svg"
               alt="Next arrow"
