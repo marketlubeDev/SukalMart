@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useMemo } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "@/lib/translations";
 
 const PRICE_RANGES_CONFIG = {
   "Body & Shower": [
@@ -165,6 +167,17 @@ const DEFAULT_PRICE_RANGES = [
 ];
 
 export default function ShopByPriceSection({ selectedCategory }) {
+  const { language } = useLanguage();
+  const formatRange = (label) => {
+    if (language !== 'AR') return label;
+    if (label.startsWith('Under')) {
+      return label.replace('Under', 'أقل من').replace('₹', '₹');
+    }
+    if (label.startsWith('Over')) {
+      return label.replace('Over', 'أكثر من').replace('₹', '₹');
+    }
+    return label.replace('₹', '₹').replace('-', ' - ');
+  };
   const router = useRouter();
   
   // Memoize price ranges to avoid recalculation on every render
@@ -180,7 +193,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
     <section className="py-8 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-10 2xl:px-10">
       <header className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-[28px] font-bold text-gray-800 mb-4">
-          Shop by Price
+          {t("homepage.shopByPrice", language)}
         </h2>
       </header>
       
@@ -204,7 +217,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
             <div className="w-full aspect-square mb-2 sm:mb-3 overflow-hidden rounded-lg relative">
               <Image
                 src={item.image}
-                alt={`${item.range} products`}
+                alt={`${formatRange(item.range)} products`}
                 fill
                 sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 16vw"
                 className="object-cover transition-transform duration-200 group-hover:scale-110"
@@ -218,7 +231,7 @@ export default function ShopByPriceSection({ selectedCategory }) {
                    md:text-[13px] 
                    lg:text-xs 
                    xl:text-sm">
-                {item.range}
+                {formatRange(item.range)}
               </p>
             </div>
           </div>

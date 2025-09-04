@@ -393,7 +393,7 @@ export default function ReviewsSection({ product, selectedImage }) {
 
       {/* Review Modal */}
       <Modal
-        title="Add Review"
+        title={t("product.addReview", language)}
         open={isReviewModalVisible}
         onCancel={handleReviewModalCancel}
         footer={null}
@@ -404,10 +404,10 @@ export default function ReviewsSection({ product, selectedImage }) {
           {/* Rating Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              How was the item?
+              {t("product.howWasItem", language)}
             </h3>
             <p className="text-sm text-gray-600 mb-4">
-              Let us know your experience with the item in a few words!
+              {t("product.howWasItemDescription", language)}
             </p>
             <div className="flex items-center justify-between">
               <div className="flex gap-1">
@@ -433,7 +433,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 onClick={clearRating}
                 className="text-red-500 text-sm hover:text-red-700 cursor-pointer"
               >
-                Clear
+                {t("common.clear", language)}
               </button>
             </div>
           </div>
@@ -441,13 +441,13 @@ export default function ReviewsSection({ product, selectedImage }) {
           {/* Review Text Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Write your review <span className="text-red-500">*</span>
+              {t("product.writeYourReview", language)} <span className="text-red-500">*</span>
             </h3>
             <div className="relative">
               <Input.TextArea
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
-                placeholder="Tell us what you think.."
+                placeholder={t("product.reviewPlaceholder", language)}
                 rows={4}
                 style={{ 
                   resize: 'none',
@@ -518,7 +518,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 fontWeight: '600',
               }}
             >
-              Rate Product
+              {t("product.rateProduct", language)}
             </Button>
           </div>
         </div>

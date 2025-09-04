@@ -21,7 +21,7 @@ export const en = {
   homepage: {
     title: "Homepage",
     hero: {
-      title: "Welcome to SukalMart",
+      title: "Welcome to Souqalmart",
       subtitle: "Your one-stop shop for quality products",
       cta: "Shop Now",
     },
@@ -34,6 +34,7 @@ export const en = {
       title: "Premium Beauty Collection",
       shopAll: "Shop all",
     },
+    shopByPrice: "Shop by Price",
     instagram: {
       followUs: "Follow us on",
       instagram: "Instagram",
@@ -124,6 +125,11 @@ export const en = {
     reviewImages: "Review images",
     customerReviews: "Customer Reviews",
     recommendedForYou: "Recommended for you",
+    addReview: "Add Review",
+    howWasItem: "How was the item?",
+    howWasItemDescription: "Let us know your experience with the item in a few words!",
+    writeYourReview: "Write your review",
+    reviewPlaceholder: "Tell us what you think...",
     relatedProducts: "Related Products",
     price: "Price",
     originalPrice: "Original Price",
@@ -178,6 +184,19 @@ export const en = {
     paymentMethod: "Payment Method",
     orderSummary: "Order Summary",
     placeOrder: "Place Order",
+    proceedToPay: "Proceed to Pay",
+    accountInfo: "Account info",
+    deliverTo: "Deliver to",
+    editAddress: "Edit Address",
+    login: "Login",
+    selectCountry: "Select Country/Region",
+    phoneNumber: "Phone number",
+    cashOnDelivery: "Cash On Delivery",
+    cashOnDeliveryNote: "Cash, UPI and cards are accepted on delivery",
+    onlinePayment: "Online Payment",
+    onlinePaymentNote: "UPI, Netbanking, Debit Card/Credit Card can be used",
+    more: "+ more",
+    less: "− less",
     firstName: "First Name",
     lastName: "Last Name",
     email: "Email",
@@ -187,7 +206,7 @@ export const en = {
     state: "State",
     zipCode: "ZIP Code",
     country: "Country",
-    saveAddress: "Save Address",
+    saveAddress: "Save",
     continue: "Continue",
     back: "Back",
   },
@@ -196,6 +215,12 @@ export const en = {
   account: {
     profile: "Profile",
     orders: "Orders",
+    support: {
+      orderIssues: { title: "Order Issues", description: "Track orders, returns, and refunds" },
+      accountPayment: { title: "Account & Payment", description: "Manage account settings and payment methods" },
+      productInformation: { title: "Product Information", description: "Get details about products and availability" },
+      shippingDelivery: { title: "Shipping & Delivery", description: "Information about shipping options and delivery" },
+    },
     addresses: "Addresses",
     settings: "Settings",
     personalInfo: "Personal Information",
@@ -208,6 +233,82 @@ export const en = {
     orderDate: "Order Date",
     orderTotal: "Order Total",
     trackingNumber: "Tracking Number",
+    pageIntro: "Access and manage your personal information, orders, saved addresses, and support preferences.",
+    accountInfo: "Account Info",
+    savedAddress: "Saved Address",
+    myOrders: "My Orders",
+    helpSupport: "Help & Support",
+    privacyPolicy: "Privacy & Policy",
+    termsConditions: "Terms & Conditions",
+    editInfo: "Edit Info",
+    email: "Email",
+    addNewAddress: "Add New Address",
+    lastUpdatedLabel: "Last Updated",
+    lastUpdatedDate: "January 15, 2024",
+    privacyContactIntro: "If you have any questions about this Privacy Policy, please contact us:",
+    terms: {
+      generalTitle: "1. General Terms",
+      generalP1: "By accessing and using Souqalmart's website and services, you agree to be bound by these Terms and Conditions. These terms apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/or contributors of content.",
+      generalP2: "We reserve the right to update, change or replace any part of these Terms and Conditions by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes.",
+      generalP3: "Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes.",
+
+      ordersTitle: "2. Orders and Payment",
+      ordersP1: "All orders are subject to acceptance and availability. We reserve the right to refuse service to anyone for any reason at any time.",
+      ordersP2: "Prices for our products are subject to change without notice. We reserve the right to modify or discontinue any product at any time.",
+      ordersP3: "Payment must be made at the time of ordering. We accept various payment methods including credit cards, debit cards, and digital wallets.",
+      ordersP4: "Orders are confirmed via email once payment is processed successfully.",
+
+      returnsTitle: "3. Returns and Refunds",
+      returnsP1: "We accept returns within 30 days of delivery for most products. Items must be unused, unopened, and in their original packaging.",
+      returnsP2: "Certain products may not be eligible for returns due to hygiene reasons or manufacturer restrictions.",
+      returnsP3: "Return shipping costs are the responsibility of the customer unless the item was received damaged or incorrect.",
+      returnsP4: "Refunds will be processed within 5-7 business days after we receive the returned item.",
+
+      privacyTitle: "4. Privacy and Data Protection",
+      privacyP1: "Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the website, to understand our practices.",
+      privacyP2: "We collect, use, and protect your personal information in accordance with applicable data protection laws.",
+      privacyP3: "By using our services, you consent to the collection and use of information in accordance with our Privacy Policy.",
+
+      liabilityTitle: "5. Limitation of Liability",
+      liabilityP1: "In no case shall Souqalmart, our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind.",
+      liabilityP2: "Our liability is limited to the amount paid for the specific product or service in question.",
+      liabilityP3: "We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations.",
+
+      contactTitle: "6. Contact Information",
+      contactIntro: "Questions about the Terms and Conditions should be sent to us at:",
+      emailLabel: "Email:",
+      phoneLabel: "Phone:",
+      addressLabel: "Address:",
+
+      footerAck: "By using our services, you acknowledge that you have read and understood these Terms and Conditions.",
+      viewFullTerms: "View Full Terms",
+    },
+    privacySections: {
+      dataCollection: {
+        title: "Data Collection",
+        content: "We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support."
+      },
+      dataUsage: {
+        title: "Data Usage",
+        content: "We use your information to process orders, provide customer support, send you updates about your orders, and improve our services."
+      },
+      dataSharing: {
+        title: "Data Sharing",
+        content: "We do not sell your personal information. We may share your information with third-party service providers who assist us in operating our website and providing services."
+      },
+      dataSecurity: {
+        title: "Data Security",
+        content: "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction."
+      },
+      yourRights: {
+        title: "Your Rights",
+        content: "You have the right to access, update, or delete your personal information. You can also opt out of marketing communications at any time."
+      },
+      cookies: {
+        title: "Cookies",
+        content: "We use cookies and similar technologies to enhance your browsing experience, analyze site traffic, and understand where our visitors are coming from."
+      }
+    },
   },
 
   // Common
@@ -248,6 +349,27 @@ export const en = {
     type: "Type",
     size: "Size",
     qty: "Qty",
+    default: "Default",
+  },
+
+  // Terms page (standalone)
+  termsPage: {
+    title: "Terms of Service",
+    acceptanceTitle: "1. Acceptance of Terms",
+    acceptanceBody: "By accessing and using Souqalmart, you accept and agree to be bound by the terms and provision of this agreement.",
+    useLicenseTitle: "2. Use License",
+    useLicenseBody: "Permission is granted to temporarily download one copy of the materials (information or software) on Souqalmart's website for personal, non-commercial transitory viewing only.",
+    disclaimerTitle: "3. Disclaimer",
+    disclaimerBody: "The materials on Souqalmart's website are provided on an 'as is' basis. Souqalmart makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.",
+    limitationsTitle: "4. Limitations",
+    limitationsBody: "In no event shall Souqalmart or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Souqalmart's website.",
+    revisionsTitle: "5. Revisions and Errata",
+    revisionsBody: "The materials appearing on Souqalmart's website could include technical, typographical, or photographic errors. Souqalmart does not warrant that any of the materials on its website are accurate, complete or current.",
+    linksTitle: "6. Links",
+    linksBody: "Souqalmart has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Souqalmart of the site.",
+    siteTermsTitle: "7. Site Terms of Use Modifications",
+    siteTermsBody: "Souqalmart may revise these terms of use for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms and Conditions of Use.",
+    backToLogin: "← Back to Login",
   },
 
   // Footer
@@ -262,7 +384,7 @@ export const en = {
     subscribe: "Subscribe",
     emailPlaceholder: "Enter your email",
     followUs: "Follow Us",
-    copyright: "© 2024 SukalMart. All rights reserved.",
+    copyright: "© 2024 Souqalmart. All rights reserved.",
   },
 
   // Messages

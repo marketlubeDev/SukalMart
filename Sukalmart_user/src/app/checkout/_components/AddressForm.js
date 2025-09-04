@@ -3,8 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function AddressForm({ onBack, initialData, onSave }) {
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     email: initialData?.email || "",
     country: initialData?.country || "",
@@ -36,25 +39,25 @@ export default function AddressForm({ onBack, initialData, onSave }) {
       <div className="bg-white rounded-lg">
         <div className="flex items-center justify-between px-4 pt-4 pb-2">
           <div className="flex items-center space-x-2">
-            <h3 className="text-xl font-semibold text-gray-800">Account info</h3>
+            <h3 className="text-xl font-semibold text-gray-800">{t("checkout.accountInfo", language)}</h3>
             <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <button className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 underline cursor-pointer">
-            Login
+            {t("checkout.login", language)}
           </button>
         </div>
         <div className="px-4 pb-4">
           <div className="space-y-2">
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
-            />
+                          <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder={t("checkout.email", language)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)]"
+              />
           </div>
         </div>
       </div>
@@ -62,7 +65,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
       {/* Deliver to */}
       <div className="bg-white rounded-lg">
         <div className="px-4 pt-4 pb-2">
-          <h3 className="text-xl font-semibold text-gray-800">Deliver to</h3>
+          <h3 className="text-xl font-semibold text-gray-800">{t("checkout.deliverTo", language)}</h3>
         </div>
         <div className="px-4 pb-4 space-y-4">
           {/* Country/Region */}
@@ -73,7 +76,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] appearance-none bg-white"
             >
-              <option value="">Select Country/Region</option>
+              <option value="">{t("checkout.selectCountry", language)}</option>
               <option value="IN">India</option>
               <option value="US">United States</option>
               <option value="UK">United Kingdom</option>
@@ -177,7 +180,7 @@ export default function AddressForm({ onBack, initialData, onSave }) {
             onClick={handleSave}
             className="mt-4 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer font-medium"
           >
-            Save
+            {t("checkout.saveAddress", language)}
           </Button>
         </div>
       </div>

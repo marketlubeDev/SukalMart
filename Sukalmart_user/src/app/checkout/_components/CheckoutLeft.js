@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function CheckoutLeft({
   cartItems,
@@ -14,6 +16,7 @@ export default function CheckoutLeft({
   discount,
   couponDiscount,
 }) {
+  const { language } = useLanguage();
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(true);
 
   return (
@@ -21,8 +24,8 @@ export default function CheckoutLeft({
       {/* Items Section */}
       <div className="rounded-lg">
         <div className="flex justify-between items-center p-4 sm:p-5 md:p-6">
-          <h3 className="text-xl font-semibold text-gray-800">Items</h3>
-          <span className="text-sm text-gray-600">{cartItems.length} products</span>
+          <h3 className="text-xl font-semibold text-gray-800">{t("cart.items", language)}</h3>
+          <span className="text-sm text-gray-600">{cartItems.length} {t("cart.products", language)}</span>
         </div>
 
         <div className="divide-y divide-dashed divide-gray-200">
@@ -73,10 +76,10 @@ export default function CheckoutLeft({
                 </h4>
                 <div className="text-sm text-gray-600 mb-2">
                   <span className="mr-4">
-                    Type: <span className="text-gray-800 font-medium">{item.color}</span>
+                    {t("common.type", language)}: <span className="text-gray-800 font-medium">{item.color}</span>
                   </span>
                   <span>
-                    Size: <span className="text-gray-800 font-medium">{item.plug}</span>
+                    {t("common.size", language)}: <span className="text-gray-800 font-medium">{item.plug}</span>
                   </span>
                 </div>
 
@@ -84,7 +87,7 @@ export default function CheckoutLeft({
                 <div className="flex items-center justify-between">
                   {/* Quantity Selector */}
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs text-gray-600">Qty :</span>
+                    <span className="text-xs text-gray-600">{t("common.qty", language)} :</span>
                     <div className="flex items-center border border-[var(--color-primary)] bg-[var(--color-primary)]/10 rounded">
                       <button
                         onClick={() => updateQuantity(item.id, quantities[item.id] - 1)}
@@ -123,7 +126,7 @@ export default function CheckoutLeft({
       {/* Order Summary */}
       <div className="rounded-lg">
         <div className="flex items-center justify-between p-4 sm:p-5 md:p-6">
-          <h3 className="text-xl font-semibold text-gray-800">Order Summary</h3>
+          <h3 className="text-xl font-semibold text-gray-800">{t("cart.orderSummary", language)}</h3>
           <button
             onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
             className="p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
@@ -149,7 +152,7 @@ export default function CheckoutLeft({
         {orderSummaryOpen && (
           <div className="p-4 sm:p-5 md:p-6 lg:p-8 space-y-4">
             <div className="flex justify-between">
-              <span className="text-base font-medium text-gray-800">Subtotal</span>
+              <span className="text-base font-medium text-gray-800">{t("cart.subtotal", language)}</span>
               <span className="text-lg font-bold text-gray-800">
                 ₹{subtotal.toLocaleString()}
               </span>
@@ -157,23 +160,23 @@ export default function CheckoutLeft({
 
             <div className="border-t border-dashed border-gray-200 pt-4 space-y-3">
               <div className="flex justify-between">
-                <span className="text-base text-gray-600">Total</span>
+                <span className="text-base text-gray-600">{t("cart.total", language)}</span>
                 <span className="text-base font-medium text-gray-800">
                   ₹{total.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-base text-gray-600">Discount</span>
+                <span className="text-base text-gray-600">{t("cart.discount", language)}</span>
                 <span className="text-base font-medium text-[var(--color-primary)]">
                   -₹{discount.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-base text-gray-600">Delivery</span>
-                <span className="text-base font-medium text-[var(--color-primary)]">Free</span>
+                <span className="text-base text-gray-600">{t("cart.delivery", language)}</span>
+                <span className="text-base font-medium text-[var(--color-primary)]">{t("homepage.services.freeShipping", language)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-base text-gray-600">Coupon discount</span>
+                <span className="text-base text-gray-600">{t("cart.couponDiscount", language)}</span>
                 <span className="text-base font-medium text-[var(--color-primary)]">
                   -₹{couponDiscount.toLocaleString()}
                 </span>
@@ -193,7 +196,7 @@ export default function CheckoutLeft({
           onMouseOver={(e) => (e.currentTarget.style.background = "#520A1E")}
           onMouseOut={(e) => (e.currentTarget.style.background = "var(--color-primary)")}
         >
-          Proceed to Pay
+          {t("checkout.proceedToPay", language)}
         </Button>
       </div>
     </div>

@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function TermsConditions() {
+  const { language } = useLanguage();
   const [expandedSections, setExpandedSections] = useState({
     general: true,
     orders: false,
@@ -24,10 +27,10 @@ export default function TermsConditions() {
     <div className="bg-[#F5F5F5] rounded-lg p-0">
       <div className="bg-white rounded-lg p-4 sm:p-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Terms and Conditions
+          {t("account.termsConditions", language)}
         </h2>
         <p className="text-gray-600 mb-6">
-          Last updated: {new Date().toLocaleDateString()}
+          {t("account.lastUpdatedLabel", language)}: {new Date().toLocaleDateString()}
         </p>
 
         {/* General Terms */}
@@ -37,7 +40,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              1. General Terms
+              {t("account.terms.generalTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.general ? "−" : "+"}
@@ -46,21 +49,13 @@ export default function TermsConditions() {
           {expandedSections.general && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                By accessing and using Souqalmart's website and services, you
-                agree to be bound by these Terms and Conditions. These terms
-                apply to all users of the site, including without limitation
-                users who are browsers, vendors, customers, merchants, and/or
-                contributors of content.
+                {t("account.terms.generalP1", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                We reserve the right to update, change or replace any part of
-                these Terms and Conditions by posting updates and/or changes to
-                our website. It is your responsibility to check this page
-                periodically for changes.
+                {t("account.terms.generalP2", language)}
               </p>
               <p className="text-gray-700">
-                Your continued use of or access to the website following the
-                posting of any changes constitutes acceptance of those changes.
+                {t("account.terms.generalP3", language)}
               </p>
             </div>
           )}
@@ -73,7 +68,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              2. Orders and Payment
+              {t("account.terms.ordersTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.orders ? "−" : "+"}
@@ -82,23 +77,16 @@ export default function TermsConditions() {
           {expandedSections.orders && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                All orders are subject to acceptance and availability. We
-                reserve the right to refuse service to anyone for any reason at
-                any time.
+                {t("account.terms.ordersP1", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                Prices for our products are subject to change without notice. We
-                reserve the right to modify or discontinue any product at any
-                time.
+                {t("account.terms.ordersP2", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                Payment must be made at the time of ordering. We accept various
-                payment methods including credit cards, debit cards, and digital
-                wallets.
+                {t("account.terms.ordersP3", language)}
               </p>
               <p className="text-gray-700">
-                Orders are confirmed via email once payment is processed
-                successfully.
+                {t("account.terms.ordersP4", language)}
               </p>
             </div>
           )}
@@ -111,7 +99,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              3. Returns and Refunds
+              {t("account.terms.returnsTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.returns ? "−" : "+"}
@@ -120,20 +108,16 @@ export default function TermsConditions() {
           {expandedSections.returns && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                We accept returns within 30 days of delivery for most products.
-                Items must be unused, unopened, and in their original packaging.
+                {t("account.terms.returnsP1", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                Certain products may not be eligible for returns due to hygiene
-                reasons or manufacturer restrictions.
+                {t("account.terms.returnsP2", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                Return shipping costs are the responsibility of the customer
-                unless the item was received damaged or incorrect.
+                {t("account.terms.returnsP3", language)}
               </p>
               <p className="text-gray-700">
-                Refunds will be processed within 5-7 business days after we
-                receive the returned item.
+                {t("account.terms.returnsP4", language)}
               </p>
             </div>
           )}
@@ -146,7 +130,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              4. Privacy and Data Protection
+              {t("account.terms.privacyTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.privacy ? "−" : "+"}
@@ -155,17 +139,13 @@ export default function TermsConditions() {
           {expandedSections.privacy && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                Your privacy is important to us. Please review our Privacy
-                Policy, which also governs your use of the website, to
-                understand our practices.
+                {t("account.terms.privacyP1", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                We collect, use, and protect your personal information in
-                accordance with applicable data protection laws.
+                {t("account.terms.privacyP2", language)}
               </p>
               <p className="text-gray-700">
-                By using our services, you consent to the collection and use of
-                information in accordance with our Privacy Policy.
+                {t("account.terms.privacyP3", language)}
               </p>
             </div>
           )}
@@ -178,7 +158,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              5. Limitation of Liability
+              {t("account.terms.liabilityTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.liability ? "−" : "+"}
@@ -187,20 +167,13 @@ export default function TermsConditions() {
           {expandedSections.liability && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                In no case shall Souqalmart, our directors, officers, employees,
-                affiliates, agents, contractors, interns, suppliers, service
-                providers or licensors be liable for any injury, loss, claim, or
-                any direct, indirect, incidental, punitive, special, or
-                consequential damages of any kind.
+                {t("account.terms.liabilityP1", language)}
               </p>
               <p className="text-gray-700 mb-4">
-                Our liability is limited to the amount paid for the specific
-                product or service in question.
+                {t("account.terms.liabilityP2", language)}
               </p>
               <p className="text-gray-700">
-                We do not warrant that the quality of any products, services,
-                information, or other material purchased or obtained by you will
-                meet your expectations.
+                {t("account.terms.liabilityP3", language)}
               </p>
             </div>
           )}
@@ -213,7 +186,7 @@ export default function TermsConditions() {
             className="w-full flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <h3 className="text-lg font-semibold text-gray-900">
-              6. Contact Information
+              {t("account.terms.contactTitle", language)}
             </h3>
             <span className="text-gray-500">
               {expandedSections.contact ? "−" : "+"}
@@ -222,18 +195,17 @@ export default function TermsConditions() {
           {expandedSections.contact && (
             <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
               <p className="text-gray-700 mb-4">
-                Questions about the Terms and Conditions should be sent to us
-                at:
+                {t("account.terms.contactIntro", language)}
               </p>
               <div className="space-y-2 text-gray-700">
                 <p>
-                  <strong>Email:</strong> legal@souqalmart.com
+                  <strong>{t("account.terms.emailLabel", language)}</strong> legal@souqalmart.com
                 </p>
                 <p>
-                  <strong>Phone:</strong> +91-1800-XXX-XXXX
+                  <strong>{t("account.terms.phoneLabel", language)}</strong> +91-1800-XXX-XXXX
                 </p>
                 <p>
-                  <strong>Address:</strong> Souqalmart Legal Department,
+                  <strong>{t("account.terms.addressLabel", language)}</strong> Souqalmart Legal Department,
                   [Address]
                 </p>
               </div>
@@ -245,14 +217,13 @@ export default function TermsConditions() {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              By using our services, you acknowledge that you have read and
-              understood these Terms and Conditions.
+              {t("account.terms.footerAck", language)}
             </p>
             <Link
               href="/terms"
               className="inline-flex items-center text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 font-medium"
             >
-              View Full Terms
+              {t("account.terms.viewFullTerms", language)}
             </Link>
           </div>
         </div>

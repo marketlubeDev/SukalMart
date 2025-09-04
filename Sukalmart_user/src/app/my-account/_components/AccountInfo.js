@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function AccountInfo() {
   const router = useRouter();
+  const { language } = useLanguage();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
     email: "muhsinachachu8446@gmail.com",
@@ -29,7 +32,7 @@ export default function AccountInfo() {
   return (
     <div className="bg-white rounded-lg p-3 sm:p-4 md:p-6">
       <div className="flex items-center justify-between mb-4 sm:mb-5 md:mb-6">
-        <h2 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900">Personal Info</h2>
+        <h2 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900">{t("account.personalInfo", language)}</h2>
         <Button
           variant="primary"
           size="large"  
@@ -43,7 +46,7 @@ export default function AccountInfo() {
           onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#520a1e")}
           onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "var(--color-primary)")}
         >
-          Edit Info
+          {t("account.editInfo", language)}
         </Button>
       </div>
 
@@ -59,7 +62,7 @@ export default function AccountInfo() {
 
         {/* Email */}
         <div className="space-y-1 sm:space-y-2">
-          <label className="block text-xs sm:text-sm font-medium text-gray-900">Email</label>
+          <label className="block text-xs sm:text-sm font-medium text-gray-900">{t("account.email", language)}</label>
           <p className="text-sm sm:text-base text-gray-700">{userData.email}</p>
         </div>
 
@@ -74,7 +77,7 @@ export default function AccountInfo() {
           onClick={handleLogout}
           className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-transparent border border-[var(--color-primary)] text-[var(--color-primary)] rounded-md hover:bg-[var(--color-primary)]/10 transition-colors cursor-pointer text-xs sm:text-sm md:text-base"
         >
-          Logout
+          {t("nav.logout", language)}
         </Button>
       </div>
     </div>
