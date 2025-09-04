@@ -4,9 +4,12 @@ import { featuredProducts } from "../../../../lib/data";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function FeaturedProductsSection({ isProductPage = false }) {
   const router = useRouter();
+  const { language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -120,7 +123,7 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
         <div className="flex flex-col gap-6">
           <div className="flex flex-row gap-2 items-center justify-between w-full">
             <h2 className="text-[20px] sm:text-[22px] md:text-[24px] xl:text-[28px] font-bold text-[#333333]">
-              Featured Shampoos
+              {t("homepage.featured.shampoos", language)}
             </h2>
           </div>
           <div className="hidden md:flex flex-row gap-6 w-full">
@@ -151,14 +154,14 @@ export default function FeaturedProductsSection({ isProductPage = false }) {
               letterSpacing: "-0.22px",
             }}
           >
-            Featured Shampoos
+            {t("homepage.featured.shampoos", language)}
           </h2>
           <button
             className="flex items-center gap-2 font-medium transition-colors cursor-pointer hover:opacity-80"
             style={{ color: "var(--color-primary)" }}
             onClick={() => router.push("/products")}
           >
-            <span className="text-sm sm:text-base">View all</span>
+            <span className="text-sm sm:text-base">{t("homepage.featured.viewAll", language)}</span>
             <span
               onClick={(e) => {
                 e.stopPropagation();

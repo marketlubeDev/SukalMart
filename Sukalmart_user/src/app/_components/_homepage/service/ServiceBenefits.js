@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import { serviceBenefits } from "../../../../lib/data";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ServiceBenefits() {
+  const { language } = useLanguage();
+
   return (
     <>
       <section 
@@ -29,7 +33,7 @@ export default function ServiceBenefits() {
                   <h3 
                     className="text-center text-[#333] font-semibold leading-tight tracking-[-0.36px] text-[clamp(10px,1.4vw,14px)] w-[clamp(70px,18vw,180px)]"
                   >
-                    {benefit.title}
+                    {t(benefit.titleKey, language)}
                   </h3>
                 </div>
 

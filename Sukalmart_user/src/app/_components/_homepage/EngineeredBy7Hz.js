@@ -4,9 +4,12 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Button from '@/app/_components/common/Button';
 import BeautyCollectionGrid from './BeautyCollectionGrid';
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function EngineeredBy7Hz() {
   const router = useRouter();
+  const { language } = useLanguage();
 
   const handleShopAllClick = () => {
     router.push('/products');
@@ -19,7 +22,7 @@ export default function EngineeredBy7Hz() {
           {/* Left Section - Text Content */}
           <div className="flex-1 lg:max-w-[400px]">
             <h2 className="mb-4 sm:mb-6 text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold leading-normal tracking-[-0.56px] sm:tracking-[-0.64px] md:tracking-[-0.72px] lg:tracking-[-0.8px] text-[#333]">
-              Premium Beauty Collection
+              {t("homepage.premiumCollection.title", language)}
             </h2>
             <p className="mb-6 sm:mb-8 text-[14px] sm:text-[16px] md:text-[17px] lg:text-[18px] font-medium leading-normal tracking-[-0.14px] sm:tracking-[-0.16px] md:tracking-[-0.17px] lg:tracking-[-0.18px] text-[rgba(51,51,51,0.8)]">
               Expertly formulated skincare and beauty products delivering radiant
@@ -32,7 +35,7 @@ export default function EngineeredBy7Hz() {
               onClick={handleShopAllClick}
               className="rounded-[4px] hover:bg-[#520A1E] text-xs sm:text-sm md:text-base lg:text-base"
             >
-              Shop all
+              {t("homepage.premiumCollection.shopAll", language)}
             </Button>
           </div>
 

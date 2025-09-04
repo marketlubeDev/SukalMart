@@ -5,11 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function LoginPage() {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { language } = useLanguage();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,8 +62,9 @@ export default function LoginPage() {
             }}
             className="sm:text-[40px]"
           >
-            Welcome <span style={{ color: "var(--color-primary)" }}>Shoppers</span>
+            {t("homepage.welcome.welcome", language)} <span style={{ color: "var(--color-primary)" }}>{t("homepage.welcome.shoppers", language)}</span>
           </h2>
+        
           <p
             style={{
               color: "rgba(51, 51, 51, 0.80)",
@@ -75,7 +79,7 @@ export default function LoginPage() {
             }}
             className="sm:text-[16px]"
           >
-            Login / signup with your email or mobile number.
+              {t("homepage.welcome.loginMessage", language)}
           </p>
         </div>
 
@@ -98,7 +102,7 @@ export default function LoginPage() {
                   letterSpacing: "-0.52px"
                 }}
               >
-                Enter your email or phone
+                {t("homepage.welcome.emailPhoneLabel", language)}
               </label>
               <input
                 id="emailOrPhone"
@@ -120,7 +124,7 @@ export default function LoginPage() {
                 }}
                 onFocus={e => e.target.style.borderColor = "var(--color-primary)"}
                 onBlur={e => e.target.style.borderColor = "#d1d5db"}
-                placeholder="Email or phone number"
+                                 placeholder={t("homepage.welcome.emailPhonePlaceholder", language)}
               />
               <style jsx>{`
                 #emailOrPhone::placeholder {
@@ -151,7 +155,7 @@ export default function LoginPage() {
               loading={isLoading}
               className="w-full sm:text-[16px] rounded-md cursor-pointer"
             >
-              {isLoading ? "Sending OTP..." : "Send OTP"}
+                             {isLoading ? t("homepage.welcome.sendingOTP", language) : t("homepage.welcome.sendOTP", language)}
             </Button>
           </div>
 
@@ -171,7 +175,7 @@ export default function LoginPage() {
               }}
               className="sm:text-[14px]"
             >
-              By continuing, you agree to our{" "}
+              {t("homepage.welcome.legalText", language)}{" "}
               <span
                 className="underline font-medium cursor-pointer"
                 style={{ color: "var(--color-primary)" }}
@@ -179,9 +183,9 @@ export default function LoginPage() {
                 onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
-                Terms
+                {t("homepage.welcome.terms", language)}
               </span>{" "}
-              and{" "}
+              {t("homepage.welcome.and", language)}{" "}
               <span
                 className="underline font-medium cursor-pointer"
                 style={{ color: "var(--color-primary)" }}
@@ -189,7 +193,7 @@ export default function LoginPage() {
                 onMouseOver={e => e.currentTarget.style.color = "var(--color-primary)"}
                 onMouseOut={e => e.currentTarget.style.color = "rgba(51, 51, 51, 0.60)"}
               >
-                Privacy Policy
+                {t("homepage.welcome.privacyPolicy", language)}
               </span>
             </p>
           </div>

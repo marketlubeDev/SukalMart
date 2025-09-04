@@ -2,6 +2,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ProductSidebar({
   selectedCategory,
@@ -13,6 +15,7 @@ export default function ProductSidebar({
 }) {
   const router = useRouter();
   const [sessionData, setSessionData] = useState({});
+  const { language } = useLanguage();
 
   const categories = [
     "Hair Care",
@@ -23,19 +26,19 @@ export default function ProductSidebar({
   ];
 
   const discountOptions = [
-    "10% off & more",
-    "20% off & more",
-    "30% off & more",
-    "40% off & more",
-    "50% off & more",
+    "homepage.productSidebar.pdiscount10",
+    "homepage.productSidebar.discount20",
+    "homepage.productSidebar.discount30",
+    "homepage.productSidebar.discount40",
+    "homepage.productSidebar.discount50",
   ];
 
   const priceRanges = [
-    "Under ₹1000",
-    "₹1000 - ₹2000",
-    "₹2000 - ₹3000",
-    "₹3000 - ₹4000",
-    "Over ₹4000",
+    "homepage.productSidebar.under1000",
+    "homepage.productSidebar.range1000to2000",
+    "homepage.productSidebar.range2000to3000",
+    "homepage.productSidebar.range3000to4000",
+    "homepage.productSidebar.over4000",
   ];
 
   const handleCategoryClick = (category) => {
@@ -72,7 +75,7 @@ export default function ProductSidebar({
             letterSpacing: "-0.18px",
           }}
         >
-          Categories
+          {t("homepage.productSidebar.categories", language)}
         </h3>
         <div className="space-y-0">
           {categories.map((category) => (
@@ -119,7 +122,7 @@ export default function ProductSidebar({
             letterSpacing: "-0.18px",
           }}
         >
-          Discount
+          {t("homepage.productSidebar.discount", language)}
         </h3>
         <div className="space-y-0">
           {discountOptions.map((discount) => (
@@ -145,7 +148,7 @@ export default function ProductSidebar({
                 letterSpacing: "-0.16px",
               }}
             >
-              {discount}
+              {t(discount, language)}
             </button>
           ))}
         </div>
@@ -166,7 +169,7 @@ export default function ProductSidebar({
             letterSpacing: "-0.18px",
           }}
         >
-          Price Range
+          {t("homepage.productSidebar.priceRange", language)}
         </h3>
 
         {/* Price Range Slider */}
@@ -334,7 +337,7 @@ export default function ProductSidebar({
                   letterSpacing: "-0.16px",
                 }}
               >
-                {range}
+                {t(range, language)}
               </button>
             ))}
           </div>

@@ -5,9 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import useBanner from "@/lib/hooks/useBanner"; // BACKEND INTERACTION: Removed dynamic banner fetching
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function HeroBanner() {
   const router = useRouter();
+  const { language } = useLanguage();
 
   const normalizeSlug = (value) =>
     String(value)
@@ -269,7 +272,7 @@ export default function HeroBanner() {
                 }
                 className="self-start md:self-auto text-xs md:text-sm lg:text-base rounded-md"
               >
-                Shop now
+                {t("homepage.hero.cta", language)}
               </Button>
             </div>
           </div>

@@ -2,6 +2,7 @@ import "./globals.css";
 import Nav from "../layout/user/Nav";
 import Footer from "../layout/user/Footer";
 import { WishlistProvider } from "./_components/context/WishlistContext";
+import { LanguageProvider } from "./_components/context/LanguageContext";
 
 export const metadata = {
 	title: "Souqalmart",
@@ -16,11 +17,13 @@ export default function RootLayout({ children }) {
 				<link rel="alternate icon" href="/favicon.ico" />
 			</head>
 			<body className="antialiased">
-				<WishlistProvider>
-					<Nav />
-					{children}
-					<Footer />
-				</WishlistProvider>
+				<LanguageProvider>
+					<WishlistProvider>
+						<Nav />
+						{children}
+						<Footer />
+					</WishlistProvider>
+				</LanguageProvider>
 			</body>
 		</html>
 	);

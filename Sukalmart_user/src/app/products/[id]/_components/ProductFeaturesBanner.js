@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ProductFeaturesBanner({ productType }) {
+  const { language } = useLanguage();
   const getImageSrc = () => {
     switch (productType) {
       case "Hair Care":
@@ -36,7 +39,7 @@ export default function ProductFeaturesBanner({ productType }) {
           textEdge: "cap",
         }}
       >
-        Product features
+        {t("product.productFeatures", language)}
       </div>
       <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
         <Image

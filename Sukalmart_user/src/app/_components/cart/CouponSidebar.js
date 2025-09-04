@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { Drawer } from "antd";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "../context/LanguageContext";
+import { t } from "../../../lib/translations";
 
 export default function CouponSidebar({ isOpen, onClose }) {
+  const { language } = useLanguage();
   const [selectedCoupon, setSelectedCoupon] = useState("SAVE100");
   const [couponCode, setCouponCode] = useState("");
 
@@ -117,7 +120,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
               letterSpacing: "-0.44px",
             }}
           >
-            Coupon & Offers
+            {t("cart.applyCouponAndOffers", language)}
           </h2>
         </div>
       </div>
@@ -141,7 +144,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
               <div className="mb-4 sm:mb-6 px-3 sm:px-4">
                 <input
                   type="text"
-                  placeholder="Enter your coupon code.."
+                  placeholder={t("cart.enterCouponPlaceholder", language)}
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
                   className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
@@ -213,7 +216,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                 className="whitespace-nowrap"
                 style={{ borderRadius: "6px" }}
               >
-                Apply
+                {t("cart.apply", language)}
               </Button>
             </div>
           </div>

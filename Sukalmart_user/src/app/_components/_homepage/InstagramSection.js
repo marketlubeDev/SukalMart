@@ -2,9 +2,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import Head from "next/head";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function InstagramPage() {
   const [playingVideo, setPlayingVideo] = useState(null);
+  const { language } = useLanguage();
 
   const handlePlayClick = (videoId) => {
     setPlayingVideo(videoId);
@@ -102,11 +105,11 @@ export default function InstagramPage() {
               textAlign: "center",
             }}
           >
-            Follow us on{" "}
+            {t("homepage.instagram.followUs", language)}{" "}
             <span
               className="text-[var(--color-primary)]"
             >
-              Instagram
+              {t("homepage.instagram.instagram", language)}
             </span>
           </h1>
 

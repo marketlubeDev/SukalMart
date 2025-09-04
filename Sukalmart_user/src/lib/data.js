@@ -680,22 +680,22 @@ export const catalogProducts = [
 export const serviceBenefits = [
   {
     icon: "/cash1.svg",
-    title: "Secured payment",
+    titleKey: "homepage.services.securedPayment",
     alt: "Secured Payment",
   },
   {
     icon: "/cash2.svg",
-    title: "Delivery in 3-4 working days",
+    titleKey: "homepage.services.deliveryInDays",
     alt: "Delivery",
   },
   {
     icon: "/cash3.svg",
-    title: "24x7 support",
+    titleKey: "homepage.services.support24x7",
     alt: "24x7 Support",
   },
   {
     icon: "/cash4.svg",
-    title: "Pay on delivery",
+    titleKey: "homepage.services.payOnDelivery",
     alt: "Pay on Delivery",
   },
 ];

@@ -3,11 +3,14 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/app/_components/common/Button";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function PromotionalBanner({ fullWidth = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const [currentBanner, setCurrentBanner] = useState(0);
+  const { language } = useLanguage();
 
   const banners = [
     {
@@ -82,7 +85,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
               onClick={() => handleShopNowClick(banners[currentBanner].productId)}
               className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
             >
-              {banners[currentBanner].buttonText}
+              {t("homepage.hero.cta", language)}
             </Button>
           </div>
         </div>
@@ -135,7 +138,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                   onClick={() => handleShopNowClick(banner.productId)}
                   className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
                 >
-                  {banner.buttonText}
+                  {t("homepage.hero.cta", language)}
                 </Button>
             </div>
           </div>
