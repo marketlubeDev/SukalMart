@@ -116,7 +116,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
 
   return (
     <div 
-      className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 flex flex-col min-w-0 lg:min-h-[400px]"
+      className="group bg-white rounded-lg overflow-hidden cursor-pointer shadow-none flex flex-col min-w-0 lg:min-h-[400px]"
       onClick={() => onProductClick(product.id)}
     >
       <div className="relative">
@@ -124,7 +124,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover"
+            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               e.target.src = "https://via.placeholder.com/300x180?text=Product+Image";
             }}
@@ -135,7 +135,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
             alt={product.name}
             width={300}
             height={180}
-            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover"
+            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover transition-transform duration-300 group-hover:scale-110"
             priority={product.id <= 3}
             onError={(e) => {
               e.target.src = "https://via.placeholder.com/300x180?text=Product+Image";
@@ -164,7 +164,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
         )}
       </div>
       
-      <div className="p-2 md:p-4 lg:p-6 flex-1 flex flex-col">
+      <div className="pt-4 px-1 flex-1 flex flex-col">
         <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2" style={{ lineHeight: "1.1" }}>
           {product.name}
         </h3>
@@ -172,19 +172,22 @@ const ProductCard = ({ product, onAddToCart, onProductClick, language }) => {
           {product.category}
         </p>
         
-        <div className="flex items-center gap-1 md:gap-2 lg:gap-3 mb-2 md:mb-3 lg:mb-4">
+        <div className="flex items-center gap-1 md:gap-2 lg:gap-3 mb-0 whitespace-nowrap">
           <span
-            className="text-sm md:text-lg lg:text-xl font-bold"
+            className="text-xs md:text-sm lg:text-base font-bold"
             style={{ color: "var(--color-primary)" }}
           >
-            ₹{product.price.toLocaleString()}
+            <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+            <span className="ml-1">{product.price.toLocaleString()}</span>
           </span>
-          <span className="text-xs md:text-sm lg:text-base text-gray-500 line-through">
-            ₹{product.originalPrice.toLocaleString()}
+          <span className="relative inline-flex items-center text-gray-500">
+            <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+            <span className="text-[10px] md:text-xs lg:text-sm ml-1">{product.originalPrice.toLocaleString()}</span>
+            <span aria-hidden="true" className="absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-px bg-gray-700"></span>
           </span>
         </div>
         
-        <div className="flex justify-start mt-auto">
+        <div className="flex justify-start mt-8">
           <Button 
             variant="cart"
             size="small"

@@ -22,13 +22,9 @@ const Button = ({
     secondary: 'text-[#333333] border border-[#333333] hover:bg-[#333333] hover:text-white focus:ring-[#333333]/50',
     tertiary: 'bg-white text-black border border-[var(--color-primary)] hover:bg-gray-50 focus:ring-[var(--color-primary)] focus:ring-offset-2',
     buy: 'bg-[var(--color-primary)] text-white hover:bg-[#520A1E] px-4 py-3 border border-transparent focus:ring-[var(--color-primary)]',
-    cart: 'bg-white text-[var(--color-primary)] border border-[var(--color-primary)] hover:bg-[#F7F3F4] ',
+    cart: 'bg-white text-[var(--color-primary)] border border-[var(--color-primary)] hover:bg-[#F7F3F4] focus:border-transparent',
     outlinePrimary: 'border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors',
-    // outline: 'border-2 border-[#6D0D26] text-[#6D0D26] hover:bg-[#6D0D26] hover:text-white focus:ring-[#6D0D26]/50',
-    // danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500/50',
-    // success: 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500/50',
-    // warning: 'bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500/50',
-    // ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500/50'
+ 
   };
   
   // Size classes

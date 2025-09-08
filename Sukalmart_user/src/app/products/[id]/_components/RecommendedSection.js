@@ -4,213 +4,126 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useLanguage } from "@/app/_components/context/LanguageContext";
 import { t } from "@/lib/translations";
+import { useRef } from "react";
 
 export default function RecommendedSection() {
   const router = useRouter();
   const { language } = useLanguage();
+  const scrollerRef = useRef(null);
+
+  const handleViewAll = () => {
+    router.push("/products");
+  };
+
+  const handleProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   return (
-    <div className="bg-white container mx-auto px-0 sm:px-10 md:px-0 lg:px-0 2xl:px-0 pt-0 pb-0 md:pt-16 md:pb-0 overflow-hidden">
-      <div className="container mx-auto">
+    <section className="bg-white">
+      <div className="container mx-auto px-0 md:px-8 lg:px-10 2xl:px-10 py-4 md:py-6 xl:pb-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h2
-            className="font-bold"
-            style={{
-              color: "#333",
-              fontSize: "clamp(18px, 4vw, 24px)",
-              fontWeight: 700,
-              fontStyle: "normal",
-              lineHeight: "normal",
-              letterSpacing: "-0.24px",
-            }}
+            className="font-bold text-lg md:text-2xl lg:text-3xl text-gray-800"
           >
             {t("product.recommendedForYou", language)}
           </h2>
           <button
-            onClick={() => router.push('/products')}
-            className="flex items-center gap-1 md:gap-2 font-medium transition-colors cursor-pointer"
+            onClick={handleViewAll}
+            className="flex items-center gap-2 font-medium transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded"
             style={{ color: "var(--color-primary)", background: "none", border: "none", padding: 0 }}
+            aria-label="View all recommended"
           >
             <span className="text-sm md:text-base">{t("common.viewAll", language)}</span>
-            <span className="flex items-center">
+            <span className="inline-flex" style={{ cursor: "pointer" }}>
               <Image
                 src="/nextarrow.svg"
                 alt="Next arrow"
-                width={20}
-                height={20}
-                className="w-5 h-5 md:w-7 md:h-7 cursor-pointer"
-                style={{ display: "inline-block" }}
+                width={28}
+                height={28}
+                className="w-5 h-5 md:w-7 md:h-7"
               />
             </span>
           </button>
         </div>
 
-        {/* Recommended Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2 md:gap-2">
-          {/* Product 1 - A1 Badge */}
-          <div onClick={() => router.push('/products/1')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <Image
-                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-                alt="Dove Nutritive Solutions"
-                width={300}
-                height={300}
-                className="w-full h-full aspect-square object-cover"
-              />
-              {/* A1 Badge */}
-              <div className="absolute top-1 md:top-2 left-[-16px]">
-                <div className="relative">
-                  <Image
-                    src="/badge.svg"
-                    alt="Badge"
-                    width={64}
-                    height={40}
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold">
-                      #1
-                    </span>
+        {/* Products Grid (horizontal scroll like BestSellers) */}
+        <div
+          ref={scrollerRef}
+          className="
+            grid grid-flow-col auto-cols-[45%] gap-4 overflow-x-auto pb-2
+            sm:auto-cols-[40%] sm:gap-5
+            md:auto-cols-[32%] md:gap-4 md:pb-4
+            lg:auto-cols-[30%] lg:gap-5
+            xl:grid-cols-6 xl:overflow-visible xl:pb-0
+            scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100
+          "
+          style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--color-primary) #f1f1f1' }}
+        >
+          {bestSellers.map((product) => (
+            <div
+              key={product.id}
+              className="group bg-white rounded-lg overflow-hidden cursor-pointer shadow-none flex flex-col min-w-0 lg:min-h-[360px]"
+              onClick={() => handleProductClick(product.id)}
+            >
+              <div className="relative">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={300}
+                  height={180}
+                  className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+
+                {product.badge && (
+                  <div className="absolute top-1 md:top-2 left-[-16px]">
+                    <div className="relative">
+                      <Image
+                        src="/badge.svg"
+                        alt="Badge"
+                        width={64}
+                        height={40}
+                        className="w-12 h-8 md:w-16 md:h-10"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-white text-[10px] md:text-xs font-bold">
+                          {product.badge}
+                        </span>
+                      </div>
+                    </div>
                   </div>
+                )}
+              </div>
+
+              <div className="pt-4 px-1 flex-1 flex flex-col">
+                <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2" style={{ lineHeight: "1.1" }}>
+                  {product.name}
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4" style={{ lineHeight: "1.1" }}>
+                  {product.category}
+                </p>
+
+                <div className="flex items-center gap-1 md:gap-2 lg:gap-3 mb-0 whitespace-nowrap">
+                  <span
+                    className="text-xs md:text-sm lg:text-base font-bold"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {product.price}
+                  </span>
+                  <span className="relative inline-flex items-center text-gray-500">
+                    <span className="text-[10px] md:text-xs lg:text-sm ml-0">{product.originalPrice}</span>
+                    <span aria-hidden="true" className="absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-px bg-gray-700"></span>
+                  </span>
                 </div>
               </div>
             </div>
-            <div className="p-2 md:p-3">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                Dove Nutritive Solutions
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">Hair Care</p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-                  ₹1,099
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹1,299
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 2 - #2 Badge */}
-          <div onClick={() => router.push('/products/2')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <Image
-                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
-                alt="Lux Body Wash"
-                width={300}
-                height={300}
-                className="w-full h-full aspect-square object-cover"
-              />
-              {/* #2 Badge */}
-              <div className="absolute top-1 md:top-2 left-[-16px]">
-                <div className="relative">
-                  <Image
-                    src="/badge.svg"
-                    alt="Badge"
-                    width={64}
-                    height={40}
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold">
-                      #2
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="p-2 md:p-3">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                Lux Body Wash
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                Body & Shower
-              </p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-                  ₹1,099
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹1,299
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 3 - #3 Badge */}
-          <div onClick={() => router.push('/products/3')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <Image
-                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp"
-                alt="Rexona / Sure Deo"
-                width={300}
-                height={300}
-                className="w-full h-full aspect-square object-cover"
-              />
-              {/* #3 Badge */}
-              <div className="absolute top-1 md:top-2 left-[-16px]">
-                <div className="relative">
-                  <Image
-                    src="/badge.svg"
-                    alt="Badge"
-                    width={64}
-                    height={40}
-                    className="w-16 h-10 md:w-20 md:h-12"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xs md:text-sm font-bold">
-                      #3
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="p-2 md:p-3">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                Rexona / Sure Deo
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">
-                Soap & Deodorants
-              </p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-                  ₹1,899
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹2,099
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 4 - No Badge */}
-          <div onClick={() => router.push('/products/4')} className="bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="relative">
-              <Image
-                src="https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-                alt="Vaseline Body Lotion"
-                width={300}
-                height={300}
-                className="w-full h-full aspect-square object-cover"
-              />
-            </div>
-            <div className="p-2 md:p-3">
-              <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
-                Vaseline Body Lotion
-              </h3>
-              <p className="text-xs text-gray-600 mb-2 md:mb-3">Skin Care</p>
-              <div className="flex items-center gap-1 md:gap-2 mb-3 md:mb-4">
-                <span className="text-sm md:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-                  ₹1,099
-                </span>
-                <span className="text-xs md:text-sm text-gray-500 line-through">
-                  ₹1,299
-                </span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
+
+        {/* Separator */}
+        <div className="border-b border-gray-200 w-full mt-6" />
       </div>
-    </div>
+    </section>
   );
 }

@@ -134,7 +134,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
               </p>
                 <Button
                   variant="secondary"
-                  size="large"
+                  size="small"
                   onClick={() => handleShopNowClick(banner.productId)}
                   className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
                 >

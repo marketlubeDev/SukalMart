@@ -608,10 +608,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                             padding: "0 2px",
                           }}
                         >
-                          ₹{(item.price || 0).toLocaleString()}
+                          AED {(item.price || 0).toLocaleString()}
                         </span>
                         <span className="text-xs text-gray-400 line-through">
-                          ₹{(item.originalPrice || 0).toLocaleString()}
+                          AED {(item.originalPrice || 0).toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -758,7 +758,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         letterSpacing: "-0.36px",
                       }}
                     >
-                      ₹{subtotal.toLocaleString()}
+                      AED {subtotal.toLocaleString()}
                     </span>
                   </div>
                   <div
@@ -796,7 +796,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        ₹{total.toLocaleString()}
+                        AED {total.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between w-full">
@@ -822,7 +822,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        -₹{discount.toLocaleString()}
+                        -AED {discount.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between w-full">
@@ -874,7 +874,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                           letterSpacing: "-0.32px",
                         }}
                       >
-                        -₹{couponDiscount.toLocaleString()}
+                        -AED {couponDiscount.toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -913,7 +913,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                     letterSpacing: "-0.4px",
                   }}
                 >
-                  ₹{(total - discount - couponDiscount).toLocaleString()}
+                  AED {(total - discount - couponDiscount).toLocaleString()}
                 </div>
                 <button
                   style={{

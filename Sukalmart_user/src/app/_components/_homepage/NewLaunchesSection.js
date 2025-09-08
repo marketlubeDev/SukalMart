@@ -8,7 +8,7 @@ import { t } from "@/lib/translations";
 function NewLaunchCard({ product, onClick }) {
   return (
     <div 
-      className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 border border-gray-200"
+      className="group bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200 border border-gray-200"
       onClick={() => onClick(product.id)}
     >
       {/* Product Image with overlay and text */}
@@ -17,7 +17,7 @@ function NewLaunchCard({ product, onClick }) {
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           onError={(e) => {
             e.target.src = "https://via.placeholder.com/200x250?text=New+Launch";

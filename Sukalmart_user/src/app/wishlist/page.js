@@ -6,6 +6,7 @@ import { useWishlist } from "../_components/context/WishlistContext";
 import Image from "next/image";
 import { useLanguage } from "../_components/context/LanguageContext";
 import { t } from "../../lib/translations";
+import { FaHeart } from "react-icons/fa6";
 
 const sortOptions = [
   "Featured",
@@ -29,16 +30,16 @@ function WishlistCard({ product, onRemove }) {
 
   return (
     <div 
-      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      className="group bg-white rounded-lg overflow-hidden transition-all duration-300 cursor-pointer"
       onClick={handleCardClick}
     >
       <div className="relative">
-        <div className="aspect-square flex items-center justify-center">
+        <div className="relative h-32 sm:h-36 md:h-40 lg:h-44 flex items-center justify-center overflow-hidden">
           <Image 
             src={product.image} 
             alt={product.name} 
             fill 
-            className="object-cover" 
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-105" 
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             onError={(e) => {
               e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
@@ -54,21 +55,22 @@ function WishlistCard({ product, onRemove }) {
             onRemove(product.id);
           }}
           aria-label="Remove from wishlist"
-          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 shadow hover:scale-105 transition-transform cursor-pointer"
+          className="absolute top-2 right-2 bg-white/90 rounded-full p-1.5 sm:p-2 hover:scale-105 transition-transform cursor-pointer"
         >
-          <Image src="/like-black.svg" alt="Remove from wishlist" width={16} height={16} className="w-4 h-4" />
+          <FaHeart className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
         </button>
       </div>
-      <div className="p-3">
-        <h3 className="text-sm font-semibold text-gray-900 mb-1">{product.name}</h3>
-        <p className="text-xs text-gray-600 mb-3">{product.type}</p>
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-            ₹{(product.price ?? 0).toLocaleString()}
+      <div className="p-2">
+        <h3 className="text-xs font-semibold text-gray-900 mb-1 line-clamp-2">{product.name}</h3>
+        <p className="text-[10px] text-gray-600 mb-2">{product.type}</p>
+        <div className="flex items-center gap-2 whitespace-nowrap">
+          <span className="font-bold tracking-tight text-xs sm:text-sm md:text-base lg:text-base" style={{ color: "var(--color-primary)" }}>
+            <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+            <span className="ml-1">{(product.price ?? 0).toLocaleString()}</span>
           </span>
           {product.originalPrice ? (
-            <span className="text-sm text-gray-500 line-through">
-              ₹{(product.originalPrice ?? 0).toLocaleString()}
+            <span className="text-gray-500 tracking-tight line-through decoration-from-font decoration-gray-400 leading-none text-[10px] sm:text-xs md:text-sm lg:text-sm">
+              AED {(product.originalPrice ?? 0).toLocaleString()}
             </span>
           ) : null}
         </div>
@@ -141,7 +143,7 @@ export default function WishlistPage() {
         {products.length === 0 ? (
           <div className="text-center text-gray-600 py-16">{t("wishlist.empty", language)}</div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
             {products.map((product) => (
               <WishlistCard key={product.id} product={product} onRemove={remove} />
             ))}

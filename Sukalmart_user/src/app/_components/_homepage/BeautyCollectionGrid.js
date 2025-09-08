@@ -76,15 +76,15 @@ export default function BeautyCollectionGrid() {
             className="flex-shrink-0 w-1/2 lg:w-1/3 snap-start"
           >
             <div 
-              className="bg-white rounded-lg p-0 lg:p-4 h-full flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200"
+              className="bg-white rounded-lg p-0 lg:p-4 h-full flex flex-col cursor-pointer group"
               onClick={() => handleProductClick(product.id)}
             >
-              <div className="relative aspect-square bg-gray-50 flex items-center justify-center p-3 sm:p-4 mb-3 sm:mb-4 rounded-lg">
+              <div className="relative aspect-square flex items-center justify-center rounded-lg overflow-hidden mb-3 sm:mb-4">
                 {product.image?.includes('marketlube') ? (
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full transition-transform duration-300 ease-out group-hover:scale-105"
                     onError={(e) => {
                       e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
                     }}
@@ -95,25 +95,28 @@ export default function BeautyCollectionGrid() {
                     alt={product.name}
                     fill
                     sizes="(max-width: 639px) 50vw, (max-width: 1024px) 33vw, 33vw"
-                    className="object-contain"
+                    className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
                     onError={(e) => {
                       e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
                     }}
                   />
                 )}
               </div>
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 tracking-[-0.32px] px-2 lg:px-0">
+              <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 px-1">
                 {product.name}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 tracking-[-0.28px] px-2 lg:px-0">
+              <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4 px-1">
                 {product.category}
               </p>
-              <div className="flex items-center gap-2 mt-auto px-2 lg:px-0 pb-2 lg:pb-0">
-                <span className="text-base sm:text-lg font-bold text-[var(--color-primary)]">
-                  ₹{product.price}
+              <div className="flex items-center gap-1 md:gap-2 lg:gap-3 mt-auto px-1 pb-2 lg:pb-0">
+                <span className="font-bold text-[var(--color-primary)] tracking-tight text-xs md:text-sm lg:text-base">
+                  <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+                  <span className="ml-1">{product.price}</span>
                 </span>
-                <span className="text-xs sm:text-sm text-gray-500 line-through">
-                  ₹{product.originalPrice}
+                <span className="relative inline-flex items-center text-gray-500 tracking-tight">
+                  <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+                  <span className="text-[10px] md:text-xs lg:text-sm ml-1">{product.originalPrice}</span>
+                  <span aria-hidden="true" className="absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-px bg-gray-700"></span>
                 </span>
               </div>
             </div>

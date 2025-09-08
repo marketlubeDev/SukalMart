@@ -128,10 +128,10 @@ export default function ProductDetailPage() {
   const coupons = [
     {
       code: "FLAT20",
-      description: "Get 20% discount on products above ₹1,999",
+      description: "Get 20% discount on products above AED 1,999",
     },
-    { code: "SAVE100", description: "Flat ₹100 OFF on orders above ₹999" },
-    { code: "GET250", description: "₹250 OFF when you spend ₹2,499 or more" },
+    { code: "SAVE100", description: "Flat AED 100 OFF on orders above AED 999" },
+    { code: "GET250", description: "AED 250 OFF when you spend AED 2,499 or more" },
   ];
   const visibleCoupons = coupons.slice(0, 2);
   const remainingCouponsCount = Math.max(

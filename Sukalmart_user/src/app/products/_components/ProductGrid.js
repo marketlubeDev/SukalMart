@@ -38,7 +38,7 @@ export default function ProductGrid({
             className="flex items-center gap-2 text-gray-900"
           >
             <Image src="/filtericon.svg" alt="Filter" width={20} height={20} className="w-5 h-5" />
-            <span className="font-semibold text-sm">Filter</span>
+            <span className="font-semibold text-sm">{t("common.filter", language)}</span>
           </button>
           <div className="h-5 w-px bg-gray-200" />
           <button
@@ -46,7 +46,7 @@ export default function ProductGrid({
             className="flex items-center gap-2 text-gray-900"
           >
             <Image src="/sorticon.svg" alt="Sort" width={20} height={20} className="w-5 h-5" />
-            <span className="font-semibold text-sm">Sort</span>
+            <span className="font-semibold text-sm">{t("common.sort", language)}</span>
           </button>
         </div>
         <div className="flex items-center gap-2">

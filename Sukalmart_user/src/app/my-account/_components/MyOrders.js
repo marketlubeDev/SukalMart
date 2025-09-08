@@ -11,20 +11,20 @@ export default function MyOrders() {
 			id: "ORD-001",
 			date: "2024-01-15",
 			status: "Delivered",
-			total: "₹3,398",
+			total: "AED 3,398",
 			items: [
-				{ name: "Glow & Hydrate Face Serum", quantity: 1, price: "₹899" },
-				{ name: "Luxury Beauty Collection Set", quantity: 1, price: "₹2,499" }
+				{ name: "Glow & Hydrate Face Serum", quantity: 1, price: "AED 899" },
+				{ name: "Luxury Beauty Collection Set", quantity: 1, price: "AED 2,499" }
 			]
 		},
 		{
 			id: "ORD-002",
 			date: "2024-01-10",
 			status: "In Transit",
-			total: "₹1,899",
+			total: "AED 1,899",
 			items: [
-				{ name: "Professional Hair Shampoo", quantity: 1, price: "₹899" },
-				{ name: "Nourishing Hair Conditioner", quantity: 1, price: "₹999" }
+				{ name: "Professional Hair Shampoo", quantity: 1, price: "AED 899" },
+				{ name: "Nourishing Hair Conditioner", quantity: 1, price: "AED 999" }
 			]
 		}
 	];

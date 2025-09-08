@@ -15,13 +15,13 @@ export default function CouponSidebar({ isOpen, onClose }) {
     {
       id: "SAVE100",
       code: "SAVE100",
-      description: "Flat ₹100 OFF on orders above ₹999",
+      description: "Flat AED 100 OFF on orders above AED 999",
       discount: 100
     },
     {
       id: "GET250",
       code: "GET250", 
-      description: "₹250 OFF when you spend ₹2,499 or more",
+      description: "AED 250 OFF when you spend AED 2,499 or more",
       discount: 250
     },
     {
@@ -33,13 +33,13 @@ export default function CouponSidebar({ isOpen, onClose }) {
     {
       id: "IEMEXTRA",
       code: "IEMEXTRA",
-      description: "Extra ₹200 OFF on IEMs above ₹1,499",
+      description: "Extra AED 200 OFF on IEMs above AED 1,499",
       discount: 200
     },
     {
       id: "EARBUDLOVE",
       code: "EARBUDLOVE",
-      description: "Flat ₹150 OFF on all true wireless earbuds",
+      description: "Flat AED 150 OFF on all true wireless earbuds",
       discount: 150
     },
     {
@@ -202,10 +202,10 @@ export default function CouponSidebar({ isOpen, onClose }) {
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <span className="text-base sm:text-lg font-semibold text-gray-900">₹{subtotal.toLocaleString()}</span>
+                <span className="text-base sm:text-lg font-semibold text-gray-900">AED {subtotal.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm" style={{ color: "var(--color-primary)" }}>- ₹{selectedCouponData ? selectedCouponData.discount : 0}</span>
+                <span className="text-xs sm:text-sm" style={{ color: "var(--color-primary)" }}>- AED {selectedCouponData ? selectedCouponData.discount : 0}</span>
               </div>
             </div>
             <div className="ml-3 sm:ml-4">

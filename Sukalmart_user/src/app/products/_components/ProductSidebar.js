@@ -285,7 +285,7 @@ export default function ProductSidebar({
                 letterSpacing: "-0.16px",
               }}
             >
-              ₹ {priceRange.min.toLocaleString()}
+              AED {priceRange.min.toLocaleString()}
             </div>
             <Image
               src="/doublearrow.svg"
@@ -314,7 +314,7 @@ export default function ProductSidebar({
                 letterSpacing: "-0.16px",
               }}
             >
-              ₹ {priceRange.max.toLocaleString()}
+              AED {priceRange.max.toLocaleString()}
             </div>
           </div>
         </div>

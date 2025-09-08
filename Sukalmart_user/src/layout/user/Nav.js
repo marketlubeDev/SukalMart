@@ -113,7 +113,7 @@ function NavContent() {
       id: String(p.id),
       name: p.name,
       image: p.image,
-      price: p.price ? `₹${p.price}` : undefined,
+      price: p.price ? `AED ${p.price}` : undefined,
       originalPrice: p.originalPrice,
       category: p.category || p.type,
     }));
@@ -279,7 +279,7 @@ function NavContent() {
   // Reusable Language Dropdown Component
   const LanguageDropdown = ({ isOpen, onClose, isMobile = false, className = "" }) => (
     <div
-      className={`absolute right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+      className={`absolute right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 w-30 transition-all duration-200 z-50 ${
         isOpen ? "opacity-100 visible" : "opacity-0 invisible"
       } ${className}`}
     >
@@ -552,43 +552,25 @@ function NavContent() {
               {/* Desktop Action Buttons */}
               <div className="hidden lg:flex lg:items-center flex-shrink-0">
                 <div className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
-                  {/* Language Selector */}
-                  <div className="relative group language-dropdown">
+                  {/* Language (desktop) */}
+                  <div className="relative language-dropdown">
                     <button
-                      className={`flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'} p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer`}
                       onClick={toggleLanguageDropdown}
+                      className="flex items-center p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                      aria-label="Language"
                     >
-                      <Image
-                        src={
-                          language === "EN" ? "/english.svg" : "/arabicicon.svg"
-                        }
-                        alt={language === "EN" ? "English" : "Arabic"}
-                        width={20}
-                        height={20}
-                        className="w-5 h-5 rounded-full"
-                      />
-                      <span className="text-sm font-medium text-gray-700">
-                        {language}
-                      </span>
+                      <Image src="/english.svg" alt="Language" width={20} height={20} className="w-5 h-5 rounded-full" />
+                      <span className="mx-2 text-sm font-semibold">{language}</span>
                       <Image
                         src="/dropdownicon.svg"
                         alt="dropdown"
                         width={8}
                         height={5}
-                        className={`w-[8px] h-[5px] transition-transform duration-200 ${
-                          isLanguageDropdownOpen ? "rotate-180" : ""
-                        }`}
+                        className={`w-[8px] h-[5px] transition-transform duration-200 ${isLanguageDropdownOpen ? "rotate-180" : ""}`}
                       />
                     </button>
-
-                    {/* Language Dropdown */}
-                    <LanguageDropdown 
-                      isOpen={isLanguageDropdownOpen}
-                      onClose={() => setIsLanguageDropdownOpen(false)}
-                      className="mt-2 w-32"
-                    />
+                    <LanguageDropdown isOpen={isLanguageDropdownOpen} onClose={() => setIsLanguageDropdownOpen(false)} />
                   </div>
-
                   {/* Wishlist */}
                   <Link
                     href="/wishlist"
@@ -624,7 +606,7 @@ function NavContent() {
                       />
                     )}
                   </button>
-
+  
                   {/* User Profile / Login */}
                   <div className="relative group user-dropdown">
                     <button
@@ -1085,39 +1067,7 @@ function NavContent() {
                 </button>
               )}
 
-              {/* Mobile Language Selector */}
-              <div className="relative" ref={mobileLangRef}>
-                <button
-                  onClick={() => setIsMobileLanguageOpen((prev) => !prev)}
-                  className={`flex items-center ${isRTL ? 'space-x-reverse space-x-1' : 'space-x-1'} p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer`}
-                >
-                  <Image
-                    src={language === "EN" ? "/english.svg" : "/arabicicon.svg"}
-                    alt={language === "EN" ? "English" : "Arabic"}
-                    width={16}
-                    height={16}
-                    className="w-4 h-4 rounded-full"
-                  />
-                  <span className="text-xs font-medium text-gray-700">
-                    {language}
-                  </span>
-                  <Image
-                    src="/dropdownicon.svg"
-                    alt="dropdown"
-                    width={6}
-                    height={4}
-                    className="w-[6px] h-[4px]"
-                  />
-                </button>
-
-                {/* Mobile Language Dropdown */}
-                <LanguageDropdown 
-                  isOpen={isMobileLanguageOpen}
-                  onClose={() => setIsMobileLanguageOpen(false)}
-                  isMobile={true}
-                  className="mt-1 w-24"
-                />
-              </div>
+              {/* Language Selector removed from top mobile bar */}
 
               {/* Mobile Wishlist - Hidden on small screens */}
               <Link
@@ -1256,6 +1206,40 @@ function NavContent() {
                   />
                   <span>{t("nav.wishlist")}</span>
                 </Link>
+                {/* Language row under Wishlist */}
+                <div
+                  className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 w-full ${isRTL ? 'text-right' : 'text-left'}`}
+                >
+                  <Image
+                    src="/Language.svg"
+                    alt="Language"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  <button
+                    onClick={() => toggleLanguage(language === 'EN' ? 'AR' : 'EN')}
+                    className="cursor-pointer hover:text-[#6D0D26]"
+                    aria-label="Toggle language"
+                  >
+                    {t("nav.language")}
+                  </button>
+                  <div className={`${isRTL ? 'mr-auto' : 'ml-auto'} flex items-center ${isRTL ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
+                    <button
+                      onClick={() => toggleLanguage('EN')}
+                      className={`${language === 'EN' ? 'text-[#6D0D26] font-medium' : 'text-gray-400'} text-sm`}
+                    >
+                      EN
+                    </button>
+                    <span className="text-gray-300">|</span>
+                    <button
+                      onClick={() => toggleLanguage('AR')}
+                      className={`${language === 'AR' ? 'text-[#6D0D26] font-medium' : 'text-gray-400'} text-sm`}
+                    >
+                      AR
+                    </button>
+                  </div>
+                </div>
                 {isAuthenticated ? (
                   <>
                     <button

@@ -72,7 +72,7 @@ export default function ShopOtherCategoriesSection({ currentCategory }) {
               </div>
               
               {/* Category Name */}
-              <p className="text-gray-900 font-medium text-center mt-2 text-xs sm:text-sm md:text-base leading-tight tracking-tight transition-colors duration-200">
+              <p className="text-gray-900 font-medium text-center mt-2 text-xs sm:text-sm md:text-base leading-tight tracking-tight transition-colors duration-200 group-hover:text-[var(--color-primary)]">
                 {category.name}
               </p>
             </div>

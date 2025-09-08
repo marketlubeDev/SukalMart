@@ -7,11 +7,35 @@ const WishlistContext = createContext(null);
 export function WishlistProvider({ children }) {
   const [items, setItems] = useState([]);
 
+  // Helper to normalize price fields to numbers (strip 'AED' and commas)
+  const sanitizePrice = (value) => {
+    if (value == null) return value;
+    if (typeof value === "number") return value;
+    const numeric = parseInt(String(value).replace(/AED\s*|,/g, ""), 10);
+    return Number.isNaN(numeric) ? Number(value) || 0 : numeric;
+  };
+
+  const normalizeId = (val) => String(val).split('_')[0];
+
+  const normalizeProduct = (product) => {
+    if (!product) return product;
+    return {
+      ...product,
+      id: normalizeId(product.id),
+      price: sanitizePrice(product.price),
+      originalPrice: sanitizePrice(product.originalPrice),
+    };
+  };
+
   // hydrate from localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem("wishlist_items");
-      if (raw) setItems(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw) || [];
+        const normalized = Array.isArray(parsed) ? parsed.map(normalizeProduct) : [];
+        setItems(normalized);
+      }
     } catch {}
   }, []);
 
@@ -25,23 +49,20 @@ export function WishlistProvider({ children }) {
     () => ({
       items,
       toggleWishlistItem: (product) => {
-        const normalizeId = (val) => String(val).split('_')[0];
-        const normalized = normalizeId(product.id);
+        const normalizedId = normalizeId(product.id);
         setItems((prev) => {
-          const exists = prev.some((p) => normalizeId(p.id) === normalized);
+          const exists = prev.some((p) => normalizeId(p.id) === normalizedId);
           if (exists) {
-            return prev.filter((p) => normalizeId(p.id) !== normalized);
+            return prev.filter((p) => normalizeId(p.id) !== normalizedId);
           }
-          return [{ ...product, id: normalized }, ...prev];
+          return [{ ...normalizeProduct(product), id: normalizedId }, ...prev];
         });
       },
       isInWishlist: (id) => {
-        const normalizeId = (val) => String(val).split('_')[0];
         const normalized = normalizeId(id);
         return items.some((p) => normalizeId(p.id) === normalized);
       },
       remove: (id) => {
-        const normalizeId = (val) => String(val).split('_')[0];
         const normalized = normalizeId(id);
         setItems((prev) => prev.filter((p) => normalizeId(p.id) !== normalized));
       },

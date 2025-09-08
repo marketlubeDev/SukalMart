@@ -18,67 +18,74 @@ function MyAccountContent() {
   const searchParams = useSearchParams();
   const tabParam = (searchParams.get("tab") || "").toLowerCase();
 
-  const mapParamToTab = (param) => {
+  // Define tabs with their keys and corresponding display names
+  const tabsConfig = [
+    { key: "accountInfo", displayName: "Account Info" },
+    { key: "savedAddress", displayName: "Saved Address" },
+    { key: "myOrders", displayName: "My Orders" },
+    { key: "helpSupport", displayName: "Help & Support" },
+    { key: "privacyPolicy", displayName: "Privacy & Policy" },
+    { key: "termsConditions", displayName: "Terms & Conditions" }
+  ];
+
+  const mapParamToTabKey = (param) => {
     switch (param) {
       case "account":
       case "info":
-        return "Account Info";
+      case "accountinfo":
+        return "accountInfo";
       case "addresses":
       case "saved-address":
       case "saved-addresses":
-        return "Saved Address";
+      case "savedaddress":
+        return "savedAddress";
       case "orders":
       case "my-orders":
       case "order-history":
-        return "My Orders";
+      case "myorders":
+        return "myOrders";
       case "help":
       case "support":
-        return "Help & Support";
+      case "helpsupport":
+        return "helpSupport";
       case "privacy":
       case "policy":
       case "privacy-policy":
-        return "Privacy & Policy";
+      case "privacypolicy":
+        return "privacyPolicy";
       case "terms":
       case "conditions":
       case "terms-conditions":
-        return "Terms & Conditions";
+      case "termsconditions":
+        return "termsConditions";
       default:
-        return "Account Info";
+        return "accountInfo";
     }
   };
 
-  const [activeTab, setActiveTab] = useState(mapParamToTab(tabParam));
+  const [activeTab, setActiveTab] = useState(mapParamToTabKey(tabParam));
 
   // Sync activeTab with URL query changes
   useEffect(() => {
-    const nextTab = mapParamToTab(tabParam);
+    const nextTab = mapParamToTabKey(tabParam);
     if (nextTab !== activeTab) {
       setActiveTab(nextTab);
     }
   }, [tabParam]);
 
-  const tabs = [
-    "accountInfo",
-    "savedAddress", 
-    "myOrders",
-    "helpSupport",
-    "privacyPolicy",
-    "termsConditions"
-  ];
-
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Account Info":
+      case "accountInfo":
         return <AccountInfo />;
-      case "Saved Address":
+      case "savedAddress":
         return <SavedAddress />;
-      case "My Orders":
+      case "myOrders":
         return <MyOrders />;
-      case "Help & Support":
+      case "helpSupport":
         return <HelpSupport />;
-      case "Privacy & Policy":
+      case "privacyPolicy":
         return <PrivacyPolicy />;
-      case "Terms & Conditions":
+      case "termsConditions":
         return <TermsConditions />;
       default:
         return <AccountInfo />;
@@ -101,22 +108,22 @@ function MyAccountContent() {
       <div className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex space-x-4 sm:space-x-8 overflow-x-auto scrollbar-hide">
-            {tabs.map((tabKey) => (
+            {tabsConfig.map((tab) => (
               <button
-                key={tabKey}
+                key={tab.key}
                 onClick={() => {
-                  setActiveTab(tabKey);
+                  setActiveTab(tab.key);
                   const newSearch = new URLSearchParams(searchParams.toString());
-                  newSearch.set("tab", tabKey);
+                  newSearch.set("tab", tab.key);
                   router.push(`${pathname}?${newSearch.toString()}`);
                 }}
                 className={`py-3 sm:py-4 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap transition-colors cursor-pointer ${
-                  activeTab === tabKey
+                  activeTab === tab.key
                     ? "border-[var(--color-primary)] text-[var(--color-primary)]"
                     : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
-                {t(`account.${tabKey}`, language)}
+                {t(`account.${tab.key}`, language)}
               </button>
             ))}
           </div>

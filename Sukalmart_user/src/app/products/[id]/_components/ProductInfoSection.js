@@ -82,10 +82,10 @@ export default function ProductInfoSection({
                 WebkitLineClamp: 2,
               }}
             >
-              ₹{product.price.toLocaleString()}
+              AED {product.price.toLocaleString()}
             </span>
             <span className="text-sm sm:text-lg text-gray-500 line-through">
-              ₹{product.originalPrice.toLocaleString()}
+              AED {product.originalPrice.toLocaleString()}
             </span>
             <span
               className="px-2 py-1 rounded text-xs sm:text-sm font-medium"

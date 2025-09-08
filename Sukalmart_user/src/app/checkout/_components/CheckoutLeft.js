@@ -110,10 +110,10 @@ export default function CheckoutLeft({
                   {/* Price Section */}
                   <div className="flex items-center space-x-2">
                     <span className="text-base font-semibold text-[var(--color-primary)]">
-                      ₹{item.price.toLocaleString()}
+                      AED {item.price.toLocaleString()}
                     </span>
                     <span className="text-sm text-gray-400 line-through">
-                      ₹{item.originalPrice.toLocaleString()}
+                      AED {item.originalPrice.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export default function CheckoutLeft({
             <div className="flex justify-between">
               <span className="text-base font-medium text-gray-800">{t("cart.subtotal", language)}</span>
               <span className="text-lg font-bold text-gray-800">
-                ₹{subtotal.toLocaleString()}
+                AED {subtotal.toLocaleString()}
               </span>
             </div>
 
@@ -162,13 +162,13 @@ export default function CheckoutLeft({
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">{t("cart.total", language)}</span>
                 <span className="text-base font-medium text-gray-800">
-                  ₹{total.toLocaleString()}
+                  AED {total.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">{t("cart.discount", language)}</span>
                 <span className="text-base font-medium text-[var(--color-primary)]">
-                  -₹{discount.toLocaleString()}
+                  -AED {discount.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -178,7 +178,7 @@ export default function CheckoutLeft({
               <div className="flex justify-between">
                 <span className="text-base text-gray-600">{t("cart.couponDiscount", language)}</span>
                 <span className="text-base font-medium text-[var(--color-primary)]">
-                  -₹{couponDiscount.toLocaleString()}
+                  -AED {couponDiscount.toLocaleString()}
                 </span>
               </div>
             </div>

@@ -28,28 +28,17 @@ export default function ProductCard({
 
   return (
     <div 
-      className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer"
-      style={{
-        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
-        cursor: "pointer"
-      }}
-      onMouseOver={(e) => {
-        e.currentTarget.style.boxShadow = "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
-        e.currentTarget.style.transform = "translateY(-2px)";
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.boxShadow = "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)";
-        e.currentTarget.style.transform = "translateY(0)";
-      }}
+      className="group bg-white rounded-lg overflow-hidden cursor-pointer shadow-none flex flex-col min-w-0"
       onClick={handleProductClick}
     >
       <div className="relative">
-        <div className="aspect-square flex items-center justify-center">
+        <div className="">
           <Image
             src={product.image}
             alt={product.name}
-            fill
-            className="object-cover"
+            width={300}
+            height={180}
+            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             onError={(e) => {
               e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
@@ -97,18 +86,28 @@ export default function ProductCard({
           </div>
         )}
       </div>
-      <div className="p-3 sm:p-4 flex flex-col h-32">
-        <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-1 line-clamp-2 flex-shrink-0">
+      <div className="pt-4 px-1 flex-1 flex flex-col">
+        <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2" style={{ lineHeight: "1.1" }}>
           {product.name}
         </h3>
-        <p className="text-xs text-gray-600 mb-2 sm:mb-3 flex-shrink-0">{product.type || product.category}</p>
-        <div className="flex items-center gap-2 mt-auto">
-          <span className="text-base sm:text-lg font-bold" style={{ color: "var(--color-primary)" }}>
-            ₹{product.price?.toLocaleString() || product.price}
+        <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4">
+          {product.type || product.category}
+        </p>
+        <div className="flex items-center gap-1 md:gap-2 lg:gap-3 whitespace-nowrap mt-auto">
+          <span
+            className="text-xs md:text-sm lg:text-base font-bold"
+            style={{ color: "var(--color-primary)" }}
+          >
+            <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+            <span className="ml-1">{String(product.price ?? '').replace(/AED\s*/, '')}</span>
           </span>
-          <span className="text-xs sm:text-sm text-gray-500 line-through">
-            ₹{product.originalPrice?.toLocaleString() || product.originalPrice}
-          </span>
+          {product.originalPrice ? (
+            <span className="relative inline-flex items-center text-gray-500">
+              <span className="align-baseline text-[9px] md:text-[10px] lg:text-xs">AED</span>
+              <span className="text-[10px] md:text-xs lg:text-sm ml-1">{String(product.originalPrice ?? '').replace(/AED\s*/, '')}</span>
+              <span aria-hidden="true" className="absolute left-0 right-0 top-1/2 -translate-y-1/2 transform h-px bg-gray-700"></span>
+            </span>
+          ) : null}
         </div>
       </div>
     </div>

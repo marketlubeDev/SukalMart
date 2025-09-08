@@ -7,12 +7,15 @@ import ProductGrid from "./_components/ProductGrid";
 import useProducts from "@/lib/hooks/useProducts";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 function ProductsPageContent() {
+  const { language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDiscount, setSelectedDiscount] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 0, max: 12999 });
-  const [sortBy, setSortBy] = useState("Featured");
+  const [sortBy, setSortBy] = useState("homepage.productSidebar.featured");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isBottomBarVisible, setIsBottomBarVisible] = useState(true);
@@ -20,22 +23,22 @@ function ProductsPageContent() {
   const searchParams = useSearchParams();
 
   // Mobile filter UI state
-  const [activeFilterTab, setActiveFilterTab] = useState("Categories");
+  const [activeFilterTab, setActiveFilterTab] = useState("homepage.productSidebar.categories");
   const [snapshot, setSnapshot] = useState({
     selectedCategory: "",
     selectedDiscount: "",
     priceRange: { min: 0, max: 12999 },
   });
-  const [pendingSort, setPendingSort] = useState("Featured");
-  const [sortSnapshot, setSortSnapshot] = useState("Featured");
+  const [pendingSort, setPendingSort] = useState("homepage.productSidebar.featured");
+  const [sortSnapshot, setSortSnapshot] = useState("homepage.productSidebar.featured");
   const [draggingHandle, setDraggingHandle] = useState(null); // 'min' or 'max' or null
 
   const sortOptions = [
-    "Featured",
-    "Price: Low to High",
-    "Price: High to Low",
-    "Newest",
-    "Popular",
+    "homepage.productSidebar.featured",
+    "homepage.productSidebar.priceLowToHigh",
+    "homepage.productSidebar.priceHighToLow",
+    "homepage.productSidebar.newest",
+    "homepage.productSidebar.popular",
   ];
   const categories = [
     "Hair Care",
@@ -46,18 +49,26 @@ function ProductsPageContent() {
   ];
 
   const discountOptions = [
-    "10% off & more",
-    "20% off & more",
-    "30% off & more",
-    "40% off & more",
-    "50% off & more",
+    "homepage.productSidebar.pdiscount10",
+    "homepage.productSidebar.discount20",
+    "homepage.productSidebar.discount30",
+    "homepage.productSidebar.discount40",
+    "homepage.productSidebar.discount50",
+  ];
+
+  const priceRanges = [
+    "homepage.productSidebar.under1000",
+    "homepage.productSidebar.range1000to2000",
+    "homepage.productSidebar.range2000to3000",
+    "homepage.productSidebar.range3000to4000",
+    "homepage.productSidebar.over4000",
   ];
 
   // Fetch products from API
   const sortParam =
-    sortBy === "Price: Low to High"
+    sortBy === "homepage.productSidebar.priceLowToHigh"
       ? "price-low"
-      : sortBy === "Price: High to Low"
+      : sortBy === "homepage.productSidebar.priceHighToLow"
       ? "price-high"
       : undefined;
   const { products, loading, error, pagination } = useProducts({
@@ -87,7 +98,7 @@ function ProductsPageContent() {
     if (!priceLabel) return;
 
     const parsePriceRangeLabel = (label) => {
-      const sanitized = label.replaceAll(",", "").replaceAll("₹", "").trim();
+      const sanitized = label.replaceAll(",", "").replaceAll("AED", "").trim();
 
       // Under X
       const underMatch = sanitized.match(/^Under\s+(\d+)$/i);
@@ -174,7 +185,7 @@ function ProductsPageContent() {
       selectedDiscount,
       priceRange: { ...priceRange },
     });
-    setActiveFilterTab("Categories");
+    setActiveFilterTab("homepage.productSidebar.categories");
     setIsFilterOpen(true);
   };
 
@@ -274,7 +285,7 @@ function ProductsPageContent() {
               height={24}
               className="w-6 h-6"
             />
-            <span className="font-semibold text-base">Filter</span>
+            <span className="font-semibold text-base">{t("common.filter", language)}</span>
           </button>
           <div className="h-6 w-px bg-gray-300" aria-hidden="true" />
           <button
@@ -289,7 +300,7 @@ function ProductsPageContent() {
               height={24}
               className="w-6 h-6"
             />
-            <span className="font-semibold text-base">Sort</span>
+            <span className="font-semibold text-base">{t("common.sort", language)}</span>
           </button>
         </div>
       </div>
@@ -302,19 +313,19 @@ function ProductsPageContent() {
             className="flex items-center justify-between px-4 py-3"
             style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}
           >
-            <h3 className="text-base font-semibold text-gray-900">Filters</h3>
+            <h3 className="text-base font-semibold text-gray-900">{t("common.filters", language)}</h3>
             <button
               onClick={clearAllFilters}
               className="text-red-600 text-sm font-medium"
             >
-              Clear all
+              {t("common.clearAll", language)}
             </button>
           </div>
 
           <div className="flex flex-1 overflow-hidden">
             {/* Left Tabs */}
             <div className="w-5/12 bg-gray-50 overflow-y-auto">
-              {["Categories", "Discount", "Price Range"].map((tab) => (
+              {["homepage.productSidebar.categories", "homepage.productSidebar.discount", "homepage.productSidebar.priceRange"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveFilterTab(tab)}
@@ -324,7 +335,7 @@ function ProductsPageContent() {
                       : "text-gray-700"
                   }`}
                 >
-                  {tab}
+                  {t(tab, language)}
                 </button>
               ))}
             </div>
@@ -334,7 +345,7 @@ function ProductsPageContent() {
               className="w-7/12 p-4 overflow-y-auto"
               style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}
             >
-              {activeFilterTab === "Categories" && (
+              {activeFilterTab === "homepage.productSidebar.categories" && (
                 <div className="space-y-0">
                   {categories.map((cat) => (
                     <div
@@ -361,7 +372,7 @@ function ProductsPageContent() {
                 </div>
               )}
 
-              {activeFilterTab === "Discount" && (
+              {activeFilterTab === "homepage.productSidebar.discount" && (
                 <div className="space-y-0">
                   {discountOptions.map((opt) => (
                     <div
@@ -376,212 +387,182 @@ function ProductsPageContent() {
                             : "hover:bg-gray-50 text-gray-800"
                         }`}
                       >
-                        {opt}
+                        {t(opt, language)}
                       </button>
                     </div>
                   ))}
                 </div>
               )}
 
-              {activeFilterTab === "Price Range" && (
+              {activeFilterTab === "homepage.productSidebar.priceRange" && (
                 <div>
                   <div className="mb-3 text-sm font-semibold text-gray-900">
-                    Select Price range
+                    {t("homepage.productSidebar.selectPriceRange", language)}
                   </div>
 
-                  {/* Price Range Display - Like the image */}
-                  <div className="flex justify-center gap-4 mb-6">
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                      ₹{priceRange.min.toLocaleString()}
-                    </div>
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                      ₹{priceRange.max.toLocaleString()}
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <div className="relative">
+                  {/* Price Range Slider (match desktop sidebar) */}
+                  <div className="mb-4 px-4">
+                    <div className="relative max-w-[160px]">
                       {/* Background track */}
-                      <div className="w-full h-2 bg-purple-300 rounded-lg relative">
-                        {/* Red selected portion */}
+                      <div className="w-full h-1 bg-gray-300 rounded-lg relative">
+                        {/* Selected portion */}
                         <div
-                          className="h-2 bg-red-500 rounded-lg absolute top-0 left-0"
+                          className="h-1 bg-[var(--color-primary)] absolute top-0 left-0"
                           style={{
-                            width: `${
-                              ((priceRange.max - priceRange.min) /
-                                (20000 - 0)) *
-                              100
-                            }%`,
+                            width: `${((priceRange.max - priceRange.min) / (20000 - 0)) * 100}%`,
                             left: `${(priceRange.min / 20000) * 100}%`,
+                            borderRadius:
+                              priceRange.min === 0
+                                ? "4px 0 0 4px"
+                                : priceRange.max === 20000
+                                ? "0 4px 4px 0"
+                                : "0",
                           }}
                         />
+
+                        {/* Start circle */}
+                        <div
+                          className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
+                          style={{ left: `${(priceRange.min / 20000) * 100}%` }}
+                        >
+                          <Image
+                            src="/pricecircle.svg"
+                            alt="start"
+                            width={12}
+                            height={12}
+                            className="w-3 h-3"
+                          />
+                        </div>
+
+                        {/* End circle */}
+                        <div
+                          className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
+                          style={{ left: `${(priceRange.max / 20000) * 100}%` }}
+                        >
+                          <Image
+                            src="/pricecircle.svg"
+                            alt="end"
+                            width={12}
+                            height={12}
+                            className="w-3 h-3"
+                          />
+                        </div>
                       </div>
 
-                      {/* Interactive track for dragging */}
-                      <div
-                        className="absolute top-0 w-full h-8 cursor-pointer"
-                        style={{
-                          marginTop: "-12px",
-                          zIndex: 50,
-                        }}
-                        onMouseDown={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const clickX = e.clientX - rect.left;
-                          const percentage = (clickX / rect.width) * 100;
-                          const value = Math.round((percentage / 100) * 20000);
-
-                          // Determine which handle to move based on which is closer
-                          const minDistance = Math.abs(value - priceRange.min);
-                          const maxDistance = Math.abs(value - priceRange.max);
-
-                          if (minDistance <= maxDistance) {
-                            setDraggingHandle("min");
+                      {/* Dual range inputs */}
+                      <input
+                        type="range"
+                        min="0"
+                        max="20000"
+                        value={priceRange.min}
+                        onChange={(e) => {
+                          const newMin = parseInt(e.target.value);
+                          if (newMin <= priceRange.max) {
                             setPriceRange((prev) => ({
                               ...prev,
-                              min: Math.min(value, prev.max),
-                            }));
-                          } else {
-                            setDraggingHandle("max");
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              max: Math.max(value, prev.min),
+                              min: newMin,
                             }));
                           }
                         }}
-                        onMouseMove={(e) => {
-                          if (!draggingHandle) return;
-
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const moveX = e.clientX - rect.left;
-                          const percentage = (moveX / rect.width) * 100;
-                          const value = Math.round((percentage / 100) * 20000);
-
-                          if (draggingHandle === "min") {
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              min: Math.min(Math.max(0, value), prev.max),
-                            }));
-                          } else {
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              max: Math.max(Math.min(20000, value), prev.min),
-                            }));
-                          }
-                        }}
-                        onMouseUp={() => setDraggingHandle(null)}
-                        onMouseLeave={() => setDraggingHandle(null)}
-                        onTouchStart={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const touch = e.touches[0];
-                          const clickX = touch.clientX - rect.left;
-                          const percentage = (clickX / rect.width) * 100;
-                          const value = Math.round((percentage / 100) * 20000);
-
-                          const minDistance = Math.abs(value - priceRange.min);
-                          const maxDistance = Math.abs(value - priceRange.max);
-
-                          if (minDistance <= maxDistance) {
-                            setDraggingHandle("min");
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              min: Math.min(value, prev.max),
-                            }));
-                          } else {
-                            setDraggingHandle("max");
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              max: Math.max(value, prev.min),
-                            }));
-                          }
-                        }}
-                        onTouchMove={(e) => {
-                          if (!draggingHandle) return;
-                          e.preventDefault();
-
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const touch = e.touches[0];
-                          const moveX = touch.clientX - rect.left;
-                          const percentage = (moveX / rect.width) * 100;
-                          const value = Math.round((percentage / 100) * 20000);
-
-                          if (draggingHandle === "min") {
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              min: Math.min(Math.max(0, value), prev.max),
-                            }));
-                          } else {
-                            setPriceRange((prev) => ({
-                              ...prev,
-                              max: Math.max(Math.min(20000, value), prev.min),
-                            }));
-                          }
-                        }}
-                        onTouchEnd={() => setDraggingHandle(null)}
+                        className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-20"
+                        style={{ pointerEvents: "auto" }}
                       />
+                      <input
+                        type="range"
+                        min="0"
+                        max="20000"
+                        value={priceRange.max}
+                        onChange={(e) => {
+                          const newMax = parseInt(e.target.value);
+                          if (newMax >= priceRange.min) {
+                            setPriceRange((prev) => ({
+                              ...prev,
+                              max: newMax,
+                            }));
+                          }
+                        }}
+                        className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-30"
+                        style={{ pointerEvents: "auto" }}
+                      />
+                    </div>
 
-                      {/* Visual circles positioned based on values */}
+                    {/* Value badges */}
+                    <div className="flex justify-start items-center gap-2 mt-2">
                       <div
-                        className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 pointer-events-none"
                         style={{
-                          left: `${(priceRange.min / 20000) * 100}%`,
-                          zIndex: 40,
+                          display: "flex",
+                          padding: "4px 6px",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "6px",
+                          minWidth: "64px",
+                          borderRadius: "4px",
+                          background: "rgba(0, 0, 0, 0.06)",
+                          color: "rgba(51, 51, 51, 0.70)",
+                          leadingTrim: "both",
+                          textEdge: "cap",
+                          fontSize: "14px",
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "normal",
+                          letterSpacing: "-0.14px",
                         }}
                       >
-                        <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
+                        AED {priceRange.min.toLocaleString()}
                       </div>
-
+                      <Image
+                        src="/doublearrow.svg"
+                        alt="range"
+                        width={20}
+                        height={8}
+                        className="w-5 h-2 mx-2 flex-shrink-0"
+                      />
                       <div
-                        className="absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 pointer-events-none"
                         style={{
-                          left: `${(priceRange.max / 20000) * 100}%`,
-                          zIndex: 40,
+                          display: "flex",
+                          padding: "4px 6px",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "6px",
+                          minWidth: "64px",
+                          borderRadius: "4px",
+                          background: "rgba(0, 0, 0, 0.06)",
+                          color: "rgba(51, 51, 51, 0.70)",
+                          leadingTrim: "both",
+                          textEdge: "cap",
+                          fontSize: "14px",
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "normal",
+                          letterSpacing: "-0.14px",
                         }}
                       >
-                        <div className="w-6 h-6 bg-white rounded-full shadow-lg border-2 border-gray-200"></div>
+                        AED {priceRange.max.toLocaleString()}
                       </div>
                     </div>
                   </div>
 
-                  {/* Input fields - Like the image */}
-                  <div className="flex items-center gap-4 justify-center">
-                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                      <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">
-                        ₹
-                      </div>
-                      <input
-                        type="number"
-                        value={priceRange.min}
-                        onChange={(e) => {
-                          const newMin = parseInt(e.target.value) || 0;
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            min: Math.min(newMin, prev.max),
-                          }));
-                        }}
-                        className="w-20 px-3 py-2 text-center focus:outline-none"
-                        min="0"
-                        max="20000"
-                      />
-                    </div>
-                    <div className="text-gray-400">to</div>
-                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                      <div className="bg-gray-100 px-3 py-2 text-gray-600 font-semibold">
-                        ₹
-                      </div>
-                      <input
-                        type="number"
-                        value={priceRange.max}
-                        onChange={(e) => {
-                          const newMax = parseInt(e.target.value) || 20000;
-                          setPriceRange((prev) => ({
-                            ...prev,
-                            max: Math.max(newMax, prev.min),
-                          }));
-                        }}
-                        className="w-20 px-3 py-2 text-center focus:outline-none"
-                        min="0"
-                        max="20000"
-                      />
+                  {/* Predefined Price Ranges (unchanged) */}
+                  <div className="space-y-0 px-4">
+                    <div className="max-w-[200px]">
+                      {priceRanges.map((range) => (
+                        <button
+                          key={range}
+                          className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
+                          style={{
+                            color: "rgba(51, 51, 51, 0.70)",
+                            leadingTrim: "both",
+                            textEdge: "cap",
+                            fontSize: "16px",
+                            fontStyle: "normal",
+                            fontWeight: "600",
+                            lineHeight: "normal",
+                            letterSpacing: "-0.16px",
+                          }}
+                        >
+                          {t(range, language)}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -598,14 +579,14 @@ function ProductsPageContent() {
               onClick={discardFilters}
               className="flex-1 text-center py-3 text-red-600 font-medium"
             >
-              Discard
+              {t("common.discard", language)}
             </button>
             <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
             <button
               onClick={() => setIsFilterOpen(false)}
               className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold"
             >
-              Apply
+              {t("common.apply", language)}
             </button>
           </div>
         </div>
@@ -618,12 +599,12 @@ function ProductsPageContent() {
             className="flex items-center justify-between px-4 py-3"
             style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.10)" }}
           >
-            <h3 className="text-base font-semibold text-gray-900">Sort by</h3>
+            <h3 className="text-base font-semibold text-gray-900">{t("common.sortBy", language)}</h3>
             <button
-              onClick={() => setPendingSort("Featured")}
+              onClick={() => setPendingSort("homepage.productSidebar.featured")}
               className="text-red-600 text-sm font-medium"
             >
-              Clear all
+              {t("common.clearAll", language)}
             </button>
           </div>
           <div className="flex-1 overflow-y-auto">
@@ -644,7 +625,7 @@ function ProductsPageContent() {
                       : "text-gray-800 hover:bg-gray-50"
                   }`}
                 >
-                  {option}
+                  {t(option, language)}
                 </button>
               </div>
             ))}
@@ -660,7 +641,7 @@ function ProductsPageContent() {
               }}
               className="flex-1 text-center py-3 text-red-600 font-medium"
             >
-              Discard
+              {t("common.discard", language)}
             </button>
             <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
             <button
@@ -670,7 +651,7 @@ function ProductsPageContent() {
               }}
               className="flex-1 text-center py-3 text-[var(--color-primary)] font-semibold"
             >
-              Apply
+              {t("common.apply", language)}
             </button>
           </div>
         </div>
@@ -685,6 +666,31 @@ function ProductsPageContent() {
         .sidebar-scroll {
           -ms-overflow-style: none;
           scrollbar-width: none;
+        }
+
+        /* Range input styles for mobile price slider */
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          background: transparent;
+          outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          height: 12px;
+          width: 12px;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          height: 12px;
+          width: 12px;
+          background: transparent;
+          cursor: pointer;
+          border: none;
         }
       `}</style>
     </div>

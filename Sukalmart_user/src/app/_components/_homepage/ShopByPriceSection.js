@@ -8,131 +8,131 @@ import { t } from "@/lib/translations";
 const PRICE_RANGES_CONFIG = {
   "Body & Shower": [
     {
-      range: "Under ₹500",
+      range: "Under AED 500",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
     },
     {
-      range: "₹500 - ₹1000",
+      range: "AED 500 - AED 1000",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
     },
     {
-      range: "₹1000 - ₹1500",
+      range: "AED 1000 - AED 1500",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
     },
     {
-      range: "₹1500 - ₹2000",
+      range: "AED 1500 - AED 2000",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
     },
     {
-      range: "₹2000 - ₹2500",
+      range: "AED 2000 - AED 2500",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
     },
     {
-      range: "Over ₹2500",
+      range: "Over AED 2500",
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
     },
   ],
   "Soap & Deodorants": [
     {
-      range: "Under ₹500",
+      range: "Under AED 500",
       image: "/soap1.jpeg",
     },
     {
-      range: "₹500 - ₹1000",
+      range: "AED 500 - AED 1000",
       image: "/soap2.jpg",
     },
     {
-      range: "₹1000 - ₹1500",
+      range: "AED 1000 - AED 1500",
       image: "/soap1.jpeg",
     },
     {
-      range: "₹1500 - ₹2000",
+      range: "AED 1500 - AED 2000",
       image: "/soap2.jpg",
     },
     {
-      range: "₹2000 - ₹2500",
+      range: "AED 2000 - AED 2500",
       image: "/soap1.jpeg",
     },
     {
-      range: "Over ₹2500",
+      range: "Over AED 2500",
       image: "/soap2.jpg",
     },
   ],
   "Hair Care": [
     {
-      range: "Under ₹1000",
+      range: "Under AED 1000",
       image: "/haircare1.jpg",
     },
     {
-      range: "₹1000 - ₹2000",
+      range: "AED 1000 - AED 2000",
       image: "/haircare2.jpg",
     },
     {
-      range: "₹2000 - ₹3000",
+      range: "AED 2000 - AED 3000",
       image: "/haircare3.jpg",
     },
     {
-      range: "₹3000 - ₹4000",
+      range: "AED 3000 - AED 4000",
       image: "/haircare1.jpg",
     },
     {
-      range: "₹4000 - ₹5000",
+      range: "AED 4000 - AED 5000",
       image: "/haircare2.jpg",
     },
     {
-      range: "Over ₹5000",
+      range: "Over AED 5000",
       image: "/haircare3.jpg",
     },
   ],
   "Skin Care": [
     {
-      range: "Under ₹500",
+      range: "Under AED 500",
       image: "/skin1.jpg",
     },
     {
-      range: "₹500 - ₹1000",
+      range: "AED 500 - AED 1000",
       image: "/skin2.jpg",
     },
     {
-      range: "₹1000 - ₹1500",
+      range: "AED 1000 - AED 1500",
       image: "/skin1.jpg",
     },
     {
-      range: "₹1500 - ₹2000",
+      range: "AED 1500 - AED 2000",
       image: "/skin2.jpg",
     },
     {
-      range: "₹2000 - ₹2500",
+      range: "AED 2000 - AED 2500",
       image: "/skin1.jpg",
     },
     {
-      range: "Over ₹2500",
+      range: "Over AED 2500",
       image: "/skin2.jpg",
     },
   ],
   "Oral & Misc": [
     {
-      range: "Under ₹500",
+      range: "Under AED 500",
       image: "/tooth1.jpg",
     },
     {
-      range: "₹500 - ₹1000",
+      range: "AED 500 - AED 1000",
       image: "/tooth2.jpg",
     },
     {
-      range: "₹1000 - ₹1500",
+      range: "AED 1000 - AED 1500",
       image: "/tooth1.jpg",
     },
     {
-      range: "₹1500 - ₹2000",
+      range: "AED 1500 - AED 2000",
       image: "/tooth2.jpg",
     },
     {
-      range: "₹2000 - ₹2500",
+      range: "AED 2000 - AED 2500",
       image: "/tooth1.jpg",
     },
     {
-      range: "Over ₹2500",
+      range: "Over AED 2500",
       image: "/tooth2.jpg",
     },
   ],
@@ -141,27 +141,27 @@ const PRICE_RANGES_CONFIG = {
 // Default price ranges
 const DEFAULT_PRICE_RANGES = [
   {
-    range: "Under ₹500",
+    range: "Under AED 500",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
   },
   {
-    range: "₹500 - ₹1000",
+    range: "AED 500 - AED 1000",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
   },
   {
-    range: "₹1000 - ₹1500",
+    range: "AED 1000 - AED 1500",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
   },
   {
-    range: "₹1500 - ₹2000",
+    range: "AED 1500 - AED 2000",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
   },
   {
-    range: "₹2000 - ₹2500",
+    range: "AED 2000 - AED 2500",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
   },
   {
-    range: "Over ₹2500",
+    range: "Over AED 2500",
     image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
   },
 ];
@@ -171,12 +171,12 @@ export default function ShopByPriceSection({ selectedCategory }) {
   const formatRange = (label) => {
     if (language !== 'AR') return label;
     if (label.startsWith('Under')) {
-      return label.replace('Under', 'أقل من').replace('₹', '₹');
+      return label.replace('Under', 'أقل من').replace('AED', 'د.إ');
     }
     if (label.startsWith('Over')) {
-      return label.replace('Over', 'أكثر من').replace('₹', '₹');
+      return label.replace('Over', 'أكثر من').replace('AED', 'د.إ');
     }
-    return label.replace('₹', '₹').replace('-', ' - ');
+    return label.replace('AED', 'د.إ').replace('-', ' - ');
   };
   const router = useRouter();
   
