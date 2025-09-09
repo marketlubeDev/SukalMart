@@ -17,6 +17,8 @@ export default function ProductInfoSection({
   volumes,
   selectedVolume,
   setSelectedVolume,
+  selectedVariant,
+  setSelectedVariant,
   quantity,
   setQuantity,
   addToCart,
@@ -87,10 +89,23 @@ export default function ProductInfoSection({
                 WebkitLineClamp: 2,
               }}
             >
-              AED {product?.price?.toLocaleString()}
+              AED{" "}
+              {(product?.variants &&
+              product.variants.length > 0 &&
+              selectedVariant !== undefined
+                ? product.variants[selectedVariant]?.offerPrice ||
+                  product.variants[selectedVariant]?.price
+                : product?.price
+              )?.toLocaleString()}
             </span>
             <span className="text-sm sm:text-lg text-gray-500 line-through">
-              AED {product?.originalPrice?.toLocaleString()}
+              AED{" "}
+              {(product?.variants &&
+              product.variants.length > 0 &&
+              selectedVariant !== undefined
+                ? product.variants[selectedVariant]?.price
+                : product?.originalPrice
+              )?.toLocaleString()}
             </span>
             <span
               className="px-2 py-1 rounded text-xs sm:text-sm font-medium"
@@ -301,34 +316,38 @@ export default function ProductInfoSection({
           </>
         )}
 
-        {/* Volume Selection */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-gray-700 font-medium text-sm sm:text-base">
-              {t("product.volume", language)}:
-            </span>
-            <span className="text-gray-900 font-semibold text-xs sm:text-sm">
-              {selectedVolume}
-            </span>
+        {/* Variant Selection */}
+        {product?.variants && product.variants.length > 0 && (
+          <div className="mb-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-gray-700 font-medium text-sm sm:text-base">
+                {t("product.volume", language)}:
+              </span>
+              <span className="text-gray-900 font-semibold text-xs sm:text-sm">
+                {(product.variants[selectedVariant]?.attributes?.title ||
+                  `Variant ${selectedVariant + 1}`) + " ml"}
+              </span>
+            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+              {product.variants.map((variant, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedVariant(index)}
+                  className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${
+                    selectedVariant === index ? "border-2" : "border"
+                  }`}
+                  style={{
+                    borderColor:
+                      selectedVariant === index ? "#6D0D26" : "#D1D5DB",
+                    color: "#333",
+                  }}
+                >
+                  {variant?.attributes?.title || `Variant ${index + 1}`}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            {volumes.map((vol) => (
-              <button
-                key={vol}
-                onClick={() => setSelectedVolume(vol)}
-                className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${
-                  selectedVolume === vol ? "border-2" : "border"
-                }`}
-                style={{
-                  borderColor: selectedVolume === vol ? "#6D0D26" : "#D1D5DB",
-                  color: "#333",
-                }}
-              >
-                {vol}
-              </button>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Quantity and Add to Cart */}
@@ -382,7 +401,16 @@ export default function ProductInfoSection({
             className="text-[#FF5722] font-medium text-xs sm:text-base"
             style={{ fontSize: "13px" }}
           >
-            Only <span className="font-semibold">5 stocks left</span>,
+            Only{" "}
+            <span className="font-semibold">
+              {product?.variants &&
+              product.variants.length > 0 &&
+              selectedVariant !== undefined
+                ? product.variants[selectedVariant]?.stock || 0
+                : 5}{" "}
+              stocks left
+            </span>
+            ,
           </span>
           <span
             className="text-black font-medium text-xs sm:text-base"
@@ -401,108 +429,46 @@ export default function ProductInfoSection({
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           {t("product.aboutProduct", language)}
         </h3>
-        <p className="text-gray-700 leading-relaxed mb-2 text-sm sm:text-base">
-          {product?.type === "Hair Care" && (
+        {(() => {
+          // Get the current description
+          const currentDescription =
+            product?.variants &&
+            product.variants.length > 0 &&
+            selectedVariant !== undefined &&
+            product.variants[selectedVariant]?.attributes?.description
+              ? product.variants[selectedVariant].attributes.description
+              : product?.description || "";
+
+          // Split description into words to control preview length
+          const words = currentDescription.split(" ");
+          const previewWords = words.slice(0, 30); // Show first 30 words
+          const remainingWords = words.slice(30);
+          const hasMoreContent = remainingWords.length > 0;
+
+          return (
             <>
-              Our premium hair care products are formulated with advanced
-              ingredients to address specific hair concerns. Whether you're
-              dealing with dryness, dandruff, or hair loss, our
-              scientifically-backed formulas work to restore hair health and
-              vitality. Each product is carefully crafted to provide deep
-              nourishment, strengthen hair follicles, and promote natural growth
-              while maintaining the perfect balance for your hair type.
+              <p className="text-gray-700 leading-relaxed mb-2 text-sm sm:text-base">
+                {showMoreDetails ? currentDescription : previewWords.join(" ")}
+                {!showMoreDetails && hasMoreContent && "..."}
+              </p>
+              {hasMoreContent && (
+                <button
+                  onClick={() => setShowMoreDetails((v) => !v)}
+                  className="text-[#6D0D26] text-sm font-medium underline hover:underline cursor-pointer"
+                  style={{
+                    display: "inline-block",
+                    marginTop: "4px",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                  }}
+                >
+                  {showMoreDetails ? "Show less" : "Show more"}
+                </button>
+              )}
             </>
-          )}
-          {product?.type === "Soap & Deodorants" && (
-            <>
-              Experience the perfect blend of natural ingredients and modern
-              science in our soap and deodorant collection. Our products are
-              designed to provide thorough cleansing while being gentle on your
-              skin. From antibacterial protection to long-lasting freshness,
-              each item is crafted to meet your daily hygiene needs. We use
-              carefully selected natural oils and essential ingredients to
-              ensure your skin stays healthy, clean, and refreshed throughout
-              the day.
-            </>
-          )}
-          {product?.type === "Skin Care" && (
-            <>
-              Transform your skincare routine with our advanced formulations
-              designed to address various skin concerns. Our products combine
-              cutting-edge dermatological science with natural ingredients to
-              deliver visible results. From hydration and brightening to
-              anti-aging and acne treatment, each product is formulated to work
-              harmoniously with your skin's natural processes, promoting
-              healthy, radiant, and youthful-looking skin.
-            </>
-          )}
-          {product?.type === "Oral Care" && (
-            <>
-              Maintain optimal oral health with our comprehensive range of
-              dental care products. Our oral care solutions are designed to
-              provide thorough cleaning, fresh breath, and long-term dental
-              health benefits. From advanced whitening formulas to gentle yet
-              effective cleaning systems, each product is engineered to work
-              together for complete oral hygiene. We prioritize both
-              effectiveness and comfort to ensure your daily dental routine is
-              both beneficial and enjoyable.
-            </>
-          )}
-          {![
-            "Hair Care",
-            "Soap & Deodorants",
-            "Skin Care",
-            "Oral Care",
-          ].includes(product?.type) && (
-            <>
-              Discover our carefully curated collection of premium products
-              designed to enhance your daily routine. Each item is crafted with
-              attention to detail, using quality ingredients and innovative
-              formulations to deliver exceptional results. Whether you're
-              looking for personal care essentials or specialized treatments,
-              our products are designed to meet your needs while providing the
-              quality and reliability you deserve.
-            </>
-          )}
-        </p>
-        <button
-          onClick={() => setShowMoreDetails((v) => !v)}
-          className="text-[#6D0D26] text-sm font-medium underline hover:underline cursor-pointer"
-          style={{
-            display: "inline-block",
-            marginTop: "4px",
-            background: "none",
-            border: "none",
-            padding: 0,
-          }}
-        >
-          {showMoreDetails ? "Show less" : "See more product details"}
-        </button>
-        {showMoreDetails && (
-          <div className="mt-3 text-gray-700 leading-relaxed space-y-2 text-sm sm:text-base md:text-base">
-            <p>
-              This is a premium formulation crafted with care to deliver visible
-              results. It blends advanced active ingredients with gentle,
-              skin-friendly bases for daily use.
-            </p>
-            <p>
-              Key highlights: dermatologist-inspired formula, lightweight
-              texture, non-greasy finish, and suitable for most skin and hair
-              types. Ideal for regular routines or as a targeted treatment.
-            </p>
-            <p>
-              Directions for best results: apply an appropriate amount, massage
-              gently, and allow to absorb. Use consistently and pair with
-              complementary products from the same category for maximum
-              benefits.
-            </p>
-            <p>
-              Note: this is a sample description for demonstration purposes
-              only. Replace with real content fetched from your backend in
-              production.
-            </p>
-          </div>
-        )}
+          );
+        })()}
       </div>
 
       {/* Specification */}
@@ -511,60 +477,12 @@ export default function ProductInfoSection({
           {t("product.specifications", language)}
         </h3>
         <ul className="list-disc pl-5 text-gray-700 space-y-1 text-sm sm:text-base">
-          {product?.type === "Hair Care" && (
-            <>
-              <li>Formulated with advanced hair care technology</li>
-              <li>Suitable for all hair types and textures</li>
-              <li>Contains natural and nourishing ingredients</li>
-              <li>Free from harmful chemicals and sulfates</li>
-              <li>Clinically tested for safety and effectiveness</li>
-              <li>Designed for daily use and long-term results</li>
-            </>
-          )}
-          {product?.type === "Soap & Deodorants" && (
-            <>
-              <li>Made with natural and gentle ingredients</li>
-              <li>Provides long-lasting freshness and protection</li>
-              <li>Suitable for sensitive skin types</li>
-              <li>Antibacterial and antimicrobial properties</li>
-              <li>Eco-friendly and biodegradable formulas</li>
-              <li>Dermatologically tested for safety</li>
-            </>
-          )}
-          {product?.type === "Skin Care" && (
-            <>
-              <li>Advanced dermatological formulations</li>
-              <li>Contains active ingredients for targeted results</li>
-              <li>Suitable for various skin concerns and types</li>
-              <li>Non-comedogenic and hypoallergenic</li>
-              <li>Clinically proven effectiveness</li>
-              <li>Designed for daily skincare routines</li>
-            </>
-          )}
-          {product?.type === "Oral Care" && (
-            <>
-              <li>Advanced dental care technology</li>
-              <li>Provides comprehensive oral hygiene</li>
-              <li>Suitable for daily use and maintenance</li>
-              <li>Contains fluoride and protective ingredients</li>
-              <li>Dentist-recommended formulations</li>
-              <li>Designed for long-term oral health benefits</li>
-            </>
-          )}
-          {![
-            "Hair Care",
-            "Soap & Deodorants",
-            "Skin Care",
-            "Oral Care",
-          ].includes(product?.type) && (
-            <>
-              <li>Premium quality ingredients and formulations</li>
-              <li>Designed for optimal performance and results</li>
-              <li>Suitable for regular daily use</li>
-              <li>Safety tested and approved</li>
-              <li>Long-lasting effectiveness and reliability</li>
-              <li>User-friendly and convenient application</li>
-            </>
+          {product?.specifications && product.specifications.length > 0 ? (
+            product.specifications.map((spec, index) => (
+              <li key={index}>{spec}</li>
+            ))
+          ) : (
+            <li>No specifications available</li>
           )}
         </ul>
       </div>

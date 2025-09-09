@@ -30,6 +30,7 @@ export default function ProductDetailPage() {
   const [mounted, setMounted] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedVariant, setSelectedVariant] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showMoreCoupons, setShowMoreCoupons] = useState(false);
   const [showMoreDetails, setShowMoreDetails] = useState(false);
@@ -43,6 +44,11 @@ export default function ProductDetailPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Reset selected image when variant changes
+  useEffect(() => {
+    setSelectedImage(0);
+  }, [selectedVariant]);
 
   // Volume options
   const defaultVolumes = ["100ml", "200ml", "500ml"];
@@ -162,6 +168,7 @@ export default function ProductDetailPage() {
               product={product}
               selectedImage={selectedImage}
               setSelectedImage={setSelectedImage}
+              selectedVariant={selectedVariant}
               toggleWishlistItem={toggleWishlistItem}
               isInWishlist={isInWishlist}
             />
@@ -178,6 +185,8 @@ export default function ProductDetailPage() {
             volumes={volumes}
             selectedVolume={selectedVolume}
             setSelectedVolume={setSelectedVolume}
+            selectedVariant={selectedVariant}
+            setSelectedVariant={setSelectedVariant}
             quantity={quantity}
             setQuantity={setQuantity}
             addToCart={addToCart}

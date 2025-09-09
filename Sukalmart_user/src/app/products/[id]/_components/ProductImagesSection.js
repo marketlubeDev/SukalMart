@@ -9,6 +9,7 @@ export default function ProductImagesSection({
   product,
   selectedImage,
   setSelectedImage,
+  selectedVariant,
   toggleWishlistItem,
   isInWishlist,
 }) {
@@ -18,11 +19,31 @@ export default function ProductImagesSection({
     setMounted(true);
   }, []);
 
+  // Determine which images to show based on variant selection
+  const getCurrentImages = () => {
+    // If product has variants and a variant is selected, use variant images
+    if (
+      product?.variants &&
+      product.variants.length > 0 &&
+      selectedVariant !== undefined
+    ) {
+      const currentVariant = product.variants[selectedVariant];
+      if (currentVariant?.images && currentVariant.images.length > 0) {
+        return currentVariant.images;
+      }
+    }
+
+    // Fallback to product images (could be featureImages or general images)
+    return product?.images || [];
+  };
+
+  const currentImages = getCurrentImages();
+
   return (
     <div className="flex flex-col md:flex-row gap-4">
       {/* Thumbnail Images - Left Side */}
       <div className="hidden md:flex flex-col gap-2">
-        {product?.images?.map((image, index) => (
+        {currentImages?.map((image, index) => (
           <button
             key={index}
             onClick={() => setSelectedImage(index)}
@@ -51,7 +72,7 @@ export default function ProductImagesSection({
       <div className="flex-1">
         <div className="aspect-square rounded-lg overflow-hidden relative">
           <Image
-            src={product?.images[selectedImage]}
+            src={currentImages[selectedImage]}
             alt={product?.name}
             fill
             className="object-contain"
@@ -60,7 +81,7 @@ export default function ProductImagesSection({
               e.target.src =
                 "https://via.placeholder.com/500x500?text=Product+Image";
             }}
-            unoptimized={product?.images[selectedImage]?.includes(
+            unoptimized={currentImages[selectedImage]?.includes(
               "amazonaws.com"
             )}
           />
@@ -81,7 +102,7 @@ export default function ProductImagesSection({
         {/* Mobile Thumbnails Row */}
         <div className="md:hidden mt-3">
           <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-            {product?.images?.map((image, index) => (
+            {currentImages?.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
