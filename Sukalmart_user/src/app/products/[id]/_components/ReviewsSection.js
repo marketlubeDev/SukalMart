@@ -14,9 +14,22 @@ export default function ReviewsSection({ product, selectedImage }) {
   const [reviewText, setReviewText] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
 
+  // Early return if product is not available
+  if (!product) {
+    return (
+      <div className="my-12 w-full mx-auto md:px-0">
+        <div className="flex justify-center items-center py-8">
+          <div className="text-center">
+            <p className="text-gray-500">Loading product reviews...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const showReviewModal = () => {
     setIsReviewModalVisible(true);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
   };
 
   const handleReviewModalCancel = () => {
@@ -24,18 +37,23 @@ export default function ReviewsSection({ product, selectedImage }) {
     setRating(0);
     setReviewText("");
     setSelectedImages([]);
-    document.body.style.overflow = 'unset'; // Restore background scrolling
+    document.body.style.overflow = "unset"; // Restore background scrolling
   };
 
   const handleReviewSubmit = () => {
     // Here you would typically send the review to your backend
-    console.log("Review submitted:", { rating, reviewText, selectedImages, productId: product.id });
+    console.log("Review submitted:", {
+      rating,
+      reviewText,
+      selectedImages,
+      productId: product.id,
+    });
     // You can add API call here to save the review
     setIsReviewModalVisible(false);
     setRating(0);
     setReviewText("");
     setSelectedImages([]);
-    document.body.style.overflow = 'unset'; // Restore background scrolling
+    document.body.style.overflow = "unset"; // Restore background scrolling
   };
 
   const clearRating = () => {
@@ -44,19 +62,19 @@ export default function ReviewsSection({ product, selectedImage }) {
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
-    const imageFiles = files.filter(file => file.type.startsWith('image/'));
-    
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+
     if (imageFiles.length > 0) {
-      const newImages = imageFiles.map(file => ({
+      const newImages = imageFiles.map((file) => ({
         file,
-        preview: URL.createObjectURL(file)
+        preview: URL.createObjectURL(file),
       }));
-      setSelectedImages(prev => [...prev, ...newImages]);
+      setSelectedImages((prev) => [...prev, ...newImages]);
     }
   };
 
   const removeImage = (index) => {
-    setSelectedImages(prev => {
+    setSelectedImages((prev) => {
       const newImages = prev.filter((_, i) => i !== index);
       return newImages;
     });
@@ -94,13 +112,21 @@ export default function ReviewsSection({ product, selectedImage }) {
                 ))}
               </div>
             </div>
-            <span className="text-gray-600 mb-4 text-sm">Based on 181 reviews</span>
+            <span className="text-gray-600 mb-4 text-sm">
+              Based on 181 reviews
+            </span>
             {/* Ratings Bar */}
             <div className="w-full max-w-xs space-y-1 mb-4 md:max-w-none">
               {[5, 4, 3, 2, 1].map((star, idx) => (
                 <div key={star} className="flex items-center gap-2">
                   <span className="text-sm text-gray-700 w-4">{star}</span>
-                  <Image src="/filledstar.svg" alt="star" width={12} height={12} className="w-3 h-3" />
+                  <Image
+                    src="/filledstar.svg"
+                    alt="star"
+                    width={12}
+                    height={12}
+                    className="w-3 h-3"
+                  />
                   <div className="flex-1 h-1.5 bg-gray-200 rounded-full">
                     <div
                       className="h-1.5 bg-[var(--color-primary)] rounded-full"
@@ -115,7 +141,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 </div>
               ))}
             </div>
-            <button 
+            <button
               onClick={showReviewModal}
               className="mt-2 px-4 py-2 border border-[var(--color-primary)] text-[var(--color-primary)] rounded font-medium hover:bg-[var(--color-primary)] hover:text-white transition text-sm cursor-pointer"
             >
@@ -147,15 +173,23 @@ export default function ReviewsSection({ product, selectedImage }) {
                   {Array.from({ length: 6 }).map((_, idx) => (
                     <Image
                       key={idx}
-                      src={product.images && product.images.length > 0 ? product.images[selectedImage] : product.image}
+                      src={
+                        product?.images && product.images.length > 0
+                          ? product.images[selectedImage]
+                          : product?.image || "/shop2.png"
+                      }
                       alt="Selected product"
                       width={64}
                       height={64}
                       className="w-16 h-16 rounded object-cover border border-gray-200"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/64x64?text=Product";
+                        e.target.src =
+                          "https://via.placeholder.com/64x64?text=Product";
                       }}
-                      unoptimized={(product.images && product.images.length > 0 ? product.images[selectedImage] : product.image)?.includes('amazonaws.com')}
+                      unoptimized={(product?.images && product.images.length > 0
+                        ? product.images[selectedImage]
+                        : product?.image
+                      )?.includes("amazonaws.com")}
                     />
                   ))}
                 </div>
@@ -207,26 +241,43 @@ export default function ReviewsSection({ product, selectedImage }) {
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2">
                     <Image
-                      src={product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image}
+                      src={
+                        product?.images && product.images[selectedImage]
+                          ? product.images[selectedImage]
+                          : product?.image || "/shop2.png"
+                      }
                       alt="Selected product review 1"
                       width={48}
                       height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                        e.target.src =
+                          "https://via.placeholder.com/48x48?text=Product";
                       }}
-                      unoptimized={(product.images && product.images[selectedImage] ? product.images[selectedImage] : product.image)?.includes('amazonaws.com')}
+                      unoptimized={(product?.images &&
+                      product.images[selectedImage]
+                        ? product.images[selectedImage]
+                        : product?.image
+                      )?.includes("amazonaws.com")}
                     />
                     <Image
-                      src={product.images && product.images[0] ? product.images[0] : product.image}
+                      src={
+                        product?.images && product.images[0]
+                          ? product.images[0]
+                          : product?.image || "/shop2.png"
+                      }
                       alt="Selected product review 2"
                       width={48}
                       height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                        e.target.src =
+                          "https://via.placeholder.com/48x48?text=Product";
                       }}
-                      unoptimized={(product.images && product.images[0] ? product.images[0] : product.image)?.includes('amazonaws.com')}
+                      unoptimized={(product?.images && product.images[0]
+                        ? product.images[0]
+                        : product?.image
+                      )?.includes("amazonaws.com")}
                     />
                   </div>
                   <p className="text-sm text-gray-700 mt-2">
@@ -296,15 +347,22 @@ export default function ReviewsSection({ product, selectedImage }) {
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2">
                     <Image
-                      src={product?.images?.[selectedImage] || product?.image || "/shop2.png"}
+                      src={
+                        product?.images?.[selectedImage] ||
+                        product?.image ||
+                        "/shop2.png"
+                      }
                       alt="Selected product image"
                       width={48}
                       height={48}
                       className="w-12 h-12 rounded object-cover border border-gray-200"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/48x48?text=Product";
+                        e.target.src =
+                          "https://via.placeholder.com/48x48?text=Product";
                       }}
-                      unoptimized={(product?.images?.[selectedImage] || product?.image)?.includes('amazonaws.com')}
+                      unoptimized={(
+                        product?.images?.[selectedImage] || product?.image
+                      )?.includes("amazonaws.com")}
                     />
                   </div>
                   <p className="text-sm text-gray-700 mt-2">
@@ -416,13 +474,11 @@ export default function ReviewsSection({ product, selectedImage }) {
                     key={star}
                     onClick={() => setRating(star)}
                     className={`text-2xl transition-colors duration-200 ${
-                      star <= rating 
-                        ? 'text-[#EF9C16]' 
-                        : 'text-transparent'
+                      star <= rating ? "text-[#EF9C16]" : "text-transparent"
                     }`}
                     style={{
-                      WebkitTextStroke: star <= rating ? 'none' : '1px #EF9C16',
-                      cursor: 'pointer'
+                      WebkitTextStroke: star <= rating ? "none" : "1px #EF9C16",
+                      cursor: "pointer",
                     }}
                   >
                     ★
@@ -441,7 +497,8 @@ export default function ReviewsSection({ product, selectedImage }) {
           {/* Review Text Section */}
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {t("product.writeYourReview", language)} <span className="text-red-500">*</span>
+              {t("product.writeYourReview", language)}{" "}
+              <span className="text-red-500">*</span>
             </h3>
             <div className="relative">
               <Input.TextArea
@@ -449,18 +506,18 @@ export default function ReviewsSection({ product, selectedImage }) {
                 onChange={(e) => setReviewText(e.target.value)}
                 placeholder={t("product.reviewPlaceholder", language)}
                 rows={4}
-                style={{ 
-                  resize: 'none',
-                  backgroundColor: 'rgba(0, 0, 0, 0.01)',
-                  paddingRight: '40px' // Add padding to make room for the icon
+                style={{
+                  resize: "none",
+                  backgroundColor: "rgba(0, 0, 0, 0.01)",
+                  paddingRight: "40px", // Add padding to make room for the icon
                 }}
               />
               {/* Attach File Icon */}
               <div className="absolute bottom-2 right-2">
                 <label htmlFor="image-upload" className="cursor-pointer">
-                  <MdAttachFile 
+                  <MdAttachFile
                     className="text-gray-400 hover:text-gray-600 transition-colors"
-                    style={{ fontSize: '20px' }}
+                    style={{ fontSize: "20px" }}
                   />
                 </label>
                 <input
@@ -473,7 +530,7 @@ export default function ReviewsSection({ product, selectedImage }) {
                 />
               </div>
             </div>
-            
+
             {/* Selected Images Preview */}
             {selectedImages.length > 0 && (
               <div className="mt-3">
@@ -510,12 +567,12 @@ export default function ReviewsSection({ product, selectedImage }) {
               onClick={handleReviewSubmit}
               disabled={!rating || !reviewText.trim()}
               style={{
-                backgroundColor: 'var(--color-primary)',
-                borderColor: 'var(--color-primary)',
-                height: '40px',
-                width: '100%',
-                color: '#ffffff',
-                fontWeight: '600',
+                backgroundColor: "var(--color-primary)",
+                borderColor: "var(--color-primary)",
+                height: "40px",
+                width: "100%",
+                color: "#ffffff",
+                fontWeight: "600",
               }}
             >
               {t("product.rateProduct", language)}
@@ -525,28 +582,26 @@ export default function ReviewsSection({ product, selectedImage }) {
       </Modal>
 
       <style jsx>{`
-       
-        
         /* Custom star rating styles */
         .custom-rate .ant-rate-star {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-first,
         .custom-rate .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-half .ant-rate-star-first,
         .custom-rate .ant-rate-star-half .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         .custom-rate .ant-rate-star-full .ant-rate-star-first,
         .custom-rate .ant-rate-star-full .ant-rate-star-second {
-          color: #EF9C16 !important;
+          color: #ef9c16 !important;
         }
-        
+
         /* Remove blue border on textarea focus/hover */
         .ant-input:focus,
         .ant-input:hover,
@@ -557,7 +612,7 @@ export default function ReviewsSection({ product, selectedImage }) {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         .ant-input-textarea:focus,
         .ant-input-textarea:hover,
         .ant-input-textarea-focused,
@@ -567,14 +622,14 @@ export default function ReviewsSection({ product, selectedImage }) {
           border-color: #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         /* Override Ant Design's default focus styles */
         .ant-input:focus,
         .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
           box-shadow: none !important;
         }
-        
+
         .ant-input-textarea .ant-input:focus,
         .ant-input-textarea .ant-input-focused {
           border: 1px solid #d9d9d9 !important;
@@ -583,4 +638,4 @@ export default function ReviewsSection({ product, selectedImage }) {
       `}</style>
     </>
   );
-} 
+}
