@@ -22,13 +22,18 @@ export default function ProductInfoSection({
   addToCart,
   buyNow,
   showMoreDetails,
-  setShowMoreDetails
+  setShowMoreDetails,
 }) {
   const { language } = useLanguage();
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-gray-600 mb-1" style={{ fontSize: "clamp(12px, 2vw, 16px)" }}>{product.type}</p>
+        <p
+          className="text-gray-600 mb-1"
+          style={{ fontSize: "clamp(12px, 2vw, 16px)" }}
+        >
+          {product?.type}
+        </p>
         <h1
           className="mb-2"
           style={{
@@ -41,7 +46,7 @@ export default function ProductInfoSection({
             textTransform: "capitalize",
           }}
         >
-          {product.name}
+          {product?.name}
         </h1>
 
         {/* Rating Section */}
@@ -82,16 +87,16 @@ export default function ProductInfoSection({
                 WebkitLineClamp: 2,
               }}
             >
-              AED {product.price.toLocaleString()}
+              AED {product?.price?.toLocaleString()}
             </span>
             <span className="text-sm sm:text-lg text-gray-500 line-through">
-              AED {product.originalPrice.toLocaleString()}
+              AED {product?.originalPrice?.toLocaleString()}
             </span>
             <span
               className="px-2 py-1 rounded text-xs sm:text-sm font-medium"
               style={{ color: "var(--color-primary)" }}
             >
-              -{product.discount}% OFF
+              -{product?.discount}% OFF
             </span>
           </div>
           <span
@@ -123,11 +128,22 @@ export default function ProductInfoSection({
                     }}
                   >
                     <div className="flex items-center justify-center flex-shrink-0">
-                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-4 h-4 md:w-5 md:h-5" />
+                      <Image
+                        src="/coupon.svg"
+                        alt="coupon"
+                        width={20}
+                        height={20}
+                        className="w-4 h-4 md:w-5 md:h-5"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
-                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                      <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">
+                        {c.code}
+                      </h4>
+                      <p
+                        className="text-xs truncate"
+                        style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                      >
                         {c.description}
                       </p>
                     </div>
@@ -149,42 +165,65 @@ export default function ProductInfoSection({
                     }}
                   >
                     <div className="flex items-center justify-center flex-shrink-0">
-                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-5 h-5" />
+                      <Image
+                        src="/coupon.svg"
+                        alt="coupon"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
-                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                      <h4 className="font-semibold text-333333 text-sm truncate">
+                        {c.code}
+                      </h4>
+                      <p
+                        className="text-xs truncate"
+                        style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                      >
                         {c.description}
                       </p>
                     </div>
                   </div>
                 ))}
                 {/* Show remaining coupons on xl screens only when expanded */}
-                {showMoreCoupons && remainingCoupons.map((c, idx) => (
-                  <div
-                    key={`xl-${idx}`}
-                    className="hidden xl:flex px-4 py-3 rounded items-center gap-2 flex-shrink-0 border-1"
-                    style={{
-                      borderRadius: "4px",
-                      borderStyle: "dashed",
-                      borderColor: "#6D0D26",
-                      background: "#F7F3F4",
-                      minWidth: "200px",
-                      maxWidth: "280px",
-                      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <div className="flex items-center justify-center flex-shrink-0">
-                      <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-5 h-5" />
+                {showMoreCoupons &&
+                  remainingCoupons.map((c, idx) => (
+                    <div
+                      key={`xl-${idx}`}
+                      className="hidden xl:flex px-4 py-3 rounded items-center gap-2 flex-shrink-0 border-1"
+                      style={{
+                        borderRadius: "4px",
+                        borderStyle: "dashed",
+                        borderColor: "#6D0D26",
+                        background: "#F7F3F4",
+                        minWidth: "200px",
+                        maxWidth: "280px",
+                        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <div className="flex items-center justify-center flex-shrink-0">
+                        <Image
+                          src="/coupon.svg"
+                          alt="coupon"
+                          width={20}
+                          height={20}
+                          className="w-5 h-5"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-semibold text-333333 text-sm truncate">
+                          {c.code}
+                        </h4>
+                        <p
+                          className="text-xs truncate"
+                          style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                        >
+                          {c.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold text-333333 text-sm truncate">{c.code}</h4>
-                      <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
-                        {c.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
                 {/* Show "Show less" button inline with coupons on xl screens */}
                 {showMoreCoupons && (
                   <button
@@ -228,11 +267,22 @@ export default function ProductInfoSection({
                   }}
                 >
                   <div className="flex items-center justify-center flex-shrink-0">
-                    <Image src="/coupon.svg" alt="coupon" width={20} height={20} className="w-4 h-4 md:w-5 md:h-5" />
+                    <Image
+                      src="/coupon.svg"
+                      alt="coupon"
+                      width={20}
+                      height={20}
+                      className="w-4 h-4 md:w-5 md:h-5"
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">{c.code}</h4>
-                    <p className="text-xs truncate" style={{ color: "rgba(51, 51, 51, 0.80)" }}>
+                    <h4 className="font-semibold text-333333 text-xs md:text-sm truncate">
+                      {c.code}
+                    </h4>
+                    <p
+                      className="text-xs truncate"
+                      style={{ color: "rgba(51, 51, 51, 0.80)" }}
+                    >
                       {c.description}
                     </p>
                   </div>
@@ -254,16 +304,25 @@ export default function ProductInfoSection({
         {/* Volume Selection */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-gray-700 font-medium text-sm sm:text-base">{t("product.volume", language)}:</span>
-            <span className="text-gray-900 font-semibold text-xs sm:text-sm">{selectedVolume}</span>
+            <span className="text-gray-700 font-medium text-sm sm:text-base">
+              {t("product.volume", language)}:
+            </span>
+            <span className="text-gray-900 font-semibold text-xs sm:text-sm">
+              {selectedVolume}
+            </span>
           </div>
           <div className="flex items-center gap-3">
             {volumes.map((vol) => (
               <button
                 key={vol}
                 onClick={() => setSelectedVolume(vol)}
-                className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${selectedVolume === vol ? "border-2" : "border"}`}
-                style={{ borderColor: selectedVolume === vol ? "#6D0D26" : "#D1D5DB", color: "#333" }}
+                className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium border cursor-pointer ${
+                  selectedVolume === vol ? "border-2" : "border"
+                }`}
+                style={{
+                  borderColor: selectedVolume === vol ? "#6D0D26" : "#D1D5DB",
+                  color: "#333",
+                }}
               >
                 {vol}
               </button>
@@ -343,54 +402,106 @@ export default function ProductInfoSection({
           {t("product.aboutProduct", language)}
         </h3>
         <p className="text-gray-700 leading-relaxed mb-2 text-sm sm:text-base">
-          {product.type === "Hair Care" && (
+          {product?.type === "Hair Care" && (
             <>
-              Our premium hair care products are formulated with advanced ingredients to address specific hair concerns. Whether you're dealing with dryness, dandruff, or hair loss, our scientifically-backed formulas work to restore hair health and vitality. Each product is carefully crafted to provide deep nourishment, strengthen hair follicles, and promote natural growth while maintaining the perfect balance for your hair type.
+              Our premium hair care products are formulated with advanced
+              ingredients to address specific hair concerns. Whether you're
+              dealing with dryness, dandruff, or hair loss, our
+              scientifically-backed formulas work to restore hair health and
+              vitality. Each product is carefully crafted to provide deep
+              nourishment, strengthen hair follicles, and promote natural growth
+              while maintaining the perfect balance for your hair type.
             </>
           )}
-          {product.type === "Soap & Deodorants" && (
+          {product?.type === "Soap & Deodorants" && (
             <>
-              Experience the perfect blend of natural ingredients and modern science in our soap and deodorant collection. Our products are designed to provide thorough cleansing while being gentle on your skin. From antibacterial protection to long-lasting freshness, each item is crafted to meet your daily hygiene needs. We use carefully selected natural oils and essential ingredients to ensure your skin stays healthy, clean, and refreshed throughout the day.
+              Experience the perfect blend of natural ingredients and modern
+              science in our soap and deodorant collection. Our products are
+              designed to provide thorough cleansing while being gentle on your
+              skin. From antibacterial protection to long-lasting freshness,
+              each item is crafted to meet your daily hygiene needs. We use
+              carefully selected natural oils and essential ingredients to
+              ensure your skin stays healthy, clean, and refreshed throughout
+              the day.
             </>
           )}
-          {product.type === "Skin Care" && (
+          {product?.type === "Skin Care" && (
             <>
-              Transform your skincare routine with our advanced formulations designed to address various skin concerns. Our products combine cutting-edge dermatological science with natural ingredients to deliver visible results. From hydration and brightening to anti-aging and acne treatment, each product is formulated to work harmoniously with your skin's natural processes, promoting healthy, radiant, and youthful-looking skin.
+              Transform your skincare routine with our advanced formulations
+              designed to address various skin concerns. Our products combine
+              cutting-edge dermatological science with natural ingredients to
+              deliver visible results. From hydration and brightening to
+              anti-aging and acne treatment, each product is formulated to work
+              harmoniously with your skin's natural processes, promoting
+              healthy, radiant, and youthful-looking skin.
             </>
           )}
-          {product.type === "Oral Care" && (
+          {product?.type === "Oral Care" && (
             <>
-              Maintain optimal oral health with our comprehensive range of dental care products. Our oral care solutions are designed to provide thorough cleaning, fresh breath, and long-term dental health benefits. From advanced whitening formulas to gentle yet effective cleaning systems, each product is engineered to work together for complete oral hygiene. We prioritize both effectiveness and comfort to ensure your daily dental routine is both beneficial and enjoyable.
+              Maintain optimal oral health with our comprehensive range of
+              dental care products. Our oral care solutions are designed to
+              provide thorough cleaning, fresh breath, and long-term dental
+              health benefits. From advanced whitening formulas to gentle yet
+              effective cleaning systems, each product is engineered to work
+              together for complete oral hygiene. We prioritize both
+              effectiveness and comfort to ensure your daily dental routine is
+              both beneficial and enjoyable.
             </>
           )}
-          {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+          {![
+            "Hair Care",
+            "Soap & Deodorants",
+            "Skin Care",
+            "Oral Care",
+          ].includes(product?.type) && (
             <>
-              Discover our carefully curated collection of premium products designed to enhance your daily routine. Each item is crafted with attention to detail, using quality ingredients and innovative formulations to deliver exceptional results. Whether you're looking for personal care essentials or specialized treatments, our products are designed to meet your needs while providing the quality and reliability you deserve.
+              Discover our carefully curated collection of premium products
+              designed to enhance your daily routine. Each item is crafted with
+              attention to detail, using quality ingredients and innovative
+              formulations to deliver exceptional results. Whether you're
+              looking for personal care essentials or specialized treatments,
+              our products are designed to meet your needs while providing the
+              quality and reliability you deserve.
             </>
           )}
         </p>
         <button
           onClick={() => setShowMoreDetails((v) => !v)}
           className="text-[#6D0D26] text-sm font-medium underline hover:underline cursor-pointer"
-          style={{ display: "inline-block", marginTop: "4px", background: 'none', border: 'none', padding: 0 }}
+          style={{
+            display: "inline-block",
+            marginTop: "4px",
+            background: "none",
+            border: "none",
+            padding: 0,
+          }}
         >
-          {showMoreDetails ? 'Show less' : 'See more product details'}
+          {showMoreDetails ? "Show less" : "See more product details"}
         </button>
         {showMoreDetails && (
-              <div className="mt-3 text-gray-700 leading-relaxed space-y-2 text-sm sm:text-base md:text-base">
-                <p>
-                  This is a premium formulation crafted with care to deliver visible results. It blends advanced active ingredients with gentle, skin-friendly bases for daily use.
-                </p>
-                <p>
-                  Key highlights: dermatologist-inspired formula, lightweight texture, non-greasy finish, and suitable for most skin and hair types. Ideal for regular routines or as a targeted treatment.
-                </p>
-                <p>
-                  Directions for best results: apply an appropriate amount, massage gently, and allow to absorb. Use consistently and pair with complementary products from the same category for maximum benefits.
-                </p>
-                <p>
-                  Note: this is a sample description for demonstration purposes only. Replace with real content fetched from your backend in production.
-                </p>
-              </div>
+          <div className="mt-3 text-gray-700 leading-relaxed space-y-2 text-sm sm:text-base md:text-base">
+            <p>
+              This is a premium formulation crafted with care to deliver visible
+              results. It blends advanced active ingredients with gentle,
+              skin-friendly bases for daily use.
+            </p>
+            <p>
+              Key highlights: dermatologist-inspired formula, lightweight
+              texture, non-greasy finish, and suitable for most skin and hair
+              types. Ideal for regular routines or as a targeted treatment.
+            </p>
+            <p>
+              Directions for best results: apply an appropriate amount, massage
+              gently, and allow to absorb. Use consistently and pair with
+              complementary products from the same category for maximum
+              benefits.
+            </p>
+            <p>
+              Note: this is a sample description for demonstration purposes
+              only. Replace with real content fetched from your backend in
+              production.
+            </p>
+          </div>
         )}
       </div>
 
@@ -400,7 +511,7 @@ export default function ProductInfoSection({
           {t("product.specifications", language)}
         </h3>
         <ul className="list-disc pl-5 text-gray-700 space-y-1 text-sm sm:text-base">
-          {product.type === "Hair Care" && (
+          {product?.type === "Hair Care" && (
             <>
               <li>Formulated with advanced hair care technology</li>
               <li>Suitable for all hair types and textures</li>
@@ -410,7 +521,7 @@ export default function ProductInfoSection({
               <li>Designed for daily use and long-term results</li>
             </>
           )}
-          {product.type === "Soap & Deodorants" && (
+          {product?.type === "Soap & Deodorants" && (
             <>
               <li>Made with natural and gentle ingredients</li>
               <li>Provides long-lasting freshness and protection</li>
@@ -420,7 +531,7 @@ export default function ProductInfoSection({
               <li>Dermatologically tested for safety</li>
             </>
           )}
-          {product.type === "Skin Care" && (
+          {product?.type === "Skin Care" && (
             <>
               <li>Advanced dermatological formulations</li>
               <li>Contains active ingredients for targeted results</li>
@@ -430,7 +541,7 @@ export default function ProductInfoSection({
               <li>Designed for daily skincare routines</li>
             </>
           )}
-          {product.type === "Oral Care" && (
+          {product?.type === "Oral Care" && (
             <>
               <li>Advanced dental care technology</li>
               <li>Provides comprehensive oral hygiene</li>
@@ -440,7 +551,12 @@ export default function ProductInfoSection({
               <li>Designed for long-term oral health benefits</li>
             </>
           )}
-          {!["Hair Care", "Soap & Deodorants", "Skin Care", "Oral Care"].includes(product.type) && (
+          {![
+            "Hair Care",
+            "Soap & Deodorants",
+            "Skin Care",
+            "Oral Care",
+          ].includes(product?.type) && (
             <>
               <li>Premium quality ingredients and formulations</li>
               <li>Designed for optimal performance and results</li>
@@ -461,15 +577,18 @@ export default function ProductInfoSection({
         </h3>
         <p className="text-gray-700 mb-2 text-sm sm:text-base">
           Returns are accepted within{" "}
-          <span className="font-semibold">7 days</span> for unused items
-          in original packaging. Damaged or incorrect products are
-          eligible for a full refund or replacement.
+          <span className="font-semibold">7 days</span> for unused items in
+          original packaging. Damaged or incorrect products are eligible for a
+          full refund or replacement.
         </p>
-        <p className="text-gray-700 text-sm sm:text-base" style={{ textIndent: "2em" }}>
-          Refunds are processed after inspection. To start a return,
-          contact our support team with your order ID.
+        <p
+          className="text-gray-700 text-sm sm:text-base"
+          style={{ textIndent: "2em" }}
+        >
+          Refunds are processed after inspection. To start a return, contact our
+          support team with your order ID.
         </p>
       </div>
     </div>
   );
-} 
+}

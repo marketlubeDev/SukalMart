@@ -22,7 +22,7 @@ import ProductImagesSection from "./_components/ProductImagesSection";
 import ProductInfoSection from "./_components/ProductInfoSection";
 import ProductFeaturesSection2 from "./_components/ProductFeaturesSection2";
 import ProductFeaturesSection3 from "./_components/ProductFeaturesSection3";
-
+import useProductDetails from "@/lib/hooks/useProductDetails";
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -33,105 +33,35 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [showMoreCoupons, setShowMoreCoupons] = useState(false);
   const [showMoreDetails, setShowMoreDetails] = useState(false);
-  
+
   const { toggleWishlistItem, isInWishlist } = useWishlist();
+
+  const { product, loading, error } = useProductDetails(productId);
+
+  console.log(product, "sdlhflshhslfllgdf");
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Static product data - multiple product details
-  const getProductData = () => {
-    // Static products database
-    const staticProducts = {
-      "static-premium-hair-oil": {
-        id: "static-premium-hair-oil",
-        name: "Premium Hair Growth Oil",
-        type: "Hair Care",
-        price: 899,
-        originalPrice: 1299,
-        discount: 31,
-        image: "/haircare1.jpg",
-        images: [
-          "/haircare1.jpg",
-          "/haircare2.jpg", 
-          "/haircare3.jpg",
-          "/haircare1.jpg"
-        ],
-        description: "Advanced hair growth formula with natural ingredients. This premium hair oil is specially formulated to promote hair growth, reduce hair fall, and improve overall hair health. Made with 100% natural ingredients including coconut oil, almond oil, and essential vitamins.",
-        features: [
-          "Promotes hair growth",
-          "Reduces hair fall",
-          "Natural ingredients",
-          "Suitable for all hair types",
-          "Deep nourishment",
-          "Improves hair texture"
-        ],
-        specifications: {
-          "Volume": "100ml",
-          "Hair Type": "All hair types",
-          "Texture": "Lightweight oil",
-          "Fragrance": "Natural herbal",
-          "Shelf Life": "24 months",
-          "Country of Origin": "India",
-        },
-        rating: 4.8,
-        reviews: 1247,
-        inStock: true
-      },
-      "1": {
-        id: "1",
-        name: "Dove Nutritive Solutions",
-        type: "Hair Care",
-        price: 1099,
-        originalPrice: 1299,
-        discount: 18,
-        image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-        images: [
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
-          "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg"
-        ],
-        description: "Experience radiant, hydrated skin with our premium face serum. Formulated with advanced ingredients for deep hydration and natural glow.",
-        features: [
-          "Deep hydration formula",
-          "Natural ingredients",
-          "Suitable for all skin types",
-          "Non-greasy texture",
-          "Fast absorption",
-        ],
-        specifications: {
-          "Volume": "30ml",
-          "Skin Type": "All skin types",
-          "Texture": "Lightweight serum",
-          "Fragrance": "Fragrance-free",
-          "Shelf Life": "24 months",
-          "Country of Origin": "India",
-        },
-      }
-    };
-
-    // Return the product based on ID, or default to the first product
-    return staticProducts[productId] || staticProducts["1"];
-  };
-
-  const product = getProductData();
 
   // Volume options
   const defaultVolumes = ["100ml", "200ml", "500ml"];
   const initialVolume = product?.specifications?.Volume || defaultVolumes[0];
   const volumes = Array.from(new Set([initialVolume, ...defaultVolumes]));
   const [selectedVolume, setSelectedVolume] = useState(initialVolume);
-
-  // Dynamic coupons for this product (replace with API data when available)
   const coupons = [
     {
       code: "FLAT20",
       description: "Get 20% discount on products above AED 1,999",
     },
-    { code: "SAVE100", description: "Flat AED 100 OFF on orders above AED 999" },
-    { code: "GET250", description: "AED 250 OFF when you spend AED 2,499 or more" },
+    {
+      code: "SAVE100",
+      description: "Flat AED 100 OFF on orders above AED 999",
+    },
+    {
+      code: "GET250",
+      description: "AED 250 OFF when you spend AED 2,499 or more",
+    },
   ];
   const visibleCoupons = coupons.slice(0, 2);
   const remainingCouponsCount = Math.max(
@@ -139,11 +69,6 @@ export default function ProductDetailPage() {
     0
   );
   const remainingCoupons = coupons.slice(2);
-  
-  // Debug logging
-  console.log("Product ID:", productId);
-  console.log("Product Data:", product);
-  console.log("Coupons:", coupons);
 
   const addToCart = () => {
     if (!mounted) return; // Don't allow cart operations during SSR
@@ -153,7 +78,9 @@ export default function ProductDetailPage() {
           ? window.localStorage.getItem("cartItems")
           : null;
       const items = raw ? JSON.parse(raw) : [];
-      const idx = items.findIndex((it) => String(it.id) === String(product.id));
+      const idx = items.findIndex(
+        (it) => String(it.id) === String(product?.id)
+      );
       if (idx >= 0) {
         const existing = items[idx];
         items[idx] = {
@@ -162,15 +89,15 @@ export default function ProductDetailPage() {
         };
       } else {
         items.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          originalPrice: product.originalPrice,
+          id: product?.id,
+          name: product?.name,
+          price: product?.price,
+          originalPrice: product?.originalPrice,
           image:
-            product.image ||
-            (product.images && product.images[0]) ||
+            product?.image ||
+            (product?.images && product?.images[0]) ||
             "/banner1.png",
-          color: product.type,
+          color: product?.type,
           plug: "Default",
           quantity,
         });
@@ -205,15 +132,15 @@ export default function ProductDetailPage() {
     try {
       const checkoutItems = [
         {
-          id: product.id,
-          name: product.name,
-          color: product.type,
+          id: product?.id,
+          name: product?.name,
+          color: product?.type,
           plug: selectedVolume || "Default",
-          price: product.price,
-          originalPrice: product.originalPrice,
+          price: product?.price,
+          originalPrice: product?.originalPrice,
           image:
-            product.image ||
-            (product.images && product.images[0]) ||
+            product?.image ||
+            (product?.images && product?.images[0]) ||
             "/banner1.png",
           quantity,
         },
@@ -231,7 +158,7 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images - Sticky */}
           <div className="product-images-sticky">
-            <ProductImagesSection 
+            <ProductImagesSection
               product={product}
               selectedImage={selectedImage}
               setSelectedImage={setSelectedImage}
@@ -239,7 +166,6 @@ export default function ProductDetailPage() {
               isInWishlist={isInWishlist}
             />
           </div>
-
           {/* Product Info */}
           <ProductInfoSection
             product={product}
@@ -260,24 +186,15 @@ export default function ProductDetailPage() {
             setShowMoreDetails={setShowMoreDetails}
           />
         </div>
-        
-        {/* Product Features Banner */}
-        <ProductFeaturesBanner productType={product.type} />
-
-        <ProductFeaturesSection productType={product.type} />
-        <ProductFeaturesSection2 productType={product.type} />
-    
-
+        {/*
+        <ProductFeaturesBanner productType={product?.type} />
+        <ProductFeaturesSection productType={product?.type} />
+        <ProductFeaturesSection2 productType={product?.type} />
         <ProductVideoSection />
-        <ProductFeaturesSection3 productType={product.type} />
-      
-
+        <ProductFeaturesSection3 productType={product?.type} />
         <FeaturedProductsSection isProductPage={true} />
-
-        {/* Reviews & Ratings Section */}
         <ReviewsSection product={product} selectedImage={selectedImage} />
-
-        <RecommendedSection />
+        <RecommendedSection /> */}
       </div>
     </div>
   );
