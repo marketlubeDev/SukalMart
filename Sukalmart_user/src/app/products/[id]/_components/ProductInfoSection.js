@@ -27,6 +27,39 @@ export default function ProductInfoSection({
   setShowMoreDetails,
 }) {
   const { language } = useLanguage();
+
+  // Calculate discount percentage dynamically
+  const calculateDiscountPercentage = () => {
+    let currentPrice, originalPrice;
+
+    // Handle variant products
+    if (
+      product?.variants &&
+      product.variants.length > 0 &&
+      selectedVariant !== undefined
+    ) {
+      const variant = product.variants[selectedVariant];
+      currentPrice = variant?.offerPrice || variant?.price;
+      originalPrice = variant?.price;
+    } else {
+      // Handle regular products
+      currentPrice = product?.price;
+      originalPrice = product?.originalPrice;
+    }
+
+    // Only calculate discount if we have both prices and original price is higher
+    if (currentPrice && originalPrice && originalPrice > currentPrice) {
+      const discountAmount = originalPrice - currentPrice;
+      const discountPercentage = Math.round(
+        (discountAmount / originalPrice) * 100
+      );
+      return discountPercentage;
+    }
+
+    return 0;
+  };
+
+  const discountPercentage = calculateDiscountPercentage();
   return (
     <div className="space-y-6">
       <div>
@@ -107,12 +140,14 @@ export default function ProductInfoSection({
                 : product?.originalPrice
               )?.toLocaleString()}
             </span>
-            <span
-              className="px-2 py-1 rounded text-xs sm:text-sm font-medium"
-              style={{ color: "var(--color-primary)" }}
-            >
-              -{product?.discount}% OFF
-            </span>
+            {discountPercentage > 0 && (
+              <span
+                className="px-2 py-1 rounded text-xs sm:text-sm font-medium"
+                style={{ color: "var(--color-primary)" }}
+              >
+                -{discountPercentage}% OFF
+              </span>
+            )}
           </div>
           <span
             className="text-xs text-gray-400 block mt-1 text-left"
