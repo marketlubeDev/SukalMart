@@ -1,13 +1,18 @@
 "use client";
 import { serviceBenefits } from "../../../../lib/data";
 import Image from "next/image";
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
 
 export default function ProductServiceBenefits() {
-  // Filter to show only the three specific benefits
-  const filteredBenefits = serviceBenefits.filter(benefit => 
-    benefit.title === "Secured payment" || 
-    benefit.title === "Delivery in 3-4 working days" || 
-    benefit.title === "24x7 support"
+  const { language } = useLanguage();
+
+  // Filter to show only the three specific benefits based on titleKey
+  const filteredBenefits = serviceBenefits.filter(
+    (benefit) =>
+      benefit.titleKey === "homepage.services.securedPayment" ||
+      benefit.titleKey === "homepage.services.deliveryInDays" ||
+      benefit.titleKey === "homepage.services.support24x7"
   );
 
   return (
@@ -26,7 +31,7 @@ export default function ProductServiceBenefits() {
                   className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-13 lg:h-13 xl:w-14 xl:h-14"
                 />
               </div>
-              <span 
+              <span
                 className="text-center text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base font-medium"
                 style={{
                   color: "#333",
@@ -37,10 +42,10 @@ export default function ProductServiceBenefits() {
                   minHeight: "2.4em",
                   display: "flex",
                   alignItems: "flex-start",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
-                {benefit.title}
+                {t(benefit.titleKey, language)}
               </span>
             </div>
           </div>
@@ -48,4 +53,4 @@ export default function ProductServiceBenefits() {
       </div>
     </div>
   );
-} 
+}
