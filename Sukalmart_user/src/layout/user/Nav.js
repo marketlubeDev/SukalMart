@@ -8,6 +8,7 @@ import NavigationBar from "./NavigationBar";
 import CartSidebar from "../../app/_components/cart/CartSidebar";
 import useCategories from "../../lib/hooks/useCategories"; // BACKEND INTERACTION: Removed dynamic category fetching
 import { useTranslation } from "../../lib/hooks/useTranslation";
+import LocationModal from "../../app/_components/common/LocationModal";
 
 // Import your data
 import {
@@ -48,13 +49,41 @@ function NavContent() {
   const [userData, setUserData] = useState(null);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("UAE");
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [searchLocation, setSearchLocation] = useState("");
+  const [selectedMapLocation, setSelectedMapLocation] = useState("UAE");
 
   // Language hook
   const { t, language, isRTL, changeLanguage } = useTranslation();
 
+  // Helper: map country to flag path
+  const getFlagSrc = (country) => {
+    switch (country) {
+      case "UAE":
+        return "/arabicicon.svg";
+      case "KSA":
+        return "/ksa.svg";
+      case "Egypt":
+        return "/Egypt.svg";
+      case "Kuwait":
+        return "/Kuwait.svg";
+      case "Bahrain":
+        return "/Bahrain.svg";
+      case "Qatar":
+        return "/Qatar.svg";
+      case "Oman":
+        return "/Oman.svg";
+      default:
+        return "/arabicicon.svg";
+    }
+  };
+
   // Refs
   const resultsRef = useRef(null);
   const mobileLangRef = useRef(null);
+  const locationRef = useRef(null);
 
   // Hooks
   const router = useRouter();
@@ -175,17 +204,19 @@ function NavContent() {
   // Close desktop dropdowns on outside click
   useEffect(() => {
     function handleOutsideClick(e) {
-      // Check if click is outside both dropdowns
+      // Check if click is outside all dropdowns
       const isOutsideLanguageDropdown = !e.target.closest(".language-dropdown");
       const isOutsideUserDropdown = !e.target.closest(".user-dropdown");
+      const isOutsideLocationDropdown = !e.target.closest(".location-dropdown");
 
-      if (isOutsideLanguageDropdown && isOutsideUserDropdown) {
+      if (isOutsideLanguageDropdown && isOutsideUserDropdown && isOutsideLocationDropdown) {
         setIsLanguageDropdownOpen(false);
         setIsUserDropdownOpen(false);
+        setIsLocationDropdownOpen(false);
       }
     }
 
-    if (isLanguageDropdownOpen || isUserDropdownOpen) {
+    if (isLanguageDropdownOpen || isUserDropdownOpen || isLocationDropdownOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
       document.addEventListener("touchstart", handleOutsideClick);
     }
@@ -194,7 +225,7 @@ function NavContent() {
       document.removeEventListener("mousedown", handleOutsideClick);
       document.removeEventListener("touchstart", handleOutsideClick);
     };
-  }, [isLanguageDropdownOpen, isUserDropdownOpen]);
+  }, [isLanguageDropdownOpen, isUserDropdownOpen, isLocationDropdownOpen]);
 
   // Lock background scroll when mobile menu is open
   useEffect(() => {
@@ -275,6 +306,91 @@ function NavContent() {
     setIsUserDropdownOpen(!isUserDropdownOpen);
     setIsLanguageDropdownOpen(false);
   };
+
+  const toggleLocationDropdown = () => {
+    setIsLocationDropdownOpen(!isLocationDropdownOpen);
+    setIsLanguageDropdownOpen(false);
+    setIsUserDropdownOpen(false);
+  };
+
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
+    setIsLocationDropdownOpen(false);
+  };
+
+  const openLocationModal = () => {
+    setIsLocationModalOpen(true);
+    setIsLocationDropdownOpen(false);
+  };
+
+  const closeLocationModal = () => {
+    setIsLocationModalOpen(false);
+  };
+
+  const confirmLocation = () => {
+    setSelectedLocation(selectedMapLocation);
+    setIsLocationModalOpen(false);
+  };
+
+  const useCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // You can implement reverse geocoding here to get the country
+          setSelectedMapLocation("UAE");
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
+  };
+
+  // Reusable Location Dropdown Component
+  const LocationDropdown = ({ isOpen, onClose, className = "" }) => (
+    <div
+      className={`absolute right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 w-40 transition-all duration-200 z-50 ${
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      } ${className}`}
+    >
+      <div className="py-2">
+        <button
+          onClick={() => handleLocationChange("UAE")}
+          className="flex items-center w-full px-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+        >
+          <Image
+            src="/arabicicon.svg"
+            alt="UAE Flag"
+            width={24}
+            height={18}
+            className="w-6 h-[25px] rounded-sm mr-2 object-cover"
+          />
+          <span className={`text-sm ${
+            selectedLocation === "UAE" ? "text-[#6D0D26] font-medium" : "text-gray-400"
+          }`}>
+            UAE
+          </span>
+        </button>
+        <button
+          onClick={() => handleLocationChange("KSA")}
+          className="flex items-center w-full px-3 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-red-50 hover:text-[#6D0D26]"
+        >
+          <Image
+            src="/arabicicon.svg"
+            alt="KSA Flag"
+            width={16}
+            height={12}
+            className="w-4 h-3 rounded-sm mr-2 object-cover"
+          />
+          <span className={`text-sm ${
+            selectedLocation === "KSA" ? "text-[#6D0D26] font-medium" : "text-gray-400"
+          }`}>
+            KSA
+          </span>
+        </button>
+      </div>
+    </div>
+  );
 
   // Reusable Language Dropdown Component
   const LanguageDropdown = ({ isOpen, onClose, isMobile = false, className = "" }) => (
@@ -438,6 +554,40 @@ function NavContent() {
                 </Link>
               </div>
 
+              {/* Desktop Location Selector */}
+              <div className="hidden lg:block flex-shrink-0">
+                <div className="relative location-dropdown">
+                  <button
+                    onClick={openLocationModal}
+                    className="flex items-center p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                    aria-label="Delivery Location"
+                  >
+                    <Image
+                      src={getFlagSrc(selectedLocation)}
+                      alt="Location Flag"
+                      width={24}
+                      height={18}
+                      className="w-6 h-[24px] rounded-sm mr-2 object-cover"
+                    />
+                    <div className="flex flex-col items-start">
+                      <span className="text-xs text-gray-500 leading-tight">
+                        {t("nav.deliverTo") || "Deliver to"}
+                      </span>
+                      <span className="text-sm font-medium leading-tight">
+                        {selectedLocation}
+                      </span>
+                    </div>
+                    <Image
+                      src="/dropdownicon.svg"
+                      alt="dropdown"
+                      width={8}
+                      height={5}
+                      className={`w-[8px] h-[5px] ml-1 transition-transform duration-200 ${isLocationModalOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                </div>
+              </div>
+
               {/* Desktop Search Bar */}
               <div className="hidden lg:flex lg:items-center flex-1 justify-center">
                 {showSearchBar ? (
@@ -559,7 +709,13 @@ function NavContent() {
                       className="flex items-center p-2 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                       aria-label="Language"
                     >
-                      <Image src="/english.svg" alt="Language" width={20} height={20} className="w-5 h-5 rounded-full" />
+                      <Image 
+                        src={language === 'AR' ? "/arabicicon.svg" : "/english.svg"} 
+                        alt="Language" 
+                        width={20} 
+                        height={20} 
+                        className="w-5 h-5 rounded-full" 
+                      />
                       <span className="mx-2 text-sm font-semibold">{language}</span>
                       <Image
                         src="/dropdownicon.svg"
@@ -940,15 +1096,19 @@ function NavContent() {
               </button>
 
               {!showSearchBar && (
-                <Link href="/" className={`flex items-center ${isRTL ? 'mr-2' : 'ml-2'}`}>
+                <div className={`flex items-center ${isRTL ? 'mr-2' : 'ml-2'}`}>
+                  <Link href="/" className="flex items-center">
                   <Image
                     src="/souqalmart-logo-name.svg"
                     alt="Souqalmart"
-                    width={150}
-                    height={24}
-                    className="h-6 w-auto"
+                      width={120}
+                      height={20}
+                      className="h-5 w-auto"
                   />
                 </Link>
+                  
+                  
+                </div>
               )}
             </div>
 
@@ -1072,7 +1232,7 @@ function NavContent() {
               {/* Mobile Wishlist - Hidden on small screens */}
               <Link
                 href="/wishlist"
-                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer hidden sm:block"
+                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
                 aria-label="Wishlist"
               >
                 <Image
@@ -1087,15 +1247,15 @@ function NavContent() {
               {/* Mobile Cart */}
               <button
                 onClick={toggleCart}
-                className="relative p-1.5 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
+                className="relative py-1.5 px-0 text-gray-600 hover:text-[#6D0D26] transition-colors duration-200 cursor-pointer"
               >
-                <Image
-                  src="/Carticon.svg"
-                  alt="cart"
-                  width={32}
-                  height={32}
-                  className="w-8 h-8"
-                />
+                              <Image
+                src="/Carticon.svg"
+                alt="cart"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+              />
                 {cartCount > 0 && (
                   <span
                     className={`absolute top-3 block w-2 h-2 rounded-full bg-[#6D0D26] ${isRTL ? 'left-3' : 'right-3'}`}
@@ -1106,6 +1266,35 @@ function NavContent() {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Mobile Deliver-To Strip (below navbar) */}
+        <div className="lg:hidden w-full bg-white border-t border-b border-gray-200">
+          <button
+            onClick={openLocationModal}
+            className={`container mx-auto px-3 md:px-6 h-9 w-full flex items-center ${isRTL ? 'flex-row-reverse' : ''} text-gray-700`}
+            aria-label="Delivery Location"
+            style={{
+              paddingLeft: "1.8rem",
+            }}
+          >
+            <Image
+              src={getFlagSrc(selectedLocation)}
+              alt="Location Flag"
+              width={16}
+              height={12}
+              className={`w-4 h-3 rounded-sm ${isRTL ? 'ml-2' : 'mr-2'} object-cover`}
+            />
+            <span className="text-xs text-gray-600">{t("nav.deliverTo") || "Deliver to"}</span>
+            <span className={`text-xs font-semibold ${isRTL ? 'mr-1' : 'ml-1'}`}>{selectedLocation}</span>
+            <Image
+              src="/dropdownicon.svg"
+              alt="dropdown"
+              width={10}
+              height={6}
+              className={`w-[10px] h-[6px] ${isRTL ? 'mr-1' : 'ml-1'} transition-transform duration-200 ${isLocationModalOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
         </div>
 
         {/* Mobile Menu */}
@@ -1192,26 +1381,13 @@ function NavContent() {
             <div>
               <div className="space-y-2">
                 {/* Wishlist - moved here, icon first */}
-                <Link
-                  href="/wishlist"
-                  className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 transition-colors duration-200 cursor-pointer w-full ${isRTL ? 'text-right' : 'text-left'} hover:text-[#6D0D26] sm:hidden`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Image
-                    src="/like-black.svg"
-                    alt="wishlist"
-                    width={16}
-                    height={16}
-                    className="w-[16px] h-4"
-                  />
-                  <span>{t("nav.wishlist")}</span>
-                </Link>
+                
                 {/* Language row under Wishlist */}
                 <div
                   className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} py-2 text-gray-700 w-full ${isRTL ? 'text-right' : 'text-left'}`}
                 >
                   <Image
-                    src="/Language.svg"
+                    src={language === 'AR' ? "/arabicicon.svg" : "/english.svg"}
                     alt="Language"
                     width={16}
                     height={16}
@@ -1496,6 +1672,16 @@ function NavContent() {
       {/* Cart Sidebar */}
       <CartSidebar isOpen={isCartOpen} onClose={closeCart} />
 
+      {/* Location Modal */}
+      <LocationModal 
+        isOpen={isLocationModalOpen}
+        onClose={closeLocationModal}
+        selectedMapLocation={selectedMapLocation}
+        setSelectedMapLocation={setSelectedMapLocation}
+        onConfirm={confirmLocation}
+        onUseCurrentLocation={useCurrentLocation}
+      />
+
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -1549,3 +1735,4 @@ export default function Nav() {
     </Suspense>
   );
 }
+

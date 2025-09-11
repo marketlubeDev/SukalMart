@@ -16,6 +16,20 @@ export const ar = {
     wishlist: "المفضلة",
     language: "اللغة",
     navigation: "التنقل",
+    deliverTo: "توصيل إلى",
+  },
+
+  // Location
+  location: {
+    addNewAddress: "إضافة عنوان جديد",
+    selectCountry: "اختر البلد/المنطقة",
+    phoneNumber: "رقم الهاتف",
+    cashOnDelivery: "الدفع عند الاستلام",
+    confirmLocation :"تأكيد الموقع",
+    useCurrentLocation:"استخدام الموقع الحالي",
+    searchLocation: "ابحث عن الموقع",
+    shipTo: "توصيل إلى",
+
   },
 
   // Homepage

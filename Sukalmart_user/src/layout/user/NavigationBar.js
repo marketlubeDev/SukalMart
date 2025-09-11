@@ -27,8 +27,8 @@ const NavigationBar = ({ navigationItems }) => {
       // Calculate position for dropdown
       const rect = event.currentTarget.getBoundingClientRect();
       setDropdownPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: isRTL ? rect.right - 224 : rect.left, // 224px is w-56 (14rem)
+        top: rect.bottom + 8,
+        left: isRTL ? rect.right - 224 : rect.left,
       });
     }
   };
