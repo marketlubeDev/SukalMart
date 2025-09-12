@@ -7,6 +7,47 @@ import Image from "next/image";
 import { FaHeart } from "react-icons/fa6";
 import { CiHeart } from "react-icons/ci";
 import { useWishlist } from "../../_components/context/WishlistContext";
+import Button from '@/app/_components/common/Button';
+import { useLanguage } from "@/app/_components/context/LanguageContext";
+import { t } from "@/lib/translations";
+import { useState } from "react";
+
+// Custom hook for cart management
+const useCart = () => {
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (product) => {
+    try {
+      const raw = typeof window !== 'undefined' ? localStorage.getItem('cartItems') : null;
+      const items = raw ? JSON.parse(raw) : [];
+      const index = items.findIndex((item) => String(item.id) === String(product.id));
+      
+      if (index >= 0) {
+        const existing = items[index];
+        items[index] = { ...existing, quantity: (existing.quantity || 1) + (product.quantity || 1) };
+      } else {
+        items.push({ ...product, quantity: product.quantity || 1 });
+      }
+      
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        window.dispatchEvent(new Event('cart-updated'));
+        
+        if (window.__openCart) {
+          window.__openCart();
+        } else {
+          window.dispatchEvent(new Event('open-cart'));
+        }
+      }
+      
+      setCartItems(items);
+    } catch (err) {
+      console.error('Failed to add to cart', err);
+    }
+  };
+
+  return { addToCart };
+};
 
 export default function ProductCard({
   product,
@@ -14,8 +55,10 @@ export default function ProductCard({
   badgeText = "",
 }) {
   const router = useRouter();
+  const { addToCart } = useCart();
   const { toggleWishlistItem, isInWishlist } = useWishlist();
   const wishlisted = isInWishlist(product.id);
+  const { language } = useLanguage();
 
   const handleProductClick = () => {
     // Extract original product ID (remove _index suffix if present)
@@ -26,9 +69,14 @@ export default function ProductCard({
     router.push(`/products/${originalId}`);
   };
 
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    addToCart(product);
+  };
+
   return (
     <div 
-      className="group bg-white rounded-lg overflow-hidden cursor-pointer shadow-none flex flex-col min-w-0"
+      className="group bg-white rounded-lg overflow-hidden cursor-pointer shadow-none flex flex-col min-w-0 relative h-72 md:h-80 lg:h-[340px]"
       onClick={handleProductClick}
     >
       <div className="relative">
@@ -38,7 +86,7 @@ export default function ProductCard({
             alt={product.name}
             width={300}
             height={180}
-            className="w-full h-36 md:h-40 lg:h-56 xl:h-44 object-cover transition-transform duration-300 group-hover:scale-110"
+            className="w-full h-40 md:h-44 lg:h-60 xl:h-48 object-cover transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             onError={(e) => {
               e.target.src = "https://via.placeholder.com/300x300?text=Product+Image";
@@ -86,14 +134,14 @@ export default function ProductCard({
           </div>
         )}
       </div>
-      <div className="pt-4 px-1 flex-1 flex flex-col">
-        <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-1 lg:mb-2 line-clamp-2" style={{ lineHeight: "1.1" }}>
+      <div className="pt-2 px-0 flex-1 flex flex-col pb-0">
+        <h3 className="text-xs md:text-sm lg:text-base font-semibold text-gray-900 mb-0.5 line-clamp-2" style={{ lineHeight: "1.1" }}>
           {product.name}
         </h3>
-        <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2 md:mb-3 lg:mb-4">
+        <p className="text-xs md:text-sm lg:text-base text-gray-600 mb-2">
           {product.type || product.category}
         </p>
-        <div className="flex items-center gap-1 md:gap-2 lg:gap-3 whitespace-nowrap mt-auto">
+        <div className="flex items-center gap-1 md:gap-2 lg:gap-3 whitespace-nowrap">
           <span
             className="text-xs md:text-sm lg:text-base font-bold"
             style={{ color: "var(--color-primary)" }}
@@ -110,6 +158,19 @@ export default function ProductCard({
           ) : null}
         </div>
       </div>
+      {/* Fixed position Add to Cart button */}
+      <Button
+        className="absolute bottom-1 left-0 py-1.5 px-4 text-xs md:text-sm font-semibold bg-white rounded-sm transition-colors hover:bg-[#f7f3f4]"
+        variant="primary"
+        size="sm"
+        style={{ 
+          border: "1px solid var(--color-primary)",
+          color: "var(--color-primary)"
+        }}
+        onClick={handleAddToCart}
+      >
+        {t("product.addToCart", language)}
+      </Button>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export default function ProductSidebar({
               onClick={() => handleCategoryClick(category)}
               className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedCategory === category
-                  ? "bg-green-100"
+                  ? "bg-[#f7f3f4]"
                   : "hover:bg-gray-50"
               }`}
               style={{
@@ -131,7 +131,7 @@ export default function ProductSidebar({
               onClick={() => setSelectedDiscount(discount)}
               className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedDiscount === discount
-                  ? "bg-green-100"
+                  ? "bg-[#f7f3f4]"
                   : "hover:bg-gray-50"
               }`}
               style={{
@@ -264,7 +264,7 @@ export default function ProductSidebar({
             />
           </div>
 
-          <div className="flex justify-start items-center gap-2 mt-2">
+          <div className="flex justify-start items-center gap-1 mt-2">
             <div
               style={{
                 display: "flex",
@@ -278,11 +278,11 @@ export default function ProductSidebar({
                 color: "rgba(51, 51, 51, 0.70)",
                 leadingTrim: "both",
                 textEdge: "cap",
-                fontSize: "16px",
+                fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: "600",
                 lineHeight: "normal",
-                letterSpacing: "-0.16px",
+                letterSpacing: "-0.14px",
               }}
             >
               AED {priceRange.min.toLocaleString()}
@@ -292,7 +292,7 @@ export default function ProductSidebar({
               alt="range"
               width={20}
               height={8}
-              className="w-5 h-2 mx-2 flex-shrink-0"
+              className="w-5 h-2 mx-1 flex-shrink-0"
             />
             <div
               style={{
@@ -307,11 +307,11 @@ export default function ProductSidebar({
                 color: "rgba(51, 51, 51, 0.70)",
                 leadingTrim: "both",
                 textEdge: "cap",
-                fontSize: "16px",
+                fontSize: "14px",
                 fontStyle: "normal",
                 fontWeight: "600",
                 lineHeight: "normal",
-                letterSpacing: "-0.16px",
+                letterSpacing: "-0.14px",
               }}
             >
               AED {priceRange.max.toLocaleString()}
@@ -320,7 +320,7 @@ export default function ProductSidebar({
         </div>
 
         {/* Predefined Price Ranges */}
-        <div className="space-y-0 px-4">
+        <div className="space-y-0 px-0">
           <div className="max-w-[200px]">
             {priceRanges.map((range) => (
               <button
@@ -330,7 +330,7 @@ export default function ProductSidebar({
                   color: "rgba(51, 51, 51, 0.70)",
                   leadingTrim: "both",
                   textEdge: "cap",
-                  fontSize: "16px",
+                  fontSize: "15px",
                   fontStyle: "normal",
                   fontWeight: "600",
                   lineHeight: "normal",
