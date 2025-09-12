@@ -16,6 +16,21 @@ export const en = {
     wishlist: "Wishlist",
     language: "Language",
     navigation: "Navigation",
+    deliverTo: "Deliver to",
+  },
+
+  // Location
+  location: {
+    shipTo: "Ship to",
+    addNewAddress: "Add new address",
+    selectCountry: "Select Country/Region",
+    phoneNumber: "Phone number",
+    cashOnDelivery: "Cash On Delivery",
+    confirmLocation:"Confirm location",
+    useCurrentLocation: "Use current location",
+    searchLocation: "Search location",
+
+
   },
 
   // Homepage

@@ -96,3 +96,30 @@ body {
     position: static;
   }
 }
+
+/* Scoped width for LocationModal search bar only */
+.location-modal .ant-input-affix-wrapper,
+.location-modal-root .ant-input-affix-wrapper {
+  width: 65% !important;
+}
+
+/* Scoped padding for LocationModal modal content only */
+.location-modal .ant-modal-content,
+.location-modal-root .ant-modal-content {
+  padding: 14px 10px !important;
+}
+
+/* Scoped country dropdown width and item spacing */
+.location-modal .country-dropdown .ant-dropdown-menu,
+.location-modal-root .country-dropdown .ant-dropdown-menu {
+  width: 184px !important;
+  padding: 6px !important;
+}
+.location-modal .country-dropdown .ant-dropdown-menu-item,
+.location-modal-root .country-dropdown .ant-dropdown-menu-item {
+  padding: 6px 8px !important;
+}
+.location-modal .country-dropdown .ant-dropdown-menu-item > div,
+.location-modal-root .country-dropdown .ant-dropdown-menu-item > div {
+  width: 100%;
+}
