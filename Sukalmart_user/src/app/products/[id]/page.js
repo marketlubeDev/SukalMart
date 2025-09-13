@@ -195,10 +195,10 @@ export default function ProductDetailPage() {
             setShowMoreDetails={setShowMoreDetails}
           />
         </div>
-        <ProductFeaturesBanner productType={product?.type} />
-        <ProductFeaturesSection productType={product?.type} />
-        <ProductFeaturesSection2 productType={product?.type} />
-        <ProductVideoSection />
+        <ProductFeaturesBanner product={product} />
+        <ProductFeaturesSection product={product} />
+        <ProductFeaturesSection2 product={product} />
+        <ProductVideoSection product={product} />
         <ProductFeaturesSection3 productType={product?.type} />
         <FeaturedProductsSection isProductPage={true} />
         <ReviewsSection product={product} selectedImage={selectedImage} />
