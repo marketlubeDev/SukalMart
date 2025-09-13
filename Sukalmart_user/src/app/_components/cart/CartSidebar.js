@@ -226,10 +226,10 @@ export default function CartSidebar({ isOpen, onClose }) {
           <div
             className="flex-1 overflow-hidden py-2 sm:py-4"
             style={{ 
-              height: "calc(100vh - 80px - 60px)", // Header (80px) + Bottom (60px on mobile, 80px on desktop) = 140px on mobile
-              maxHeight: "calc(100vh - 80px - 60px)",
+              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px on mobile, 100px on desktop) = 160px on mobile
+              maxHeight: "calc(100vh - 80px - 80px)",
               overflow: "hidden",
-              paddingBottom: "60px" // Add padding to prevent content from being hidden behind fixed bottom bar on mobile
+              paddingBottom: "80px" // Add padding to prevent content from being hidden behind fixed bottom bar on mobile
             }}
           >
             {/* Items Header */}
@@ -269,7 +269,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 padding: 0,
                 margin: 0,
                 overflow: "hidden",
-                minHeight: cartItems.length === 0 ? "calc(100vh - 140px)" : "auto"
+                minHeight: cartItems.length === 0 ? "calc(100vh - 160px)" : "auto"
               }}
             >
               {cartItems.length === 0 ? (
@@ -277,8 +277,8 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <div
                   className="flex flex-col items-center justify-start py-6 sm:py-12 px-4 sm:px-4"
                   style={{
-                    minHeight: "calc(100vh - 140px)",
-                    height: "calc(100vh - 140px)",
+                    minHeight: "calc(100vh - 160px)",
+                    height: "calc(100vh - 160px)",
                     textAlign: "center",
                     backgroundColor: "white",
                     width: "100%"
@@ -741,7 +741,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         letterSpacing: "-0.32px",
                       }}
                     >
-                                              {t("cart.subtotal", language)}
+                    {t("cart.subtotal", language)}
                     </span>
                     <span
                       className="text-[16px] sm:text-[18px]"
@@ -881,11 +881,11 @@ export default function CartSidebar({ isOpen, onClose }) {
 
           {/* Bottom Action Bar - Fixed height */}
           <div
-            className="border-t border-gray-200 py-2 px-4 sm:p-3 bg-white fixed sm:relative bottom-0 sm:bottom-auto left-0 sm:left-auto right-0 sm:right-auto h-[60px] sm:h-[80px]"
+            className="border-t border-gray-200 py-4 px-4 sm:py-6 sm:px-3 bg-white fixed sm:relative bottom-0 sm:bottom-auto left-0 sm:left-auto right-0 sm:right-auto h-[80px] sm:h-[100px]"
             style={{
               width: "100%",
               backgroundColor: "white",
-              minHeight: "60px",
+              minHeight: "80px",
               flexShrink: 0,
               zIndex: 10
             }}

@@ -2,7 +2,6 @@ import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   // Generate page numbers with ellipsis for large page counts
-
   const getPageNumbers = () => {
     const pageNumbers = [];
     const maxVisiblePages = 5;
@@ -50,47 +49,54 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <nav aria-label="Page navigation example">
-      <ul className="inline-flex -space-x-px text-sm">
-        <li>
-          <button
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage == 1}
-            className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
-        </li>
-        {getPageNumbers().map((pageNumber, index) => (
-          <li key={index}>
-            {pageNumber === "..." ? (
-              <span className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300">
-                ...
-              </span>
-            ) : (
-              <button
-                onClick={() => onPageChange(pageNumber)}
-                className={`flex items-center justify-center px-3 h-8 leading-tight ${
-                  currentPage == pageNumber
-                    ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
-                    : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                } border border-gray-300`}
-              >
-                {pageNumber}
-              </button>
-            )}
-          </li>
-        ))}
-        <li>
-          <button
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage == totalPages}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
-        </li>
-      </ul>
+    <nav className="flex items-center justify-between" aria-label="Pagination">
+      <div className="flex items-center space-x-2">
+        {/* Previous Button */}
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+        >
+          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Previous
+        </button>
+
+        {/* Page Numbers */}
+        <div className="flex items-center space-x-1">
+          {getPageNumbers().map((pageNumber, index) => (
+            <React.Fragment key={index}>
+              {pageNumber === "..." ? (
+                <span className="px-3 py-2 text-sm text-gray-500">...</span>
+              ) : (
+                <button
+                  onClick={() => onPageChange(pageNumber)}
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    currentPage === pageNumber
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {pageNumber}
+                </button>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
+        >
+          Next
+          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </nav>
   );
 };

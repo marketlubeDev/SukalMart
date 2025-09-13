@@ -127,6 +127,16 @@ export const en = {
       support24x7: "24x7 support",
       payOnDelivery: "Pay on delivery",
     },
+    promotionalBanner: {
+      skincare: {
+        title: "Glow Up Your Skin, 20% OFF!",
+        description: "Premium skincare essentials for radiant, healthy skin"
+      },
+      antiAging: {
+        title: "Anti-Aging Collection, 25% OFF!",
+        description: "Advanced anti-aging formulas to restore youthful radiance. Limited time offer"
+      }
+    },
   },
 
   // Product

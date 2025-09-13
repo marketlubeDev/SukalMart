@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Modal, Input, Button, Dropdown } from "antd";
-import { SearchOutlined, CloseOutlined } from "@ant-design/icons";
+import { Modal, Input, Button } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import { useTranslation } from "../../../lib/hooks/useTranslation";
 
 const LocationModal = ({
@@ -17,39 +17,9 @@ const LocationModal = ({
   const [searchLocation, setSearchLocation] = useState("");
   const { t, isRTL } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
-  const [isCountryOpen, setIsCountryOpen] = useState(false);
 
-  const countries = [
-    { label: "UAE", value: "UAE", flag: "/arabicicon.svg" },
-    { label: "KSA", value: "KSA", flag: "/ksa.svg" },
-    { label: "Egypt", value: "Egypt", flag: "/Egypt.svg" },
-    { label: "Kuwait", value: "Kuwait", flag: "/Kuwait.svg" },
-    { label: "Bahrain", value: "Bahrain", flag: "/Bahrain.svg" },
-    { label: "Qatar", value: "Qatar", flag: "/Qatar.svg" },
-    { label: "Oman", value: "Oman", flag: "/Oman.svg" }
-  ];
-
-  const countryMenu = {
-    onClick: ({ key }) => {
-      setSelectedMapLocation?.(key);
-    },
-    items: countries.map((country) => ({
-      key: country.value,
-      label: (
-        <div className="flex items-center justify-between w-full gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <Image src={country.flag} alt={country.label} width={22} height={16} className="w-[22px] h-[16px] rounded-sm object-cover" />
-            <span className="truncate text-[#333333]">{country.label}</span>
-          </div>
-          <span
-            className={`inline-block w-3.5 h-3.5 rounded-full border ${
-              selectedMapLocation === country.value ? "bg-blue-500 border-blue-500" : "border-gray-300"
-            }`}
-          />
-        </div>
-      ),
-    })),
-  };
+  // Only UAE is available for shipping
+  const shippingCountry = { label: "UAE", value: "UAE", flag: "/arabicicon.svg" };
 
   // Track viewport to switch to full-screen on small devices
   useEffect(() => {
@@ -93,27 +63,14 @@ const LocationModal = ({
       </span>
       <div className="flex items-center text-sm text-gray-600">
         <Image
-          src={countries.find(c => c.value === selectedMapLocation)?.flag || "/arabicicon.svg"}
-          alt="Location Flag"
+          src={shippingCountry.flag}
+          alt="UAE Flag"
           width={16}
           height={12}
           className="w-4 h-4 rounded-full mr-2 object-cover"
         />
         <span className="mr-1 text-sm font-semibold text-[11px]">{t("location.shipTo") || "Ship to"}</span>
-        <Dropdown
-          menu={countryMenu}
-          trigger={["click"]}
-          placement="bottomRight"
-          overlayClassName="country-dropdown"
-          open={isCountryOpen}
-          onOpenChange={setIsCountryOpen}
-          getPopupContainer={(triggerNode) => isMobile ? document.body : (triggerNode.closest('.ant-modal-content') || document.body)}
-        >
-          <button type="button" className="flex items-center gap-2 bg-transparent font-semibold cursor-pointer">
-            <span className="text-[#333333]">{selectedMapLocation}</span>
-            <Image src="/dropdownicon.svg" alt="Dropdown" width={10} height={6} className={`transition-transform duration-200 ${isCountryOpen ? 'rotate-180' : ''}`} />
-          </button>
-        </Dropdown>
+        <span className="text-[#333333] font-semibold">{shippingCountry.label}</span>
       </div>
     </div>
   );
@@ -205,27 +162,14 @@ const LocationModal = ({
           </span>
           <div className="ml-auto flex items-center">
             <Image
-              src={countries.find(c => c.value === selectedMapLocation)?.flag || "/arabicicon.svg"}
-              alt="Location Flag"
+              src={shippingCountry.flag}
+              alt="UAE Flag"
               width={16}
               height={12}
               className="w-4 h-4 rounded-full mr-2 object-cover"
             />
             <span className="mr-1 text-sm font-semibold text-[11px]">{t("location.shipTo") || "Ship to"}</span>
-            <Dropdown
-              menu={countryMenu}
-              trigger={["click"]}
-              placement="bottomRight"
-              overlayClassName="country-dropdown"
-              open={isCountryOpen}
-              onOpenChange={setIsCountryOpen}
-              getPopupContainer={() => document.body}
-            >
-              <button type="button" className="flex items-center gap-2 bg-transparent font-semibold cursor-pointer">
-                <span className="text-[#333333]">{selectedMapLocation}</span>
-                <Image src="/dropdownicon.svg" alt="Dropdown" width={10} height={6} className={`transition-transform duration-200 ${isCountryOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </Dropdown>
+            <span className="text-[#333333] font-semibold">{shippingCountry.label}</span>
             <button type="button" aria-label="Close" onClick={onClose} className="ml-2 text-gray-500 hover:text-gray-700">
               <CloseOutlined />
             </button>

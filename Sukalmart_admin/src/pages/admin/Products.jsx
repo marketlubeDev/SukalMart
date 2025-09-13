@@ -38,6 +38,14 @@ function Products({ role }) {
   const [selectedLabel, setSelectedLabel] = useState("");
   const [selectedActiveStatus, setSelectedActiveStatus] = useState("all");
   const [showSubcategory, setShowSubcategory] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
+  const [productCounts, setProductCounts] = useState({
+    all: 0,
+    active: 0,
+    inactive: 0,
+    outOfStock: 0,
+    drafts: 0
+  });
   const navigate = useNavigate();
 
   const [showBulkOfferModal, setShowBulkOfferModal] = useState(false);
@@ -98,9 +106,20 @@ function Products({ role }) {
     if (selectedCategory && selectedCategory !== "All Categories") {
       filter.categoryId = selectedCategory;
     }
-    if (selectedActiveStatus) {
-      filter.activeStatus = selectedActiveStatus;
+    
+    // Handle tab-based filtering
+    if (activeTab !== "all") {
+      if (activeTab === "active") {
+        filter.activeStatus = "active";
+      } else if (activeTab === "inactive") {
+        filter.activeStatus = "inactive";
+      } else if (activeTab === "outOfStock") {
+        filter.stock = 0;
+      } else if (activeTab === "drafts") {
+        filter.isDraft = true;
+      }
     }
+    
     if (selectedSubcategory && selectedSubcategory !== "All Subcategories") {
       filter.subcategoryId = selectedSubcategory;
     }
@@ -118,7 +137,7 @@ function Products({ role }) {
     selectedStore,
     selectedBrand,
     selectedCategory,
-    selectedActiveStatus,
+    activeTab,
     selectedSubcategory,
     selectedLabel,
     searchKeyword,
@@ -131,6 +150,15 @@ function Products({ role }) {
       const res = await listProducts(page, pageSize, filter);
       setProducts(res?.data?.data?.products);
       setTotalPages(res?.data?.data?.totalPages);
+      
+      // Update product counts (this would ideally come from the API)
+      setProductCounts({
+        all: res?.data?.data?.totalProducts || 0,
+        active: res?.data?.data?.activeCount || 0,
+        inactive: res?.data?.data?.inactiveCount || 0,
+        outOfStock: res?.data?.data?.outOfStockCount || 0,
+        drafts: res?.data?.data?.draftsCount || 0
+      });
     } catch (err) {
       toast.error("Failed to fetch products");
     } finally {
@@ -138,53 +166,12 @@ function Products({ role }) {
     }
   };
 
-  // Debounced search function
-  // const debouncedSearchProducts = useCallback(
-  //   debounce(async (keyword) => {
-  //     if (!keyword.trim()) {
-  //       fetchProducts(currentPage);
-  //       return;
-  //     }
-
-  //     try {
-  //       setIsLoading(true);
-  //       const res = await fetchProducts(currentPage, {
-  //         search: keyword,
-  //       });
-  //     } catch (err) {
-  //       toast.error("Failed to search products");
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }, 1000),
-  //   [currentPage]
-  // );
-
   // Handle search input changes
   const handleSearchInput = (e) => {
     const value = e.target.value;
     setSearchKeyword(value);
     setCurrentPage(1); // Reset to first page on new search
-    // debouncedSearch(value);
   };
-
-  // Perform search with pagination
-  // const performSearch = async (keyword, page) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const res = await searchProducts({
-  //       keyword,
-  //       page,
-  //       limit: pageSize,
-  //     });
-  //     setProducts(res?.data?.data?.products);
-  //     setTotalPages(res?.data?.data?.totalPages);
-  //   } catch (err) {
-  //     toast.error("Failed to search products");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -210,37 +197,86 @@ function Products({ role }) {
     }
   };
 
-  // Handle page size change
-  // const handlePageSizeChange = (e) => {
-  //   const newPageSize = parseInt(e.target.value);
-  //   setPageSize(newPageSize);
-  //   setCurrentPage(1); // Reset to first page when changing page size
-  // };
-
-  // Cleanup debounce on component unmount
-  // useEffect(() => {
-  //   return () => {
-  //     debouncedSearchProducts.cancel();
-  //   };
-  // }, [debouncedSearchProducts]);
-
   const clearSelectedProducts = () => {
     setSelectedProducts([]);
     setIsProductSelected(false);
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 relative">
+    <div className="flex flex-col min-h-screen bg-white relative">
       <PageHeader content="Products" marginBottom="mb-0" />
-      <div className="bg-white p-4 shadow flex gap-2 flex-wrap">
-        <div className="text-sm text-gray-600 space-y-1">
+      
+      {/* Tab Navigation */}
+      <div className="bg-white border-b">
+        <div className="flex space-x-8 px-6">
+          <button
+            onClick={() => handleTabChange("all")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${
+              activeTab === "all"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            All Products <span className="ml-2 bg-gray-100 text-gray-600 py-1 px-2 rounded-full text-xs">{productCounts.all}</span>
+          </button>
+          <button
+            onClick={() => handleTabChange("active")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${
+              activeTab === "active"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Active <span className="ml-2 bg-gray-100 text-gray-600 py-1 px-2 rounded-full text-xs">{productCounts.active}</span>
+          </button>
+          <button
+            onClick={() => handleTabChange("inactive")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${
+              activeTab === "inactive"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Inactive <span className="ml-2 bg-gray-100 text-gray-600 py-1 px-2 rounded-full text-xs">{productCounts.inactive}</span>
+          </button>
+          <button
+            onClick={() => handleTabChange("outOfStock")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${
+              activeTab === "outOfStock"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Out of stock <span className="ml-2 bg-gray-100 text-gray-600 py-1 px-2 rounded-full text-xs">{productCounts.outOfStock}</span>
+          </button>
+          <button
+            onClick={() => handleTabChange("drafts")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${
+              activeTab === "drafts"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            }`}
+          >
+            Drafts <span className="ml-2 bg-gray-100 text-gray-600 py-1 px-2 rounded-full text-xs">{productCounts.drafts}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Filters - Now more compact and below tabs */}
+      <div className="bg-white px-6 py-4 border-b">
+        <div className="flex gap-4 flex-wrap">
           <select
             value={selectedCategory}
             onChange={(e) => {
               setSelectedCategory(e.target.value);
               setCurrentPage(1);
             }}
-            className="border border-gray-300 rounded-md px-4 py-2 w-60"
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="All Categories">All Categories</option>
             {categories?.map((category) => (
@@ -249,18 +285,15 @@ function Products({ role }) {
               </option>
             ))}
           </select>
-        </div>
-        <div className="text-sm text-gray-600 space-y-1">
+
           <select
             value={selectedSubcategory}
             onChange={(e) => {
               setSelectedSubcategory(e.target.value);
               setCurrentPage(1);
             }}
-            className="border border-gray-300 rounded-md px-4 py-2 w-60"
-            disabled={
-              !selectedCategory || selectedCategory === "All Categories"
-            }
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            disabled={!selectedCategory || selectedCategory === "All Categories"}
           >
             <option value="All Subcategories">All Subcategories</option>
             {showSubcategory?.map((subcategory) => (
@@ -269,15 +302,14 @@ function Products({ role }) {
               </option>
             ))}
           </select>
-        </div>
-        <div className="text-sm text-gray-600 space-y-1">
+
           <select
             value={selectedLabel}
             onChange={(e) => {
               setSelectedLabel(e.target.value);
               setCurrentPage(1);
             }}
-            className="border border-gray-300 rounded-md px-4 py-2 w-60"
+            className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="All Labels">All Labels</option>
             {labels?.map((label) => (
@@ -286,96 +318,29 @@ function Products({ role }) {
               </option>
             ))}
           </select>
-        </div>
-        <div className="text-sm text-gray-600 space-y-1">
-          <select
-            className="border border-gray-300 rounded-md px-4 py-2 w-60"
-            value={selectedActiveStatus}
-            onChange={(e) => {
-              setSelectedActiveStatus(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option value="all">Active/Inactive</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-      </div>
 
-      <div className="flex flex-col  m-4">
-        <div className="relative overflow-hidden shadow-md sm:rounded-lg flex flex-col flex-1 bg-white">
-          {/* Header section with Add Product button and Search */}
-          <div className="flex items-center justify-between flex-wrap md:flex-row p-4 border-b">
-            {/* search-bar */}
+          {/* Search moved to filters area */}
+          <div className="flex-1 max-w-md">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg
-                  className="w-5 h-5 text-gray-500"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clipRule="evenodd"
-                  />
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
               <input
                 type="text"
                 value={searchKeyword}
                 onChange={handleSearchInput}
-                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-sm placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Search products..."
               />
             </div>
-            {/* buttons */}
-            <div className="flex gap-2">
-              {/* {isProductSelected && (
-                <button className="font-semibold text-red-500 p-2 rounded-md hover:bg-red-500 hover:text-white transition-colors">
-                  x Remove Offer
-                </button>
-              )} */}
-              {/* <button
-                onClick={() => setShowBulkOfferModal(true)}
-                className="border-2 border-green-500 text-green-500 p-2 rounded-md hover:bg-green-500 hover:text-white transition-colors"
-              >
-                + Add Bulk Offer
-              </button> */}
-              {!isProductSelected && (
-                <button
-                  onClick={() =>
-                    navigate("addproduct", {
-                      state: {
-                        storeId: store?._id,
-                      },
-                    })
-                  }
-                  className="bg-green-500 p-2 text-white rounded-md hover:bg-green-600 transition-colors"
-                >
-                  + Add Product
-                </button>
-              )}
-            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Bulk Offer Modal */}
-          <Modal
-            isOpen={showBulkOfferModal}
-            onClose={() => setShowBulkOfferModal(false)}
-          >
-            <BulkOfferForm
-              onClose={() => setShowBulkOfferModal(false)}
-              isProductSelected={isProductSelected}
-              selectedProducts={selectedProducts}
-              setPageRender={setPageRender}
-              clearSelectedProducts={clearSelectedProducts}
-            />
-          </Modal>
-
+      <div className="flex flex-col flex-1 m-6">
+        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
           {/* Table section with loading state */}
           <div className="overflow-y-auto flex-1 relative">
             {isLoading && (
@@ -384,8 +349,26 @@ function Products({ role }) {
               </div>
             )}
             {!isLoading && products?.length === 0 ? (
-              <div className="text-center py-4 text-gray-500">
-                No products found
+              <div className="text-center py-12 text-gray-500">
+                <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2 2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+                <h3 className="mt-2 text-sm font-medium text-gray-900">No products found</h3>
+                <p className="mt-1 text-sm text-gray-500">Get started by creating a new product.</p>
+                <div className="mt-6">
+                  <button
+                    onClick={() =>
+                      navigate("addproduct", {
+                        state: {
+                          storeId: store?._id,
+                        },
+                      })
+                    }
+                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    + Add Product
+                  </button>
+                </div>
               </div>
             ) : (
               <ProductTable
@@ -404,16 +387,59 @@ function Products({ role }) {
 
           {/* Pagination */}
           {!isLoading && totalPages > 1 && (
-            <div className="sticky bottom-0 flex items-center justify-end p-4 bg-white border-t">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
+            <div className="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center text-sm text-gray-700">
+                  <span>Showing</span>
+                  <span className="mx-2 font-medium">{((currentPage - 1) * pageSize) + 1}</span>
+                  <span>to</span>
+                  <span className="mx-2 font-medium">{Math.min(currentPage * pageSize, productCounts.all)}</span>
+                  <span>of</span>
+                  <span className="mx-2 font-medium">{productCounts.all}</span>
+                  <span>results</span>
+                </div>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
             </div>
           )}
         </div>
       </div>
+
+      {/* Floating Add Button */}
+      {!isProductSelected && products?.length > 0 && (
+        <button
+          onClick={() =>
+            navigate("addproduct", {
+              state: {
+                storeId: store?._id,
+              },
+            })
+          }
+          className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-colors z-50"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </button>
+      )}
+
+      {/* Bulk Offer Modal */}
+      <Modal
+        isOpen={showBulkOfferModal}
+        onClose={() => setShowBulkOfferModal(false)}
+      >
+        <BulkOfferForm
+          onClose={() => setShowBulkOfferModal(false)}
+          isProductSelected={isProductSelected}
+          selectedProducts={selectedProducts}
+          setPageRender={setPageRender}
+          clearSelectedProducts={clearSelectedProducts}
+        />
+      </Modal>
     </div>
   );
 }

@@ -58,7 +58,7 @@ export default function ProductCard({
   const { addToCart } = useCart();
   const { toggleWishlistItem, isInWishlist } = useWishlist();
   const wishlisted = isInWishlist(product.id);
-  const { language } = useLanguage();
+  const { language, isRTL } = useLanguage();
 
   const handleProductClick = () => {
     // Extract original product ID (remove _index suffix if present)
@@ -160,7 +160,7 @@ export default function ProductCard({
       </div>
       {/* Fixed position Add to Cart button */}
       <Button
-        className="absolute bottom-1 left-0 py-1.5 px-4 text-xs md:text-sm font-semibold bg-white rounded-sm transition-colors hover:bg-[#f7f3f4]"
+        className={`absolute bottom-1 ${isRTL ? 'right-0' : 'left-0'} py-1.5 px-4 text-xs md:text-sm font-semibold bg-white rounded-sm transition-colors hover:bg-[#f7f3f4]`}
         variant="primary"
         size="sm"
         style={{ 

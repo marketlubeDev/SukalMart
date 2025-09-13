@@ -111,7 +111,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
             </svg>
           </button>
           <h2
-            className="font-[600] text-xs sm:text-sm md:text-lg lg:text-xl"
+            className="text-[18px] font-[600] sm:text-sm md:text-lg lg:text-xl"
             style={{
               color: "#333333",
               fontStyle: "normal",
@@ -147,7 +147,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                   placeholder={t("cart.enterCouponPlaceholder", language)}
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
-                  className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
+                  className="w-full p-3 sm:p-4 border border-gray-300 rounded-lg text-sm sm:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
                 />
               </div>
 
@@ -176,9 +176,9 @@ export default function CouponSidebar({ isOpen, onClose }) {
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
-                        <span className="font-semibold text-gray-900 text-[10px] sm:text-xs md:text-sm lg:text-base">{coupon.code}</span>
+                        <span className="font-semibold text-gray-900 text-xs sm:text-xs md:text-sm lg:text-base">{coupon.code}</span>
                       </div>
-                      <p className="text-[10px] sm:text-xs md:text-sm text-gray-600">{coupon.description}</p>
+                      <p className="text-xs sm:text-xs md:text-sm text-gray-600">{coupon.description}</p>
                     </div>
                   </label>
                 </div>
@@ -189,7 +189,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
 
                   {/* Bottom Action Bar - Fixed height */}
           <div 
-            className="border-t border-gray-200 bg-white p-2 sm:p-3 md:p-4 flex-shrink-0"
+            className="border-t border-gray-200 bg-white p-4 sm:p-3 md:p-4 flex-shrink-0"
             style={{
               width: "100%",
               backgroundColor: "white",
@@ -212,10 +212,10 @@ export default function CouponSidebar({ isOpen, onClose }) {
           <div className="flex items-center justify-between h-full">
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-900">AED {subtotal.toLocaleString()}</span>
+                <span className="text-sm sm:text-sm md:text-base lg:text-lg font-semibold text-gray-900">AED {subtotal.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] sm:text-xs md:text-sm" style={{ color: "var(--color-primary)" }}>- AED {selectedCouponData ? selectedCouponData.discount : 0}</span>
+                <span className="text-xs sm:text-xs md:text-sm" style={{ color: "var(--color-primary)" }}>- AED {selectedCouponData ? selectedCouponData.discount : 0}</span>
               </div>
             </div>
             <div className="ml-2 sm:ml-3 md:ml-4">
@@ -223,7 +223,7 @@ export default function CouponSidebar({ isOpen, onClose }) {
                 variant="primary"
                 size="small"
                 onClick={onClose}
-                className="whitespace-nowrap text-xs sm:text-sm md:text-base px-3 sm:px-4 md:px-6 py-1 sm:py-2 md:py-3 h-7 sm:h-9 md:h-11 min-w-[60px] sm:min-w-[80px] md:min-w-[100px]"
+                className="whitespace-nowrap text-sm sm:text-sm md:text-base px-3 sm:px-4 md:px-6 py-1 sm:py-2 md:py-3 h-7 sm:h-9 md:h-11 min-w-[60px] sm:min-w-[80px] md:min-w-[100px]"
                 style={{ borderRadius: "4px" }}
               >
                 {t("cart.apply", language)}
