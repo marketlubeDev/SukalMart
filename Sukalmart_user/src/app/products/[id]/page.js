@@ -198,7 +198,7 @@ export default function ProductDetailPage() {
         <ProductFeaturesBanner product={product} />
         <ProductFeaturesSection product={product} />
         <ProductFeaturesSection2 product={product} />
-        <ProductVideoSection />
+        <ProductVideoSection product={product} />
         <ProductFeaturesSection3 productType={product?.type} />
         <FeaturedProductsSection isProductPage={true} />
         <ReviewsSection product={product} selectedImage={selectedImage} />
