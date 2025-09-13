@@ -1056,7 +1056,7 @@ function NavContent() {
           <NavigationBar navigationItems={translatedNavigationItems} />
 
           {/* Mobile Layout */}
-          <div className={`lg:hidden flex items-center ${isRTL ? 'flex-row-reverse' : 'justify-between'} w-full h-14 px-3 md:px-6`}>
+          <div className={`lg:hidden flex items-center ${isRTL ? 'flex-row-reverse' : 'justify-between'} w-full h-12 px-3 md:px-6`}>
             {/* Left Group - Hamburger and Logo */}
             <div className={`flex items-center ${isRTL ? 'ml-2' : 'ml-2'}`}>
               <button
@@ -1272,7 +1272,7 @@ function NavContent() {
         <div className="lg:hidden w-full bg-white border-t border-b border-gray-200">
           <button
             onClick={openLocationModal}
-            className={`container mx-auto px-3 md:px-6 h-9 w-full flex items-center ${isRTL ? 'flex-row-reverse' : ''} text-gray-700`}
+            className={`container mx-auto px-3 md:px-6 h-8 w-full flex items-center ${isRTL ? 'flex-row-reverse' : ''} text-gray-700`}
             aria-label="Delivery Location"
             style={{
               paddingLeft: "1.8rem",
@@ -1301,7 +1301,7 @@ function NavContent() {
         <div
           className={`lg:hidden transition-all duration-300 ease-in-out ${
             isMobileMenuOpen
-              ? "fixed inset-x-0 top-16 bottom-0 bg-white z-[9999] opacity-100 overflow-y-auto"
+              ? "fixed inset-x-0 top-14 bottom-0 bg-white z-[9999] opacity-100 overflow-y-auto"
               : "max-h-0 opacity-0 overflow-hidden"
           }`}
         >

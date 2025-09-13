@@ -50,8 +50,8 @@ export default function ProductGrid({
           </button>
         </div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800">
-            {t("homepage.productSidebar.showingResultsFor", language)} &quot;{selectedCategory || t("homepage.productSidebar.allProducts", language)}&quot;
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-600">
+            {t("homepage.productSidebar.showingResultsFor", language)} <span className="font-semibold text-gray-900">&quot;{selectedCategory || t("homepage.productSidebar.allProducts", language)}&quot;</span>
           </h1>
         </div>
 
@@ -61,12 +61,12 @@ export default function ProductGrid({
             <span className="text-sm text-gray-600">{t("homepage.productSidebar.sortBy", language)}</span>
             <div
               className="relative flex items-center"
-              style={{ marginRight: "12px" }}
+              style={{ marginRight: "0px" }}
             >
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="pl-0 pr-6 py-0 text-sm bg-white appearance-none focus:outline-none font-semibold text-gray-800"
+                className="pl-0 pr-4 py-0 text-sm bg-white appearance-none focus:outline-none font-semibold text-gray-800"
                 style={{
                   border: "none",
                   boxShadow: "none",
@@ -75,15 +75,18 @@ export default function ProductGrid({
                   MozAppearance: "none",
                   appearance: "none",
                   paddingLeft: "0rem",
-                  paddingRight: "1.5rem",
+                  paddingRight: "18px",
                   height: "24px",
                   lineHeight: "24px",
-                  minWidth: "80px",
+                  minWidth: "fit-content",
                   cursor: "pointer",
+                  direction: "ltr",
+                  textAlign: "left",
+                  position: "relative",
                 }}
               >
                 {sortOptions.map((option) => (
-                  <option key={option} value={option} className="font-normal">
+                  <option key={option} value={option} className="font-normal" style={{ textAlign: "left" }}>
                     {t(option, language)}
                   </option>
                 ))}
@@ -93,8 +96,12 @@ export default function ProductGrid({
                 alt="dropdown"
                 width={12}
                 height={12}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
-                style={{ minWidth: "12px", minHeight: "12px" }}
+                className="absolute top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none"
+                style={{ 
+                  minWidth: "12px", 
+                  minHeight: "12px",
+                  right: "2px"
+                }}
               />
             </div>
             <div
@@ -106,7 +113,7 @@ export default function ProductGrid({
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
         {modifiedProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg overflow-hidden">
             <ProductCard product={product} />
@@ -119,7 +126,7 @@ export default function ProductGrid({
       </div>
 
       {/* Second row of products */}
-      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
+      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
         {modifiedProducts.map((product, index) => (
           <div
             key={`second-${product.id}`}
@@ -135,7 +142,7 @@ export default function ProductGrid({
       </div>
 
       {/* Third row of products */}
-      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
+      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
         {modifiedProducts.map((product, index) => (
           <div
             key={`third-${product.id}`}

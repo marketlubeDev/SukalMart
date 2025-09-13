@@ -247,7 +247,7 @@ function ProductsPageContent() {
         {/* Main Content - 70% width */}
         <div className="lg:w-[80%] 2xl:w-[80%] 2xl:mr-auto">
           <div
-            className="px-0 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
+            className="px-0 pb-10 sm:px-6 md:px-8 py-8 pb-0 lg:pb-8"
             style={{
               overscrollBehavior: "contain",
             }}
@@ -342,7 +342,7 @@ function ProductsPageContent() {
 
             {/* Right Content */}
             <div
-              className="w-7/12 p-4 overflow-y-auto"
+              className="w-7/12 px-0 py-0 overflow-y-auto"
               style={{ borderLeft: "1px solid rgba(0, 0, 0, 0.10)" }}
             >
               {activeFilterTab === "homepage.productSidebar.categories" && (
@@ -359,9 +359,9 @@ function ProductsPageContent() {
                           setSelectedCategory(cat);
                           localStorage.setItem("selectedCategory", cat);
                         }}
-                        className={`w-full text-left px-3 py-3 ${
+                        className={`w-full text-left px-4 py-3 ${
                           selectedCategory === cat
-                            ? "bg-green-100 text-[var(--color-primary)] font-semibold"
+                            ? "bg-[#f7f3f4] text-[var(--color-primary)] font-semibold"
                             : "hover:bg-gray-50 text-gray-800"
                         }`}
                       >
@@ -383,7 +383,7 @@ function ProductsPageContent() {
                         onClick={() => setSelectedDiscount(opt)}
                         className={`w-full text-left px-3 py-3 ${
                           selectedDiscount === opt
-                            ? "bg-green-100 text-[var(--color-primary)] font-semibold"
+                            ? "bg-[#f7f3f4] text-[var(--color-primary)] font-semibold"
                             : "hover:bg-gray-50 text-gray-800"
                         }`}
                       >
@@ -395,16 +395,16 @@ function ProductsPageContent() {
               )}
 
               {activeFilterTab === "homepage.productSidebar.priceRange" && (
-                <div>
-                  <div className="mb-3 text-sm font-semibold text-gray-900">
+                <div className="py-4">
+                  <div className="mb-3 text-[16px] font-semibold text-gray-900 px-4">
                     {t("homepage.productSidebar.selectPriceRange", language)}
                   </div>
 
                   {/* Price Range Slider (match desktop sidebar) */}
-                  <div className="mb-4 px-4">
+                  <div className="mb-1 px-2">
                     <div className="relative max-w-[160px]">
                       {/* Background track */}
-                      <div className="w-full h-1 bg-gray-300 rounded-lg relative">
+                      <div className="w-[85%] h-1 bg-gray-300 rounded-lg relative mx-auto">
                         {/* Selected portion */}
                         <div
                           className="h-1 bg-[var(--color-primary)] absolute top-0 left-0"
@@ -481,7 +481,7 @@ function ProductsPageContent() {
                             }));
                           }
                         }}
-                        className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-30"
+                        className="absolute top-0 w-[100%] h-1 opacity-0 cursor-pointer z-30"
                         style={{ pointerEvents: "auto" }}
                       />
                     </div>
@@ -501,7 +501,7 @@ function ProductsPageContent() {
                           color: "rgba(51, 51, 51, 0.70)",
                           leadingTrim: "both",
                           textEdge: "cap",
-                          fontSize: "14px",
+                          fontSize: "12px",
                           fontStyle: "normal",
                           fontWeight: "600",
                           lineHeight: "normal",
@@ -530,7 +530,7 @@ function ProductsPageContent() {
                           color: "rgba(51, 51, 51, 0.70)",
                           leadingTrim: "both",
                           textEdge: "cap",
-                          fontSize: "14px",
+                          fontSize: "12px",
                           fontStyle: "normal",
                           fontWeight: "600",
                           lineHeight: "normal",
@@ -543,19 +543,19 @@ function ProductsPageContent() {
                   </div>
 
                   {/* Predefined Price Ranges (unchanged) */}
-                  <div className="space-y-0 px-4">
+                  <div className="space-y-0 px-4 py-2">
                     <div className="max-w-[200px]">
                       {priceRanges.map((range) => (
                         <button
                           key={range}
-                          className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
+                          className="w-full text-left px-0 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
                           style={{
-                            color: "rgba(51, 51, 51, 0.70)",
+                            color: "var(--color-gray-800)",
                             leadingTrim: "both",
                             textEdge: "cap",
-                            fontSize: "16px",
+                            fontSize: "15px",
                             fontStyle: "normal",
-                            fontWeight: "600",
+                            // fontWeight: "500",
                             lineHeight: "normal",
                             letterSpacing: "-0.16px",
                           }}

@@ -15,7 +15,7 @@ export default function ProductSidebar({
 }) {
   const router = useRouter();
   const [sessionData, setSessionData] = useState({});
-  const { language } = useLanguage();
+  const { language, isRTL } = useLanguage();
 
   const categories = [
     "Hair Care",
@@ -54,6 +54,7 @@ export default function ProductSidebar({
         overscrollBehavior: "contain",
         minWidth: "320px",
         maxWidth: "100%",
+        direction: isRTL ? "rtl" : "ltr",
       }}
       onWheel={(e) => {
         // Prevent scroll propagation to parent elements
@@ -73,6 +74,7 @@ export default function ProductSidebar({
             fontWeight: "600",
             lineHeight: "normal",
             letterSpacing: "-0.18px",
+            textAlign: isRTL ? "right" : "left",
           }}
         >
           {t("homepage.productSidebar.categories", language)}
@@ -82,9 +84,9 @@ export default function ProductSidebar({
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
+              className={`w-full ${isRTL ? 'text-right' : 'text-left'} px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedCategory === category
-                  ? "bg-green-100"
+                  ? "bg-[#f7f3f4]"
                   : "hover:bg-gray-50"
               }`}
               style={{
@@ -99,6 +101,7 @@ export default function ProductSidebar({
                 fontWeight: "600",
                 lineHeight: "normal",
                 letterSpacing: "-0.16px",
+                textAlign: isRTL ? "right" : "left",
               }}
             >
               {category}
@@ -120,6 +123,7 @@ export default function ProductSidebar({
             fontWeight: "600",
             lineHeight: "normal",
             letterSpacing: "-0.18px",
+            textAlign: isRTL ? "right" : "left",
           }}
         >
           {t("homepage.productSidebar.discount", language)}
@@ -129,9 +133,9 @@ export default function ProductSidebar({
             <button
               key={discount}
               onClick={() => setSelectedDiscount(discount)}
-              className={`w-full text-left px-3 py-2 rounded-md transition-colors cursor-pointer ${
+              className={`w-full ${isRTL ? 'text-right' : 'text-left'} px-3 py-2 rounded-md transition-colors cursor-pointer ${
                 selectedDiscount === discount
-                  ? "bg-green-100"
+                  ? "bg-[#f7f3f4]"
                   : "hover:bg-gray-50"
               }`}
               style={{
@@ -146,6 +150,7 @@ export default function ProductSidebar({
                 fontWeight: "600",
                 lineHeight: "normal",
                 letterSpacing: "-0.16px",
+                textAlign: isRTL ? "right" : "left",
               }}
             >
               {t(discount, language)}
@@ -167,6 +172,7 @@ export default function ProductSidebar({
             fontWeight: "600",
             lineHeight: "normal",
             letterSpacing: "-0.18px",
+            textAlign: isRTL ? "right" : "left",
           }}
         >
           {t("homepage.productSidebar.priceRange", language)}
@@ -174,48 +180,85 @@ export default function ProductSidebar({
 
         {/* Price Range Slider */}
         <div className="mb-4 px-4">
-          <div className="relative max-w-[200px]">
+          <div className="relative max-w-[200px]" style={{ margin: isRTL ? "0 0 0 auto" : "0 auto 0 0" }}>
             {/* Background track */}
             <div className="w-full h-1 bg-gray-300 rounded-lg relative">
               {/* Green selected portion */}
               <div
-                className="h-1 bg-[var(--color-primary)] absolute top-0 left-0"
+                className="h-1 bg-[var(--color-primary)] absolute top-0"
                 style={{
                   width: `${
                     ((priceRange.max - priceRange.min) / (20000 - 0)) * 100
                   }%`,
-                  left: `${(priceRange.min / 20000) * 100}%`,
+                  ...(isRTL 
+                    ? { 
+                        right: `${(priceRange.min / 20000) * 100}%`,
+                        left: 'auto'
+                      }
+                    : { 
+                        left: `${(priceRange.min / 20000) * 100}%`,
+                        right: 'auto'
+                      }
+                  ),
                   borderRadius:
                     priceRange.min === 0
-                      ? "4px 0 0 4px"
+                      ? isRTL ? "4px 0 0 4px" : "4px 0 0 4px"
                       : priceRange.max === 20000
-                      ? "0 4px 4px 0"
+                      ? isRTL ? "0 4px 4px 0" : "0 4px 4px 0"
                       : "0",
                 }}
               />
 
-              {/* Start circle */}
+              {/* Min circle */}
               <div
-                className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
-                style={{ left: `${(priceRange.min / 20000) * 100}%` }}
+                className="absolute z-10"
+                style={{ 
+                  top: '50%',
+                  ...(isRTL 
+                    ? { 
+                        right: `${(priceRange.min / 20000) * 100}%`,
+                        left: 'auto',
+                        transform: 'translate(50%, -50%)'
+                      }
+                    : { 
+                        left: `${(priceRange.min / 20000) * 100}%`,
+                        right: 'auto',
+                        transform: 'translate(-50%, -50%)'
+                      }
+                  )
+                }}
               >
                 <Image
                   src="/pricecircle.svg"
-                  alt="start"
+                  alt="min"
                   width={12}
                   height={12}
                   className="w-3 h-3"
                 />
               </div>
 
-              {/* End circle */}
+              {/* Max circle */}
               <div
-                className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 z-10"
-                style={{ left: `${(priceRange.max / 20000) * 100}%` }}
+                className="absolute z-10"
+                style={{ 
+                  top: '50%',
+                  ...(isRTL 
+                    ? { 
+                        right: `${(priceRange.max / 20000) * 100}%`,
+                        left: 'auto',
+                        transform: 'translate(50%, -50%)'
+                      }
+                    : { 
+                        left: `${(priceRange.max / 20000) * 100}%`,
+                        right: 'auto',
+                        transform: 'translate(-50%, -50%)'
+                      }
+                  )
+                }}
               >
                 <Image
                   src="/pricecircle.svg"
-                  alt="end"
+                  alt="max"
                   width={12}
                   height={12}
                   className="w-3 h-3"
@@ -228,9 +271,10 @@ export default function ProductSidebar({
               type="range"
               min="0"
               max="20000"
-              value={priceRange.min}
+              value={isRTL ? 20000 - priceRange.max : priceRange.min}
               onChange={(e) => {
-                const newMin = parseInt(e.target.value);
+                const value = parseInt(e.target.value);
+                const newMin = isRTL ? 20000 - value : value;
                 if (newMin <= priceRange.max) {
                   setPriceRange((prev) => ({
                     ...prev,
@@ -241,15 +285,17 @@ export default function ProductSidebar({
               className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-20"
               style={{
                 pointerEvents: "auto",
+                direction: isRTL ? "rtl" : "ltr",
               }}
             />
             <input
               type="range"
               min="0"
               max="20000"
-              value={priceRange.max}
+              value={isRTL ? 20000 - priceRange.min : priceRange.max}
               onChange={(e) => {
-                const newMax = parseInt(e.target.value);
+                const value = parseInt(e.target.value);
+                const newMax = isRTL ? 20000 - value : value;
                 if (newMax >= priceRange.min) {
                   setPriceRange((prev) => ({
                     ...prev,
@@ -260,81 +306,142 @@ export default function ProductSidebar({
               className="absolute top-0 w-full h-1 opacity-0 cursor-pointer z-30"
               style={{
                 pointerEvents: "auto",
+                direction: isRTL ? "rtl" : "ltr",
               }}
             />
           </div>
 
-          <div className="flex justify-start items-center gap-2 mt-2">
-            <div
-              style={{
-                display: "flex",
-                padding: "6px 6px",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                minWidth: "80px",
-                borderRadius: "4px",
-                background: "rgba(0, 0, 0, 0.06)",
-                color: "rgba(51, 51, 51, 0.70)",
-                leadingTrim: "both",
-                textEdge: "cap",
-                fontSize: "16px",
-                fontStyle: "normal",
-                fontWeight: "600",
-                lineHeight: "normal",
-                letterSpacing: "-0.16px",
-              }}
-            >
-              AED {priceRange.min.toLocaleString()}
-            </div>
-            <Image
-              src="/doublearrow.svg"
-              alt="range"
-              width={20}
-              height={8}
-              className="w-5 h-2 mx-2 flex-shrink-0"
-            />
-            <div
-              style={{
-                display: "flex",
-                padding: "6px 6px",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                minWidth: "80px",
-                borderRadius: "4px",
-                background: "rgba(0, 0, 0, 0.06)",
-                color: "rgba(51, 51, 51, 0.70)",
-                leadingTrim: "both",
-                textEdge: "cap",
-                fontSize: "16px",
-                fontStyle: "normal",
-                fontWeight: "600",
-                lineHeight: "normal",
-                letterSpacing: "-0.16px",
-              }}
-            >
-              AED {priceRange.max.toLocaleString()}
-            </div>
+          <div className={`flex ${isRTL ? 'justify-start' : 'justify-start'} items-center gap-1 mt-2`} style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+            {isRTL ? (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "6px 6px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    minWidth: "80px",
+                    borderRadius: "4px",
+                    background: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(51, 51, 51, 0.70)",
+                    leadingTrim: "both",
+                    textEdge: "cap",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: "600",
+                    lineHeight: "normal",
+                    letterSpacing: "-0.14px",
+                  }}
+                >
+                  AED {priceRange.max.toLocaleString()}
+                </div>
+                <Image
+                  src="/doublearrow.svg"
+                  alt="range"
+                  width={20}
+                  height={8}
+                  className="w-5 h-2 mx-1 flex-shrink-0"
+                  style={{ transform: 'scaleX(-1)' }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "6px 6px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    minWidth: "80px",
+                    borderRadius: "4px",
+                    background: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(51, 51, 51, 0.70)",
+                    leadingTrim: "both",
+                    textEdge: "cap",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: "600",
+                    lineHeight: "normal",
+                    letterSpacing: "-0.14px",
+                  }}
+                >
+                  AED {priceRange.min.toLocaleString()}
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "6px 6px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    minWidth: "80px",
+                    borderRadius: "4px",
+                    background: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(51, 51, 51, 0.70)",
+                    leadingTrim: "both",
+                    textEdge: "cap",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: "600",
+                    lineHeight: "normal",
+                    letterSpacing: "-0.14px",
+                  }}
+                >
+                  AED {priceRange.min.toLocaleString()}
+                </div>
+                <Image
+                  src="/doublearrow.svg"
+                  alt="range"
+                  width={20}
+                  height={8}
+                  className="w-5 h-2 mx-1 flex-shrink-0"
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "6px 6px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    minWidth: "80px",
+                    borderRadius: "4px",
+                    background: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(51, 51, 51, 0.70)",
+                    leadingTrim: "both",
+                    textEdge: "cap",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: "600",
+                    lineHeight: "normal",
+                    letterSpacing: "-0.14px",
+                  }}
+                >
+                  AED {priceRange.max.toLocaleString()}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         {/* Predefined Price Ranges */}
-        <div className="space-y-0 px-4">
-          <div className="max-w-[200px]">
+        <div className="space-y-0 px-0">
+          <div className="max-w-[200px]" style={{ margin: isRTL ? "0 0 0 auto" : "0 auto 0 0" }}>
             {priceRanges.map((range) => (
               <button
                 key={range}
-                className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer"
+                className={`w-full ${isRTL ? 'text-right' : 'text-left'} px-3 py-2 rounded-md hover:bg-gray-50 transition-colors cursor-pointer`}
                 style={{
                   color: "rgba(51, 51, 51, 0.70)",
                   leadingTrim: "both",
                   textEdge: "cap",
-                  fontSize: "16px",
+                  fontSize: "15px",
                   fontStyle: "normal",
                   fontWeight: "600",
                   lineHeight: "normal",
                   letterSpacing: "-0.16px",
+                  textAlign: isRTL ? "right" : "left",
                 }}
               >
                 {t(range, language)}

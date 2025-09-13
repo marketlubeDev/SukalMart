@@ -17,38 +17,24 @@ const ProductTableHeader = ({
   }, [selectedProducts, products]);
 
   return (
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead className="bg-gray-50 border-b border-gray-200">
       <tr>
-        {/* <th scope="col" className="p-4">
-          <div className="flex items-center">
-            <input
-              id="checkbox-all-search"
-              type="checkbox"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              // onChange={onSelectAll}
-              onChange={(e) => onSelectAll(e, currentPage)}
-              checked={isAllSelected}
-            />
-            <label htmlFor="checkbox-all-search" className="sr-only">
-              checkbox
-            </label>
-          </div>
-        </th> */}
-        <th scope="col" className="px-6 py-3">
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           Product name
         </th>
-
-        <th scope="col" className="px-6 py-3">
-          Category
-        </th>
-        <th scope="col" className="px-6 py-3">
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           Status
         </th>
-        <th scope="col" className="px-6 py-3">
-          Last Updated
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Category
         </th>
-
-        <th scope="col" className="px-6 py-3">
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Sub Category
+        </th>
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Last updated on
+        </th>
+        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
           Actions
         </th>
       </tr>

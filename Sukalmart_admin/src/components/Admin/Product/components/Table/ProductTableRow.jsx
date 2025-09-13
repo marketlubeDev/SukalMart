@@ -49,65 +49,129 @@ const ProductTableRow = ({
     }
   };
 
+  const getStatusBadge = () => {
+    if (product?.isDraft) {
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          Draft
+        </span>
+      );
+    }
+    
+    if (product?.activeStatus) {
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          Active
+        </span>
+      );
+    } else {
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          Inactive
+        </span>
+      );
+    }
+  };
+
+  // Get product image
+  const getProductImage = () => {
+    if (product?.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    if (product?.image) {
+      return product.image;
+    }
+    return null;
+  };
+
+  const productImage = getProductImage();
+
   return (
     <>
-      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-        {/* <td className="w-4 p-4">
-          <div className="flex items-center">
-            <input
-              id={`checkbox-table-search-${product._id}`}
-              type="checkbox"
-              checked={selectedProducts?.includes(product._id)}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              htmlFor={`checkbox-table-search-${product._id}`}
-              className="sr-only"
-            >
-              checkbox
-            </label>
-          </div>
-        </td> */}
-        <th
-          scope="row"
-          className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center gap-2 cursor-pointer"
-          title={product?.name}
-        >
-          <span
-            className={`w-2 h-2 block rounded-full ${
-              product?.priority && "bg-green-500"
-            }`}
-            title={product?.priority ? "Priority Product" : ""}
-          ></span>
-          {product?.name?.split("").length > 30
-            ? product?.name?.split(" ").slice(0, 4).join(" ") + "..."
-            : product?.name}
-        </th>
-        <td className="px-6 py-4">{product?.category?.name}</td>
-        <td className="px-6 py-4 ">
-          {product?.activeStatus ? (
-            <span className="bg-green-500 text-white px-2 py-1 rounded-md w-16 inline-block text-center">
-              Active
-            </span>
-          ) : (
-            <span className="bg-red-500 text-white px-2 py-1 rounded-md w-16 inline-block text-center">
-              Inactive
-            </span>
-          )}
-        </td>
+      <tr className="bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors">
+        {/* Product Image and Name */}
         <td className="px-6 py-4">
-          {new Date(product?.updatedAt).toLocaleDateString()}
+          <div className="flex items-center">
+            <div className="flex-shrink-0 h-12 w-12">
+              {productImage ? (
+                <img
+                  className="h-12 w-12 rounded-lg object-cover border border-gray-200"
+                  src={productImage}
+                  alt={product?.name}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div 
+                className={`h-12 w-12 rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200 ${productImage ? 'hidden' : 'flex'}`}
+              >
+                <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+            <div className="ml-4">
+              <div className="flex items-center">
+                {product?.priority && (
+                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2" title="Priority Product"></span>
+                )}
+                <div className="text-sm font-medium text-gray-900">
+                  {product?.name?.length > 40
+                    ? product?.name?.substring(0, 40) + "..."
+                    : product?.name}
+                </div>
+              </div>
+              <div className="text-sm text-gray-500">
+                {product?.variants?.length || 0} variants
+              </div>
+            </div>
+          </div>
         </td>
-        <td className="px-6 py-4 flex items-center gap-2">
-          <FaEdit
-            className="w-5 h-5 text-blue-600 cursor-pointer"
-            onClick={() => handleEdit(product?._id)}
-          />
-          <FaTrash
-            className="w-5 h-5 text-red-600 cursor-pointer"
-            onClick={() => confirmDelete(product?._id)}
-          />
+
+        {/* Status */}
+        <td className="px-6 py-4">
+          {getStatusBadge()}
+        </td>
+
+        {/* Category */}
+        <td className="px-6 py-4 text-sm text-gray-900">
+          {product?.category?.name || 'N/A'}
+        </td>
+
+        {/* Sub Category */}
+        <td className="px-6 py-4 text-sm text-gray-900">
+          {product?.subcategory?.name || 'N/A'}
+        </td>
+
+        {/* Last Updated */}
+        <td className="px-6 py-4 text-sm text-gray-500">
+          {new Date(product?.updatedAt).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          })}
+        </td>
+
+        {/* Actions */}
+        <td className="px-6 py-4 text-right text-sm font-medium">
+          <div className="flex items-center justify-end space-x-2">
+            <button
+              onClick={() => handleEdit(product?._id)}
+              className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors"
+              title="Edit Product"
+            >
+              <FaEdit className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => confirmDelete(product?._id)}
+              className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors"
+              title="Delete Product"
+            >
+              <FaTrash className="w-4 h-4" />
+            </button>
+          </div>
         </td>
       </tr>
 

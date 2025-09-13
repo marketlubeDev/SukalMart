@@ -10,28 +10,28 @@ export default function PromotionalBanner({ fullWidth = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const [currentBanner, setCurrentBanner] = useState(0);
-  const { language } = useLanguage();
+  const { language, isRTL } = useLanguage();
 
   const banners = [
     {
       id: 1,
       productId: "2",
-      title: "Glow Up Your Skin, 20% OFF!",
-      description: "Premium skincare essentials for radiant, healthy skin",
+      title: t("homepage.promotionalBanner.skincare.title", language),
+      description: t("homepage.promotionalBanner.skincare.description", language),
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/JcZhBwKYsh.webp",
       alt: "Skincare Products",
       background: "linear-gradient(90deg, #FFE5F1, #FFF0F5)",
-      buttonText: "Shop now",
+      buttonText: t("homepage.hero.cta", language),
     },
     {
       id: 2,
       productId: "1",
-      title: "Anti-Aging Collection, 25% OFF!",
-      description: "Advanced anti-aging formulas to restore youthful radiance. Limited time offer",
+      title: t("homepage.promotionalBanner.antiAging.title", language),
+      description: t("homepage.promotionalBanner.antiAging.description", language),
       image: "https://marketlube-website-assets.s3.ap-south-1.amazonaws.com/Souqalmart/bestseller/8613516cf28a3fde364291c8bf09a4eb.jpg",
       alt: "Anti-Aging Products",
       background: "linear-gradient(90deg, #FFF8DC, #FFF5E6)",
-      buttonText: "Shop now",
+      buttonText: t("homepage.hero.cta", language),
     },
   ];
 
@@ -60,8 +60,8 @@ export default function PromotionalBanner({ fullWidth = false }) {
           className="relative overflow-hidden rounded-lg md:p-4 h-[200px] md:h-[250px] lg:h-[240px]"
           style={{ background: banners[currentBanner].background }}
         >
-          {/* Product Image - Right Side */}
-          <div className="absolute right-3 sm:right-4 md:right-6 lg:right-4 top-1/2 transform -translate-y-1/2">
+          {/* Product Image - Positioned based on language direction */}
+          <div className={`absolute ${isRTL ? 'left-3 sm:left-4 md:left-6 lg:left-4' : 'right-3 sm:right-4 md:right-6 lg:right-4'} top-1/2 transform -translate-y-1/2`}>
             <Image
               src={banners[currentBanner].image}
               alt={banners[currentBanner].alt}
@@ -71,12 +71,12 @@ export default function PromotionalBanner({ fullWidth = false }) {
             />
           </div>
 
-          {/* Content - Left Side */}
-          <div className="absolute left-4 sm:left-6 md:left-8 lg:left-6 top-1/2 transform -translate-y-1/2 max-w-[200px] sm:max-w-xs lg:max-w-xs">
-            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-bold mb-2 sm:mb-3 lg:mb-3 text-[#333333]">
+          {/* Content - Positioned based on language direction */}
+          <div className={`absolute ${isRTL ? 'right-4 sm:right-6 md:right-8 lg:right-6' : 'left-4 sm:left-6 md:left-8 lg:left-6'} top-1/2 transform -translate-y-1/2 max-w-[200px] sm:max-w-xs lg:max-w-xs`}>
+            <h3 className={`text-lg sm:text-xl md:text-2xl lg:text-2xl font-bold mb-2 sm:mb-3 lg:mb-3 text-[#333333] ${isRTL ? 'text-right' : 'text-left'}`}>
               {banners[currentBanner].title}
             </h3>
-            <p className="text-xs sm:text-sm md:text-base lg:text-base mb-3 sm:mb-4 lg:mb-4 text-[#333333]">
+            <p className={`text-xs sm:text-sm md:text-base lg:text-base mb-3 sm:mb-4 lg:mb-4 text-[#333333] ${isRTL ? 'text-right' : 'text-left'}`}>
               {banners[currentBanner].description}
             </p>
             <Button
@@ -85,7 +85,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
               onClick={() => handleShopNowClick(banners[currentBanner].productId)}
               className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
             >
-              {t("homepage.hero.cta", language)}
+              {banners[currentBanner].buttonText}
             </Button>
           </div>
         </div>
@@ -113,8 +113,8 @@ export default function PromotionalBanner({ fullWidth = false }) {
             }`}
             style={{ background: banner.background }}
           >
-            {/* Product Image - Right Side */}
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            {/* Product Image - Positioned based on language direction */}
+            <div className={`absolute ${isRTL ? 'left-4' : 'right-4'} top-1/2 transform -translate-y-1/2`}>
               <Image
                 src={banner.image}
                 alt={banner.alt}
@@ -124,12 +124,12 @@ export default function PromotionalBanner({ fullWidth = false }) {
               />
             </div>
 
-            {/* Content - Left Side */}
-            <div className="absolute left-6 top-1/2 transform -translate-y-1/2 max-w-xs">
-              <h3 className="text-2xl font-bold mb-3 text-[#333333]">
+            {/* Content - Positioned based on language direction */}
+            <div className={`absolute ${isRTL ? 'right-6' : 'left-6'} top-1/2 transform -translate-y-1/2 max-w-xs`}>
+              <h3 className={`text-2xl font-bold mb-3 text-[#333333] ${isRTL ? 'text-right' : 'text-left'}`}>
                 {banner.title}
               </h3>
-              <p className="text-base mb-4 text-[#333333]">
+              <p className={`text-base mb-4 text-[#333333] ${isRTL ? 'text-right' : 'text-left'}`}>
                 {banner.description}
               </p>
                 <Button
@@ -138,7 +138,7 @@ export default function PromotionalBanner({ fullWidth = false }) {
                   onClick={() => handleShopNowClick(banner.productId)}
                   className="text-xs sm:text-sm md:text-base lg:text-base rounded-md"
                 >
-                  {t("homepage.hero.cta", language)}
+                  {banner.buttonText}
                 </Button>
             </div>
           </div>

@@ -177,7 +177,7 @@ export default function CartSidebar({ isOpen, onClose }) {
       >
         {/* Header - Fixed height */}
         <div 
-          className="flex items-center justify-between p-4 border-b border-gray-200 bg-white"
+          className="flex items-center justify-between p-2 sm:p-4 border-b border-gray-200 bg-white"
           style={{
             backgroundColor: "white",
             height: "80px",
@@ -207,10 +207,9 @@ export default function CartSidebar({ isOpen, onClose }) {
               </svg>
             </button>
             <h2
-              className="font-[600]"
+              className="font-[600] text-[18px] sm:text-[22px]"
               style={{
                 color: "#333333",
-                fontSize: "22px",
                 fontStyle: "normal",
                 lineHeight: "normal",
                 letterSpacing: "-0.44px",
@@ -225,21 +224,20 @@ export default function CartSidebar({ isOpen, onClose }) {
         <div className="flex flex-col h-screen overflow-hidden" style={{ maxHeight: '100vh' }}>
           {/* Items Section - Flexible height to fit 100vh */}
           <div
-            className="flex-1 overflow-hidden"
+            className="flex-1 overflow-hidden py-2 sm:py-4"
             style={{ 
-              paddingTop: "16px",
-              paddingBottom: "16px",
-              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px) = 160px
+              height: "calc(100vh - 80px - 80px)", // Header (80px) + Bottom (80px on mobile, 100px on desktop) = 160px on mobile
               maxHeight: "calc(100vh - 80px - 80px)",
-              overflow: "hidden"
+              overflow: "hidden",
+              paddingBottom: "80px" // Add padding to prevent content from being hidden behind fixed bottom bar on mobile
             }}
           >
             {/* Items Header */}
-            <div className="flex justify-between items-center mb-4 px-4" style={{ overflow: "hidden" }}>
+            <div className="flex justify-between items-center mb-2 sm:mb-4 px-4 sm:px-4" style={{ overflow: "hidden" }}>
               <h3
+                className="text-[16px] sm:text-[20px]"
                 style={{
                   color: "#333333",
-                  fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
                   lineHeight: "normal",
@@ -249,9 +247,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                 {t("cart.items", language)}
               </h3>
               <span
+                className="text-[12px] sm:text-[14px]"
                 style={{
                   color: "rgba(51, 51, 51, 0.60)",
-                  fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: 500,
                   lineHeight: "normal",
@@ -277,7 +275,7 @@ export default function CartSidebar({ isOpen, onClose }) {
               {cartItems.length === 0 ? (
                 // Empty Cart Message
                 <div
-                  className="flex flex-col items-center justify-start py-12 px-4"
+                  className="flex flex-col items-center justify-start py-6 sm:py-12 px-4 sm:px-4"
                   style={{
                     minHeight: "calc(100vh - 160px)",
                     height: "calc(100vh - 160px)",
@@ -319,9 +317,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                   
                   {/* Empty Cart Text */}
                   <h3
+                    className="text-[16px] sm:text-[20px]"
                     style={{
                       color: "#333333",
-                      fontSize: "20px",
                       fontStyle: "normal",
                       fontWeight: 600,
                       lineHeight: "normal",
@@ -333,9 +331,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                   </h3>
                   
                   <p
+                    className="text-[14px] sm:text-[16px]"
                     style={{
                       color: "rgba(51, 51, 51, 0.70)",
-                      fontSize: "16px",
                       fontStyle: "normal",
                       fontWeight: 400,
                       lineHeight: "normal",
@@ -362,7 +360,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                       background: "var(--color-primary)",
                       color: "#fff",
                       fontWeight: 500,
-                      fontSize: "16px",
+                      fontSize: "14px",
                       lineHeight: "normal",
                       border: "none",
                       transition: "background 0.2s",
@@ -386,11 +384,11 @@ export default function CartSidebar({ isOpen, onClose }) {
                   className="relative flex w-full"
                   style={{
                     display: "flex",
-                    paddingBottom: "16px",
+                    paddingBottom: "12px",
                     alignItems: "center",
                     gap: "12px",
                     alignSelf: "stretch",
-                    paddingTop: "18px",
+                    paddingTop: "12px",
                     paddingLeft: "16px",
                     paddingRight: "16px",
                     borderBottom:
@@ -444,7 +442,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                   {/* Product Details */}
                   <div className="flex-1 min-w-0 w-full">
                     <h4
-                      className="text-[16px] font-semibold mb-1"
+                      className="text-[14px] sm:text-[16px] font-semibold mb-1"
                       style={{
                         overflow: "hidden",
                         color: "#333",
@@ -452,7 +450,6 @@ export default function CartSidebar({ isOpen, onClose }) {
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 1,
-                        fontSize: "16px",
                         fontStyle: "normal",
                         fontWeight: 600,
                         lineHeight: "140%",
@@ -465,11 +462,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                       {item.name}
                     </h4>
                     <div
-                      className="mb-1"
+                      className="mb-1 text-[12px] sm:text-[14px]"
                       style={{
                         display: "block",
                         overflow: "hidden",
-                        fontSize: "14px",
                         color: "rgba(51, 51, 51, 0.70)",
                         fontWeight: 500,
                         lineHeight: "140%",
@@ -495,7 +491,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <div className="flex items-center justify-between w-full">
                       {/* Quantity Selector */}
                       <div className="flex items-center space-x-2">
-                        <span className="text-xs text-gray-600">{t("common.qty", language)} :</span>
+                        <span className="text-[10px] sm:text-xs text-gray-600">{t("common.qty", language)} :</span>
                         <div
                           style={{
                             display: "flex",
@@ -592,11 +588,11 @@ export default function CartSidebar({ isOpen, onClose }) {
                       {/* Price Section */}
                       <div className="flex items-center space-x-2 ml-4">
                         <span
+                          className="text-[14px] sm:text-[16px]"
                           style={{
                             overflow: "hidden",
                             color: "var(--color-primary)",
                             textOverflow: "ellipsis",
-                            fontSize: "16px",
                             fontStyle: "normal",
                             fontWeight: 600,
                             lineHeight: "100%",
@@ -610,7 +606,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                         >
                           AED {(item.price || 0).toLocaleString()}
                         </span>
-                        <span className="text-xs text-gray-400 line-through">
+                        <span className="text-[10px] sm:text-xs text-gray-400 line-through">
                           AED {(item.originalPrice || 0).toLocaleString()}
                         </span>
                       </div>
@@ -623,23 +619,22 @@ export default function CartSidebar({ isOpen, onClose }) {
 
             {/* Coupon Section - Only show when cart has items */}
             {cartItems.length > 0 && (
-            <div className="mt-6 bg-[#F5F5F5]" style={{ overflow: "hidden" }}>
+            <div className="mt-3 sm:mt-6 bg-[#F5F5F5]" style={{ overflow: "hidden" }}>
               <h3
+                className="mb-2 sm:mb-3 px-4 sm:px-4 text-[16px] sm:text-[20px]"
                 style={{
                   color: "#333333",
-                  fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: 600,
                   lineHeight: "normal",
                   letterSpacing: "-0.4px",
                 }}
-                className="mb-3 px-4"
               >
                 {t("cart.coupon", language)}
               </h3>
               <button
                 onClick={() => setShowCouponSidebar(true)}
-                className="flex items-center justify-between p-3 bg-white border border-gray-200 px-4 w-full hover:bg-gray-50 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-2 sm:p-3 bg-white border border-gray-200 px-4 sm:px-4 w-full hover:bg-gray-50 transition-colors cursor-pointer"
                 style={{ cursor: "pointer" }}
               >
                 <div className="flex items-center space-x-3">
@@ -647,10 +642,10 @@ export default function CartSidebar({ isOpen, onClose }) {
                     <img src="/coupon.svg" alt="Coupon" className="w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-medium text-gray-800">
+                    <p className="text-[12px] sm:text-sm font-medium text-gray-800">
                       {t("cart.applyCouponAndOffers", language)}
                     </p>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-[10px] sm:text-xs text-gray-600">
                       {t("cart.couponDescription", language)}
                     </p>
                   </div>
@@ -674,12 +669,12 @@ export default function CartSidebar({ isOpen, onClose }) {
 
             {/* Order Summary - Only show when cart has items */}
             {cartItems.length > 0 && (
-            <div className="mt-6" style={{ overflow: "hidden" }}>
-              <div className="flex items-center justify-between mb-3 px-4">
+            <div className="mt-3 sm:mt-6" style={{ overflow: "hidden" }}>
+                              <div className="flex items-center justify-between mb-2 sm:mb-3 px-4 sm:px-4">
                 <h3
+                  className="text-[16px] sm:text-[20px]"
                   style={{
                     color: "#333333",
-                    fontSize: "20px",
                     fontStyle: "normal",
                     fontWeight: 600,
                     lineHeight: "normal",
@@ -734,24 +729,24 @@ export default function CartSidebar({ isOpen, onClose }) {
               </div>
 
               {orderSummaryOpen && (
-                <div className="space-y-2 text-sm bg-white px-6 py-4">
+                <div className="space-y-2 text-sm bg-white px-4 sm:px-6 py-2 sm:py-4">
                   <div className="flex justify-between">
                     <span
+                      className="text-[14px] sm:text-[16px]"
                       style={{
                         color: "#333",
-                        fontSize: "16px",
                         fontStyle: "normal",
                         fontWeight: 500,
                         lineHeight: "normal",
                         letterSpacing: "-0.32px",
                       }}
                     >
-                                              {t("cart.subtotal", language)}
+                    {t("cart.subtotal", language)}
                     </span>
                     <span
+                      className="text-[16px] sm:text-[18px]"
                       style={{
                         color: "#333",
-                        fontSize: "18px",
                         fontStyle: "normal",
                         fontWeight: 700,
                         lineHeight: "normal",
@@ -769,15 +764,15 @@ export default function CartSidebar({ isOpen, onClose }) {
                       alignItems: "flex-start",
                       gap: "12px",
                       alignSelf: "stretch",
-                      padding: "16px 0 16px",
+                      padding: "12px 0 12px",
                       borderTop: "1px dashed rgba(51, 51, 51, 0.10)",
                     }}
                   >
                     <div className="flex justify-between w-full">
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -787,9 +782,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                         {t("cart.total", language)}
                       </span>
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "#333",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -801,9 +796,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                     </div>
                     <div className="flex justify-between w-full">
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -813,9 +808,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                         {t("cart.discount", language)}
                       </span>
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "var(--color-primary)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -827,9 +822,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                     </div>
                     <div className="flex justify-between w-full">
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -839,9 +834,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                         {t("cart.delivery", language)}
                       </span>
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "var(--color-primary)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -853,9 +848,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                     </div>
                     <div className="flex justify-between w-full">
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "rgba(51, 51, 51, 0.70)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -865,9 +860,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                         {t("cart.couponDiscount", language)}
                       </span>
                       <span
+                        className="text-[14px] sm:text-[16px]"
                         style={{
                           color: "var(--color-primary)",
-                          fontSize: "16px",
                           fontStyle: "normal",
                           fontWeight: 500,
                           lineHeight: "normal",
@@ -886,14 +881,13 @@ export default function CartSidebar({ isOpen, onClose }) {
 
           {/* Bottom Action Bar - Fixed height */}
           <div
-            className="border-t border-gray-200 p-3 bg-white"
+            className="border-t border-gray-200 py-4 px-4 sm:py-6 sm:px-3 bg-white fixed sm:relative bottom-0 sm:bottom-auto left-0 sm:left-auto right-0 sm:right-auto h-[80px] sm:h-[100px]"
             style={{
               width: "100%",
               backgroundColor: "white",
-              height: "80px",
               minHeight: "80px",
-              maxHeight: "80px",
-              flexShrink: 0
+              flexShrink: 0,
+              zIndex: 10
             }}
           >
             {cartItems.length === 0 ? (
@@ -904,7 +898,7 @@ export default function CartSidebar({ isOpen, onClose }) {
             <div className="flex items-center justify-between">
               <div>
                 <div
-                  className="text-[18px] sm:text-[20px]"
+                  className="text-[16px] sm:text-[20px]"
                   style={{
                     color: "#333333",
                     fontStyle: "normal",
@@ -916,9 +910,9 @@ export default function CartSidebar({ isOpen, onClose }) {
                   AED {(total - discount - couponDiscount).toLocaleString()}
                 </div>
                 <button
+                  className="text-[12px] sm:text-[14px]"
                   style={{
                     color: "rgba(51, 51, 51, 0.70)",
-                    fontSize: "14px",
                     fontStyle: "normal",
                     fontWeight: 500,
                     lineHeight: "normal",
@@ -941,7 +935,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 variant="primary"
                 size="large"
                 onClick={handleProceedToCheckout}
-                className="font-medium sm:w-[260px]"
+                className="font-medium sm:w-[260px] text-[14px] sm:text-[16px]"
                 style={{ borderRadius: "4px" }}
               >
                 {t("cart.checkout", language)}
