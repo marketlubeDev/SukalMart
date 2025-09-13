@@ -26,7 +26,7 @@ export default function ProductVideoSection({ product }) {
           src={videoSections[0].mediaUrl}
           className="w-full object-cover object-center h-48 sm:h-64 md:h-80 lg:h-[600px]"
           controls
-          poster={videoSections[0].mediaUrl}
+          // poster={videoSections[0].mediaUrl}
         >
           Your browser does not support the video tag.
         </video>
