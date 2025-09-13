@@ -195,9 +195,9 @@ export default function ProductDetailPage() {
             setShowMoreDetails={setShowMoreDetails}
           />
         </div>
-        <ProductFeaturesBanner productType={product?.type} />
-        <ProductFeaturesSection productType={product?.type} />
-        <ProductFeaturesSection2 productType={product?.type} />
+        <ProductFeaturesBanner product={product} />
+        <ProductFeaturesSection product={product} />
+        <ProductFeaturesSection2 product={product} />
         <ProductVideoSection />
         <ProductFeaturesSection3 productType={product?.type} />
         <FeaturedProductsSection isProductPage={true} />

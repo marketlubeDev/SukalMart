@@ -4,25 +4,17 @@ import Image from "next/image";
 import { useLanguage } from "@/app/_components/context/LanguageContext";
 import { t } from "@/lib/translations";
 
-export default function ProductFeaturesBanner({ productType }) {
+export default function ProductFeaturesBanner({ product }) {
   const { language } = useLanguage();
-  const getImageSrc = () => {
-    switch (productType) {
-      case "Hair Care":
-        return "/haircarebanner.png";
-      case "Skin Care":
-        return "/skinacrebanner.png";
-      case "Soap & Deodorants":
-        return "/soap.png";
-      case "Body & Wash":
-        return "/bodywash.png";
-      case "Oral Care":
-      case "Oral & Misc":
-        return "/oral&misc.png";
-      default:
-        return "/skinacrebanner.png";
-    }
-  };
+
+  // Early return if product is not loaded
+  if (!product) return null;
+
+  // Filter banner sections (only image banners)
+  const bannerSections =
+    product.featuresSections?.filter(
+      (section) => section.layout === "banner" && section.mediaType === "image"
+    ) || [];
 
   return (
     <div className="my-8">
@@ -35,21 +27,27 @@ export default function ProductFeaturesBanner({ productType }) {
           fontStyle: "normal",
           lineHeight: "normal",
           letterSpacing: "-0.24px",
-          leadingTrim: "both",
-          textEdge: "cap",
         }}
       >
         {t("product.productFeatures", language)}
       </div>
-      <div className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center">
-        <Image
-          src={getImageSrc()}
-          alt={`${productType} Product Features`}
-          width={1500}
-          height={500}
-          className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[500px]"
-        />
+
+      <div className="space-y-6">
+        {bannerSections.map((section, index) => (
+          <div
+            key={index}
+            className="w-full rounded-lg overflow-hidden border border-gray-200 bg-white flex justify-center items-center"
+          >
+            <Image
+              src={section.mediaUrl}
+              alt={`Banner ${index + 1}`}
+              width={1500}
+              height={500}
+              className="w-full max-w-[1500px] object-cover object-center h-48 sm:h-56 md:h-72 lg:h-[500px]"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
-} 
+}
